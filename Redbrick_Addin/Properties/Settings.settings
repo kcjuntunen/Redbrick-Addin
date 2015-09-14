@@ -1,0 +1,92 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Redbrick_Addin.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING</Value>
+    </Setting>
+    <Setting Name="Top" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="Left" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="RevLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="Authors" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;BS&lt;/string&gt;
+  &lt;string&gt;CD&lt;/string&gt;
+  &lt;string&gt;CW&lt;/string&gt;
+  &lt;string&gt;DF&lt;/string&gt;
+  &lt;string&gt;DH&lt;/string&gt;
+  &lt;string&gt;ED&lt;/string&gt;
+  &lt;string&gt;JB&lt;/string&gt;
+  &lt;string&gt;KC&lt;/string&gt;
+  &lt;string&gt;KL&lt;/string&gt;
+  &lt;string&gt;LF&lt;/string&gt;
+  &lt;string&gt;SP&lt;/string&gt;
+  &lt;string&gt;TH&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Materials" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;ACRYLIC&lt;/string&gt;
+  &lt;string&gt;ALUMINUM&lt;/string&gt;
+  &lt;string&gt;BENDER&lt;/string&gt;
+  &lt;string&gt;CRS&lt;/string&gt;
+  &lt;string&gt;FELT&lt;/string&gt;
+  &lt;string&gt;GLASS FL&lt;/string&gt;
+  &lt;string&gt;GLASS LAM&lt;/string&gt;
+  &lt;string&gt;GLASS TMP&lt;/string&gt;
+  &lt;string&gt;HPL&lt;/string&gt;
+  &lt;string&gt;HRS&lt;/string&gt;
+  &lt;string&gt;MDF&lt;/string&gt;
+  &lt;string&gt;MEL&lt;/string&gt;
+  &lt;string&gt;OFF ALL&lt;/string&gt;
+  &lt;string&gt;PB&lt;/string&gt;
+  &lt;string&gt;PC&lt;/string&gt;
+  &lt;string&gt;PE&lt;/string&gt;
+  &lt;string&gt;PLWD&lt;/string&gt;
+  &lt;string&gt;POPLAR&lt;/string&gt;
+  &lt;string&gt;POSTFRM MDF&lt;/string&gt;
+  &lt;string&gt;PVC&lt;/string&gt;
+  &lt;string&gt;SLAB&lt;/string&gt;
+  &lt;string&gt;SOLID SURF&lt;/string&gt;
+  &lt;string&gt;SST&lt;/string&gt;
+  &lt;string&gt;STYRENE&lt;/string&gt;
+  &lt;string&gt;VAC PRESS&lt;/string&gt;
+  &lt;string&gt;VENEER&lt;/string&gt;
+  &lt;string&gt;VINYL&lt;/string&gt;
+  &lt;string&gt;VINYL WRAP&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Customers" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;JCPENNEY - 220&lt;/string&gt;
+  &lt;string&gt;KMART - 239&lt;/string&gt;
+  &lt;string&gt;KOHLS - 201&lt;/string&gt;
+  &lt;string&gt;MACY'S  - 495&lt;/string&gt;
+  &lt;string&gt;SEARS - 210&lt;/string&gt;
+  &lt;string&gt;STERLING-491&lt;/string&gt;
+  &lt;string&gt;TARGET - 274&lt;/string&gt;
+  &lt;string&gt;WALGREENS - 510&lt;/string&gt;
+  &lt;string&gt;WALMART - 505&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Width" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Height" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

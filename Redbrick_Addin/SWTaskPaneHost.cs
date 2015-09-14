@@ -118,18 +118,15 @@ namespace Redbrick_Addin
 
         private void SetupAssy()
         {
-            this.button1.Text = "Assembly";
             this.ConnectAssemblyEvents();
         }
 
         private void SetupDrawing()
         {
-            this.button1.Text = "Drawing";
         }
 
         private void SetupPart()
         {
-            this.button1.Text = "Part";
         }
 
         private void SetupOther()
@@ -184,13 +181,11 @@ namespace Redbrick_Addin
             this.swSelComp = swSelMgr.GetSelectedObjectsComponent2(1);
             if (swSelComp != null)
             {
-                this.textBox1.Text += string.Format("{0}\r\n", swSelComp.GetPathName());
                 this.Document = this.swSelComp.GetModelDoc2();
                 this.ConnectSelection();
             }
             else
             {
-                this.textBox1.Text += string.Format("{0}\r\n", this.Document.GetPathName());
                 this.Document = this.SwApp.ActiveDoc;
                 this.ConnectOpenDoc();
             }

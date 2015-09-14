@@ -64,26 +64,72 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationSpecific.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConfigurationSpecific.Designer.cs" />
+    <Compile Include="CutlistData.cs" />
+    <Compile Include="DepartmentSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DepartmentSelector.Designer.cs" />
+    <Compile Include="DrawingProperties.cs" />
+    <Compile Include="DrawingRev.cs" />
+    <Compile Include="DrawingRevs.cs" />
+    <Compile Include="eco.cs" />
+    <Compile Include="EditRev.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditRev.Designer.cs" />
     <Compile Include="ErrMsg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ErrMsg.Designer.cs" />
+    <Compile Include="GeneralProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GeneralProperties.Designer.cs" />
+    <Compile Include="MachineProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MachineProperties.Designer.cs" />
+    <Compile Include="Ops.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ops.Designer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Redbrick.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SwProperties.cs" />
+    <Compile Include="SwProperty.cs" />
     <Compile Include="SWTaskPaneHost.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SWTaskPaneHost.Designer.cs">
       <DependentUpon>SWTaskPaneHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="tvRevs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="tvRevs.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ConfigurationSpecific.resx" />
+    <EmbeddedResource Include="DepartmentSelector.resx" />
+    <EmbeddedResource Include="EditRev.resx" />
     <EmbeddedResource Include="ErrMsg.resx" />
+    <EmbeddedResource Include="GeneralProperties.resx" />
+    <EmbeddedResource Include="MachineProperties.resx" />
+    <EmbeddedResource Include="Ops.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -91,6 +137,14 @@
     <EmbeddedResource Include="SWTaskPaneHost.resx">
       <DependentUpon>SWTaskPaneHost.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="tvRevs.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
