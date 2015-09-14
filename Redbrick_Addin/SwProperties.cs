@@ -337,7 +337,7 @@ namespace Redbrick_Addin
             {
                 if (p.Ctl != null)
                 {
-                    p.Value = p.Ctl.Text.ToUpper();
+                    p.Value = p.Ctl.Text;
                 }
             }
         }

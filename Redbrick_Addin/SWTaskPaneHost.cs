@@ -24,6 +24,7 @@ namespace Redbrick_Addin
         protected ModelDoc2 Document;
         protected SelectionMgr swSelMgr;
         protected Component2 swSelComp;
+        protected SwProperties prop;
 
         private bool AssmEventsAssigned = false;
         //private bool PartEventsAssigned = false;
@@ -118,15 +119,17 @@ namespace Redbrick_Addin
 
         private void SetupAssy()
         {
-            this.ConnectAssemblyEvents();
+
         }
 
         private void SetupDrawing()
         {
+            
         }
 
         private void SetupPart()
         {
+            this.ClearControls();
             TableLayoutPanel tlp = new TableLayoutPanel();
             tlp.AutoScroll = true;
             tlp.AutoSize = true;
@@ -134,22 +137,28 @@ namespace Redbrick_Addin
             tlp.ColumnCount = 1;
             tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100));
             tlp.RowCount = 5;
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
             tlp.Size = new System.Drawing.Size(228, 175);
             tlp.TabIndex = 2;
             tlp.Tag = string.Empty;
+            tlp.AutoScroll = true;
 
             DockStyle d = DockStyle.Fill;
             tlp.Dock = d;
 
-            SwProperties p = new SwProperties(this._swApp);
-            p.GetPropertyData();
+            this.prop = new SwProperties(this._swApp);
+            prop.GetPropertyData();
 
-            DepartmentSelector ds = new DepartmentSelector(ref p);
-            ConfigurationSpecific cs = new ConfigurationSpecific(ref p);
-            GeneralProperties gp = new GeneralProperties(ref p);
-            MachineProperties mp = new MachineProperties(ref p);
-            Ops op = new Ops(ref p);
+            DepartmentSelector ds = new DepartmentSelector(ref prop);
+            ConfigurationSpecific cs = new ConfigurationSpecific(ref prop);
+            GeneralProperties gp = new GeneralProperties(ref prop);
+            MachineProperties mp = new MachineProperties(ref prop);
+            Ops op = new Ops(ref prop);
+
+            op.OpType = ds.OpType;
+            op.RefreshOps(ds.OpType);
+            cs.ToggleFields(ds.OpType);
+            gp.ToggleFields(ds.OpType);
 
             tlp.Controls.Add(ds, 0, 0);
             tlp.Controls.Add(cs, 0, 1);
@@ -162,10 +171,16 @@ namespace Redbrick_Addin
                 item.Dock = d;
                 item.Show();
             }
+            this.LinkControls(cs, gp, mp, op);
+            this.Controls.Add(tlp);
+        }
 
-            tlp.Show();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+        private void ClearControls()
+        {
+            foreach (Control item in this.Controls)
+            {
+                this.Controls.Remove(item);
+            }
         }
 
         private void SetupOther()
@@ -276,6 +291,69 @@ namespace Redbrick_Addin
             if (this.Document.GetType() == (int)swDocumentTypes_e.swDocPART)
             {
                 PartDoc pd = (PartDoc)this.Document;
+            }
+        }
+
+        public void Write()
+        {
+            this.prop.ReadControls();
+            this.prop.Write(this.SwApp);
+        }
+
+        private void LinkControls(ConfigurationSpecific cs, GeneralProperties gp, MachineProperties mp, Ops op)
+        {
+
+            this.LinkControlToProperty("CUTLIST MATERIAL", cs.GetCutlistMatBox());
+            this.LinkControlToProperty("EDGE FRONT (L)", cs.GetEdgeFrontBox());
+            this.LinkControlToProperty("EDGE BACK (L)", cs.GetEdgeBackBox());
+            this.LinkControlToProperty("EDGE LEFT (W)", cs.GetEdgeLeftBox());
+            this.LinkControlToProperty("EDGE RIGHT (W)", cs.GetEdgeRightBox());
+
+            this.LinkControlToProperty("Description", gp.GetDescriptionBox());
+            this.LinkControlToProperty("LENGTH", gp.GetLengthBox());
+            gp.UpdateLengthRes(this.prop.GetProperty("LENGTH"));
+            this.LinkControlToProperty("WIDTH", gp.GetWidthBox());
+            gp.UpdateWidthRes(this.prop.GetProperty("WIDTH"));
+            this.LinkControlToProperty("THICKNESS", gp.GetThicknessBox());
+            gp.UpdateThickRes(this.prop.GetProperty("THICKNESS"));
+            this.LinkControlToProperty("WALL THICKNESS", gp.GetWallThicknessBox());
+            gp.UpdateWallThickRes(this.prop.GetProperty("WALL THICKNESS"));
+            this.LinkControlToProperty("COMMENT", gp.GetCommentBox());
+            this.LinkControlToProperty("BLANK QTY", mp.GetPartsPerBlankBox());
+            this.LinkControlToProperty("CNC1", mp.GetCNC1Box());
+            this.LinkControlToProperty("CNC2", mp.GetCNC2Box());
+            this.LinkControlToProperty("OVERL", mp.GetOverLBox());
+            this.LinkControlToProperty("OVERW", mp.GetOverWBox());
+            this.LinkControlToProperty("OP1", op.GetOp1Box());
+            this.LinkControlToProperty("OP2", op.GetOp2Box());
+            this.LinkControlToProperty("OP3", op.GetOp3Box());
+            this.LinkControlToProperty("OP4", op.GetOp4Box());
+            this.LinkControlToProperty("OP5", op.GetOp5Box());
+
+            TextBox tbBlankL = mp.GetBlankLBox();
+            TextBox tbBlankW = mp.GetBlankWBox();
+            double l = gp.PartLength - cs.EdgeDiffL;
+            double w = gp.PartWidth - cs.EdgeDiffW;
+            tbBlankL.Text = l.ToString();
+            tbBlankW.Text = w.ToString();
+        }
+
+        private void LinkControlToProperty(string property, Control c)
+        {
+            SwProperty p = this.prop.GetProperty(property);
+            if (this.prop.Contains(p))
+            {
+#if DEBUG
+                System.Diagnostics.Debug.Print(p.ToString());
+#endif
+                p.SwApp = this._swApp;
+                p.Ctl = c;
+            }
+            else
+            {
+                SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+                x.SwApp = this._swApp;
+                x.Ctl = c;
             }
         }
 

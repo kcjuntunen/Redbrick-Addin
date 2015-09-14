@@ -36,7 +36,7 @@ namespace Redbrick_Addin
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Name = "SWTaskPaneHost";
-            this.Size = new System.Drawing.Size(360, 447);
+            this.Size = new System.Drawing.Size(207, 473);
             this.ResumeLayout(false);
 
         }

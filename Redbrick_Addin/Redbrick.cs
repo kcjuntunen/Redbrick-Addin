@@ -44,6 +44,12 @@ namespace Redbrick_Addin
                 taskpaneView = swApp.CreateTaskpaneView2(string.Empty, "Property Editor");
                 taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
                 taskpaneHost.OnRequestSW += new Func<SldWorks>(delegate { return this.swApp; });
+
+                bool result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Ok, "OK");
+                result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Close, "Close");
+
+                taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
+
                 taskpaneHost.Start();
             }
             catch (Exception e)
@@ -51,6 +57,22 @@ namespace Redbrick_Addin
                 RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
                 em.ShowDialog();
             }
+        }
+
+        int taskpaneView_TaskPaneToolbarButtonClicked(int ButtonIndex)
+        {
+            switch (ButtonIndex)
+            {
+                case 0:
+                    this.taskpaneHost.Write();
+                    break;
+                case 1:
+                    this.DisconnectFromSW();
+                    break;
+                default:
+                    break;
+            }
+            return 1;
         }
         
         private void UITearDown()
