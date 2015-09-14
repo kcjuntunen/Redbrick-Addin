@@ -166,11 +166,26 @@ namespace Redbrick_Addin
 
             if (opType != "WOOD")
             {
-                this.tableLayoutPanel1.RowCount = 2;                
+                for (int row = this.tableLayoutPanel1.RowCount - 1; row >= 0; row--)
+                {
+                    bool hasControl = false;
+                    for (int col = 0; col < tableLayoutPanel1.ColumnCount; col++)
+			        {
+                        if (this.tableLayoutPanel1.GetControlFromPosition(col, row) != null)
+                        {
+                            hasControl = true;
+                            break;
+                        }
+			        }
+                    if (!hasControl)
+	                {
+                        this.tableLayoutPanel1.RowStyles.RemoveAt(row);
+                        tableLayoutPanel1.RowCount--;
+	                }
+                }
             }
             else
             {
-                this.tableLayoutPanel1.RowCount = 10;
             }
         }
 

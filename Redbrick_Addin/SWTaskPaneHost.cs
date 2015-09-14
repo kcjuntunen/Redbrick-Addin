@@ -158,28 +158,32 @@ namespace Redbrick_Addin
             tlp.AutoSize = true;
             tlp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             tlp.ColumnCount = 1;
-            tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.AutoSize));
             tlp.RowCount = 5;
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
-            tlp.Size = new System.Drawing.Size(1,1);
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
+            tlp.Size = new System.Drawing.Size();
             tlp.TabIndex = 2;
             tlp.Tag = string.Empty;
             tlp.AutoScroll = true;
 
-            DockStyle d = DockStyle.Top;
+            DockStyle d = DockStyle.Bottom;
             tlp.Dock = d;
 
             prop.GetPropertyData(this.Document);
 
             this.ds = new DepartmentSelector(ref prop);
             this.cs = new ConfigurationSpecific(ref prop);
-            this.cs.AutoScroll = true;
+            this.cs.Dock = DockStyle.Fill;
             this.gp = new GeneralProperties(ref prop);
-            this.gp.AutoScroll = true;
+            this.gp.Dock = DockStyle.Fill;
             this.mp = new MachineProperties(ref prop);
-            this.mp.AutoScroll = true;
+            this.mp.Dock = DockStyle.Fill;
             this.op = new Ops(ref prop);
-            this.op.AutoScroll = true;
+            this.op.Dock = DockStyle.Fill;
 
             if (ds != null && !this.PartEventsAssigned)
             {
@@ -198,11 +202,6 @@ namespace Redbrick_Addin
             tlp.Controls.Add(mp, 0, 3);
             tlp.Controls.Add(op, 0, 4);
 
-            foreach (Control item in tlp.Controls)
-            {
-                item.Dock = d;
-                item.Show();
-            }
             this.LinkControls(cs, gp, mp, op);
             this.Controls.Add(tlp);
         }

@@ -249,7 +249,7 @@ namespace Redbrick_Addin
             //DataGridViewColumn col = new DataGridViewColumn();
 
             //System.Windows.Forms.MessageBox.Show("DataGridViewColumn col = new DataGridViewColumn();");
-            ////this.lbRevs.Columns.Add(col);
+            //this.lbRevs.Columns.Add(col);
             //System.Windows.Forms.MessageBox.Show("this.lbRevs.Columns.Add(col);");
             //this.lbRevs.RowCount = 5;
             
