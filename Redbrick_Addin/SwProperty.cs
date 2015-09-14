@@ -124,6 +124,79 @@ namespace Redbrick_Addin
             }
         }
 
+        public void Write(ModelDoc2 md)
+        {
+            if (this.SwApp != null)
+            {
+                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+
+                CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                CustomPropertyManager scpm;
+                if (cf != null)
+                {
+                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+                }
+                else
+                {
+                    scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                }
+
+                swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
+                int res;
+
+                if (this.Global)
+                    res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                else
+                    res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+#if DEBUG
+                System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
+#endif
+            }
+            else
+            {
+#if DEBUG
+                System.Diagnostics.Debug.Print("SwApp is undefined");
+#endif
+            }
+        }
+
+        public void Write(SldWorks sw, ModelDoc2 md)
+        {
+            if (sw != null)
+            {
+                this.SwApp = sw;
+                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+
+                CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                CustomPropertyManager scpm;
+                if (cf != null)
+                {
+                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+                }
+                else
+                {
+                    scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                }
+
+                swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
+                int res;
+
+                if (this.Global)
+                    res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                else
+                    res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+#if DEBUG
+                System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
+#endif
+            }
+            else
+            {
+#if DEBUG
+                System.Diagnostics.Debug.Print("SwApp is undefined");
+#endif
+            }
+        }
+
         public void Get()
         {
             if (this.SwApp != null)

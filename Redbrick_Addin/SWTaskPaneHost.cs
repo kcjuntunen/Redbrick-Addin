@@ -26,6 +26,8 @@ namespace Redbrick_Addin
         protected Component2 swSelComp;
         protected SwProperties prop;
 
+        protected AssemblyDoc ad;
+
         private bool AssmEventsAssigned = false;
         //private bool PartEventsAssigned = false;
         //private bool DrawEventsAssigned = false;
@@ -64,34 +66,48 @@ namespace Redbrick_Addin
 
         private void ConnectOpenDoc()
         {
-            this.Document = (ModelDoc2)this.SwApp.ActiveDoc;
-            this.swSelMgr = Document.SelectionManager;
-            swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
-            switch (docT)
+            if (this.SwApp != null)
             {
-                case swDocumentTypes_e.swDocASSEMBLY:
-                    this.SetupAssy();
-                    break;
-                case swDocumentTypes_e.swDocDRAWING:
-                    this.SetupDrawing();
-                    break;
-                case swDocumentTypes_e.swDocNONE:
-                    this.SetupOther();
-                    break;
-                case swDocumentTypes_e.swDocPART:
-                    this.SetupPart();
-                    break;
-                case swDocumentTypes_e.swDocSDM:
-                    this.SetupOther();
-                    break;
-                default:
-                    this.SetupOther();
-                    break;
+                this.Document = (ModelDoc2)this.SwApp.ActiveDoc;
+                this.prop = new SwProperties(this._swApp);
+                this.prop.GetPropertyData(this.Document);
+                if (this.Document != null)
+                {
+                    this.swSelMgr = Document.SelectionManager;
+                    swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
+                    switch (docT)
+                    {
+                        case swDocumentTypes_e.swDocASSEMBLY:
+                            this.SetupAssy();
+                            break;
+                        case swDocumentTypes_e.swDocDRAWING:
+                            this.SetupDrawing();
+                            break;
+                        case swDocumentTypes_e.swDocNONE:
+                            this.SetupOther();
+                            break;
+                        case swDocumentTypes_e.swDocPART:
+                            this.SetupPart();
+                            break;
+                        case swDocumentTypes_e.swDocSDM:
+                            this.SetupOther();
+                            break;
+                        default:
+                            this.SetupOther();
+                            break;
+                    }   
+                }
+                else
+                {
+                    throw new NullReferenceException("You need to have a document opened.");
+                }
             }
         }
 
         private void ConnectSelection()
         {
+            this.prop = new SwProperties(this._swApp);
+            this.prop.GetPropertyData(this.Document);
             swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
             switch (docT)
             {
@@ -119,7 +135,8 @@ namespace Redbrick_Addin
 
         private void SetupAssy()
         {
-
+            this.ConnectAssemblyEvents();
+            this.SetupPart();
         }
 
         private void SetupDrawing()
@@ -129,7 +146,6 @@ namespace Redbrick_Addin
 
         private void SetupPart()
         {
-            this.ClearControls();
             TableLayoutPanel tlp = new TableLayoutPanel();
             tlp.AutoScroll = true;
             tlp.AutoSize = true;
@@ -146,8 +162,7 @@ namespace Redbrick_Addin
             DockStyle d = DockStyle.Fill;
             tlp.Dock = d;
 
-            this.prop = new SwProperties(this._swApp);
-            prop.GetPropertyData();
+            prop.GetPropertyData(this.Document);
 
             DepartmentSelector ds = new DepartmentSelector(ref prop);
             ConfigurationSpecific cs = new ConfigurationSpecific(ref prop);
@@ -195,7 +210,7 @@ namespace Redbrick_Addin
         {
             if ((this.Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !this.AssmEventsAssigned)
             {
-                AssemblyDoc ad = (AssemblyDoc)this.Document;
+                ad = (AssemblyDoc)this.Document;
                 ad.UserSelectionPostNotify += ad_UserSelectionPostNotify;
                 ad.DestroyNotify2 += ad_DestroyNotify2;
                 ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;
@@ -236,42 +251,15 @@ namespace Redbrick_Addin
             if (swSelComp != null)
             {
                 this.Document = this.swSelComp.GetModelDoc2();
+                this.ClearControls();
                 this.ConnectSelection();
             }
             else
             {
                 this.Document = this.SwApp.ActiveDoc;
+                this.ClearControls();
                 this.ConnectOpenDoc();
             }
-
-            //ConfigurationManager cm = default(ConfigurationManager);
-            //Configuration specConf = default(Configuration);
-            //CustomPropertyManager gcpm = default(CustomPropertyManager);
-            //CustomPropertyManager scpm = default(CustomPropertyManager);
-
-            //if (swSelMgr != null)
-            //{
-            //    //object swSelObj = (ModelDoc2)swSelMgr.GetSelectedObject5(1);
-            //    if (swSelComp != null)
-            //    {
-            //        this.Document = swSelComp.GetModelDoc2();
-            //        cm = this.Document.ConfigurationManager;
-            //        specConf = cm.ActiveConfiguration;
-            //        gcpm = this.Document.Extension.get_CustomPropertyManager(string.Empty);
-            //        scpm = this.Document.Extension.get_CustomPropertyManager(specConf.Name);
-            //        this.textBox1.Text += string.Format("{0}: {1}\n", specConf.Name, this.swSelComp.GetPathName());
-            //        this.ConnectSelection();
-            //    }
-            //    else
-            //    {
-            //        this.Document = this.SwApp.ActiveDoc;
-            //        specConf = Document.GetActiveConfiguration();
-            //        gcpm = this.Document.Extension.get_CustomPropertyManager(string.Empty);
-            //        scpm = this.Document.Extension.get_CustomPropertyManager(specConf.Name);
-            //        this.textBox1.Text += string.Format("{0}: {1}\n", specConf.Name, this.Document.GetPathName());
-            //        this.ConnectOpenDoc();
-            //    }
-            //}
 
             return 0;
         }
@@ -297,7 +285,7 @@ namespace Redbrick_Addin
         public void Write()
         {
             this.prop.ReadControls();
-            this.prop.Write(this.SwApp);
+            this.prop.Write(this.SwApp, this.Document);
         }
 
         private void LinkControls(ConfigurationSpecific cs, GeneralProperties gp, MachineProperties mp, Ops op)

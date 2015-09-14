@@ -72,8 +72,9 @@ namespace Redbrick_Addin
                 //System.Diagnostics.Debug.Print("Creating " + p.Name);
 #endif
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-                p.Type = swCustomInfoType_e.swCustomInfoText;
+                x.Type = swCustomInfoType_e.swCustomInfoText;
                 x.Ctl = c;
+                this.propertySet.Add(x);
             }
         }
 
