@@ -1,4 +1,4 @@
-#undef DEEBUG
+#undef DEBUG
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,7 +69,7 @@ namespace Redbrick_Addin
             else
             {
 #if DEBUG
-                System.Diagnostics.Debug.Print("Creating " + p.Name);
+                //System.Diagnostics.Debug.Print("Creating " + p.Name);
 #endif
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
                 p.Type = swCustomInfoType_e.swCustomInfoText;
@@ -176,10 +176,12 @@ namespace Redbrick_Addin
             }
             catch (InvalidCastException ice)
             {
+                ice.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
             catch (NullReferenceException nre)
             {
+                nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
 
@@ -196,10 +198,12 @@ namespace Redbrick_Addin
             }
             catch (InvalidCastException ice)
             {
+                ice.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
             catch (NullReferenceException nre)
             {
+                nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
 
@@ -222,10 +226,12 @@ namespace Redbrick_Addin
             }
             catch (InvalidCastException ice)
             {
+                ice.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
             catch (NullReferenceException nre)
             {
+                nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
 
@@ -242,10 +248,12 @@ namespace Redbrick_Addin
             }
             catch (InvalidCastException ice)
             {
+                ice.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
             catch (NullReferenceException nre)
             {
+                nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
 

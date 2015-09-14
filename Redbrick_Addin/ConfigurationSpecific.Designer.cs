@@ -1,4 +1,4 @@
-namespace redbrick.csproj
+namespace Redbrick_Addin
 {
     partial class ConfigurationSpecific
     {

@@ -5,7 +5,7 @@ using System.Text;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.sldworks;
 
-namespace redbrick.csproj
+namespace Redbrick_Addin
 {
     public class SwProperty
     {

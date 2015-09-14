@@ -1,4 +1,4 @@
-namespace redbrick.csproj
+namespace Redbrick_Addin
 {
     partial class GeneralProperties
     {
@@ -260,7 +260,7 @@ namespace redbrick.csproj
             // 
             this.bCopy.AutoSize = true;
             this.bCopy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.bCopy.Image = global::redbrick.csproj.Properties.Resources.clipboard;
+            this.bCopy.Image = global::Redbrick_Addin.Properties.Resources.clipboard;
             this.bCopy.Location = new System.Drawing.Point(247, 16);
             this.bCopy.Name = "bCopy";
             this.tableLayoutPanel1.SetRowSpan(this.bCopy, 2);

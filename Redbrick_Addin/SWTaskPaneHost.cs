@@ -26,8 +26,8 @@ namespace Redbrick_Addin
         protected Component2 swSelComp;
 
         private bool AssmEventsAssigned = false;
-        private bool PartEventsAssigned = false;
-        private bool DrawEventsAssigned = false;
+        //private bool PartEventsAssigned = false;
+        //private bool DrawEventsAssigned = false;
 
         public SWTaskPaneHost()
         {
@@ -127,6 +127,45 @@ namespace Redbrick_Addin
 
         private void SetupPart()
         {
+            TableLayoutPanel tlp = new TableLayoutPanel();
+            tlp.AutoScroll = true;
+            tlp.AutoSize = true;
+            tlp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tlp.ColumnCount = 1;
+            tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100));
+            tlp.RowCount = 5;
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tlp.Size = new System.Drawing.Size(228, 175);
+            tlp.TabIndex = 2;
+            tlp.Tag = string.Empty;
+
+            DockStyle d = DockStyle.Fill;
+            tlp.Dock = d;
+
+            SwProperties p = new SwProperties(this._swApp);
+            p.GetPropertyData();
+
+            DepartmentSelector ds = new DepartmentSelector(ref p);
+            ConfigurationSpecific cs = new ConfigurationSpecific(ref p);
+            GeneralProperties gp = new GeneralProperties(ref p);
+            MachineProperties mp = new MachineProperties(ref p);
+            Ops op = new Ops(ref p);
+
+            tlp.Controls.Add(ds, 0, 0);
+            tlp.Controls.Add(cs, 0, 1);
+            tlp.Controls.Add(gp, 0, 2);
+            tlp.Controls.Add(mp, 0, 3);
+            tlp.Controls.Add(op, 0, 4);
+
+            foreach (Control item in tlp.Controls)
+            {
+                item.Dock = d;
+                item.Show();
+            }
+
+            tlp.Show();
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         private void SetupOther()
@@ -250,7 +289,13 @@ namespace Redbrick_Addin
 
         public Func<SldWorks> OnRequestSW;
 
-        public SldWorks SwApp { get; set; }
+        protected SldWorks _swApp;
+
+        public SldWorks SwApp 
+        { 
+            get { return this._swApp; } 
+            set { this._swApp = value; }
+        }
         public Redbrick MyParent { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-namespace redbrick.csproj
+namespace Redbrick_Addin
 {
     public partial class DepartmentSelector : UserControl
     {

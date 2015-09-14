@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 using SolidWorks.Interop.swconst;
 
-namespace redbrick.csproj
+namespace Redbrick_Addin
 {
     public partial class MachineProperties : UserControl
     {
