@@ -160,11 +160,11 @@ namespace Redbrick_Addin
             tlp.ColumnCount = 1;
             tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(SizeType.AutoSize));
             tlp.RowCount = 5;
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
-            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.Percent));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
+            tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
             tlp.Size = new System.Drawing.Size();
             tlp.TabIndex = 2;
             tlp.Tag = string.Empty;
