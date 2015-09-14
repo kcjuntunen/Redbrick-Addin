@@ -34,6 +34,7 @@ namespace Redbrick_Addin
                 this.fillEdg((object)c);
                 
             }
+            
             this.LinkControls();
         }
 
@@ -162,6 +163,15 @@ namespace Redbrick_Addin
             lEr.Visible = wood;
             leRColor.Visible = wood;
             cbEr.Visible = wood;
+
+            if (opType != "WOOD")
+            {
+                this.tableLayoutPanel1.RowCount = 2;                
+            }
+            else
+            {
+                this.tableLayoutPanel1.RowCount = 10;
+            }
         }
 
         private void UpdateDiffW(ComboBox cbl, ComboBox cbr)
@@ -368,7 +378,5 @@ namespace Redbrick_Addin
             get { return _edgeDiffW; }
             set { _edgeDiffW = value; }
         }
-	
-	
     }
 }

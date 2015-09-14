@@ -28,8 +28,14 @@ namespace Redbrick_Addin
 
         protected AssemblyDoc ad;
 
+        DepartmentSelector ds;
+        ConfigurationSpecific cs;
+        GeneralProperties gp;
+        MachineProperties mp;
+        Ops op;
+
         private bool AssmEventsAssigned = false;
-        //private bool PartEventsAssigned = false;
+        private bool PartEventsAssigned = false;
         //private bool DrawEventsAssigned = false;
 
         public SWTaskPaneHost()
@@ -60,6 +66,7 @@ namespace Redbrick_Addin
 
         int SwApp_ActiveDocChangeNotify()
         {
+            this.ClearControls();
             this.ConnectOpenDoc();
             return 0;
         }
@@ -151,24 +158,34 @@ namespace Redbrick_Addin
             tlp.AutoSize = true;
             tlp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             tlp.ColumnCount = 1;
-            tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100));
+            tlp.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             tlp.RowCount = 5;
             tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(SizeType.AutoSize));
-            tlp.Size = new System.Drawing.Size(228, 175);
+            tlp.Size = new System.Drawing.Size(1,1);
             tlp.TabIndex = 2;
             tlp.Tag = string.Empty;
             tlp.AutoScroll = true;
 
-            DockStyle d = DockStyle.Fill;
+            DockStyle d = DockStyle.Top;
             tlp.Dock = d;
 
             prop.GetPropertyData(this.Document);
 
-            DepartmentSelector ds = new DepartmentSelector(ref prop);
-            ConfigurationSpecific cs = new ConfigurationSpecific(ref prop);
-            GeneralProperties gp = new GeneralProperties(ref prop);
-            MachineProperties mp = new MachineProperties(ref prop);
-            Ops op = new Ops(ref prop);
+            this.ds = new DepartmentSelector(ref prop);
+            this.cs = new ConfigurationSpecific(ref prop);
+            this.cs.AutoScroll = true;
+            this.gp = new GeneralProperties(ref prop);
+            this.gp.AutoScroll = true;
+            this.mp = new MachineProperties(ref prop);
+            this.mp.AutoScroll = true;
+            this.op = new Ops(ref prop);
+            this.op.AutoScroll = true;
+
+            if (ds != null && !this.PartEventsAssigned)
+            {
+                this.PartEventsAssigned = true;
+                this.ds.CheckedChanged += ds_CheckedChanged;
+            }
 
             op.OpType = ds.OpType;
             op.RefreshOps(ds.OpType);
@@ -188,6 +205,14 @@ namespace Redbrick_Addin
             }
             this.LinkControls(cs, gp, mp, op);
             this.Controls.Add(tlp);
+        }
+
+        void ds_CheckedChanged(object sender, EventArgs e)
+        {
+            op.OpType = ds.OpType;
+            op.RefreshOps(ds.OpType);
+            cs.ToggleFields(ds.OpType);
+            gp.ToggleFields(ds.OpType);
         }
 
         private void ClearControls()

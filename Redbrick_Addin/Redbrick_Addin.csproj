@@ -74,6 +74,10 @@
     </Compile>
     <Compile Include="DepartmentSelector.Designer.cs" />
     <Compile Include="DrawingProperties.cs" />
+    <Compile Include="DrawingRedbrick.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawingRedbrick.Designer.cs" />
     <Compile Include="DrawingRev.cs" />
     <Compile Include="DrawingRevs.cs" />
     <Compile Include="eco.cs" />
@@ -125,6 +129,7 @@
   <ItemGroup>
     <EmbeddedResource Include="ConfigurationSpecific.resx" />
     <EmbeddedResource Include="DepartmentSelector.resx" />
+    <EmbeddedResource Include="DrawingRedbrick.resx" />
     <EmbeddedResource Include="EditRev.resx" />
     <EmbeddedResource Include="ErrMsg.resx" />
     <EmbeddedResource Include="GeneralProperties.resx" />

@@ -198,6 +198,6 @@ namespace Redbrick_Addin
         private void bCopy_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Clipboard.SetText(this.tbDescription.Text);
-        }	
+        }
     }
 }
