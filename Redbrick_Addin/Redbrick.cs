@@ -39,10 +39,18 @@ namespace Redbrick_Addin
 
         private void UISetup()
         {
-            taskpaneView = swApp.CreateTaskpaneView2(string.Empty, "Property Editor");
-            taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
-            taskpaneHost.OnRequestSW += new Func<SldWorks>(delegate { return this.swApp; });
-            taskpaneHost.Start();
+            try
+            {
+                taskpaneView = swApp.CreateTaskpaneView2(string.Empty, "Property Editor");
+                taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
+                taskpaneHost.OnRequestSW += new Func<SldWorks>(delegate { return this.swApp; });
+                taskpaneHost.Start();
+            }
+            catch (Exception e)
+            {
+                RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
+                em.ShowDialog();
+            }
         }
         
         private void UITearDown()

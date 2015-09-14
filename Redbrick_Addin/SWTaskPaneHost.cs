@@ -21,7 +21,13 @@ namespace Redbrick_Addin
     public partial class SWTaskPaneHost : UserControl
     {
         public const string SWTASKPANE_PROGID = "Redbrick.SWTaskPane_Addin";
-        public ModelDoc2 Document;
+        protected ModelDoc2 Document;
+        protected SelectionMgr swSelMgr;
+        protected Component2 swSelComp;
+
+        private bool AssmEventsAssigned = false;
+        private bool PartEventsAssigned = false;
+        private bool DrawEventsAssigned = false;
 
         public SWTaskPaneHost()
         {
@@ -36,13 +42,30 @@ namespace Redbrick_Addin
 
         public void Start()
         {
+            this.SwApp = this.RequestSW();
+
+            this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
+            this.SwApp.DestroyNotify += SwApp_DestroyNotify;
             this.ConnectOpenDoc();
+        }
+
+        int SwApp_DestroyNotify()
+        {
+            // Solidworks closed
+            return 0;
+        }
+
+        int SwApp_ActiveDocChangeNotify()
+        {
+            this.ConnectOpenDoc();
+            return 0;
         }
 
         private void ConnectOpenDoc()
         {
-            Document = (ModelDoc2)this.RequestSW().ActiveDoc;
-            swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
+            this.Document = (ModelDoc2)this.SwApp.ActiveDoc;
+            this.swSelMgr = Document.SelectionManager;
+            swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
             switch (docT)
             {
                 case swDocumentTypes_e.swDocASSEMBLY:
@@ -66,9 +89,37 @@ namespace Redbrick_Addin
             }
         }
 
+        private void ConnectSelection()
+        {
+            swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
+            switch (docT)
+            {
+                case swDocumentTypes_e.swDocASSEMBLY:
+                    this.SetupAssy();
+                    break;
+                case swDocumentTypes_e.swDocDRAWING:
+                    this.SetupDrawing();
+                    break;
+                case swDocumentTypes_e.swDocNONE:
+                    this.SetupOther();
+                    break;
+                case swDocumentTypes_e.swDocPART:
+                    this.SetupPart();
+                    break;
+                case swDocumentTypes_e.swDocSDM:
+                    this.SetupOther();
+                    break;
+                default:
+                    this.SetupOther();
+                    break;
+            }
+
+        }
+
         private void SetupAssy()
         {
             this.button1.Text = "Assembly";
+            this.ConnectAssemblyEvents();
         }
 
         private void SetupDrawing()
@@ -91,7 +142,7 @@ namespace Redbrick_Addin
 
         private void ConnectAssemblyEvents()
         {
-            if (this.Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY)
+            if ((this.Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !this.AssmEventsAssigned)
             {
                 AssemblyDoc ad = (AssemblyDoc)this.Document;
                 ad.UserSelectionPostNotify += ad_UserSelectionPostNotify;
@@ -103,6 +154,11 @@ namespace Redbrick_Addin
             {
 
             }
+        }
+
+        private void DisconnectAssemblyEvents()
+        {
+            
         }
 
         int ad_ActiveViewChangeNotify()
@@ -118,12 +174,57 @@ namespace Redbrick_Addin
 
         int ad_DestroyNotify2(int DestroyType)
         {
-            throw new NotImplementedException();
+            this.Document = null;
+            this.SwApp = null;
+            return 0;
         }
 
         int ad_UserSelectionPostNotify()
         {
-            throw new NotImplementedException();
+            this.swSelComp = swSelMgr.GetSelectedObjectsComponent2(1);
+            if (swSelComp != null)
+            {
+                this.textBox1.Text += string.Format("{0}\r\n", swSelComp.GetPathName());
+                this.Document = this.swSelComp.GetModelDoc2();
+                this.ConnectSelection();
+            }
+            else
+            {
+                this.textBox1.Text += string.Format("{0}\r\n", this.Document.GetPathName());
+                this.Document = this.SwApp.ActiveDoc;
+                this.ConnectOpenDoc();
+            }
+
+            //ConfigurationManager cm = default(ConfigurationManager);
+            //Configuration specConf = default(Configuration);
+            //CustomPropertyManager gcpm = default(CustomPropertyManager);
+            //CustomPropertyManager scpm = default(CustomPropertyManager);
+
+            //if (swSelMgr != null)
+            //{
+            //    //object swSelObj = (ModelDoc2)swSelMgr.GetSelectedObject5(1);
+            //    if (swSelComp != null)
+            //    {
+            //        this.Document = swSelComp.GetModelDoc2();
+            //        cm = this.Document.ConfigurationManager;
+            //        specConf = cm.ActiveConfiguration;
+            //        gcpm = this.Document.Extension.get_CustomPropertyManager(string.Empty);
+            //        scpm = this.Document.Extension.get_CustomPropertyManager(specConf.Name);
+            //        this.textBox1.Text += string.Format("{0}: {1}\n", specConf.Name, this.swSelComp.GetPathName());
+            //        this.ConnectSelection();
+            //    }
+            //    else
+            //    {
+            //        this.Document = this.SwApp.ActiveDoc;
+            //        specConf = Document.GetActiveConfiguration();
+            //        gcpm = this.Document.Extension.get_CustomPropertyManager(string.Empty);
+            //        scpm = this.Document.Extension.get_CustomPropertyManager(specConf.Name);
+            //        this.textBox1.Text += string.Format("{0}: {1}\n", specConf.Name, this.Document.GetPathName());
+            //        this.ConnectOpenDoc();
+            //    }
+            //}
+
+            return 0;
         }
 
         private void ConnectDrawingEvents()
