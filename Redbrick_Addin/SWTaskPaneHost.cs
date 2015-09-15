@@ -53,6 +53,10 @@ namespace Redbrick_Addin
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
             this.Controls.Add(new ModelRedbrick(this._swApp));
+            foreach (Control item in this.Controls)
+            {
+                item.Dock = DockStyle.Fill;
+            }
             //this.ConnectOpenDoc();
         }
 
