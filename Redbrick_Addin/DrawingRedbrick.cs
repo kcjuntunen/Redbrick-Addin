@@ -21,7 +21,7 @@ namespace Redbrick_Addin
             this.fillAuthor();
             this.fillCustomer();
 
-            this.SetLocation();
+            //this.SetLocation();
 
             this.PropertySet = new DrawingProperties(this._swApp);
             this.RevSet = new DrawingRevs(this._swApp);

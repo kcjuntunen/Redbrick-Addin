@@ -28,6 +28,7 @@ namespace Redbrick_Addin
         /// </summary>
         private void InitializeComponent()
         {
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.rbDeptWood = new System.Windows.Forms.RadioButton();
             this.rbDeptMetal = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();

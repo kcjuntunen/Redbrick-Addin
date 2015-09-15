@@ -131,32 +131,50 @@ namespace Redbrick_Addin
                 Configuration cf = md.ConfigurationManager.ActiveConfiguration;
 
                 CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                CustomPropertyManager scpm;
+                CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+
                 if (cf != null)
-                {
                     scpm = md.Extension.get_CustomPropertyManager(cf.Name);
-                }
-                else
-                {
-                    scpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                }
+
 
                 swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
-                int res;
 
+                int res;
                 if (this.Global)
-                    res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                {
+                    if (this.Name.Contains("OP"))
+                    {
+                        string v = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
+                        res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
+    #if DEBUG
+                        System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
+    #endif
+                    }
+                    else
+                    {
+                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value.ToUpper(), (int)ao);
+                    }
+                }
                 else
-                    res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
-#if DEBUG
-                System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
+                {
+                    if (this.Name.Contains("EDGE") || this.Name.Contains("CUTLIST MATERIAL"))
+                    {
+                        string v = "0";
+                        if ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null)
+                            v = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
+                        string name = md.GetPathName();
+                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
+    #if DEBUG
+                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
+    #endif
+                    }
+                }
             }
             else
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
+    #if DEBUG
+                System.Diagnostics.Debug.Print(string.Format("{0}: SwApp is undefined", this.Name));
+    #endif
             }
         }
 
@@ -295,6 +313,88 @@ namespace Redbrick_Addin
                 System.Diagnostics.Debug.Print("SwApp is undefined");
 #endif
             }
+        }
+
+        public void Get(ModelDoc2 md, CutlistData cd)
+        {
+            Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+
+            CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+            CustomPropertyManager scpm;
+
+            bool wasResolved;
+            bool useCached = false;
+
+            if (cf != null)
+            {
+                scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+            }
+            else
+            {
+                scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+            }
+            int res;
+
+            if (this.Global)
+            {
+                res = gcpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
+                this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+
+
+                if (this.Type == swCustomInfoType_e.swCustomInfoNumber && this.Name.ToUpper().Contains("OVER"))
+                    this.Type = swCustomInfoType_e.swCustomInfoDouble;
+
+                if (this.Name.Contains("OP"))
+                {
+                    int tp = 0;
+
+                    if (int.TryParse(this._value, out tp))
+                    {
+                        this.ID = this._resValue;
+                        this._value = cd.GetOpByID(this._resValue);
+                    }
+                    else
+                    {
+                        this.ID = cd.GetOpIDByName(this._resValue).ToString();
+                        this._value = cd.GetOpByID(this.ID);
+                    }
+                }
+            }
+            else
+            {
+                res = scpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
+                this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+                if (this.Name.ToUpper().Contains("CUTLIST MATERIAL"))
+                {
+                    int tp = 0;
+                    if (int.TryParse(this._value, out tp))
+                    {
+                        this.ID = this._resValue;
+                        this._value = cd.GetMaterialByID(this._resValue);   
+                    }
+                    else
+                    {
+                        this.ID = cd.GetMaterialID(this._value).ToString();
+                    }
+                }
+
+                if (this.Name.ToUpper().Contains("EDGE"))
+                {
+                    int tp = 0;
+                    if (int.TryParse(this._value, out tp))
+                    {
+                        this.ID = this._resValue;
+                        this._value = cd.GetEdgeByID(this._resValue);   
+                    }
+                    else
+                    {
+                        this.ID = cd.GetMaterialID(this._value).ToString();
+                    }
+                }
+            }
+#if DEBUG
+            System.Diagnostics.Debug.Print(this.Name + " --> " + this.Value);
+#endif
         }
 
         public void Del()

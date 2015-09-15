@@ -167,9 +167,8 @@ namespace Redbrick_Addin
 #endif
         }
 
-        public void GetPropertyData()
+        public void GetPropertyData(ModelDoc2 md)
         {
-            ModelDoc2 md = (ModelDoc2)swApp.ActiveDoc;
             CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
 
             string[] ss = (string[])g.GetNames();
@@ -178,8 +177,7 @@ namespace Redbrick_Addin
                 foreach (string s in ss)
                 {
                     SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-                    p.Get(this.swApp);
-
+                    p.Get(md, this.cutlistData);
                     this._innerArray.Add(p);
                 }
             }
@@ -191,7 +189,7 @@ namespace Redbrick_Addin
                 foreach (string s in ss)
                 {
                     SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, string.Empty, false);
-                    p.Get(this.swApp);
+                    p.Get(md, this.cutlistData);
                     this._innerArray.Add(p);
                 }
             }
@@ -245,51 +243,51 @@ namespace Redbrick_Addin
             }
         }
 
-        public void GetPropertyData(ModelDoc2 md)
-        {
-            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-            string valOut;
-            string resValOut;
-            bool wasResolved;
-            int res;
+//        public void GetPropertyData(ModelDoc2 md)
+//        {
+//            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+//            string valOut;
+//            string resValOut;
+//            bool wasResolved;
+//            int res;
 
-            string[] ss = (string[])g.GetNames();
-            foreach (string s in ss)
-            {
-                res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
-                SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
-                p.ResValue = resValOut;
-                p.Type = (swCustomInfoType_e)g.GetType2(s);
+//            string[] ss = (string[])g.GetNames();
+//            foreach (string s in ss)
+//            {
+//                res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
+//                SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
+//                p.ResValue = resValOut;
+//                p.Type = (swCustomInfoType_e)g.GetType2(s);
 
-                if (p.Type == swCustomInfoType_e.swCustomInfoNumber && p.Name.ToUpper().Contains("OVER"))
-                    p.Type = swCustomInfoType_e.swCustomInfoDouble;
+//                if (p.Type == swCustomInfoType_e.swCustomInfoNumber && p.Name.ToUpper().Contains("OVER"))
+//                    p.Type = swCustomInfoType_e.swCustomInfoDouble;
 
-                p.SwApp = this.swApp;
-                this._innerArray.Add(p);
-#if DEBUG
-                System.Diagnostics.Debug.Print(s);
-#endif
-            }
+//                p.SwApp = this.swApp;
+//                this._innerArray.Add(p);
+//#if DEBUG
+//                System.Diagnostics.Debug.Print(s);
+//#endif
+//            }
 
 
-            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
-            {
-                CustomPropertyManager c = md.Extension.get_CustomPropertyManager(md.ConfigurationManager.ActiveConfiguration.Name);
-                ss = (string[])c.GetNames();
-                foreach (string s in ss)
-                {
-                    res = c.Get5(s, false, out valOut, out resValOut, out wasResolved);
-                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
-                    p.ResValue = resValOut;
-                    p.Type = (swCustomInfoType_e)g.GetType2(s);
-                    p.SwApp = this.swApp;
-#if DEBUG
-                    System.Diagnostics.Debug.Print(s);
-#endif
-                    this._innerArray.Add(p);
-                }
-            }
-        }
+//            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
+//            {
+//                CustomPropertyManager c = md.Extension.get_CustomPropertyManager(md.ConfigurationManager.ActiveConfiguration.Name);
+//                ss = (string[])c.GetNames();
+//                foreach (string s in ss)
+//                {
+//                    res = c.Get5(s, false, out valOut, out resValOut, out wasResolved);
+//                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
+//                    p.ResValue = resValOut;
+//                    p.Type = (swCustomInfoType_e)g.GetType2(s);
+//                    p.SwApp = this.swApp;
+//#if DEBUG
+//                    System.Diagnostics.Debug.Print(s);
+//#endif
+//                    this._innerArray.Add(p);
+//                }
+//            }
+//        }
 
         public void GetPropertyData(SldWorks sw, ModelDoc2 md)
         {

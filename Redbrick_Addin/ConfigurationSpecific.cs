@@ -79,6 +79,13 @@ namespace Redbrick_Addin
             }
         }
 
+        public void GetProperties()
+        {
+            foreach (Control c in this.tableLayoutPanel1.Controls)
+            {
+            }
+        }
+
         private int GetIndex(DataTable dt, string val)
         {
             if (dt != null)

@@ -28,6 +28,7 @@ namespace Redbrick_Addin
         /// </summary>
         private void InitializeComponent()
         {
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cbEr = new System.Windows.Forms.ComboBox();
             this.lEr = new System.Windows.Forms.Label();

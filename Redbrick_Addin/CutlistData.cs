@@ -60,61 +60,6 @@ namespace Redbrick_Addin
 	        }
         }
 
-//        private DataSet GetMaterials2()
-//        {
-//            string cacheFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-//            string cacheFileName = Properties.Settings.Default.MatCacheFileName;
-//            string cacheFile = cacheFilePath + @"\" + cacheFileName;
-//            int cacheExpireTime = Properties.Settings.Default.CacheExpireTime;
-
-//            FileInfo fi = new FileInfo(cacheFile);
-
-//            if (((!fi.Exists) || (DateTime.Now - fi.LastWriteTime) > new TimeSpan(0, cacheExpireTime, 0)))
-//            {
-//                FileStream fs = new FileStream(fi.FullName, System.IO.FileMode.OpenOrCreate);
-//                lock (threadLock)
-//                {
-//                    string SQL = "SELECT MATID,DESCR,COLOR FROM CUT_MATERIALS ORDER BY DESCR;";
-//                    //conn.Open();
-//                    OdbcCommand comm = new OdbcCommand(SQL, conn);
-//                    OdbcDataAdapter da = new OdbcDataAdapter(comm);
-//                    DataSet ds = new DataSet();
-//                    da.Fill(ds);
-
-//                    //conn.Close();
-//                    using (TextWriter sw = new StreamWriter(fs))
-//                    {
-//#if DEBUG
-//                        System.Diagnostics.Debug.Print("Writing " + cacheFile);
-//#endif
-//                        System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(DataSet));
-//                        xs.Serialize(sw, ds);
-//                    }
-//                    return ds;
-//                }
-//            }
-//            else if (this._materials == null)
-//            {
-//#if DEBUG
-//                DateTime start;
-//                DateTime end;
-//                start = DateTime.Now;
-//                System.Diagnostics.Debug.Print("Reading from " + cacheFile);
-//#endif
-//                DataSet ds = new DataSet();
-//                ds.ReadXml(cacheFile);
-//#if DEBUG
-//                end = DateTime.Now;
-//                System.Diagnostics.Debug.Print("<<< " + (end - start).ToString() + " >>>");
-//#endif
-//                return ds;
-//            }
-//            else
-//            {
-//                return this._materials;
-//            }
-//        }
-
         private DataSet GetEdges()
         {
             lock (threadLock)
@@ -201,6 +146,92 @@ namespace Redbrick_Addin
                 return dr.GetInt32(0);
             else
                 return 0;
+        }
+
+        public int GetOpID(string description)
+        {
+            if (description == string.Empty)
+                return 0;
+
+            string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPDESCR = '{0}'", description);
+            OdbcCommand comm = new OdbcCommand(SQL, conn);
+            OdbcDataReader dr = comm.ExecuteReader();
+            if (dr.HasRows)
+                return dr.GetInt32(0);
+            else
+                return 0;
+        }
+
+        public int GetOpIDByName(string name)
+        {
+            if (name == string.Empty)
+                return 0;
+
+            string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPNAME = '{0}'", name);
+            OdbcCommand comm = new OdbcCommand(SQL, conn);
+            OdbcDataReader dr = comm.ExecuteReader();
+            if (dr.HasRows)
+                return dr.GetInt32(0);
+            else
+                return 0;
+        }
+
+        public string GetMaterialByID(string id)
+        {
+            if (id == string.Empty)
+                return "TBD MATERIAL";
+
+            int tp = 0;
+            if (int.TryParse(id, out tp))
+            {
+
+                string SQL = string.Format("SELECT DESCR FROM CUT_MATERIALS WHERE MATID = {0}", id);
+                OdbcCommand comm = new OdbcCommand(SQL, conn);
+                OdbcDataReader dr = comm.ExecuteReader();
+                if (dr.HasRows)
+                    return dr.GetString(0);
+                else
+                    return "TBD MATERIAL";
+            }
+            return "TBD MATERIAL";
+        }
+
+        public string GetEdgeByID(string id)
+        {
+            if (id == string.Empty)
+                return string.Empty;
+
+            int tp = 0;
+            if (int.TryParse(id, out tp))
+            {
+                string SQL = string.Format("SELECT DESCR FROM CUT_EDGES WHERE EDGEID = {0}", id);
+                OdbcCommand comm = new OdbcCommand(SQL, conn);
+                OdbcDataReader dr = comm.ExecuteReader();
+                if (dr.HasRows)
+                    return dr.GetString(0);
+                else
+                    return string.Empty;
+            }
+            return string.Empty;
+        }
+
+        public string GetOpByID(string id)
+        {
+            if (id == string.Empty)
+                return string.Empty;
+
+            int tp = 0;
+            if (int.TryParse(id, out tp))
+            {
+                string SQL = string.Format("SELECT OPDESCR FROM CUT_OPS WHERE OPID = {0}", id);
+                OdbcCommand comm = new OdbcCommand(SQL, conn);
+                OdbcDataReader dr = comm.ExecuteReader();
+                if (dr.HasRows)
+                    return dr.GetString(0);
+                else
+                    return string.Empty;
+            }
+            return string.Empty;
         }
 
         public eco GetECOData(string ecoNumber)
