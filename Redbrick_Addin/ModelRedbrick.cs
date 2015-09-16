@@ -32,15 +32,15 @@ namespace Redbrick_Addin
             props.GetPropertyData((ModelDoc2)this._swApp.ActiveDoc);
 
             ds = new DepartmentSelector(ref this.props);
-            ds.Dock = d;
+            //ds.Dock = d;
             cs = new ConfigurationSpecific(ref this.props);
-            cs.Dock = d;
+            //cs.Dock = d;
             gp = new GeneralProperties(ref this.props);
-            gp.Dock = d;
+            //gp.Dock = d;
             mp = new MachineProperties(ref this.props);
-            mp.Dock = d;
+            //mp.Dock = d;
             op = new Ops(ref this.props);
-            op.Dock = d;
+            //op.Dock = d;
 
             this.tlpMain.Controls.Add(ds);
             this.tlpMain.Controls.Add(cs);
@@ -48,10 +48,10 @@ namespace Redbrick_Addin
             this.tlpMain.Controls.Add(mp);
             this.tlpMain.Controls.Add(op);
 
-            foreach (Control item in this.tlpMain.Controls)
-            {
-                item.Dock = d;
-            }
+            //foreach (Control item in this.tlpMain.Controls)
+            //{
+            //    item.Dock = d;
+            //}
 
             this.tlpMain.Controls.Add(ds, 0, 0);
             this.gbSpecProp.Controls.Add(cs);
@@ -73,10 +73,45 @@ namespace Redbrick_Addin
 
         protected SldWorks _swApp;
 
+        protected ModelDoc2 RequestDoc()
+        {
+            if (OnRequestDoc == null)
+                throw new Exception("No SW!");
+
+            return OnRequestDoc();
+        }
+
+        public Func<ModelDoc2> OnRequestDoc;
+
         public SldWorks SwApp
         {
             get { return this._swApp; }
             set { this._swApp = value; }
+        }
+
+        public DepartmentSelector aDepartmentSelector
+        {
+            get { return this.ds;  }
+        }
+
+        public ConfigurationSpecific aConfigurationSpecific
+        {
+            get { return this.cs;  }
+        }
+
+        public GeneralProperties aGeneralProperties
+        {
+            get { return this.gp; }
+        }
+
+        public MachineProperties aMachineProperties
+        {
+            get { return this.mp; }
+        }
+
+        public Ops aOps
+        {
+            get { return this.op; }
         }
     }
 }

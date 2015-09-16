@@ -152,9 +152,9 @@ namespace Redbrick_Addin
             c.ValueMember = "EDGEID";
         }
 
-        public void ToggleFields(string opType)
+        public void ToggleFields(int opType)
         {
-            bool wood = (opType != "METAL");
+            bool wood = (opType != 2);
             lEf.Visible = wood;
             leFColor.Visible = wood;
             cbEf.Visible = wood;
@@ -170,30 +170,6 @@ namespace Redbrick_Addin
             lEr.Visible = wood;
             leRColor.Visible = wood;
             cbEr.Visible = wood;
-
-            if (opType != "WOOD")
-            {
-                for (int row = this.tableLayoutPanel1.RowCount - 1; row >= 0; row--)
-                {
-                    bool hasControl = false;
-                    for (int col = 0; col < tableLayoutPanel1.ColumnCount; col++)
-			        {
-                        if (this.tableLayoutPanel1.GetControlFromPosition(col, row) != null)
-                        {
-                            hasControl = true;
-                            break;
-                        }
-			        }
-                    if (!hasControl)
-	                {
-                        this.tableLayoutPanel1.RowStyles.RemoveAt(row);
-                        tableLayoutPanel1.RowCount--;
-	                }
-                }
-            }
-            else
-            {
-            }
         }
 
         private void UpdateDiffW(ComboBox cbl, ComboBox cbr)

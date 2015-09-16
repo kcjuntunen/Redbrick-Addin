@@ -309,6 +309,9 @@ namespace Redbrick_Addin
                 if (p.Type == swCustomInfoType_e.swCustomInfoNumber && p.Name.ToUpper().Contains("OVER"))
                     p.Type = swCustomInfoType_e.swCustomInfoDouble;
 
+                if (p.Name.ToUpper().Contains("CUTLIST") || p.Name.ToUpper().Contains("EDGE"))
+                    p.Global = false;
+
                 p.SwApp = this.swApp;
                 this._innerArray.Add(p);
 #if DEBUG
@@ -454,6 +457,7 @@ namespace Redbrick_Addin
         {
             foreach (SwProperty p in this._innerArray)
             {
+                p.Del(md);
                 p.Write(md);
             }
         }

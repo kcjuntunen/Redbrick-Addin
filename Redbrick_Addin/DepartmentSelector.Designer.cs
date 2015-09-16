@@ -28,50 +28,33 @@ namespace Redbrick_Addin
         /// </summary>
         private void InitializeComponent()
         {
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.rbDeptWood = new System.Windows.Forms.RadioButton();
-            this.rbDeptMetal = new System.Windows.Forms.RadioButton();
+            this.cbDepartment = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // rbDeptWood
+            // cbDepartment
             // 
-            this.rbDeptWood.AutoSize = true;
-            this.rbDeptWood.Location = new System.Drawing.Point(3, 4);
-            this.rbDeptWood.Name = "rbDeptWood";
-            this.rbDeptWood.Size = new System.Drawing.Size(54, 17);
-            this.rbDeptWood.TabIndex = 0;
-            this.rbDeptWood.TabStop = true;
-            this.rbDeptWood.Text = "Wood";
-            this.rbDeptWood.UseVisualStyleBackColor = true;
-            this.rbDeptWood.CheckedChanged += new System.EventHandler(this.rbDeptWood_CheckedChanged);
-            // 
-            // rbDeptMetal
-            // 
-            this.rbDeptMetal.AutoSize = true;
-            this.rbDeptMetal.Location = new System.Drawing.Point(63, 4);
-            this.rbDeptMetal.Name = "rbDeptMetal";
-            this.rbDeptMetal.Size = new System.Drawing.Size(51, 17);
-            this.rbDeptMetal.TabIndex = 1;
-            this.rbDeptMetal.TabStop = true;
-            this.rbDeptMetal.Text = "Metal";
-            this.rbDeptMetal.UseVisualStyleBackColor = true;
+            this.cbDepartment.FormattingEnabled = true;
+            this.cbDepartment.Location = new System.Drawing.Point(0, 0);
+            this.cbDepartment.Name = "cbDepartment";
+            this.cbDepartment.Size = new System.Drawing.Size(150, 21);
+            this.cbDepartment.TabIndex = 0;
+            this.cbDepartment.SelectedIndexChanged += new System.EventHandler(this.cbDepartment_SelectedIndexChanged);
             // 
             // DepartmentSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.rbDeptMetal);
-            this.Controls.Add(this.rbDeptWood);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.Controls.Add(this.cbDepartment);
             this.Name = "DepartmentSelector";
-            this.Size = new System.Drawing.Size(115, 24);
+            this.Size = new System.Drawing.Size(153, 24);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RadioButton rbDeptWood;
-        private System.Windows.Forms.RadioButton rbDeptMetal;
+        private System.Windows.Forms.ComboBox cbDepartment;
     }
 }

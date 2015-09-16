@@ -464,6 +464,29 @@ namespace Redbrick_Addin
             }
         }
 
+        public void Del(ModelDoc2 md)
+        {
+            Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+
+            CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+            CustomPropertyManager scpm;
+            if (cf != null)
+            {
+                scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+            }
+            else
+            {
+                scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+            }
+
+            int res;
+
+            if (this.Global)
+                res = gcpm.Delete2(this.Name);
+            else
+                res = scpm.Delete2(this.Name);
+        }
+
         private string _id;
 
         public string ID

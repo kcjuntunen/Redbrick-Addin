@@ -52,12 +52,7 @@ namespace Redbrick_Addin
 
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
-            this.Controls.Add(new ModelRedbrick(this._swApp));
-            foreach (Control item in this.Controls)
-            {
-                item.Dock = DockStyle.Fill;
-            }
-            //this.ConnectOpenDoc();
+            this.ConnectOpenDoc();
         }
 
         int SwApp_DestroyNotify()
@@ -68,7 +63,7 @@ namespace Redbrick_Addin
 
         int SwApp_ActiveDocChangeNotify()
         {
-            this.ClearControls();
+            this.ClearControls(this);
             this.ConnectOpenDoc();
             return 0;
         }
@@ -92,10 +87,12 @@ namespace Redbrick_Addin
                             {
                                 this.SetupPart();
                                 this.LinkControls(cs, gp, mp, op);
+                                this.handleDept();
                             }
                             else
                             {
                                 this.LinkControls(cs, gp, mp, op);
+                                this.handleDept();
                             }
                             break;
                         case swDocumentTypes_e.swDocDRAWING:
@@ -109,10 +106,12 @@ namespace Redbrick_Addin
                             {
                                 this.SetupPart();
                                 this.LinkControls(cs, gp, mp, op);
+                                this.handleDept();
                             }
                             else
                             {
                                 this.LinkControls(cs, gp, mp, op);
+                                this.handleDept();
                             }
                             break;
                         case swDocumentTypes_e.swDocSDM:
@@ -142,10 +141,12 @@ namespace Redbrick_Addin
                     {
                         this.SetupPart();
                         this.LinkControls(cs, gp, mp, op);
+                        this.handleDept();
                     }
                     else
                     {
                         this.LinkControls(cs, gp, mp, op);
+                        this.handleDept();
                     }
                     this.SetupAssy();
                     break;
@@ -160,10 +161,12 @@ namespace Redbrick_Addin
                     {
                         this.SetupPart();
                         this.LinkControls(cs, gp, mp, op);
+                        this.handleDept();
                     }
                     else
                     {
                         this.LinkControls(cs, gp, mp, op);
+                        this.handleDept();
                     }
                     break;
                 case swDocumentTypes_e.swDocSDM:
@@ -179,7 +182,6 @@ namespace Redbrick_Addin
         private void SetupAssy()
         {
             this.ConnectAssemblyEvents();
-            this.SetupPart();
         }
 
         private void SetupDrawing()
@@ -194,71 +196,87 @@ namespace Redbrick_Addin
 
         private void SetupPart()
         {
+            this.ClearControls(this);
             DockStyle d = DockStyle.Fill;
-            this.ClearControls();
-            TableLayoutPanel tlp = new TableLayoutPanel();
-            tlp.AutoScroll = true;
-            tlp.AutoSize = true;
-            //tlp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            tlp.Dock = d;
-            tlp.ColumnCount = 1;
-            tlp.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-            //tlp.RowCount = 5;
-            //tlp.RowStyles.Add(new RowStyle(SizeType.AutoSize)); /* Selector */
-            //tlp.RowStyles.Add(new RowStyle(SizeType.AutoSize)); /* Specific */
-            //tlp.RowStyles.Add(new RowStyle(SizeType.AutoSize)); /* General */
-            //tlp.RowStyles.Add(new RowStyle(SizeType.AutoSize)); /* Machine */
-            //tlp.RowStyles.Add(new RowStyle(SizeType.AutoSize)); /* Ops */
-            tlp.Size = new System.Drawing.Size();
-            tlp.TabIndex = 1;
-            tlp.Tag = string.Empty;
 
-            this.ds = new DepartmentSelector(ref prop);
-            this.cs = new ConfigurationSpecific(ref prop);
-            this.gp = new GeneralProperties(ref prop);
-            this.mp = new MachineProperties(ref prop);
-            this.op = new Ops(ref prop);
+            ModelRedbrick mrb = new ModelRedbrick(this._swApp);
+            mrb.Dock = d;
+            this.Controls.Add(mrb);
+            this.Dock = d;
 
-            if (ds != null && !this.PartEventsAssigned)
-            {
-                this.PartEventsAssigned = true;
-                this.ds.CheckedChanged += ds_CheckedChanged;
-            }
-
-            tlp.Controls.Add(ds, 0, 0);
-            tlp.Controls.Add(cs, 0, 1);
-            tlp.Controls.Add(gp, 0, 2);
-            tlp.Controls.Add(mp, 0, 3);
-            tlp.Controls.Add(op, 0, 4);
-
-            foreach (Control item in tlp.Controls)
+            foreach (Control item in mrb.Controls)
             {
                 item.Dock = d;
+                item.ResumeLayout(true);
             }
-            this.LinkControls(cs, gp, mp, op);
-            this.Controls.Add(tlp);
-
-            tlp.ResumeLayout(true);
             this.ResumeLayout(true);
+            this.ds = mrb.aDepartmentSelector;
+            this.cs = mrb.aConfigurationSpecific;
+            this.gp = mrb.aGeneralProperties;
+            this.mp = mrb.aMachineProperties;
+            this.op = mrb.aOps;
+            /* this.LinkControls(mrb.aConfigurationSpecific, mrb.aGeneralProperties, mrb.aMachineProperties, mrb.aOps); */
 
             this.PartSetup = true;
         }
 
+        private void handleDept()
+        {
+            string pn = "DEPARTMENT";
+            string dept;
+            if (this.prop.Contains(pn))
+            {
+                dept = this.prop.GetProperty(pn).Value;
+                int tp = 1;
+
+                if (int.TryParse(dept, out tp))
+                {
+                    this.ds.OpType = tp;
+                }
+                else
+                {
+                    this.ds.OpType = this.prop.cutlistData.GetOpTypeIDByName(dept);
+                }
+                dept = tp.ToString();
+            }
+            else
+            {
+                SwProperty p = new SwProperty(pn, swCustomInfoType_e.swCustomInfoNumber, "1", true);
+                p.SwApp = this._swApp;
+                p.Ctl = this.ds;
+                this.prop.Add(p);
+                this.ds.OpType = 1;
+            }
+            this.ds.updateDept();
+            this.op.RefreshOps(this.ds.OpType);
+            cs.ToggleFields(ds.OpType);
+            gp.ToggleFields(ds.OpType);
+
+            this.LinkControlToProperty("OP1", op.GetOp1Box());
+            this.LinkControlToProperty("OP2", op.GetOp2Box());
+            this.LinkControlToProperty("OP3", op.GetOp3Box());
+            this.LinkControlToProperty("OP4", op.GetOp4Box());
+            this.LinkControlToProperty("OP5", op.GetOp5Box());
+        }
+
         void ds_CheckedChanged(object sender, EventArgs e)
         {
-            op.OpType = ds.OpType;
             op.RefreshOps(ds.OpType);
             cs.ToggleFields(ds.OpType);
             gp.ToggleFields(ds.OpType);
         }
 
-        private void ClearControls()
+        private void ClearControls(Control c)
         {
             this.PartSetup = false;
             this.DrawSetup = false;
-            foreach (Control item in this.Controls)
+            foreach (Control item in c.Controls)
             {
-                this.Controls.Remove(item);
+                if (item.HasChildren) /* Recurse */
+                {
+                    this.ClearControls(item);
+                }
+                c.Controls.Remove(item);
             }
         }
 
@@ -347,12 +365,16 @@ namespace Redbrick_Addin
         public void Write()
         {
             this.prop.ReadControls();
-            System.Windows.Forms.MessageBox.Show(this.prop.ToString());
+            //System.Windows.Forms.MessageBox.Show(this.prop.ToString());
             this.prop.Write(this.Document);
         }
 
         private void LinkControls(ConfigurationSpecific cs, GeneralProperties gp, MachineProperties mp, Ops op)
         {
+            this.cs = cs;
+            this.gp = gp;
+            this.mp = mp;
+            this.op = op;
 
             this.LinkControlToProperty("CUTLIST MATERIAL", cs.GetCutlistMatBox());
             this.LinkControlToProperty("EDGE FRONT (L)", cs.GetEdgeFrontBox());
@@ -375,11 +397,6 @@ namespace Redbrick_Addin
             this.LinkControlToProperty("CNC2", mp.GetCNC2Box());
             this.LinkControlToProperty("OVERL", mp.GetOverLBox());
             this.LinkControlToProperty("OVERW", mp.GetOverWBox());
-            this.LinkControlToProperty("OP1", op.GetOp1Box());
-            this.LinkControlToProperty("OP2", op.GetOp2Box());
-            this.LinkControlToProperty("OP3", op.GetOp3Box());
-            this.LinkControlToProperty("OP4", op.GetOp4Box());
-            this.LinkControlToProperty("OP5", op.GetOp5Box());
 
             TextBox tbBlankL = mp.GetBlankLBox();
             TextBox tbBlankW = mp.GetBlankWBox();

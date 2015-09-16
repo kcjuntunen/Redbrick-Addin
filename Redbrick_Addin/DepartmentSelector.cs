@@ -5,53 +5,59 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
-// TODO replace me!
+
 namespace Redbrick_Addin
 {
     public partial class DepartmentSelector : UserControl
     {
-        public DepartmentSelector(ref SwProperties prop)
+        public DepartmentSelector(ref SwProperties p)
         {
+            this.PropertySet = p;
             InitializeComponent();
-            if (prop.GetProperty("DEPARTMENT").Value.ToUpper() == "METAL")
+            Init();
+        }
+
+        private void Init()
+        {
+            this.cbDepartment.ValueMember = "TYPEID";
+            this.cbDepartment.DisplayMember = "TYPEDESC";
+            this.cbDepartment.DataSource = this.PropertySet.cutlistData.OpTypes.Tables[0];
+        }
+
+        public void updateDept()
+        {
+            int idx = this.GetIndex((this.cbDepartment.DataSource as DataTable), this.OpType.ToString()) - 1;
+            this.cbDepartment.SelectedIndex = idx;
+            this.cbDepartment.DisplayMember = "TYPEDESC";
+        }
+
+        private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int tp = 1; // wood
+            string val = ((this.cbDepartment.SelectedItem as DataRowView)[this.cbDepartment.ValueMember]).ToString();
+            if (int.TryParse(val, out tp))
             {
-                this.rbDeptMetal.Checked = true;
-                this.rbDeptWood.Checked = false;
-                this.OpType = "METAL";
+                this.OpType = tp;   
             }
-            else
+        }
+
+        private int GetIndex(DataTable dt, string val)
+        {
+            if (dt != null)
             {
-                this.rbDeptWood.Checked = true;
-                this.rbDeptMetal.Checked = false;
-                this.OpType = "WOOD";
+                int count = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    count++;
+
+                    if (dr.ItemArray[0].ToString().Trim().ToUpper() == val.Trim().ToUpper())
+                        return count;
+                }
             }
+            return -1;
         }
 
-        private void rbDeptWood_CheckedChanged(object sender, EventArgs e)
-        {
-            OnCheckedChanged(new EventArgs());
-            if (!rbDeptWood.Checked)
-                this.OpType = "WOOD";
-            else
-                this.OpType = "METAL";
-        }
-
-        protected virtual void OnCheckedChanged(EventArgs e)
-        {
-            EventHandler eh = CheckedChanged;
-            if (eh != null)
-                eh(this, e);
-        }
-
-        public event EventHandler CheckedChanged;
-
-        private string _opType;
-
-        public string OpType
-        {
-            get { return _opType; }
-            set { _opType = value; }
-        }
-	
+        public SwProperties PropertySet { get; set; }
+        public int OpType { get; set; }
     }
 }

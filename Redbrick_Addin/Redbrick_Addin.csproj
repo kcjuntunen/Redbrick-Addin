@@ -72,7 +72,9 @@
     <Compile Include="DepartmentSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DepartmentSelector.Designer.cs" />
+    <Compile Include="DepartmentSelector.Designer.cs">
+      <DependentUpon>DepartmentSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrawingProperties.cs" />
     <Compile Include="DrawingRedbrick.cs">
       <SubType>UserControl</SubType>
@@ -134,7 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConfigurationSpecific.resx" />
-    <EmbeddedResource Include="DepartmentSelector.resx" />
+    <EmbeddedResource Include="DepartmentSelector.resx">
+      <DependentUpon>DepartmentSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DrawingRedbrick.resx" />
     <EmbeddedResource Include="EditRev.resx" />
     <EmbeddedResource Include="ErrMsg.resx" />

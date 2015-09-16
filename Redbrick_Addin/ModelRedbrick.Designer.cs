@@ -29,83 +29,90 @@ namespace Redbrick_Addin
         private void InitializeComponent()
         {
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
-            this.gbOp = new System.Windows.Forms.GroupBox();
             this.gbMachProp = new System.Windows.Forms.GroupBox();
             this.gbGlobProp = new System.Windows.Forms.GroupBox();
             this.gbSpecProp = new System.Windows.Forms.GroupBox();
+            this.gbOp = new System.Windows.Forms.GroupBox();
             this.tlpMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
             // 
-            this.tlpMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tlpMain.AutoScroll = true;
+            this.tlpMain.AutoSize = true;
             this.tlpMain.ColumnCount = 1;
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Controls.Add(this.gbOp, 0, 4);
             this.tlpMain.Controls.Add(this.gbMachProp, 0, 3);
             this.tlpMain.Controls.Add(this.gbGlobProp, 0, 2);
             this.tlpMain.Controls.Add(this.gbSpecProp, 0, 1);
-            this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpMain.Controls.Add(this.gbOp, 0, 4);
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 5;
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tlpMain.Size = new System.Drawing.Size(208, 256);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tlpMain.Size = new System.Drawing.Size(222, 1140);
             this.tlpMain.TabIndex = 0;
-            // 
-            // gbOp
-            // 
-            this.gbOp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbOp.Location = new System.Drawing.Point(3, 207);
-            this.gbOp.Name = "gbOp";
-            this.gbOp.Size = new System.Drawing.Size(202, 46);
-            this.gbOp.TabIndex = 4;
-            this.gbOp.TabStop = false;
-            this.gbOp.Text = "Ops";
             // 
             // gbMachProp
             // 
-            this.gbMachProp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbMachProp.Location = new System.Drawing.Point(3, 156);
+            this.gbMachProp.AutoSize = true;
+            this.gbMachProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbMachProp.Location = new System.Drawing.Point(3, 643);
             this.gbMachProp.Name = "gbMachProp";
-            this.gbMachProp.Size = new System.Drawing.Size(202, 45);
+            this.gbMachProp.Size = new System.Drawing.Size(6, 5);
             this.gbMachProp.TabIndex = 2;
             this.gbMachProp.TabStop = false;
             this.gbMachProp.Text = "Machine Properties";
             // 
             // gbGlobProp
             // 
-            this.gbGlobProp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbGlobProp.Location = new System.Drawing.Point(3, 105);
+            this.gbGlobProp.AutoSize = true;
+            this.gbGlobProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbGlobProp.Location = new System.Drawing.Point(3, 273);
             this.gbGlobProp.Name = "gbGlobProp";
-            this.gbGlobProp.Size = new System.Drawing.Size(202, 45);
+            this.gbGlobProp.Size = new System.Drawing.Size(6, 19);
             this.gbGlobProp.TabIndex = 1;
             this.gbGlobProp.TabStop = false;
             this.gbGlobProp.Text = "Global Properties";
             // 
             // gbSpecProp
             // 
-            this.gbSpecProp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbSpecProp.Location = new System.Drawing.Point(3, 54);
+            this.gbSpecProp.AutoSize = true;
+            this.gbSpecProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbSpecProp.Location = new System.Drawing.Point(3, 3);
             this.gbSpecProp.Name = "gbSpecProp";
-            this.gbSpecProp.Size = new System.Drawing.Size(202, 45);
+            this.gbSpecProp.Size = new System.Drawing.Size(6, 19);
             this.gbSpecProp.TabIndex = 0;
             this.gbSpecProp.TabStop = false;
             this.gbSpecProp.Text = "Configuration Specific";
+            // 
+            // gbOp
+            // 
+            this.gbOp.AutoSize = true;
+            this.gbOp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbOp.Location = new System.Drawing.Point(3, 843);
+            this.gbOp.Name = "gbOp";
+            this.gbOp.Size = new System.Drawing.Size(6, 5);
+            this.gbOp.TabIndex = 4;
+            this.gbOp.TabStop = false;
+            this.gbOp.Text = "Ops";
             // 
             // ModelRedbrick
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.Controls.Add(this.tlpMain);
             this.Name = "ModelRedbrick";
-            this.Size = new System.Drawing.Size(208, 256);
+            this.Size = new System.Drawing.Size(1194, 668);
             this.tlpMain.ResumeLayout(false);
+            this.tlpMain.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

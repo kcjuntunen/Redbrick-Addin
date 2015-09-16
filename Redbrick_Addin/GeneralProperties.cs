@@ -78,9 +78,9 @@ namespace Redbrick_Addin
                 this._width = 0.0;
         }
 
-        public void ToggleFields(string opType)
+        public void ToggleFields(int opType)
         {
-            bool wood = (opType != "METAL");
+            bool wood = (opType != 2);
             this.labResWallThickness.Visible = !wood;
             this.lWallThickness.Visible = !wood;
             this.tbWallThick.Visible = !wood;

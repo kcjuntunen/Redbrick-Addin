@@ -23,8 +23,8 @@ namespace Redbrick_Addin
             this.propertySet = prop;
 
             InitializeComponent();
-            
-            this.OpType = "WOOD";
+            this.OpType = 1;
+            this.RefreshOps(this.OpType);
         }
 
         public void GetProperties()
@@ -132,18 +132,16 @@ namespace Redbrick_Addin
         private void fillBox(object occ)
         {
             ComboBox c = (ComboBox)occ;
-            c.DataSource = cd.GetOps(this.OpType).Tables[0];
+            //c.DataSource = cd.GetOps(this.OpType).Tables[0];
             c.DisplayMember = "OPDESCR";
             c.ValueMember = "OPNAME";
+            this.propertySet.cutlistData.OpType = this.OpType;
+            c.DataSource = this.propertySet.cutlistData.Ops.Tables[0];
         }
 
-        public void RefreshOps(string opType)
+        public void RefreshOps(int opType)
         {
-            if (opType == null)
-                this.OpType = "WOOD";
-            else
-                this.OpType = opType;
-
+            this.OpType = opType;
             ComboBox[] cc = { this.cbOp1, this.cbOp2, this.cbOp3, this.cbOp4, this.cbOp5 };
             foreach (ComboBox c in cc)
             {
@@ -152,11 +150,10 @@ namespace Redbrick_Addin
             this.GetProperties();
         }
 
-        public EventArgs RefreshOpBoxes(string opType)
+        public EventArgs RefreshOpBoxes(int opType)
         {
             EventArgs e = new EventArgs();
-            this.OpType = opType;
-            this.RefreshOps(this.OpType);
+            this.RefreshOps(opType);
             return e;
         }
 
@@ -201,14 +198,6 @@ namespace Redbrick_Addin
             return this.cbOp5;
         }
 
-        private string _opType;
-
-        public string OpType
-        {
-            get { return _opType; }
-            set { _opType = value; }
-        }
-
-
+        public int OpType { get; set; }
     }
 }
