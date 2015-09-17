@@ -17,7 +17,6 @@ namespace Redbrick_Addin
         private CutlistData cd;
         private SwProperties propertySet;
 
-        //private List<ComboBox> cc = new List<ComboBox>();
         public ConfigurationSpecific(ref SwProperties prop)
         {
             this.propertySet = prop;
@@ -44,6 +43,7 @@ namespace Redbrick_Addin
             this._edgeDiffL = 0.0;
             this._edgeDiffW = 0.0;
             this.LinkControls();
+            this.ToggleFields(cd.OpType);
         }
 
         private void LinkControls()
@@ -114,10 +114,10 @@ namespace Redbrick_Addin
 
         private void fillMat()
         {
-            //System.Windows.Forms.MessageBox.Show("fillMat()");
             this.cbMat.DataSource = cd.Materials.Tables[0];
             this.cbMat.DisplayMember = "DESCR";
             this.cbMat.ValueMember = "MATID";
+            this.cbMat.Text = string.Empty;
         }
 
         private void fillEdg(object occ)
@@ -126,26 +126,27 @@ namespace Redbrick_Addin
             c.DataSource = cd.Edges.Tables[0];
             c.DisplayMember = "DESCR";
             c.ValueMember = "EDGEID";
+            c.Text = string.Empty;
         }
 
         public void ToggleFields(int opType)
         {
             bool wood = (opType != 2);
-            lEf.Visible = wood;
-            leFColor.Visible = wood;
-            cbEf.Visible = wood;
+            lEf.Enabled = wood;
+            leFColor.Enabled = wood;
+            cbEf.Enabled = wood;
 
-            lEb.Visible = wood;
-            leBColor.Visible = wood;
-            cbEb.Visible = wood;
+            lEb.Enabled = wood;
+            leBColor.Enabled = wood;
+            cbEb.Enabled = wood;
 
-            lEl.Visible = wood;
-            leLColor.Visible = wood;
-            cbEl.Visible = wood;
+            lEl.Enabled = wood;
+            leLColor.Enabled = wood;
+            cbEl.Enabled = wood;
 
-            lEr.Visible = wood;
-            leRColor.Visible = wood;
-            cbEr.Visible = wood;
+            lEr.Enabled = wood;
+            leRColor.Enabled = wood;
+            cbEr.Enabled = wood;
         }
 
         private void UpdateDiffW(ComboBox cbl, ComboBox cbr)

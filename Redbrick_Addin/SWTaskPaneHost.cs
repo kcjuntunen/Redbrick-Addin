@@ -38,7 +38,7 @@ namespace Redbrick_Addin
 
         private bool AssmEventsAssigned = false;
         private bool PartEventsAssigned = false;
-        //private bool DrawEventsAssigned = false;
+        private bool DrawEventsAssigned = false;
 
         private bool PartSetup = false;
         private bool DrawSetup = false;
@@ -54,7 +54,8 @@ namespace Redbrick_Addin
 
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
-            this.ConnectOpenDoc();
+            this.Document = this.SwApp.ActiveDoc;
+            this.ConnectSelection();
         }
 
         private void dockeverything(Control c)
@@ -79,73 +80,16 @@ namespace Redbrick_Addin
         int SwApp_ActiveDocChangeNotify()
         {
             this.ClearControls(this);
-            this.ConnectOpenDoc();
+
+            if (this.SwApp == null)
+                this.SwApp = this.RequestSW();
+
+            this.Document = this.SwApp.ActiveDoc;
+            this.ConnectSelection();
             return 0;
         }
 
-        private void ConnectOpenDoc()
-        {
-            if (this.SwApp != null)
-            {
-                this.Document = (ModelDoc2)this.SwApp.ActiveDoc;
-                this.prop = new SwProperties(this._swApp);
-                this.prop.GetPropertyData(this.Document);
-                if (this.Document != null)
-                {
-                    this.swSelMgr = Document.SelectionManager;
-                    swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
-                    switch (docT)
-                    {
-                        case swDocumentTypes_e.swDocASSEMBLY:
-                            this.SetupAssy();
-                            if (!this.PartSetup)
-                            {
-                                this.SetupPart();
-                                this.mrb.Update(ref this.prop);
-                                //this.LinkControls(cs, gp, mp, op);
-                                this.handleDept();
-                            }
-                            else
-                            {
-                                this.LinkControls(cs, gp, mp, op);
-                                this.handleDept();
-                            }
-                            break;
-                        case swDocumentTypes_e.swDocDRAWING:
-                            this.SetupDrawing();   
-                            break;
-                        case swDocumentTypes_e.swDocNONE:
-                            this.SetupOther();
-                            break;
-                        case swDocumentTypes_e.swDocPART:
-                            if (!this.PartSetup)
-                            {
-                                this.SetupPart();
-                                this.LinkControls(cs, gp, mp, op);
-                                this.handleDept();
-                            }
-                            else
-                            {
-                                this.LinkControls(cs, gp, mp, op);
-                                this.handleDept();
-                            }
-                            break;
-                        case swDocumentTypes_e.swDocSDM:
-                            this.SetupOther();
-                            break;
-                        default:
-                            this.SetupOther();
-                            break;
-                    }   
-                }
-                else
-                {
-                    throw new NullReferenceException("You need to have a document opened.");
-                }
-            }
-        }
-
-        private void ConnectSelection()
+         private void ConnectSelection()
         {
             this.prop = new SwProperties(this._swApp);
             this.prop.GetPropertyData(this.Document);
@@ -156,13 +100,13 @@ namespace Redbrick_Addin
                     if (!this.PartSetup)
                     {
                         this.SetupPart();
-                        this.LinkControls(cs, gp, mp, op);
-                        this.handleDept();
+                        this.mrb.Update(ref this.prop);
                     }
                     else
                     {
-                        this.LinkControls(cs, gp, mp, op);
-                        this.handleDept();
+                        this.mrb.Update(ref this.prop);
+                        //this.LinkControls(cs, gp, mp, op);
+                        //this.handleDept();
                     }
                     this.SetupAssy();
                     break;
@@ -176,13 +120,15 @@ namespace Redbrick_Addin
                     if (!this.PartSetup)
                     {
                         this.SetupPart();
-                        this.LinkControls(cs, gp, mp, op);
-                        this.handleDept();
+                        this.mrb.Update(ref this.prop);
+                        //this.LinkControls(cs, gp, mp, op);
+                        //this.handleDept();
                     }
                     else
                     {
-                        this.LinkControls(cs, gp, mp, op);
-                        this.handleDept();
+                        this.mrb.Update(ref this.prop);
+                        //this.LinkControls(cs, gp, mp, op);
+                        //this.handleDept();
                     }
                     break;
                 case swDocumentTypes_e.swDocSDM:
@@ -197,6 +143,7 @@ namespace Redbrick_Addin
 
         private void SetupAssy()
         {
+            this.swSelMgr = Document.SelectionManager;
             this.ConnectAssemblyEvents();
         }
 
@@ -232,9 +179,8 @@ namespace Redbrick_Addin
             this.mp = mrb.aMachineProperties;
             this.op = mrb.aOps;
             /* this.LinkControls(mrb.aConfigurationSpecific, mrb.aGeneralProperties, mrb.aMachineProperties, mrb.aOps); */
-            this.dockeverything(mrb);
+            //this.dockeverything(mrb);
             this.PartSetup = true;
-            this.mrb.Update(ref this.prop);
         }
 
         private void handleDept()
@@ -295,6 +241,7 @@ namespace Redbrick_Addin
                 }
                 c.Controls.Remove(item);
             }
+            DisconnectAssemblyEvents();
         }
 
         private void SetupOther()
@@ -314,6 +261,7 @@ namespace Redbrick_Addin
                 ad.DestroyNotify2 += ad_DestroyNotify2;
                 ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;
                 ad.ActiveViewChangeNotify += ad_ActiveViewChangeNotify;
+                this.AssmEventsAssigned = true;
             }
             else
             {
@@ -323,12 +271,20 @@ namespace Redbrick_Addin
 
         private void DisconnectAssemblyEvents()
         {
-            
+            if (this.AssmEventsAssigned)
+            {
+                ad.UserSelectionPostNotify -= ad_UserSelectionPostNotify;
+                ad.DestroyNotify2 -= ad_DestroyNotify2;
+                ad.ActiveDisplayStateChangePostNotify -= ad_ActiveDisplayStateChangePostNotify;
+                ad.ActiveViewChangeNotify -= ad_ActiveViewChangeNotify;
+                this.AssmEventsAssigned = false;
+            }
         }
 
         int ad_ActiveViewChangeNotify()
         {
-            this.ConnectOpenDoc();
+            this.Document = this.SwApp.ActiveDoc;
+            this.ConnectSelection();
             return 0;
         }
 
@@ -355,7 +311,7 @@ namespace Redbrick_Addin
             else
             {
                 this.Document = this.SwApp.ActiveDoc;
-                this.ConnectOpenDoc();
+                this.ConnectSelection();
             }
 
             return 0;

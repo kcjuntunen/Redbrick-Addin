@@ -28,10 +28,11 @@ namespace Redbrick_Addin
         public void Update(ref SwProperties p)
         {
             this.PropertySet = p;
-            int idx = this.GetIndex((this.cbDepartment.DataSource as DataTable), this.OpType.ToString()) - 1;
+            this.LinkControlToProperty();
+            this.PropertySet.cutlistData.OpType = this.OpType;
+            int idx = this.GetIndex((this.cbDepartment.DataSource as DataTable), (this.OpType).ToString());
             this.cbDepartment.SelectedIndex = idx;
             this.cbDepartment.DisplayMember = "TYPEDESC";
-            this.LinkControlToProperty();
         }
 
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
@@ -40,7 +41,8 @@ namespace Redbrick_Addin
             string val = ((this.cbDepartment.SelectedItem as DataRowView)[this.cbDepartment.ValueMember]).ToString();
             if (int.TryParse(val, out tp))
             {
-                this.OpType = tp;   
+                this.OpType = tp;
+                this.PropertySet.cutlistData.OpType = tp;
             }
         }
 
@@ -72,23 +74,22 @@ namespace Redbrick_Addin
                 this.PropertySet.Add(p);
                 this.OpType = 1;
             }
-            this.updateDept();
         }
 
         private int GetIndex(DataTable dt, string val)
         {
+            int count = 1;
             if (dt != null)
             {
-                int count = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
                     count++;
 
                     if (dr.ItemArray[0].ToString().Trim().ToUpper() == val.Trim().ToUpper())
-                        return count;
+                        return count + 1;
                 }
             }
-            return -1;
+            return 1;
         }
 
         public SwProperties PropertySet { get; set; }

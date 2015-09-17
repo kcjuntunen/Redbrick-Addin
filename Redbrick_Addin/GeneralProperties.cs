@@ -23,22 +23,22 @@ namespace Redbrick_Addin
         {
             this.propertySet = p;
             this.LinkControls();
+            this.ToggleFields(this.propertySet.cutlistData.OpType);
         }
 
         private void LinkControls()
         {
-            SwProperties p = this.propertySet;
-            p.LinkControlToProperty("Description", true, this.tbDescription);
-            p.LinkControlToProperty("LENGTH", true, this.tbLength);
-            p.LinkControlToProperty("WIDTH", true, this.tbWidth);
-            p.LinkControlToProperty("THICKNESS", true, this.tbThick);
-            p.LinkControlToProperty("WALL THICKNESS", true, this.tbWallThick);
-            p.LinkControlToProperty("COMMENT", true, this.tbComment);
+            this.propertySet.LinkControlToProperty("Description", true, this.tbDescription);
+            this.propertySet.LinkControlToProperty("LENGTH", true, this.tbLength);
+            this.propertySet.LinkControlToProperty("WIDTH", true, this.tbWidth);
+            this.propertySet.LinkControlToProperty("THICKNESS", true, this.tbThick);
+            this.propertySet.LinkControlToProperty("WALL THICKNESS", true, this.tbWallThick);
+            this.propertySet.LinkControlToProperty("COMMENT", true, this.tbComment);
 
-            this.UpdateRes(p.GetProperty("LENGTH"), this.labResLength)
-            this.UpdateRes(p.GetProperty("WIDTH"), this.labResWidth);
-            this.UpdateRes(p.GetProperty("THICKNESS"), this.labResThickness);
-            this.UpdateRes(p.GetProperty("WALL THICKNESS"), this.labResWallThickness);
+            this.UpdateRes(this.propertySet.GetProperty("LENGTH"), this.labResLength);
+            this.UpdateRes(this.propertySet.GetProperty("WIDTH"), this.labResWidth);
+            this.UpdateRes(this.propertySet.GetProperty("THICKNESS"), this.labResThickness);
+            //this.UpdateRes(this.propertySet.GetProperty("WALL THICKNESS"), this.labResWallThickness);
 
             this.UpdateLnW();
         }

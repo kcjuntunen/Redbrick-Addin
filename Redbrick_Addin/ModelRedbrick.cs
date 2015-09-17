@@ -28,13 +28,12 @@ namespace Redbrick_Addin
             this.props = p;
             this._swApp = p.SwApp;
             InitializeComponent();
+            Init();
         }
 
         private void Init()
         {
             DockStyle d = DockStyle.Fill;
-            props = new SwProperties(this._swApp);
-            props.GetPropertyData((ModelDoc2)this._swApp.ActiveDoc);
 
             ds = new DepartmentSelector(ref this.props);
             ds.Dock = d;

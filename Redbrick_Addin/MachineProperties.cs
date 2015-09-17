@@ -29,10 +29,10 @@ namespace Redbrick_Addin
         private void LinkControls()
         {
             this.propertySet.LinkControlToProperty("BLANK QTY", true, this.tbPPB);
-            this.propertySet.LinkControlToProperty("CNC1", true, this.tbPPB);
-            this.propertySet.LinkControlToProperty("CNC2", true, this.tbPPB);
-            this.propertySet.LinkControlToProperty("OVERL", true, this.tbPPB);
-            this.propertySet.LinkControlToProperty("OVERW", true, this.tbPPB);
+            this.propertySet.LinkControlToProperty("CNC1", true, this.tbCNC1);
+            this.propertySet.LinkControlToProperty("CNC2", true, this.tbCNC2);
+            this.propertySet.LinkControlToProperty("OVERL", true, this.tbOverL);
+            this.propertySet.LinkControlToProperty("OVERW", true, this.tbOverW);
 
             string tVal = this.propertySet.GetProperty("OVERL").Value;
             double dVal = 0.0;

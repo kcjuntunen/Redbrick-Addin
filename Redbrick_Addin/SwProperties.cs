@@ -169,164 +169,145 @@ namespace Redbrick_Addin
 
         public void GetPropertyData(ModelDoc2 md)
         {
-            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+            
+            if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
+            {
+                CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+                this.ParsePropertyData(g, md);
+            }
+            else
+            {
+                CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+                Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
+                CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
 
-            string[] ss = (string[])g.GetNames();
+                this.ParsePropertyData(g, md);
+                this.ParsePropertyData(s, md);
+            }
+        }
+        
+        public void ParsePropertyData(CustomPropertyManager g, ModelDoc2 md)
+        {
+            string valOut;
+            string resValOut;
+            bool wasResolved;
+            int res;
+            string[] ss = g.GetNames();
+
             if (ss != null)
             {
                 foreach (string s in ss)
                 {
-                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-                    p.Get(md, this.cutlistData);
-                    this._innerArray.Add(p);
-                }
-            }
-
-            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
-            {
-                CustomPropertyManager c = md.Extension.get_CustomPropertyManager(md.ConfigurationManager.ActiveConfiguration.Name);
-                ss = (string[])c.GetNames();
-                foreach (string s in ss)
-                {
-                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, string.Empty, false);
-                    p.Get(md, this.cutlistData);
-                    this._innerArray.Add(p);
-                }
-            }
-        }
-
-        public void GetPropertyData(SldWorks sw)
-        {
-            this.swApp = sw;
-            ModelDoc2 md = (ModelDoc2)swApp.ActiveDoc;
-            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-            string valOut;
-            string resValOut;
-            bool wasResolved;
-            int res;
-
-            string[] ss = (string[])g.GetNames();
-            foreach (string s in ss)
-            {
-                res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
-                SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
-                p.ResValue = resValOut;
-                p.Type = (swCustomInfoType_e)g.GetType2(s);
-
-                if (p.Type == swCustomInfoType_e.swCustomInfoNumber && p.Name.ToUpper().Contains("OVER"))
-                    p.Type = swCustomInfoType_e.swCustomInfoDouble;
-
-                p.SwApp = this.swApp;
-                this._innerArray.Add(p);
-#if DEBUG
-                System.Diagnostics.Debug.Print(s);
-#endif
-            }
-
-
-            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
-            {
-                CustomPropertyManager c = md.Extension.get_CustomPropertyManager(md.ConfigurationManager.ActiveConfiguration.Name);
-                ss = (string[])c.GetNames();
-                foreach (string s in ss)
-                {
-                    res = c.Get5(s, false, out valOut, out resValOut, out wasResolved);
-                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
+                    res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
+                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
                     p.ResValue = resValOut;
                     p.Type = (swCustomInfoType_e)g.GetType2(s);
+
+                    if (p.Name.ToUpper().StartsWith("OVER"))
+                    {
+                        p.Global = true;
+                        p.Type = swCustomInfoType_e.swCustomInfoDouble;
+                    }
+
+                    if (p.Name.ToUpper().StartsWith("CUTLIST"))
+                    {
+                        p.Global = false;
+                        p.Type = swCustomInfoType_e.swCustomInfoNumber;
+                        p.Table = "CLPARTID";
+                        p.Field = "MATID";
+                        int tp = 0;
+                        if (int.TryParse(p.Value, out tp))
+                        {
+                            if (tp > 0)
+                            {
+                                p.ResValue = this.cutlistData.GetMaterialByID(p.Value);
+                            }
+                            else
+                            {
+                                p.ResValue = string.Empty;
+                            }
+                        }
+                        else
+                        {
+                            p.Value = this.cutlistData.GetMaterialID(p.ResValue).ToString();
+                        }
+                    }
+
+                    if (p.Name.ToUpper().StartsWith("EDGE"))
+                    {
+                        p.Global = false;
+                        p.Type = swCustomInfoType_e.swCustomInfoNumber;
+                        p.Table = "CLPARTID";
+                        p.Field = "EDGEID_{0}";
+                        int tp = 0;
+                        if (int.TryParse(p.Value, out tp))
+                        {
+                            if (tp > 0)
+                            {
+                                p.ResValue = this.cutlistData.GetEdgeByID(p.Value);
+                            }
+                            else
+                            {
+                                p.ResValue = string.Empty;
+                            }
+                        }
+                        else
+                        {
+                            p.Value = this.cutlistData.GetEdgeID(p.ResValue).ToString();
+                        }
+                    }
+
+                    if (p.Name.ToUpper().Contains("OP"))
+                    {
+                        p.Global = true;
+                        p.Type = swCustomInfoType_e.swCustomInfoNumber;
+                        p.Table = "CUT_PARTS";
+                        p.Field = "OP{0}ID";
+                        int tp = 0;
+                        if (int.TryParse(p.Value, out tp))
+                        {
+                            if (tp > 0)
+                            {
+                                p.ResValue = this.cutlistData.GetOpByID(p.Value);
+                            }
+                            else
+                            {
+                                p.ResValue = string.Empty;
+                            }
+                        }
+                        else
+                        {
+                            if (p.ResValue.Length < 4 && p.ResValue != string.Empty)
+                            {
+                                p.Value = this.cutlistData.GetOpIDByName(p.ResValue).ToString();
+                                p.ResValue = this.cutlistData.GetOpByID(p.Value);
+                            }
+                            else
+                            {
+                                p.Value = "0";
+                                p.ResValue = string.Empty;
+                            }
+                        }
+                    }
+
                     p.SwApp = this.swApp;
-#if DEBUG
+                    this._innerArray.Add(p);
+#if DEBUG   
                     System.Diagnostics.Debug.Print(s);
 #endif
-                    this._innerArray.Add(p);
                 }
             }
-        }
-
-//        public void GetPropertyData(ModelDoc2 md)
-//        {
-//            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-//            string valOut;
-//            string resValOut;
-//            bool wasResolved;
-//            int res;
-
-//            string[] ss = (string[])g.GetNames();
-//            foreach (string s in ss)
-//            {
-//                res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
-//                SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
-//                p.ResValue = resValOut;
-//                p.Type = (swCustomInfoType_e)g.GetType2(s);
-
-//                if (p.Type == swCustomInfoType_e.swCustomInfoNumber && p.Name.ToUpper().Contains("OVER"))
-//                    p.Type = swCustomInfoType_e.swCustomInfoDouble;
-
-//                p.SwApp = this.swApp;
-//                this._innerArray.Add(p);
-//#if DEBUG
-//                System.Diagnostics.Debug.Print(s);
-//#endif
-//            }
-
-
-//            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
-//            {
-//                CustomPropertyManager c = md.Extension.get_CustomPropertyManager(md.ConfigurationManager.ActiveConfiguration.Name);
-//                ss = (string[])c.GetNames();
-//                foreach (string s in ss)
-//                {
-//                    res = c.Get5(s, false, out valOut, out resValOut, out wasResolved);
-//                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
-//                    p.ResValue = resValOut;
-//                    p.Type = (swCustomInfoType_e)g.GetType2(s);
-//                    p.SwApp = this.swApp;
-//#if DEBUG
-//                    System.Diagnostics.Debug.Print(s);
-//#endif
-//                    this._innerArray.Add(p);
-//                }
-//            }
-//        }
-
-        public void GetPropertyData(SldWorks sw, ModelDoc2 md)
-        {
-            this.swApp = sw;
-            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-            string valOut;
-            string resValOut;
-            bool wasResolved;
-            int res;
-
-            string[] ss = (string[])g.GetNames();
-            foreach (string s in ss)
+            else
             {
-                res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
-                SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
-                p.ResValue = resValOut;
-                p.Type = (swCustomInfoType_e)g.GetType2(s);
-
-                if (p.Type == swCustomInfoType_e.swCustomInfoNumber && p.Name.ToUpper().Contains("OVER"))
-                    p.Type = swCustomInfoType_e.swCustomInfoDouble;
-
-                if (p.Name.ToUpper().Contains("CUTLIST") || p.Name.ToUpper().Contains("EDGE"))
-                    p.Global = false;
-
-                p.SwApp = this.swApp;
-                this._innerArray.Add(p);
-#if DEBUG
-                System.Diagnostics.Debug.Print(s);
-#endif
+                this.CreateDefaultDrawingSet();
             }
 
-
-            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
+            if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
             {
-                CustomPropertyManager c = md.Extension.get_CustomPropertyManager(md.ConfigurationManager.ActiveConfiguration.Name);
-                ss = (string[])c.GetNames();
+                ss = (string[])g.GetNames();
                 foreach (string s in ss)
                 {
-                    res = c.Get5(s, false, out valOut, out resValOut, out wasResolved);
+                    res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
                     SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
                     p.ResValue = resValOut;
                     p.Type = (swCustomInfoType_e)g.GetType2(s);
@@ -348,7 +329,7 @@ namespace Redbrick_Addin
                 System.Diagnostics.Debug.Print(p.ToString());
 #endif
                 p.SwApp = this.swApp;
-                c.Text = p.Value;
+                c.Text = p.ResValue;
                 p.Ctl = c;
             }
             else

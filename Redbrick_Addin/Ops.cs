@@ -28,10 +28,19 @@ namespace Redbrick_Addin
         public void Update(ref SwProperties p)
         {
             this.propertySet = p;
-            this.OpType = 1;
+            this.OpType = p.cutlistData.OpType;
             this.RefreshOps(this.OpType);
+            this.LinkControls();
         }
 
+        private void LinkControls()
+        {
+            this.propertySet.LinkControlToProperty("OP1", true, this.cbOp1);
+            this.propertySet.LinkControlToProperty("OP2", true, this.cbOp2);
+            this.propertySet.LinkControlToProperty("OP3", true, this.cbOp3);
+            this.propertySet.LinkControlToProperty("OP4", true, this.cbOp4);
+            this.propertySet.LinkControlToProperty("OP5", true, this.cbOp5);
+        }
 
         public void GetProperties()
         {
@@ -84,56 +93,56 @@ namespace Redbrick_Addin
             }
         }
 
-        public void LinkControls()
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                string op = string.Format("OP{0}", i.ToString());
+        //public void LinkControls()
+        //{
+        //    for (int i = 0; i < 6; i++)
+        //    {
+        //        string op = string.Format("OP{0}", i.ToString());
 
-                foreach (Control c in this.tableLayoutPanel1.Controls)
-                {
-                    if ((c is ComboBox) && c.Name.ToUpper().Contains(op))
-                    {
-                        ComboBox cb = (c as ComboBox);
+        //        foreach (Control c in this.tableLayoutPanel1.Controls)
+        //        {
+        //            if ((c is ComboBox) && c.Name.ToUpper().Contains(op))
+        //            {
+        //                ComboBox cb = (c as ComboBox);
 
-                        if (!this.propertySet.Contains(op))
-                        {
-                            SwProperty ps = new SwProperty(op, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-                            ps.ID = (cb.SelectedItem as DataRowView).Row.ItemArray[0].ToString();
-                            ps.Value = (cb.SelectedItem as DataRowView).Row.ItemArray[1].ToString();
-                            ps.ResValue = (cb.SelectedItem as DataRowView).Row.ItemArray[2].ToString();
+        //                if (!this.propertySet.Contains(op))
+        //                {
+        //                    SwProperty ps = new SwProperty(op, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+        //                    ps.ID = (cb.SelectedItem as DataRowView).Row.ItemArray[0].ToString();
+        //                    ps.Value = (cb.SelectedItem as DataRowView).Row.ItemArray[1].ToString();
+        //                    ps.ResValue = (cb.SelectedItem as DataRowView).Row.ItemArray[2].ToString();
 
-                            ps.Table = "CUT_PARTS";
-                            ps.Field = string.Format("OP{0}ID", c.Name.Split('p')[1]);
-                            ps.SwApp = this.propertySet.SwApp;
-                            this.propertySet.Add(ps);
-                        }
+        //                    ps.Table = "CUT_PARTS";
+        //                    ps.Field = string.Format("OP{0}ID", c.Name.Split('p')[1]);
+        //                    ps.SwApp = this.propertySet.SwApp;
+        //                    this.propertySet.Add(ps);
+        //                }
 
-                        this.propertySet.GetProperty(op).Ctl = c;
-                        cb.DisplayMember = "OPID";
+        //                this.propertySet.GetProperty(op).Ctl = c;
+        //                cb.DisplayMember = "OPID";
 
-                        int idx = this.GetIndex((cb.DataSource as DataTable),
-                            this.propertySet.GetProperty(op).Value);
+        //                int idx = this.GetIndex((cb.DataSource as DataTable),
+        //                    this.propertySet.GetProperty(op).Value);
 
-                        System.Diagnostics.Debug.Print(this.GetIndex((cb.DataSource as DataTable),
-                            this.propertySet.GetProperty(op).Value).ToString());
+        //                System.Diagnostics.Debug.Print(this.GetIndex((cb.DataSource as DataTable),
+        //                    this.propertySet.GetProperty(op).Value).ToString());
 
-                        if (idx > cb.Items.Count - 1) idx = 0;
+        //                if (idx > cb.Items.Count - 1) idx = 0;
 
-                        cb.SelectedIndex = idx;
-                        cb.DisplayMember = "OPDESCR";
+        //                cb.SelectedIndex = idx;
+        //                cb.DisplayMember = "OPDESCR";
 
-                        SwProperty p = this.propertySet.GetProperty(op);
-                        p.ID = (cb.SelectedItem as DataRowView).Row.ItemArray[0].ToString();
-                        p.Value = (cb.SelectedItem as DataRowView).Row.ItemArray[1].ToString();
-                        p.ResValue = (cb.SelectedItem as DataRowView).Row.ItemArray[2].ToString();
+        //                SwProperty p = this.propertySet.GetProperty(op);
+        //                p.ID = (cb.SelectedItem as DataRowView).Row.ItemArray[0].ToString();
+        //                p.Value = (cb.SelectedItem as DataRowView).Row.ItemArray[1].ToString();
+        //                p.ResValue = (cb.SelectedItem as DataRowView).Row.ItemArray[2].ToString();
 
-                        p.Table = "CUT_PARTS";
-                        p.Field = string.Format("OP{0}ID", c.Name.Split('p')[1]);
-                    }
-                }
-            }
-        }
+        //                p.Table = "CUT_PARTS";
+        //                p.Field = string.Format("OP{0}ID", c.Name.Split('p')[1]);
+        //            }
+        //        }
+        //    }
+        //}
 
         private void fillBox(object occ)
         {
@@ -153,7 +162,7 @@ namespace Redbrick_Addin
             {
                 this.fillBox((object)c);
             }
-            this.GetProperties();
+            //this.GetProperties();
         }
 
         public EventArgs RefreshOpBoxes(int opType)

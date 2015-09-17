@@ -22,6 +22,7 @@ namespace Redbrick_Addin
         public CutlistData()
         {
             conn = new OdbcConnection(Properties.Settings.Default.ConnectionString);
+            this.OpType = 1;
             conn.Open();
         }
 
@@ -126,7 +127,7 @@ namespace Redbrick_Addin
         public DataSet GetOps()
         {
             lock (threadLock)
-            {
+            {                
                 string SQL =string.Format("SELECT * FROM CUT_OPS WHERE OPTYPE = {0} ORDER BY OPDESCR", this.OpType);
                 //string SQL = "SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS ORDER BY OPDESCR";
                 //conn.Open();
@@ -201,12 +202,26 @@ namespace Redbrick_Addin
                 return 0;
         }
 
+        public int GetEdgeID(string description)
+        {
+            if (description == string.Empty)
+                return 0;
+
+            string SQL = string.Format("SELECT EDGEID FROM CUT_EDGES WHERE OPDESCR = '{0}'", description);
+            OdbcCommand comm = new OdbcCommand(SQL, conn);
+            OdbcDataReader dr = comm.ExecuteReader();
+            if (dr.HasRows)
+                return dr.GetInt32(0);
+            else
+                return 0;
+        }
+
         public int GetOpIDByName(string name)
         {
             if (name == string.Empty)
                 return 0;
 
-            string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPNAME = '{0}'", name);
+            string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPNAME Like '{0}'", name);
             OdbcCommand comm = new OdbcCommand(SQL, conn);
             OdbcDataReader dr = comm.ExecuteReader();
             if (dr.HasRows)
@@ -220,7 +235,7 @@ namespace Redbrick_Addin
             if (name == string.Empty)
                 return 0;
 
-            string SQL = string.Format("SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC = '{0}'", name);
+            string SQL = string.Format("SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC Like '{0}'", name);
             OdbcCommand comm = new OdbcCommand(SQL, conn);
             OdbcDataReader dr = comm.ExecuteReader();
             if (dr.HasRows)
@@ -416,21 +431,13 @@ namespace Redbrick_Addin
         {
             get
             {
-                if ((this._Ops != null) && (this._Ops.Tables[0].Rows[1]["OPTYPE"].ToString() == this.OpType.ToString()))
+                if ((this._Ops != null) && (this._Ops.Tables[0].Rows[0]["OPTYPE"].ToString() == this.OpType.ToString()))
                 {
                     return this._Ops.Copy();
                 }
-                else
-                {
-                    this._Ops = this.GetOps();
-                    /*
-                    if ((this.OpType != "WOOD") || (this.OpType != "METAL"))
-                        this._Ops = this.GetOps("WOOD");
-                    else
-                        this._Ops = this.GetOps(this.OpType);
-                    */
-                    return this._Ops.Copy();
-                }
+
+                this._Ops = this.GetOps();
+                return this._Ops = this._Ops.Copy();
             }
             private set { _Ops = value; }
         }
