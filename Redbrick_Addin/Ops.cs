@@ -23,9 +23,15 @@ namespace Redbrick_Addin
             this.propertySet = prop;
 
             InitializeComponent();
+        }
+
+        public void Update(ref SwProperties p)
+        {
+            this.propertySet = p;
             this.OpType = 1;
             this.RefreshOps(this.OpType);
         }
+
 
         public void GetProperties()
         {

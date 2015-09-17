@@ -34,6 +34,8 @@ namespace Redbrick_Addin
         MachineProperties mp;
         Ops op;
 
+        ModelRedbrick mrb;
+
         private bool AssmEventsAssigned = false;
         private bool PartEventsAssigned = false;
         //private bool DrawEventsAssigned = false;
@@ -53,6 +55,19 @@ namespace Redbrick_Addin
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
             this.ConnectOpenDoc();
+        }
+
+        private void dockeverything(Control c)
+        {
+            if (c.HasChildren)
+            {
+                foreach (Control item in c.Controls)
+                {
+                    c.Dock = DockStyle.Fill;
+                    //this.dockeverything(c);
+                }
+                c.Dock = DockStyle.Fill;
+            }
         }
 
         int SwApp_DestroyNotify()
@@ -86,7 +101,8 @@ namespace Redbrick_Addin
                             if (!this.PartSetup)
                             {
                                 this.SetupPart();
-                                this.LinkControls(cs, gp, mp, op);
+                                this.mrb.Update(ref this.prop);
+                                //this.LinkControls(cs, gp, mp, op);
                                 this.handleDept();
                             }
                             else
@@ -199,8 +215,8 @@ namespace Redbrick_Addin
             this.ClearControls(this);
             DockStyle d = DockStyle.Fill;
 
-            ModelRedbrick mrb = new ModelRedbrick(this._swApp);
-            mrb.Dock = d;
+            this.mrb = new ModelRedbrick(ref this.prop);
+            this.mrb.Dock = d;
             this.Controls.Add(mrb);
             this.Dock = d;
 
@@ -216,8 +232,9 @@ namespace Redbrick_Addin
             this.mp = mrb.aMachineProperties;
             this.op = mrb.aOps;
             /* this.LinkControls(mrb.aConfigurationSpecific, mrb.aGeneralProperties, mrb.aMachineProperties, mrb.aOps); */
-
+            this.dockeverything(mrb);
             this.PartSetup = true;
+            this.mrb.Update(ref this.prop);
         }
 
         private void handleDept()
@@ -247,11 +264,11 @@ namespace Redbrick_Addin
                 this.prop.Add(p);
                 this.ds.OpType = 1;
             }
-            this.ds.updateDept();
+            this.ds.Update();
             this.op.RefreshOps(this.ds.OpType);
             cs.ToggleFields(ds.OpType);
             gp.ToggleFields(ds.OpType);
-
+            //this.mrb.ResizeGroups(this.ds.OpType);
             this.LinkControlToProperty("OP1", op.GetOp1Box());
             this.LinkControlToProperty("OP2", op.GetOp2Box());
             this.LinkControlToProperty("OP3", op.GetOp3Box());

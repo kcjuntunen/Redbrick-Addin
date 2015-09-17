@@ -17,26 +17,35 @@ namespace Redbrick_Addin
         {
             this.propertySet = prop;
             InitializeComponent();
+        }
+
+        public void Update(ref SwProperties p)
+        {
+            this.propertySet = p;
             this.LinkControls();
         }
 
         private void LinkControls()
         {
+            SwProperties p = this.propertySet;
+            p.LinkControlToProperty("Description", true, this.tbDescription);
+            p.LinkControlToProperty("LENGTH", true, this.tbLength);
+            p.LinkControlToProperty("WIDTH", true, this.tbWidth);
+            p.LinkControlToProperty("THICKNESS", true, this.tbThick);
+            p.LinkControlToProperty("WALL THICKNESS", true, this.tbWallThick);
+            p.LinkControlToProperty("COMMENT", true, this.tbComment);
 
-            this.LinkControlToProperty("Description", this.tbDescription);
-            this.LinkControlToProperty("LENGTH", this.tbLength);
-            this.UpdateLengthRes(propertySet.GetProperty("LENGTH"));
-
-            this.LinkControlToProperty("WIDTH", this.tbWidth);
-            this.UpdateWidthRes(propertySet.GetProperty("WIDTH"));
-
-            this.LinkControlToProperty("THICKNESS", this.tbThick);
-            this.UpdateThickRes(propertySet.GetProperty("THICKNESS"));
-            this.LinkControlToProperty("WALL THICKNESS", this.tbWallThick);
-            this.UpdateWallThickRes(propertySet.GetProperty("WALL THICKNESS"));
-            this.LinkControlToProperty("COMMENT", this.tbComment);
+            this.UpdateRes(p.GetProperty("LENGTH"), this.labResLength)
+            this.UpdateRes(p.GetProperty("WIDTH"), this.labResWidth);
+            this.UpdateRes(p.GetProperty("THICKNESS"), this.labResThickness);
+            this.UpdateRes(p.GetProperty("WALL THICKNESS"), this.labResWallThickness);
 
             this.UpdateLnW();
+        }
+
+        private void UpdateRes(SwProperty p, Control c)
+        {
+            c.Text = p.ResValue;
         }
 
         private void LinkControlToProperty(string property, Control c)

@@ -137,7 +137,7 @@ namespace Redbrick_Addin
             this.cbOp1.TabIndex = 5;
             // 
             // cbOp2
-            // 
+            //
             this.cbOp2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbOp2.FormattingEnabled = true;
             this.cbOp2.Location = new System.Drawing.Point(3, 56);

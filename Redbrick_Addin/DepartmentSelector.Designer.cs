@@ -33,10 +33,11 @@ namespace Redbrick_Addin
             // 
             // cbDepartment
             // 
+            this.cbDepartment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbDepartment.FormattingEnabled = true;
             this.cbDepartment.Location = new System.Drawing.Point(0, 0);
             this.cbDepartment.Name = "cbDepartment";
-            this.cbDepartment.Size = new System.Drawing.Size(150, 21);
+            this.cbDepartment.Size = new System.Drawing.Size(153, 21);
             this.cbDepartment.TabIndex = 0;
             this.cbDepartment.SelectedIndexChanged += new System.EventHandler(this.cbDepartment_SelectedIndexChanged);
             // 
@@ -44,7 +45,6 @@ namespace Redbrick_Addin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.cbDepartment);
             this.Name = "DepartmentSelector";

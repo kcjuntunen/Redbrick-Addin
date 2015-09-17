@@ -20,13 +20,12 @@ namespace Redbrick_Addin
         //private List<ComboBox> cc = new List<ComboBox>();
         public ConfigurationSpecific(ref SwProperties prop)
         {
-            propertySet = prop;
-            cd = prop.cutlistData;
+            this.propertySet = prop;
+            this.cd = prop.cutlistData;
             this._edgeDiffL = 0.0;
             this._edgeDiffW = 0.0;
 
             InitializeComponent();
-            //this.fillComboBoxes();
             this.fillMat();
             ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
             foreach (ComboBox c in cc)
@@ -38,45 +37,22 @@ namespace Redbrick_Addin
             this.LinkControls();
         }
 
-        private void LinkControls()
+        public void Update(ref SwProperties prop)
         {
-
-            this.LinkControlToProperty("CUTLIST MATERIAL", this.cbMat);
-            this.LinkControlToProperty("EDGE FRONT (L)", this.cbEf);
-            this.LinkControlToProperty("EDGE BACK (L)", this.cbEb);
-            this.LinkControlToProperty("EDGE LEFT (W)", this.cbEl);
-            this.LinkControlToProperty("EDGE RIGHT (W)", this.cbEr);
+            this.propertySet = prop;
+            this.cd = prop.cutlistData;
+            this._edgeDiffL = 0.0;
+            this._edgeDiffW = 0.0;
+            this.LinkControls();
         }
 
-        private void LinkControlToProperty(string property, Control c)
+        private void LinkControls()
         {
-            SwProperty p = this.propertySet.GetProperty(property);
-            ComboBox cb = (c as ComboBox);
-            if (this.propertySet.Contains(p))
-            {
-                p.Type = swCustomInfoType_e.swCustomInfoText;
-                p.Ctl = c;
-                int idx = this.GetIndex((cb.DataSource as DataTable), p.Value.Trim());
-#if DEBUG
-                System.Diagnostics.Debug.Print(string.Format("Linking {0}\nGot index {1} for value {2}.", p.Name, idx, p.Value));
-#endif
-                if (idx > cb.Items.Count - 1) idx = -1;
-
-                (c as ComboBox).SelectedIndex = idx;
-#if DEBUG
-                System.Diagnostics.Debug.Print(p.Value + " " + idx);
-#endif
-            }
-            else
-            {
-#if DEBUG
-                //System.Diagnostics.Debug.Print("Creating " + p.Name);
-#endif
-                SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-                x.Type = swCustomInfoType_e.swCustomInfoText;
-                x.Ctl = c;
-                this.propertySet.Add(x);
-            }
+            this.propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
+            this.propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
+            this.propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
+            this.propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
+            this.propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
         }
 
         public void GetProperties()

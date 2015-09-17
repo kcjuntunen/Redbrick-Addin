@@ -339,6 +339,25 @@ namespace Redbrick_Addin
             }
         }
 
+        public void LinkControlToProperty(string property, bool global, System.Windows.Forms.Control c)
+        {
+            SwProperty p = this.GetProperty(property);
+            if (this.Contains(p))
+            {
+#if DEBUG
+                System.Diagnostics.Debug.Print(p.ToString());
+#endif
+                p.SwApp = this.swApp;
+                c.Text = p.Value;
+                p.Ctl = c;
+            }
+            else
+            {
+                SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, global);
+                x.SwApp = this.swApp;
+                x.Ctl = c;
+            }
+        }
 
         public bool SWContains(string property)
         {

@@ -20,12 +20,19 @@ namespace Redbrick_Addin
             this.LinkControls();
         }
 
+        public void Update(ref SwProperties p)
+        {
+            this.propertySet = p;
+            this.LinkControls();
+        }
+
         private void LinkControls()
         {
-            this.LinkControlToProperty("BLANK QTY", this.tbPPB);
-            this.LinkControlToProperty("CNC1", this.tbCNC1);
-            this.LinkControlToProperty("CNC2", this.tbCNC2);
-            this.LinkControlToProperty("OVERL", this.tbOverL);
+            this.propertySet.LinkControlToProperty("BLANK QTY", true, this.tbPPB);
+            this.propertySet.LinkControlToProperty("CNC1", true, this.tbPPB);
+            this.propertySet.LinkControlToProperty("CNC2", true, this.tbPPB);
+            this.propertySet.LinkControlToProperty("OVERL", true, this.tbPPB);
+            this.propertySet.LinkControlToProperty("OVERW", true, this.tbPPB);
 
             string tVal = this.propertySet.GetProperty("OVERL").Value;
             double dVal = 0.0;
@@ -33,8 +40,6 @@ namespace Redbrick_Addin
             {
                 this._overL = dVal;
             }
-
-            this.LinkControlToProperty("OVERW", this.tbOverW);
 
             tVal = this.propertySet.GetProperty("OVERW").Value;
             dVal = 0.0;

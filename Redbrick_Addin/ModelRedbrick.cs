@@ -23,24 +23,29 @@ namespace Redbrick_Addin
         private Ops op;
         protected SwProperties props;
 
-        public ModelRedbrick(SldWorks sw)
+        public ModelRedbrick(ref SwProperties p)
         {
+            this.props = p;
+            this._swApp = p.SwApp;
             InitializeComponent();
+        }
+
+        private void Init()
+        {
             DockStyle d = DockStyle.Fill;
-            this._swApp = sw;
             props = new SwProperties(this._swApp);
             props.GetPropertyData((ModelDoc2)this._swApp.ActiveDoc);
 
             ds = new DepartmentSelector(ref this.props);
-            //ds.Dock = d;
+            ds.Dock = d;
             cs = new ConfigurationSpecific(ref this.props);
-            //cs.Dock = d;
+            cs.Dock = d;
             gp = new GeneralProperties(ref this.props);
-            //gp.Dock = d;
+            gp.Dock = d;
             mp = new MachineProperties(ref this.props);
-            //mp.Dock = d;
+            mp.Dock = d;
             op = new Ops(ref this.props);
-            //op.Dock = d;
+            op.Dock = d;
 
             this.tlpMain.Controls.Add(ds);
             this.tlpMain.Controls.Add(cs);
@@ -48,10 +53,10 @@ namespace Redbrick_Addin
             this.tlpMain.Controls.Add(mp);
             this.tlpMain.Controls.Add(op);
 
-            //foreach (Control item in this.tlpMain.Controls)
-            //{
-            //    item.Dock = d;
-            //}
+            foreach (Control item in this.tlpMain.Controls)
+            {
+                item.Dock = d;
+            }
 
             this.tlpMain.Controls.Add(ds, 0, 0);
             this.gbSpecProp.Controls.Add(cs);
@@ -59,6 +64,29 @@ namespace Redbrick_Addin
             this.gbMachProp.Controls.Add(mp);
             this.gbOp.Controls.Add(op);
             this.tlpMain.ResumeLayout(true);
+            Update();
+        }
+
+        public void Update(ref SwProperties p)
+        {
+            this.props = p;
+            this.ds.Update(ref p);
+            this.cs.Update(ref p);
+            this.gp.Update(ref p);
+            this.mp.Update(ref p);
+            this.op.Update(ref p);
+        }
+
+        public void ResizeGroups(int opType)
+        {
+            if (opType == 2)
+            {
+                this.tlpMain.RowStyles[1].Height = 70;
+            }
+            else
+            {
+                this.tlpMain.RowStyles[1].Height = 280;
+            }
         }
 
         protected SldWorks RequestSW()
@@ -91,9 +119,8 @@ namespace Redbrick_Addin
 
         public DepartmentSelector aDepartmentSelector
         {
-            get { return this.ds;  }
+            get { return this.ds; }
         }
-
         public ConfigurationSpecific aConfigurationSpecific
         {
             get { return this.cs;  }
