@@ -127,21 +127,31 @@ namespace Redbrick_Addin
         public DataSet GetOps()
         {
             lock (threadLock)
-            {                
+            {
                 string SQL =string.Format("SELECT * FROM CUT_OPS WHERE OPTYPE = {0} ORDER BY OPDESCR", this.OpType);
                 //string SQL = "SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS ORDER BY OPDESCR";
                 //conn.Open();
                 OdbcCommand comm = new OdbcCommand(SQL, conn);
                 OdbcDataAdapter da = new OdbcDataAdapter(comm);
                 DataSet ds = new DataSet();
-                da.Fill(ds);
-                //conn.Close();
-                DataRow dar = ds.Tables[0].NewRow();
-                dar[0] = 0;
-                dar[1] = string.Empty;
-                dar[2] = string.Empty;
-                ds.Tables[0].Rows.Add(dar);
-                this.Ops = ds;
+
+                try
+                {
+                    da.Fill(ds);
+                }
+                catch (StackOverflowException sofe)
+                {
+                    throw sofe;
+                }
+                finally
+                {
+                    DataRow dar = ds.Tables[0].NewRow();
+                    dar[0] = 0;
+                    dar[1] = string.Empty;
+                    dar[2] = string.Empty;
+                    ds.Tables[0].Rows.Add(dar);             
+                    this.Ops = ds;
+                }
                 return this.Ops;
             }
         }
@@ -230,18 +240,46 @@ namespace Redbrick_Addin
                 return 0;
         }
 
+        public List<string> GetOpDataByName(string name)
+        {
+            if (name == string.Empty)
+                return null;
+
+            string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like '{0}' AND OPTYPE = {1}", name, this.OpType);
+            OdbcCommand comm = new OdbcCommand(SQL, conn);
+            OdbcDataReader dr = comm.ExecuteReader();
+            if (dr.HasRows)
+            {
+                List<string> x = new List<string>();
+                x.Add(dr.GetString(0));
+                x.Add(dr.GetString(1));
+                x.Add(dr.GetString(2));
+                x.Add(dr.GetString(3));
+                return x;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public int GetOpTypeIDByName(string name)
         {
             if (name == string.Empty)
-                return 0;
+                return 1;
 
             string SQL = string.Format("SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC Like '{0}'", name);
             OdbcCommand comm = new OdbcCommand(SQL, conn);
             OdbcDataReader dr = comm.ExecuteReader();
             if (dr.HasRows)
-                return dr.GetInt32(0);
+            {
+                int res = dr.GetInt32(0);
+                return res;
+            }
             else
-                return 0;
+            {
+                return 1;
+            }
         }
 
         public string GetMaterialByID(string id)
@@ -421,7 +459,13 @@ namespace Redbrick_Addin
         public int OpType
         {
             get { return _opType; }
-            set { _opType = value; }
+            set 
+            {
+                if (value > 2)
+                    _opType = 1;
+                else
+                    _opType = value;
+            }
         }
 
 

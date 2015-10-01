@@ -69,70 +69,13 @@ namespace Redbrick_Addin
                     DrawingRev dr = new DrawingRev(rp, ep, dep, lp, dap);
                     if (dr != null)
                     {
-                        //this._innerArray.Insert(i, dr);
-                        this._innerArray.Add(dr);   
+                        this._innerArray.Add(dr);
                     }
                 }
                 else
                     break;
             }
         }
-
-        //public void UpdateListBox()
-        //{
-        //    DataTable dt = new DataTable("revs");
-        //    CalendarColumn cc = new CalendarColumn();
-        //    System.Windows.Forms.DataGridViewColumn dc1 = new System.Windows.Forms.DataGridViewColumn();
-        //    System.Windows.Forms.DataGridViewColumn dc2 = new System.Windows.Forms.DataGridViewColumn();
-        //    System.Windows.Forms.DataGridViewColumn dc3 = new System.Windows.Forms.DataGridViewColumn();
-        //    System.Windows.Forms.DataGridViewColumn dc4 = new System.Windows.Forms.DataGridViewColumn();
-            
-        //    dc1.Name = ("Level");
-        //    dc2.Name = ("ECR");
-        //    dc3.Name = ("Description");
-        //    dc4.Name = ("By");
-        //    cc.Name = ("Date");
-
-        //    dc1.CellTemplate = new System.Windows.Forms.DataGridViewTextBoxCell();
-        //    dc2.CellTemplate = new System.Windows.Forms.DataGridViewTextBoxCell();
-        //    dc3.CellTemplate = new System.Windows.Forms.DataGridViewTextBoxCell();
-        //    dc4.CellTemplate = new System.Windows.Forms.DataGridViewTextBoxCell();
-        //    //DataSet ds = new DataSet("revisions");
-        //    this.listBox.Columns.Add(dc1);
-        //    this.listBox.Columns.Add(dc2);
-        //    this.listBox.Columns.Add(dc3);
-        //    this.listBox.Columns.Add(dc4);
-        //    this.listBox.Columns.Add(cc);
-
-        //    //dt.Columns.Add("Level");
-        //    //dt.Columns.Add("ECR");
-        //    //dt.Columns.Add("Description");
-        //    //dt.Columns.Add("By");
-        //    //dt.Columns.Add("Date");
-
-        //    foreach (DrawingRev r in this._innerArray)
-        //    {
-        //        System.Windows.Forms.DataGridViewCell[] x = { new System.Windows.Forms.DataGridViewTextBoxCell(), 
-        //            new System.Windows.Forms.DataGridViewTextBoxCell(), 
-        //            new System.Windows.Forms.DataGridViewTextBoxCell(), 
-        //            new System.Windows.Forms.DataGridViewTextBoxCell(),
-        //            new CalendarCell() };
-        //            // = { r.Revision.Value, r.Eco.Value, r.Description.Value, r.List.Value, r.Date.Value };
-        //        x[0].Value = r.Revision.Value;
-        //        x[1].Value = r.Eco.Value;
-        //        x[2].Value = r.Description.Value;
-        //        x[3].Value = r.List.Value;
-        //        x[4].Value = r.Date.Value;
-
-        //        //dt.Rows.Add(x);
-        //        System.Windows.Forms.DataGridViewRow dgvr = new System.Windows.Forms.DataGridViewRow();
-
-        //        dgvr.Cells.AddRange(x);
-        //        this.listBox.Rows.Add(dgvr);
-        //    }
-        //    //this.listBox.DataSource = dt;
-        //    this.listBox.Show();
-        //}
 
         public void ClearProps()
         {

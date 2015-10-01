@@ -24,28 +24,81 @@ namespace Redbrick_Addin
         {
             this.propertySet = p;
             this.LinkControls();
+            this.ToggleFields(this.propertySet.cutlistData.OpType);
         }
 
         private void LinkControls()
         {
+            this.tbCNC1.Text = string.Empty;
+            this.tbCNC2.Text = string.Empty;
+            this.tbOverL.Text = string.Empty;
+            this.tbOverW.Text = string.Empty;
+            this.tbBlankW.Text = string.Empty;
+            this.tbBlankL.Text = string.Empty;
+
             this.propertySet.LinkControlToProperty("BLANK QTY", true, this.tbPPB);
             this.propertySet.LinkControlToProperty("CNC1", true, this.tbCNC1);
             this.propertySet.LinkControlToProperty("CNC2", true, this.tbCNC2);
             this.propertySet.LinkControlToProperty("OVERL", true, this.tbOverL);
             this.propertySet.LinkControlToProperty("OVERW", true, this.tbOverW);
 
-            string tVal = this.propertySet.GetProperty("OVERL").Value;
+            string tVal = "0.0";
             double dVal = 0.0;
-            if (double.TryParse(tVal, out dVal))
+            int edgef = 0;
+            int edgeb = 0;
+            int edgel = 0;
+            int edger = 0;
+
+            double finLen = 0.0;
+            double blankLen = 0.0;
+            double total_thickness = 0.0;
+
+            if (this.propertySet.Contains("LENGTH"))
             {
-                this._overL = dVal;
+                if (double.TryParse(this.propertySet.GetProperty("LENGTH").ResValue, out finLen))
+                    blankLen += finLen;
+
+                if (this.propertySet.Contains("EDGE FRONT (L)"))
+                    if (int.TryParse(this.propertySet.GetProperty("EDGE FRONT (L)").Value, out edgef))
+                        total_thickness -= this.propertySet.cutlistData.GetEdgeThickness(edgef);
+
+                if (this.propertySet.Contains("EDGE BACK (L)"))
+                    if (int.TryParse(this.propertySet.GetProperty("EDGE BACK (L)").Value, out edgeb))
+                        total_thickness -= this.propertySet.cutlistData.GetEdgeThickness(edgeb);
+
+                if (this.propertySet.Contains("OVERL"))
+                    tVal = this.propertySet.GetProperty("OVERL").Value;
+
+                if (double.TryParse(tVal, out dVal))
+                    this._overL = dVal;
+
+                this.tbBlankL.Text = (blankLen + dVal - total_thickness).ToString("N3");
             }
 
-            tVal = this.propertySet.GetProperty("OVERW").Value;
-            dVal = 0.0;
-            if (double.TryParse(tVal, out dVal))
+            finLen = 0.0;
+            blankLen = 0.0;
+            total_thickness = 0.0;
+            if (this.propertySet.Contains("WIDTH"))
             {
-                this._overW = dVal;
+                if (double.TryParse(this.propertySet.GetProperty("WIDTH").ResValue, out finLen))
+                    blankLen += finLen;
+
+                if (this.propertySet.Contains("EDGE LEFT (W)"))
+                    if (int.TryParse(this.propertySet.GetProperty("EDGE LEFT (W)").Value, out edgel))
+                        total_thickness -= this.propertySet.cutlistData.GetEdgeThickness(edgel);
+
+                if (this.propertySet.Contains("EDGE RIGHT (W)"))
+                    if (int.TryParse(this.propertySet.GetProperty("EDGE RIGHT (W)").Value, out edger))
+                        total_thickness -= this.propertySet.cutlistData.GetEdgeThickness(edger);
+
+                if (this.propertySet.Contains("OVERW"))
+                    tVal = this.propertySet.GetProperty("OVERW").Value;
+
+                dVal = 0.0;
+                if (double.TryParse(tVal, out dVal))
+                    this._overW = dVal;
+                
+                this.tbBlankW.Text = (blankLen + dVal - total_thickness).ToString("N3");
             }
         }
 
@@ -68,6 +121,18 @@ namespace Redbrick_Addin
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
                 x.Ctl = c;
             }
+        }
+
+        public void ToggleFields(int opType)
+        {
+            bool wood = (opType != 2);
+            this.tbOverL.Enabled = wood;
+            this.tbOverW.Enabled = wood;
+            this.tbBlankL.Enabled = wood;
+            this.tbBlankW.Enabled = wood;
+            this.label4.Enabled = wood;
+            this.label5.Enabled = wood;
+            this.label6.Enabled = wood;
         }
 
         public TextBox GetCNC1Box()

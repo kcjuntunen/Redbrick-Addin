@@ -36,7 +36,7 @@ namespace Redbrick_Addin
                 TreeNode tnECO;
                 TreeNode tnC;
                 int test = 0;
-                if (int.TryParse(r.Eco.Value, out test))
+                if (int.TryParse(r.Eco.Value, out test) && test > 8999)
                 {
                     CutlistData cd = new CutlistData();
                     eco e = cd.GetECOData(r.Eco.Value);

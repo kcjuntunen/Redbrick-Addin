@@ -340,6 +340,11 @@ namespace Redbrick_Addin
             this.prop.ReadControls();
             //System.Windows.Forms.MessageBox.Show(this.prop.ToString());
             this.prop.Write(this.Document);
+
+            if (this.PartSetup)
+            {
+                this.mrb.Update(ref this.prop);
+            }
         }
 
         private void LinkControls(ConfigurationSpecific cs, GeneralProperties gp, MachineProperties mp, Ops op)

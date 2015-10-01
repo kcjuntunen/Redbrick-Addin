@@ -181,9 +181,45 @@ namespace Redbrick_Addin
                 Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
                 CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
 
+                this.cutlistData.OpType = ParseDept(md);
+
                 this.ParsePropertyData(g, md);
                 this.ParsePropertyData(s, md);
             }
+        }
+
+        public int ParseDept(ModelDoc2 md)
+        {
+            CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+            Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
+            CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
+
+            string[] sa = g.GetNames();
+            List<string> ss = new List<string>();
+            ss.AddRange(sa);
+            int res;
+            bool useCached = false;
+            string val = "WOOD";
+            string resVal = "WOOD";
+            bool wRes = false;
+
+            if (ss.Contains("DEPARTMENT"))
+            {
+                res = g.Get5("DEPARTMENT", useCached, out val, out resVal, out wRes);
+            }
+            else
+            {
+                sa = s.GetNames();
+                ss.AddRange(sa);
+
+                if (ss.Contains("DEPARTMENT"))
+                {
+                    res = s.Get5("DEPARTMENT", useCached, out val, out resVal, out wRes);
+                }
+            }
+
+            int opt = this.cutlistData.GetOpTypeIDByName(resVal.ToUpper());
+            return opt;
         }
         
         public void ParsePropertyData(CustomPropertyManager g, ModelDoc2 md)
@@ -279,8 +315,9 @@ namespace Redbrick_Addin
                         {
                             if (p.ResValue.Length < 4 && p.ResValue != string.Empty)
                             {
-                                p.Value = this.cutlistData.GetOpIDByName(p.ResValue).ToString();
-                                p.ResValue = this.cutlistData.GetOpByID(p.Value);
+                                List<string> dr = this.cutlistData.GetOpDataByName(p.ResValue.ToString());
+                                p.Value = dr[0]; //this.cutlistData.GetOpIDByName(p.ResValue).ToString();
+                                p.ResValue = dr[2]; // this.cutlistData.GetOpByID(p.Value);
                             }
                             else
                             {
@@ -291,7 +328,10 @@ namespace Redbrick_Addin
                     }
 
                     p.SwApp = this.swApp;
-                    this._innerArray.Add(p);
+                    if (!this.Contains(p))
+                    {
+                        this._innerArray.Add(p);   
+                    }
 #if DEBUG   
                     System.Diagnostics.Debug.Print(s);
 #endif
@@ -329,7 +369,15 @@ namespace Redbrick_Addin
                 System.Diagnostics.Debug.Print(p.ToString());
 #endif
                 p.SwApp = this.swApp;
-                c.Text = p.ResValue;
+                if (p.Name.ToUpper() == "LENGTH" || p.Name.ToUpper() == "WIDTH"
+                    || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS")
+                {
+                    c.Text = p.Value;
+                }
+                else
+                {
+                    c.Text = p.ResValue;
+                }
                 p.Ctl = c;
             }
             else

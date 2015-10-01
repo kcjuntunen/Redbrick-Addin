@@ -46,18 +46,17 @@ namespace Redbrick_Addin
             op = new Ops(ref this.props);
             op.Dock = d;
 
-            this.tlpMain.Controls.Add(ds);
-            this.tlpMain.Controls.Add(cs);
-            this.tlpMain.Controls.Add(gp);
-            this.tlpMain.Controls.Add(mp);
-            this.tlpMain.Controls.Add(op);
+            this.tlpMain.Controls.Add(cs, 0, 0);
+            this.tlpMain.Controls.Add(gp, 0, 1);
+            this.tlpMain.Controls.Add(mp, 0, 2);
+            this.tlpMain.Controls.Add(ds, 0, 3);
+            this.tlpMain.Controls.Add(op, 0, 4);
 
             foreach (Control item in this.tlpMain.Controls)
             {
                 item.Dock = d;
             }
 
-            this.tlpMain.Controls.Add(ds, 0, 0);
             this.gbSpecProp.Controls.Add(cs);
             this.gbGlobProp.Controls.Add(gp);
             this.gbMachProp.Controls.Add(mp);
@@ -72,8 +71,8 @@ namespace Redbrick_Addin
             this.ds.Update(ref p);
             this.cs.Update(ref p);
             this.gp.Update(ref p);
-            this.mp.Update(ref p);
             this.op.Update(ref p);
+            this.mp.Update(ref p);
         }
 
         public void ResizeGroups(int opType)

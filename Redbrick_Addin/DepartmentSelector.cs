@@ -30,7 +30,7 @@ namespace Redbrick_Addin
             this.PropertySet = p;
             this.LinkControlToProperty();
             this.PropertySet.cutlistData.OpType = this.OpType;
-            int idx = this.GetIndex((this.cbDepartment.DataSource as DataTable), (this.OpType).ToString());
+            int idx = this.OpType - 1; // this.GetIndex((this.cbDepartment.DataSource as DataTable), (this.OpType).ToString());
             this.cbDepartment.SelectedIndex = idx;
             this.cbDepartment.DisplayMember = "TYPEDESC";
         }
@@ -85,8 +85,8 @@ namespace Redbrick_Addin
                 {
                     count++;
 
-                    if (dr.ItemArray[0].ToString().Trim().ToUpper() == val.Trim().ToUpper())
-                        return count + 1;
+                    if (int.Parse(dr.ItemArray[0].ToString()) == int.Parse(val))
+                        return count;
                 }
             }
             return 1;

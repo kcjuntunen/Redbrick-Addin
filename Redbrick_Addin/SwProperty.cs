@@ -73,7 +73,7 @@ namespace Redbrick_Addin
                         }
                         else
                         {
-                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value.ToUpper(), (int)ao);
+                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
                         }
                     }
                 }
@@ -167,7 +167,7 @@ namespace Redbrick_Addin
                     }
                     else
                     {
-                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value.ToUpper(), (int)ao);
+                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
                     }
                 }
                 else

@@ -28,6 +28,12 @@ namespace Redbrick_Addin
 
         private void LinkControls()
         {
+            this.tbLength.Text = string.Empty;
+            this.tbWidth.Text = string.Empty;
+            this.tbThick.Text = string.Empty;
+            this.tbWallThick.Text = string.Empty;
+            this.tbComment.Text = string.Empty;
+
             this.propertySet.LinkControlToProperty("Description", true, this.tbDescription);
             this.propertySet.LinkControlToProperty("LENGTH", true, this.tbLength);
             this.propertySet.LinkControlToProperty("WIDTH", true, this.tbWidth);
@@ -38,14 +44,16 @@ namespace Redbrick_Addin
             this.UpdateRes(this.propertySet.GetProperty("LENGTH"), this.labResLength);
             this.UpdateRes(this.propertySet.GetProperty("WIDTH"), this.labResWidth);
             this.UpdateRes(this.propertySet.GetProperty("THICKNESS"), this.labResThickness);
-            //this.UpdateRes(this.propertySet.GetProperty("WALL THICKNESS"), this.labResWallThickness);
+
+            if (this.propertySet.GetProperty("WALL THICKNESS") != null)
+                this.UpdateRes(this.propertySet.GetProperty("WALL THICKNESS"), this.labResWallThickness);
 
             this.UpdateLnW();
         }
 
         private void UpdateRes(SwProperty p, Control c)
         {
-            c.Text = p.ResValue;
+            c.Text = string.Format("{0:N3}", p.ResValue);
         }
 
         private void LinkControlToProperty(string property, Control c)
@@ -90,9 +98,9 @@ namespace Redbrick_Addin
         public void ToggleFields(int opType)
         {
             bool wood = (opType != 2);
-            this.labResWallThickness.Visible = !wood;
-            this.lWallThickness.Visible = !wood;
-            this.tbWallThick.Visible = !wood;
+            this.labResWallThickness.Enabled = !wood;
+            this.lWallThickness.Enabled = !wood;
+            this.tbWallThick.Enabled = !wood;
         }
 
         public TextBox GetDescriptionBox()
