@@ -29,52 +29,10 @@ namespace Redbrick_Addin
             this._innerArray = new ArrayList();
         }
 
+        /// <summary>
+        /// Empty metadata can create a problem.
+        /// </summary>
         public void CreateDefaultPartSet()
-        {
-            //this._innerArray.Add(new SwProperty("CUTLIST MATERIAL", swCustomInfoType_e.swCustomInfoNumber, "TBD MATERIAL", false));
-            this._innerArray.Add(new SwProperty("EDGE FRONT (L)", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-            this._innerArray.Add(new SwProperty("EDGE BACK (L)", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-            this._innerArray.Add(new SwProperty("EDGE LEFT (W)", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-            this._innerArray.Add(new SwProperty("EDGE RIGHT (W)", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-
-            this._innerArray.Add(new SwProperty("Description", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("LENGTH", swCustomInfoType_e.swCustomInfoText, "\"D1@Sketch1\"", true));
-            this._innerArray.Add(new SwProperty("WIDTH", swCustomInfoType_e.swCustomInfoText, "\"D2@Sketch1\"", true));
-            this._innerArray.Add(new SwProperty("THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"D1@Boss-Extrude1\"", true));
-            this._innerArray.Add(new SwProperty("WALL THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"Thickness@Sheet-Metal1\"", true));
-            this._innerArray.Add(new SwProperty("COMMENT", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("BLANK QTY", swCustomInfoType_e.swCustomInfoNumber, "1", true));
-            this._innerArray.Add(new SwProperty("CNC1", swCustomInfoType_e.swCustomInfoText, "NA", true));
-            this._innerArray.Add(new SwProperty("CNC2", swCustomInfoType_e.swCustomInfoText, "NA", true));
-            this._innerArray.Add(new SwProperty("OVERL", swCustomInfoType_e.swCustomInfoDouble, "0.0", true));
-            this._innerArray.Add(new SwProperty("OVERW", swCustomInfoType_e.swCustomInfoDouble, "0.0", true));
-            this._innerArray.Add(new SwProperty("OP1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("DEPARTMENT", swCustomInfoType_e.swCustomInfoText, "WOOD", true));
-            this._innerArray.Add(new SwProperty("UPDATE CNC", swCustomInfoType_e.swCustomInfoYesOrNo, "No", true));
-            this._innerArray.Add(new SwProperty("INCLUDE IN CUTLIST", swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true));
-
-            this._innerArray.Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true));
-            this._innerArray.Add(new SwProperty("MATERIAL", swCustomInfoType_e.swCustomInfoText, "\"SW-Material@{0}\"", true));
-            this._innerArray.Add(new SwProperty("WEIGHT", swCustomInfoType_e.swCustomInfoText, "\"SW-Mass@{0}\"", true));
-            this._innerArray.Add(new SwProperty("VOLUME", swCustomInfoType_e.swCustomInfoText, "\"SW-Volume@{0}\"", true));
-            this._innerArray.Add(new SwProperty("COST-TOTALCOST", swCustomInfoType_e.swCustomInfoText, "\"SW-Cost-TotalCost@{0}\"", true));
-
-            string s = string.Empty;
-            foreach (SwProperty p in this._innerArray)
-            {
-                p.Get(this.swApp);
-                s += p.Name + ": " + p.ResValue + "\n";
-            }
-#if DEBUG
-            System.Windows.Forms.MessageBox.Show(s);
-#endif
-        }
-
-        public void CreateDefaultPartSet2()
         {
             this._innerArray.Add(new SwProperty("MATID", swCustomInfoType_e.swCustomInfoNumber, "TBD MATERIAL", false));
             this._innerArray.Add(new SwProperty("EDGEID_LF", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
@@ -107,35 +65,11 @@ namespace Redbrick_Addin
             this._innerArray.Add(new SwProperty("WEIGHT", swCustomInfoType_e.swCustomInfoText, "\"SW-Mass@{0}\"", true));
             this._innerArray.Add(new SwProperty("VOLUME", swCustomInfoType_e.swCustomInfoText, "\"SW-Volume@{0}\"", true));
             this._innerArray.Add(new SwProperty("COST-TOTALCOST", swCustomInfoType_e.swCustomInfoText, "\"SW-Cost-TotalCost@{0}\"", true));
-
-#if DEBUG
-            string s = string.Empty;
-#endif
-            foreach (SwProperty p in this._innerArray)
-            {
-                p.Get(this.swApp);
-#if DEBUG
-                s += p.Name + ": " + p.ResValue + "\n";
-#endif
-            }
-#if DEBUG
-            System.Windows.Forms.MessageBox.Show(s);
-#endif
-
-            if (this._innerArray.Contains("CUTLIST MATERIAL"))
-            {
-                int id = cutlistData.GetMaterialID(this.GetProperty("CUTLIST MATERIAL").Value);
-                SwProperty p = new SwProperty("MATID", swCustomInfoType_e.swCustomInfoNumber, id.ToString(), false );
-                this.Remove("CUTLIST MATERIAL");
-                this._innerArray.Add(p);
-            }
-
-            if (this._innerArray.Contains("EDGE FRONT (L)"))
-            {
-                
-            }
         }
 
+        /// <summary>
+        /// Empty metadata can create a problem.
+        /// </summary>
         public void CreateDefaultDrawingSet()
         {
             this._innerArray.Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoNumber, "$PRP:\"SW-File Name\"", true));
@@ -154,46 +88,44 @@ namespace Redbrick_Addin
             this._innerArray.Add(new SwProperty("FINISH 4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
             this._innerArray.Add(new SwProperty("M5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
             this._innerArray.Add(new SwProperty("FINISH 5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-
-#if DEBUG
-            string s = string.Empty;
-#endif
-            foreach (SwProperty p in this._innerArray)
-            {
-                p.Get(this.swApp);
-#if DEBUG
-                s += p.Name + ": " + p.ResValue + "\n";
-#endif
-            }
-#if DEBUG
-            System.Windows.Forms.MessageBox.Show(s);
-#endif
         }
 
+        /// <summary>
+        /// This sucks in all the metadata from a SW doc.
+        /// </summary>
+        /// <param name="md">A ModelDoc2 object.</param>
         public void GetPropertyData(ModelDoc2 md)
         {
             this.modeldoc = md;
             if (md != null)
             {
-                if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
+                swDocumentTypes_e docType = (swDocumentTypes_e)md.GetType();
+                // Drawings only have global props.
+                if (docType == swDocumentTypes_e.swDocDRAWING)
                 {
                     CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-                    this.ParsePropertyData(g, md);
+                    this.ParsePropertyData(g, docType);
                 }
                 else
                 {
+                    // Getting global and local props.
                     CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
                     Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
                     CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
                     
                     this.cutlistData.OpType = ParseDept(md);
                     this.configName = c.Name;
-                    this.ParsePropertyData(g, md);
-                    this.ParsePropertyData(s, md);
+                    this.ParsePropertyData(g, docType);
+                    this.ParsePropertyData(s, docType);
                 }
             }
         }
 
+        /// <summary>
+        /// Gotta know the dept to know how to populate OPS and turn on/off the right fields.
+        /// </summary>
+        /// <param name="md">A ModelDoc2 object.</param>
+        /// <returns>Returns the ID of an OpType.</returns>
         public int ParseDept(ModelDoc2 md)
         {
             CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
@@ -203,12 +135,13 @@ namespace Redbrick_Addin
             string[] sa = g.GetNames();
             List<string> ss = new List<string>();
 
+            // Noooo! Null stuff is trouble.
             if (sa != null)
                 ss.AddRange(sa);
 
             int res;
             bool useCached = false;
-            string val = "WOOD";
+            string val = "WOOD";                // If we can't find the prop we want, let's just presume a wood part.
             string resVal = "WOOD";
             bool wRes = false;
 
@@ -216,7 +149,7 @@ namespace Redbrick_Addin
             {
                 res = g.Get5("DEPARTMENT", useCached, out val, out resVal, out wRes);
             }
-            else
+            else // If it wasn't where it was supposed to be, let's look here. Maybe, in the future, we could traverse configs for it too.
             {
                 sa = s.GetNames();
                 
@@ -233,12 +166,18 @@ namespace Redbrick_Addin
             return opt;
         }
         
-        public void ParsePropertyData(CustomPropertyManager g, ModelDoc2 md)
+        /// <summary>
+        /// This takes the property data and sets it up for the controls to read properly. This gets the descrs from the cutlist,
+        ///  or, if we have descrs, it gets IDs instead.
+        /// </summary>
+        /// <param name="g">A CustomPropertyManager.</param>
+        /// <param name="dt">Drawing or Model?</param>
+        public void ParsePropertyData(CustomPropertyManager g, swDocumentTypes_e dt)
         {
-            string valOut;
-            string resValOut;
-            bool wasResolved;
-            int res;
+            string valOut = string.Empty;
+            string resValOut = string.Empty;
+            bool wasResolved = false;
+            int res = 0;
             string[] ss = g.GetNames();
 
             if (ss != null)
@@ -253,82 +192,82 @@ namespace Redbrick_Addin
                     if (p.Name.ToUpper().StartsWith("OVER"))
                     {
                         p.Global = true;
-                        p.Type = swCustomInfoType_e.swCustomInfoDouble;
+                        p.Type = swCustomInfoType_e.swCustomInfoDouble;                         // Make sure OVERs are doubles.
                     }
 
-                    if (p.Name.ToUpper().StartsWith("CUTLIST"))
+                    if (p.Name.ToUpper().StartsWith("CUTLIST"))                                 // Cutlist material.
                     {
                         p.Global = false;
                         p.Type = swCustomInfoType_e.swCustomInfoNumber;
                         p.Table = "CLPARTID";
                         p.Field = "MATID";
                         int tp = 0;
-                        if (int.TryParse(p.Value, out tp))
+                        if (int.TryParse(p.Value, out tp))                                      // Is it numerical? Then it's an ID.
                         {
                             if (tp > 0)
                             {
                                 p.ResValue = this.cutlistData.GetMaterialByID(p.Value);
                             }
-                            else
+                            else                                                                // No mat.
                             {
-                                p.ResValue = string.Empty;
+                                p.ResValue = "2929";                                            // "TBD MATERIAL"
                             }
                         }
-                        else
+                        else                                                               
                         {
-                            p.Value = this.cutlistData.GetMaterialID(p.ResValue).ToString();
+                            p.Value = this.cutlistData.GetMaterialID(p.ResValue).ToString();    // Not numerical; must have a descr. Let's get an ID.
                         }
                     }
 
-                    if (p.Name.ToUpper().StartsWith("EDGE"))
+                    if (p.Name.ToUpper().StartsWith("EDGE"))                                    // Cutlist edge.
                     {
                         p.Global = false;
                         p.Type = swCustomInfoType_e.swCustomInfoNumber;
                         p.Table = "CLPARTID";
                         p.Field = "EDGEID_{0}";
                         int tp = 0;
-                        if (int.TryParse(p.Value, out tp))
+                        if (int.TryParse(p.Value, out tp))                                      // Is it numerical? We have an ID.
                         {
                             if (tp > 0)
                             {
                                 p.ResValue = this.cutlistData.GetEdgeByID(p.Value);
                             }
-                            else
+                            else                                                                // No edge.
                             {
-                                p.ResValue = string.Empty;
+                                p.ResValue = string.Empty;                                      // It's OK for edging to not exist.
                             }
                         }
                         else
                         {
-                            p.Value = this.cutlistData.GetEdgeID(p.ResValue).ToString();
+                            p.Value = this.cutlistData.GetEdgeID(p.ResValue).ToString();        // When life gives you descrs, make IDs.
                         }
                     }
 
-                    if (p.Name.ToUpper().Contains("OP"))
+                    if (p.Name.ToUpper().Contains("OP"))                                        // Handle ops. Good thing we've got the dept figured out!
                     {
                         p.Global = true;
                         p.Type = swCustomInfoType_e.swCustomInfoNumber;
                         p.Table = "CUT_PARTS";
                         p.Field = "OP{0}ID";
                         int tp = 0;
-                        if (int.TryParse(p.Value, out tp))
+                        if (int.TryParse(p.Value, out tp))                                      // Are we numerical?
                         {
                             if (tp > 0)
                             {
                                 p.ResValue = this.cutlistData.GetOpByID(p.Value);
                             }
-                            else
+                            else                                                                // Nothing in there.
                             {
-                                p.ResValue = string.Empty;
+                                p.ResValue = string.Empty;                                      // It's ok to nop.
                             }
                         }
                         else
                         {
-                            if (p.ResValue.Length < 4 && p.ResValue != string.Empty)
-                            {
-                                List<string> dr = this.cutlistData.GetOpDataByName(p.ResValue.ToString());
-                                p.Value = dr[0]; //this.cutlistData.GetOpIDByName(p.ResValue).ToString();
-                                p.ResValue = dr[2]; // this.cutlistData.GetOpByID(p.Value);
+                            if (p.ResValue.Length < 4)                                                      // When it's not numerical, it's probably
+                            {                                                                               // abbreviated.
+                                List<string> dr = this.cutlistData.GetOpDataByName(p.ResValue.ToString());  // Getting datarows leads to trouble here
+                                p.Value = dr[0];                                                            // if they're empty.
+                                p.ResValue = dr[2];
                             }
                             else
                             {
@@ -339,7 +278,7 @@ namespace Redbrick_Addin
                     }
 
                     p.SwApp = this.swApp;
-                    if (!this.Contains(p))
+                    if (!this.Contains(p))                                                                  // Let's add it if we don't already have it.
                     {
                         this._innerArray.Add(p);   
                     }
@@ -349,14 +288,14 @@ namespace Redbrick_Addin
                 }
             }
 
-            if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
+            if (dt == swDocumentTypes_e.swDocDRAWING)                                                           // Well, now, if it's a drawing...
             {
                 ss = (string[])g.GetNames();
                 if (ss != null)
                 {
                     foreach (string s in ss)
                     {
-                        res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
+                        res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);                     // We can just pull data. Nice!
                         SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
                         p.ResValue = resValOut;
                         p.Type = (swCustomInfoType_e)g.GetType2(s);
@@ -369,7 +308,7 @@ namespace Redbrick_Addin
                 }
                 else
                 {
-                    this.CreateDefaultDrawingSet();
+                    this.CreateDefaultDrawingSet();                                                             // Nothing in there. Let's make stuff up.
                 }
             }
         }
@@ -384,11 +323,11 @@ namespace Redbrick_Addin
 #endif
                 p.SwApp = this.swApp;
                 if (p.Name.ToUpper() == "LENGTH" || p.Name.ToUpper() == "WIDTH"
-                    || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS")
+                    || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS")  // Only these fields get resolved to something.
                 {
                     c.Text = p.Value;
                 }
-                else
+                else                                                                            // Otherwise I'm using ResValue to carry cutlist descrs.
                 {
                     c.Text = p.ResValue;
                 }
@@ -402,38 +341,10 @@ namespace Redbrick_Addin
             }
         }
 
-        public bool SWContains(string property)
-        {
-            ModelDoc2 md = (ModelDoc2)swApp.ActiveDoc;
-            Configuration conf = md.ConfigurationManager.ActiveConfiguration;
-            CustomPropertyManager gp = md.Extension.get_CustomPropertyManager(string.Empty);
-            CustomPropertyManager sp = md.Extension.get_CustomPropertyManager(conf.Name);
-            string[] ss = (string[])gp.GetNames();
-
-            foreach (string s in ss)
-            {
-                if (s.ToUpper() == property.ToUpper())
-                {
-                    return true;
-                }
-            }
-
-            if ((swDocumentTypes_e)md.GetType() != swDocumentTypes_e.swDocDRAWING)
-            {
-                ss = (string[])sp.GetNames();
-
-                foreach (string s in ss)
-                {
-                    if (s.ToUpper() == property.ToUpper())
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
+        /// <summary>
+        /// Clear out everything the doc has on the config specific side.
+        /// </summary>
+        /// <param name="md">A ModelDoc2 object.</param>
         public void DelSpecific(ModelDoc2 md)
         {
             Configuration conf = md.ConfigurationManager.ActiveConfiguration;
@@ -537,14 +448,6 @@ namespace Redbrick_Addin
             {
                 p.Del(md);
                 p.Write(md);
-            }
-        }
-
-        public void Write(SldWorks sw, ModelDoc2 md)
-        {
-            foreach (SwProperty p in this._innerArray)
-            {
-                p.Write(sw, md);
             }
         }
 

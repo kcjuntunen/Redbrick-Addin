@@ -9,7 +9,13 @@ namespace Redbrick_Addin
 {
     public class SwProperty
     {
-
+        /// <summary>
+        /// Contructor with vars.
+        /// </summary>
+        /// <param name="PropertyName">This is more or less permanent, and yan't add one if it already exists.</param>
+        /// <param name="swType">This gets reassigned appropriately on write because so many old models have it wrong.</param>
+        /// <param name="testValue">Unresolved val.</param>
+        /// <param name="global">This gets reassigned appropriately on write because so many old models have it wrong.</param>
         public SwProperty(string PropertyName, swCustomInfoType_e swType, string testValue, bool global)
         {
             this.Name = PropertyName;
@@ -18,6 +24,9 @@ namespace Redbrick_Addin
             this.Global = global;
         }
 
+        /// <summary>
+        /// Contructs a stub property.
+        /// </summary>
         public SwProperty()
         {
             string n = "STUB" + DateTime.Now.ToLongTimeString();
@@ -39,71 +48,14 @@ namespace Redbrick_Addin
             if (this.SwApp != null)
             {
                 ModelDoc2 md = (ModelDoc2)this.SwApp.ActiveDoc;
-                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
-
-                CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                
-                
-                if (cf != null)
-                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
-                
-                
-                swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
-                
-                int res;
-                if (this.Global)
-                {
-                    if (this.Name.Contains("OP"))
-                    {
-                        string v = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
-                        res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-#if DEBUG
-                        System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
-#endif
-                    }
-                    else
-                    {
-                        if (this.Name.Contains("EDGE") || this.Name.Contains("CUTLIST MATERIAL"))
-                        {
-                            string v = "0";
-                            if ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null)
-                                v = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
-
-                            res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-#if DEBUG
-                            System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
-                        }
-                        else
-                        {
-                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
-                        }
-                    }
-                }
-                else
-                {
-                    if (this.Name.Contains("EDGE") || this.Name.Contains("CUTLIST MATERIAL"))
-                    {
-                        string v = "0";
-                        if ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null)
-                            v = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
-
-                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-#if DEBUG
-                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
-                    }
-                }
-            }
-            else
-            {
-#if DEBUG
-                System.Diagnostics.Debug.Print(string.Format("{0}: SwApp is undefined", this.Name));
-#endif
+                this.Write(md);
             }
         }
 
+        /// <summary>
+        /// Define this.SwApp, then use it to write on the active document.
+        /// </summary>
+        /// <param name="sw">SwApp</param>
         public void Write(SldWorks sw)
         {
             if (sw != null)
@@ -121,6 +73,10 @@ namespace Redbrick_Addin
             }
         }
 
+        /// <summary>
+        /// Writes data using the custom property managers of a selected ModelDoc2.
+        /// </summary>
+        /// <param name="md">A ModelDoc2 object</param>
         public void Write(ModelDoc2 md)
         {
             if (this.SwApp != null)
@@ -130,15 +86,18 @@ namespace Redbrick_Addin
                 CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
                 CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
 
+                // Null reference on drawings. Not good. Let's just make everything global if there's no config.
                 if (cf != null)
                     scpm = md.Extension.get_CustomPropertyManager(cf.Name);
 
-
+                // Rather than changing values, we'll just completely overwrite them.
                 swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
 
+                // This is for checking if the writing actually happened. It usually does. Don't know what I'd do if it didn't.
                 int res;
                 if (this.Global)
                 {
+                    // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
                     if (this.Name.Contains("OP"))
                     {
                         System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
@@ -148,13 +107,14 @@ namespace Redbrick_Addin
                         System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
     #endif
                     }
-                    else
+                    else // Regular text, double, and date type global props can just be written.
                     {
                         res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
                     }
                 }
-                else
+                else // Configuration specific props.
                 {
+                    // We only want material and edging here. It'll get ID #s from the datarow in the combobox.
                     if (this.Name.Contains("EDGE") || this.Name.Contains("CUTLIST MATERIAL"))
                     {
                         string v = "0";
@@ -176,43 +136,9 @@ namespace Redbrick_Addin
             }
         }
 
-        public void Write(SldWorks sw, ModelDoc2 md)
-        {
-            if (sw != null)
-            {
-                this.SwApp = sw;
-                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
-
-                CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                CustomPropertyManager scpm;
-                if (cf != null)
-                {
-                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
-                }
-                else
-                {
-                    scpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                }
-
-                swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
-                int res;
-
-                if (this.Global)
-                    res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
-                else
-                    res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
-#if DEBUG
-                System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
-            }
-            else
-            {
-#if DEBUG
-                System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
-            }
-        }
-
+        /// <summary>
+        /// Directly draws from SW.
+        /// </summary>
         public void Get()
         {
             if (this.SwApp != null)
@@ -263,6 +189,10 @@ namespace Redbrick_Addin
                 }
         }
 
+        /// <summary>
+        /// Directly draws from SW, assinging SwApp.
+        /// </summary>
+        /// <param name="sw">SwApp</param>
         public void Get(SldWorks sw)
         {
             if (sw != null)
@@ -313,6 +243,11 @@ namespace Redbrick_Addin
             }
         }
 
+        /// <summary>
+        /// Directly draws from SW, assinging SwApp. Why do I have all these?
+        /// </summary>
+        /// <param name="md">A ModelDoc2.</param>
+        /// <param name="cd">The Cutlist handler.</param>
         public void Get(ModelDoc2 md, CutlistData cd)
         {
             Configuration cf = md.ConfigurationManager.ActiveConfiguration;
@@ -368,7 +303,7 @@ namespace Redbrick_Addin
                     if (int.TryParse(this._value, out tp))
                     {
                         this.ID = this._resValue;
-                        this._value = cd.GetMaterialByID(this._resValue);   
+                        this._value = cd.GetMaterialByID(this._resValue);
                     }
                     else
                     {
@@ -382,7 +317,7 @@ namespace Redbrick_Addin
                     if (int.TryParse(this._value, out tp))
                     {
                         this.ID = this._resValue;
-                        this._value = cd.GetEdgeByID(this._resValue);   
+                        this._value = cd.GetEdgeByID(this._resValue);
                     }
                     else
                     {
@@ -395,6 +330,9 @@ namespace Redbrick_Addin
 #endif
         }
 
+        /// <summary>
+        /// Deletes the prop from the SW doc.
+        /// </summary>
         public void Del()
         {
             if (this.SwApp != null)
@@ -428,6 +366,10 @@ namespace Redbrick_Addin
             }
         }
 
+        /// <summary>
+        /// Deletes the prop from the SW doc, assigning the SwApp object.
+        /// </summary>
+        /// <param name="sw"></param>
         public void Del(SldWorks sw)
         {
             if (sw != null)
@@ -462,6 +404,10 @@ namespace Redbrick_Addin
             }
         }
 
+        /// <summary>
+        /// Deletes the prop from the selected ModelDoc2 object.
+        /// </summary>
+        /// <param name="md">A ModelDoc2 object.</param>
         public void Del(ModelDoc2 md)
         {
             Configuration cf = md.ConfigurationManager.ActiveConfiguration;
