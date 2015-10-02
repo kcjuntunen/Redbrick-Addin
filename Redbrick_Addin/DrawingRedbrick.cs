@@ -242,35 +242,17 @@ namespace Redbrick_Addin
             Properties.Settings.Default.Save();
         }
 
-        //private void dataGridTest()
-        //{
-        //    System.Windows.Forms.MessageBox.Show("Inside dataGridTest();");
-        //    CalendarColumn col = new CalendarColumn();
-            //DataGridViewColumn col = new DataGridViewColumn();
-
-            //System.Windows.Forms.MessageBox.Show("DataGridViewColumn col = new DataGridViewColumn();");
-            //this.lbRevs.Columns.Add(col);
-            //System.Windows.Forms.MessageBox.Show("this.lbRevs.Columns.Add(col);");
-            //this.lbRevs.RowCount = 5;
-            
-            //System.Windows.Forms.MessageBox.Show(this.lbRevs.RowCount.ToString());
-
-            //foreach (DataGridViewRow r in this.lbRevs.Rows)
-            //{
-            //    try
-            //    {
-            //        r.Cells[0].Value = DateTime.Now;
-            //    }
-            //    catch (Exception)
-            //    {
-            //        System.Diagnostics.Debug.Print("Whoops");
-            //    }
-            //}
-        //}
-
         private void lbRevs_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
 
+        }
+
+        public void Write(DrawingDoc doc)
+        {
+            this.PropertySet.ReadControls();
+            this.PropertySet.Write(this.SwApp);
+            this.RevSet.Write(this.SwApp);
+            (this.SwApp.ActiveDoc as DrawingDoc).ForceRebuild();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -289,10 +271,10 @@ namespace Redbrick_Addin
 #endif
             this.PropertySet.Write(this.SwApp);
             this.RevSet.Write(this.SwApp);
-
-            EventHandler eh = Closing;
-            if (eh != null)
-                eh(this, e);
+            (this.SwApp.ActiveDoc as DrawingDoc).ForceRebuild();
+            //EventHandler eh = Closing;
+            //if (eh != null)
+            //    eh(this, e);
         }
 
         protected virtual void OnCheckedChanged(EventArgs e)

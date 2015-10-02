@@ -217,7 +217,7 @@ namespace Redbrick_Addin
             if (description == string.Empty)
                 return 0;
 
-            string SQL = string.Format("SELECT EDGEID FROM CUT_EDGES WHERE OPDESCR = '{0}'", description);
+            string SQL = string.Format("SELECT EDGEID FROM CUT_EDGES WHERE DESCR = '{0}'", description);
             OdbcCommand comm = new OdbcCommand(SQL, conn);
             OdbcDataReader dr = comm.ExecuteReader();
             if (dr.HasRows)

@@ -35,6 +35,7 @@ namespace Redbrick_Addin
         Ops op;
 
         ModelRedbrick mrb;
+        DrawingRedbrick drb;
 
         private bool AssmEventsAssigned = false;
         private bool PartEventsAssigned = false;
@@ -92,6 +93,7 @@ namespace Redbrick_Addin
          private void ConnectSelection()
         {
             this.prop = new SwProperties(this._swApp);
+            this.prop.Clear();
             this.prop.GetPropertyData(this.Document);
             swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();
             switch (docT)
@@ -149,7 +151,8 @@ namespace Redbrick_Addin
 
         private void SetupDrawing()
         {
-            this.Controls.Add(new DrawingRedbrick(this._swApp));
+            drb = new DrawingRedbrick(this._swApp);
+            this.Controls.Add(drb);
             foreach (Control item in this.Controls)
             {
                 item.Dock = DockStyle.Fill;
@@ -337,13 +340,16 @@ namespace Redbrick_Addin
 
         public void Write()
         {
-            this.prop.ReadControls();
-            //System.Windows.Forms.MessageBox.Show(this.prop.ToString());
-            this.prop.Write(this.Document);
-
             if (this.PartSetup)
             {
+                this.mrb.Write(this.Document);
+                this.ConnectSelection();
                 this.mrb.Update(ref this.prop);
+            }
+
+            if (this.DrawSetup)
+            {
+                this.drb.Write((DrawingDoc)this._swApp.ActiveDoc);
             }
         }
 

@@ -105,33 +105,12 @@ namespace Redbrick_Addin
             if (sw != null)
             {
                 this.SwApp = sw;
-                ModelDoc2 md = (ModelDoc2)sw.ActiveDoc;
-                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
-
-                CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                CustomPropertyManager scpm;
-                if (cf != null)
-                {
-                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
-                }
-                else
-                {
-                    scpm = md.Extension.get_CustomPropertyManager(string.Empty);
-                }
-
-                swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
-                int res;
-
-                if (this.Global)
-                    res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
-                else
-                    res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
-#if DEBUG
-                System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
+                this.Write();
             }
             else
             {
+                if (this.SwApp != null)
+                    this.Write();
 #if DEBUG
                 System.Diagnostics.Debug.Print("SwApp is undefined");
 #endif

@@ -169,22 +169,24 @@ namespace Redbrick_Addin
 
         public void GetPropertyData(ModelDoc2 md)
         {
-            
-            if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
+            if (md != null)
             {
-                CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-                this.ParsePropertyData(g, md);
-            }
-            else
-            {
-                CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-                Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
-                CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
+                if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
+                {
+                    CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+                    this.ParsePropertyData(g, md);
+                }
+                else
+                {
+                    CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
+                    Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
+                    CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
 
-                this.cutlistData.OpType = ParseDept(md);
+                    this.cutlistData.OpType = ParseDept(md);
 
-                this.ParsePropertyData(g, md);
-                this.ParsePropertyData(s, md);
+                    this.ParsePropertyData(g, md);
+                    this.ParsePropertyData(s, md);
+                }
             }
         }
 
@@ -196,7 +198,10 @@ namespace Redbrick_Addin
 
             string[] sa = g.GetNames();
             List<string> ss = new List<string>();
-            ss.AddRange(sa);
+
+            if (sa != null)
+                ss.AddRange(sa);
+
             int res;
             bool useCached = false;
             string val = "WOOD";
@@ -337,25 +342,28 @@ namespace Redbrick_Addin
 #endif
                 }
             }
-            else
-            {
-                this.CreateDefaultDrawingSet();
-            }
 
             if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
             {
                 ss = (string[])g.GetNames();
-                foreach (string s in ss)
+                if (ss != null)
                 {
-                    res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
-                    SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
-                    p.ResValue = resValOut;
-                    p.Type = (swCustomInfoType_e)g.GetType2(s);
-                    p.SwApp = this.swApp;
+                    foreach (string s in ss)
+                    {
+                        res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
+                        SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
+                        p.ResValue = resValOut;
+                        p.Type = (swCustomInfoType_e)g.GetType2(s);
+                        p.SwApp = this.swApp;
 #if DEBUG
-                    System.Diagnostics.Debug.Print(s);
+                        System.Diagnostics.Debug.Print(s);
 #endif
-                    this._innerArray.Add(p);
+                        this._innerArray.Add(p);
+                    }
+                }
+                else
+                {
+                    this.CreateDefaultDrawingSet();
                 }
             }
         }
@@ -420,6 +428,21 @@ namespace Redbrick_Addin
             return false;
         }
 
+        public void DelSpecific(ModelDoc2 md)
+        {
+            Configuration conf = md.ConfigurationManager.ActiveConfiguration;
+            if (conf != null)
+            {
+                CustomPropertyManager sp = md.Extension.get_CustomPropertyManager(conf.Name);
+                string[] ss = (string[])sp.GetNames();
+
+                foreach (string s in ss)
+                {
+                    sp.Delete2(s);
+                }   
+            }
+        }
+
         public virtual IEnumerator<SwProperty> GetEnumerator()
         {
             return (new List<SwProperty>(this).GetEnumerator());
@@ -456,8 +479,8 @@ namespace Redbrick_Addin
                     return p;
                 }
             }
-
-            return null;
+            SwProperty q = new SwProperty(name, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+            return q;
         }
 
         public void ReadProperties()
@@ -503,6 +526,7 @@ namespace Redbrick_Addin
 
         public void Write(ModelDoc2 md)
         {
+            this.DelSpecific(md);
             foreach (SwProperty p in this._innerArray)
             {
                 p.Del(md);

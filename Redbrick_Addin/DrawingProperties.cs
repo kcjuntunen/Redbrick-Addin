@@ -200,22 +200,30 @@ namespace Redbrick_Addin
             ModelDoc2 md = (ModelDoc2)this._swApp.ActiveDoc;
             CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
             int res;
+            string[] ss = (string[])glP.GetNames();
 
-            res = glP.Delete2("PartNo");
-            res = glP.Delete2("CUSTOMER");
-            res = glP.Delete2("REVISION LEVEL");
-            res = glP.Delete2("DrawnBy");
-            res = glP.Delete2("DATE");
-            res = glP.Delete2("M1");
-            res = glP.Delete2("FINISH 1");
-            res = glP.Delete2("M2");
-            res = glP.Delete2("FINISH 2");
-            res = glP.Delete2("M3");
-            res = glP.Delete2("FINISH 3");
-            res = glP.Delete2("M4");
-            res = glP.Delete2("FINISH 4");
-            res = glP.Delete2("M5");
-            res = glP.Delete2("FINISH 5");
+            if (ss != null)
+            {
+                foreach (string s in ss)
+                {
+                    glP.Delete2(s);
+                }
+            }
+            //res = glP.Delete2("PartNo");
+            //res = glP.Delete2("CUSTOMER");
+            //res = glP.Delete2("REVISION LEVEL");
+            //res = glP.Delete2("DrawnBy");
+            //res = glP.Delete2("DATE");
+            //res = glP.Delete2("M1");
+            //res = glP.Delete2("FINISH 1");
+            //res = glP.Delete2("M2");
+            //res = glP.Delete2("FINISH 2");
+            //res = glP.Delete2("M3");
+            //res = glP.Delete2("FINISH 3");
+            //res = glP.Delete2("M4");
+            //res = glP.Delete2("FINISH 4");
+            //res = glP.Delete2("M5");
+            //res = glP.Delete2("FINISH 5");
         }
 
         public void Write()

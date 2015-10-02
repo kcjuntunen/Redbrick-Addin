@@ -75,6 +75,18 @@ namespace Redbrick_Addin
             this.mp.Update(ref p);
         }
 
+        public void Write(ModelDoc2 doc)
+        {
+            this.props.ReadControls();
+            //System.Windows.Forms.MessageBox.Show(this.prop.ToString());
+            this.props.Write(doc);
+            doc.ForceRebuild3(false);
+            int err = 0;
+            int wrn = 0;
+            swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
+            doc.Save3((int)op, ref err, ref wrn);
+        }
+
         public void ResizeGroups(int opType)
         {
             if (opType == 2)
