@@ -31,6 +31,9 @@ namespace Redbrick_Addin
             this.Table = "[No]";
         }
 
+        /// <summary>
+        /// Write assuming we already have SwApp defined.
+        /// </summary>
         public void Write()
         {
             if (this.SwApp != null)
@@ -40,6 +43,7 @@ namespace Redbrick_Addin
 
                 CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
                 CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                
                 
                 if (cf != null)
                     scpm = md.Extension.get_CustomPropertyManager(cf.Name);

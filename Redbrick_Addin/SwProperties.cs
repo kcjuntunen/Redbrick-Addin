@@ -19,6 +19,9 @@ namespace Redbrick_Addin
             get { return this.swApp; }
         }
 
+        public ModelDoc2 modeldoc { get; set; }
+        public string configName { get; set; }
+
         public SwProperties(SldWorks sw)
         {
             this.swApp = sw;
@@ -169,6 +172,7 @@ namespace Redbrick_Addin
 
         public void GetPropertyData(ModelDoc2 md)
         {
+            this.modeldoc = md;
             if (md != null)
             {
                 if ((swDocumentTypes_e)md.GetType() == swDocumentTypes_e.swDocDRAWING)
@@ -181,9 +185,9 @@ namespace Redbrick_Addin
                     CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
                     Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
                     CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
-
+                    
                     this.cutlistData.OpType = ParseDept(md);
-
+                    this.configName = c.Name;
                     this.ParsePropertyData(g, md);
                     this.ParsePropertyData(s, md);
                 }
@@ -215,7 +219,9 @@ namespace Redbrick_Addin
             else
             {
                 sa = s.GetNames();
-                ss.AddRange(sa);
+                
+                if (sa != null)
+                    ss.AddRange(sa);
 
                 if (ss.Contains("DEPARTMENT"))
                 {

@@ -70,6 +70,7 @@ namespace Redbrick_Addin
             this.props = p;
             this.ds.Update(ref p);
             this.cs.Update(ref p);
+            this.gbSpecProp.Text = "Configuration Specific - " + p.configName;
             this.gp.Update(ref p);
             this.op.Update(ref p);
             this.mp.Update(ref p);

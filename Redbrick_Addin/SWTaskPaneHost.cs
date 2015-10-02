@@ -27,6 +27,8 @@ namespace Redbrick_Addin
         protected SwProperties prop;
 
         protected AssemblyDoc ad;
+        protected PartDoc pd;
+        protected DrawingDoc dd;
 
         DepartmentSelector ds;
         ConfigurationSpecific cs;
@@ -157,6 +159,7 @@ namespace Redbrick_Addin
             {
                 item.Dock = DockStyle.Fill;
             }
+            this.ConnectDrawingEvents();
             this.DrawSetup = true;
         }
 
@@ -183,6 +186,7 @@ namespace Redbrick_Addin
             this.op = mrb.aOps;
             /* this.LinkControls(mrb.aConfigurationSpecific, mrb.aGeneralProperties, mrb.aMachineProperties, mrb.aOps); */
             //this.dockeverything(mrb);
+            this.ConnectPartEvents();
             this.PartSetup = true;
         }
 
@@ -225,12 +229,12 @@ namespace Redbrick_Addin
             this.LinkControlToProperty("OP5", op.GetOp5Box());
         }
 
-        void ds_CheckedChanged(object sender, EventArgs e)
-        {
-            op.RefreshOps(ds.OpType);
-            cs.ToggleFields(ds.OpType);
-            gp.ToggleFields(ds.OpType);
-        }
+        //void ds_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    op.RefreshOps(ds.OpType);
+        //    cs.ToggleFields(ds.OpType);
+        //    gp.ToggleFields(ds.OpType);
+        //}
 
         private void ClearControls(Control c)
         {
@@ -244,7 +248,9 @@ namespace Redbrick_Addin
                 }
                 c.Controls.Remove(item);
             }
-            DisconnectAssemblyEvents();
+            this.DisconnectAssemblyEvents();
+            this.DisconnectPartEvents();
+            this.DisconnectDrawingEvents();
         }
 
         private void SetupOther()
@@ -272,6 +278,25 @@ namespace Redbrick_Addin
             }
         }
 
+        private void ConnectDrawingEvents()
+        {
+            if (this.Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING && !this.DrawEventsAssigned)
+            {
+                dd = (DrawingDoc)this.Document;
+                this.DrawEventsAssigned = true;
+            }
+        }
+
+        private void ConnectPartEvents()
+        {
+            if (this.Document.GetType() == (int)swDocumentTypes_e.swDocPART && !this.PartEventsAssigned)
+            {
+                pd = (PartDoc)this.Document;
+                pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
+                this.PartEventsAssigned = true;
+            }
+        }
+
         private void DisconnectAssemblyEvents()
         {
             if (this.AssmEventsAssigned)
@@ -281,6 +306,23 @@ namespace Redbrick_Addin
                 ad.ActiveDisplayStateChangePostNotify -= ad_ActiveDisplayStateChangePostNotify;
                 ad.ActiveViewChangeNotify -= ad_ActiveViewChangeNotify;
                 this.AssmEventsAssigned = false;
+            }
+        }
+
+        private void DisconnectPartEvents()
+        {
+            if (this.PartEventsAssigned)
+            {
+                pd.ActiveConfigChangePostNotify -= pd_ActiveConfigChangePostNotify;
+                this.PartEventsAssigned = false;
+            }
+        }
+
+        private void DisconnectDrawingEvents()
+        {
+            if (this.DrawEventsAssigned)
+            {
+                this.DrawEventsAssigned = false;
             }
         }
 
@@ -320,22 +362,11 @@ namespace Redbrick_Addin
             return 0;
         }
 
-        private void ConnectDrawingEvents()
-        {
-            if (this.Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
-            {
-                DrawingDoc dd = (DrawingDoc)this.Document;
-                
 
-            }
-        }
-
-        private void ConnectPartEvents()
+        int pd_ActiveConfigChangePostNotify()
         {
-            if (this.Document.GetType() == (int)swDocumentTypes_e.swDocPART)
-            {
-                PartDoc pd = (PartDoc)this.Document;
-            }
+            this.ConnectSelection();
+            return 0;
         }
 
         public void Write()

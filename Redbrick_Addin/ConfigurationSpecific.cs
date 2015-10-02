@@ -39,6 +39,7 @@ namespace Redbrick_Addin
         public void Update(ref SwProperties prop)
         {
             this.propertySet = prop;
+            this.configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
             this.cd = prop.cutlistData;
             this._edgeDiffL = 0.0;
             this._edgeDiffW = 0.0;
@@ -312,6 +313,8 @@ namespace Redbrick_Addin
 
             this.UpdateDiffW(this.cbEl, this.cbEr);
         }
+
+        public string configurationName { get; set; }
 
         public ComboBox GetCutlistMatBox()
         {
