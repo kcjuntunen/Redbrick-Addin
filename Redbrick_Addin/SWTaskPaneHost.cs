@@ -55,7 +55,7 @@ namespace Redbrick_Addin
         public void Start()
         {
             this.SwApp = this.RequestSW();
-
+            this.prop = new SwProperties(this._swApp);
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
             this.Document = this.SwApp.ActiveDoc;
@@ -81,8 +81,7 @@ namespace Redbrick_Addin
         }
 
          private void ConnectSelection()
-        {
-            //this.prop = new SwProperties(this._swApp);                          
+        {                          
             this.prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
             this.prop.GetPropertyData(this.Document);                               // get new ones.
             swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();    // what sort of doc is open?
