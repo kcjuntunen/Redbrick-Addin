@@ -72,7 +72,7 @@ namespace Redbrick_Addin
             this.gbSpecProp.Text = "Configuration Specific - " + p.configName;
             this.gp.Update(ref p);
             this.op.Update(ref p);
-            this.mp.Update(ref p);
+            this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
         }
 
         public void Write(ModelDoc2 doc)

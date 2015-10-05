@@ -45,6 +45,8 @@ namespace Redbrick_Addin
             this._edgeDiffW = 0.0;
             this.LinkControls();
             this.ToggleFields(cd.OpType);
+            this.UpdateDiffL(this.cbEf, this.cbEb);
+            this.UpdateDiffW(this.cbEl, this.cbEr);
         }
 
         private void LinkControls()
