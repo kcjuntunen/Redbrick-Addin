@@ -28,7 +28,7 @@
   &lt;string&gt;DH&lt;/string&gt;
   &lt;string&gt;ED&lt;/string&gt;
   &lt;string&gt;JB&lt;/string&gt;
-  &lt;string&gt;KC&lt;/string&gt;
+  &lt;string&gt;KJ&lt;/string&gt;
   &lt;string&gt;KL&lt;/string&gt;
   &lt;string&gt;LF&lt;/string&gt;
   &lt;string&gt;SP&lt;/string&gt;
@@ -82,11 +82,8 @@
   &lt;string&gt;WALMART - 505&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="Width" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="Height" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="EditRevLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">100, 100</Value>
     </Setting>
   </Settings>
 </SettingsFile>

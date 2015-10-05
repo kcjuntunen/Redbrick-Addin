@@ -359,6 +359,7 @@ namespace Redbrick_Addin
                 e.Revision = ReturnString(dr, 5);
                 e.Status = ReturnString(dr, 3);
                 e.RequestedBy = ReturnString(dr, 0) + " " + ReturnString(dr, 1);
+                dr.Close();
             }
             return e;
         }
@@ -392,6 +393,31 @@ namespace Redbrick_Addin
                 return ds;
         }
 
+        public string GetAuthorUserName(string initial)
+        {
+            if (initial == string.Empty)
+                return string.Empty;
+
+            string SQL = string.Format("SELECT username FROM GEN_USERS WHERE INITIAL LIKE '{0}%';", initial);
+            OdbcCommand comm = new OdbcCommand(SQL, conn);
+            while (conn.State == ConnectionState.Fetching)
+            {
+
+            }
+            OdbcDataReader dr = comm.ExecuteReader();
+            
+            if (dr.HasRows)
+            {
+                string x = dr.GetString(0);
+                dr.Close();
+                return x;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         private string ReturnString(OdbcDataReader dr, int i)
         {
             if (dr.HasRows)
@@ -402,7 +428,8 @@ namespace Redbrick_Addin
                 }
                 else
                 {
-                    return dr.GetValue(i).ToString();
+                    string returnString = dr.GetValue(i).ToString();
+                    return returnString;
                 }
             }
             return string.Empty;

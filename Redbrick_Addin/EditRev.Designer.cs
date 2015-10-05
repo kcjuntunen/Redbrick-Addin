@@ -28,6 +28,8 @@ namespace Redbrick_Addin
         /// </summary>
         private void InitializeComponent()
         {
+            this.Location = Properties.Settings.Default.EditRevLocation;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,6 +49,9 @@ namespace Redbrick_Addin
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditRev_FormClosing);
+            this.ResumeLayout(false);
+	
             // 
             // tableLayoutPanel1
             // 

@@ -263,7 +263,7 @@ namespace Redbrick_Addin
                         }
                         else
                         {
-                            if (p.ResValue.Length < 4)                                                      // When it's not numerical, it's probably
+                            if (p.ResValue.Length < 4 && p.ResValue != string.Empty)                        // When it's not numerical, it's probably
                             {                                                                               // abbreviated.
                                 List<string> dr = this.cutlistData.GetOpDataByName(p.ResValue.ToString());  // Getting datarows leads to trouble here
                                 p.Value = dr[0];                                                            // if they're empty.

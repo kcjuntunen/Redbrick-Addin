@@ -24,7 +24,7 @@ namespace Redbrick_Addin
         private void Init()
         {
             CutlistData cd = new CutlistData();
-            
+
             this.cbBy.DataSource = cd.GetAuthors().Tables[0];
             this.cbBy.DisplayMember = "INITIAL";
             this.cbBy.ValueMember = "INITIAL";
@@ -41,7 +41,7 @@ namespace Redbrick_Addin
                 DrawingRev r = this.Revs.GetRev(theRev);
                 this.tbECO.Text = r.Eco.Value;
                 this.tbDesc.Text = r.Description.Value;
-                this.cbBy.SelectedIndex = this.GetIndex((cbBy.DataSource as DataTable), this.cbBy.Text);
+                this.cbBy.SelectedIndex = this.GetIndex((cbBy.DataSource as DataTable), cd.GetAuthorUserName(r.List.Value));
                 this.Text = "Editing " + theRev + "...";
             }
 
@@ -115,9 +115,16 @@ namespace Redbrick_Addin
                 this.Revs.Add(r);
             }
 #if DEBUG
-            System.Windows.Forms.MessageBox.Show(this.Revs.ToString());
+            //System.Windows.Forms.MessageBox.Show(this.Revs.ToString());
 #endif
             this.Close();
+        }
+
+
+        private void EditRev_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.EditRevLocation = this.Location;
+            Properties.Settings.Default.Save();
         }
 
         private DrawingRevs _revs;
@@ -127,6 +134,5 @@ namespace Redbrick_Addin
             get { return _revs; }
             set { _revs = value; }
         }
-	
     }
 }
