@@ -21,6 +21,9 @@ namespace Redbrick_Addin
         private GeneralProperties gp;
         private MachineProperties mp;
         private Ops op;
+
+        private bool deptEvents = false;
+
         protected SwProperties props;
 
         public ModelRedbrick(ref SwProperties p)
@@ -66,6 +69,7 @@ namespace Redbrick_Addin
 
         public void Update(ref SwProperties p)
         {
+            this.TearDownDeptSelectEvent();
             this.props = p;                                                     // Order matters here. The first thing SwProperties does informs what ds
             this.ds.Update(ref p);                                              // does. Ds informs these other guys.
             this.cs.Update(ref p);
@@ -73,6 +77,24 @@ namespace Redbrick_Addin
             this.gp.Update(ref p);
             this.op.Update(ref p);
             this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
+            this.SetupDeptSelectEvent();
+        }
+
+        private void SetupDeptSelectEvent()
+        {
+            if (!this.deptEvents)
+                this.ds.Selected += ds_Selected;
+        }
+
+        private void TearDownDeptSelectEvent()
+        {
+            if (this.deptEvents)
+                this.ds.Selected -= ds_Selected; 
+        }
+
+        void ds_Selected(object d, EventArgs e)
+        {
+            this.op.Update(ref this.props);
         }
 
         public void Write(ModelDoc2 doc)

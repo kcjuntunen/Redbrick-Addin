@@ -39,7 +39,6 @@ namespace Redbrick_Addin
             this.cbDepartment.Name = "cbDepartment";
             this.cbDepartment.Size = new System.Drawing.Size(153, 21);
             this.cbDepartment.TabIndex = 0;
-            this.cbDepartment.SelectedIndexChanged += new System.EventHandler(this.cbDepartment_SelectedIndexChanged);
             // 
             // DepartmentSelector
             // 

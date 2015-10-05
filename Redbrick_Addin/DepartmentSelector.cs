@@ -23,27 +23,48 @@ namespace Redbrick_Addin
             this.cbDepartment.ValueMember = "TYPEID";
             this.cbDepartment.DisplayMember = "TYPEDESC";
             this.cbDepartment.DataSource = this.PropertySet.cutlistData.OpTypes.Tables[0];
+            this.cbDepartment.SelectedIndexChanged +=cbDepartment_SelectedIndexChanged;
+
+            Selected = new DepartmentSelected(OnSelected);
         }
+
+        public delegate void DepartmentSelected(object d, EventArgs e);
+        public event DepartmentSelected Selected;
 
         public void Update(ref SwProperties p)
         {
             this.PropertySet = p;
             this.LinkControlToProperty();
             this.PropertySet.cutlistData.OpType = this.OpType;
-            int idx = this.OpType - 1; // this.GetIndex((this.cbDepartment.DataSource as DataTable), (this.OpType).ToString());
+            int idx = this.OpType - 1; // Don't sort the table, and this works well.
             this.cbDepartment.SelectedIndex = idx;
             this.cbDepartment.DisplayMember = "TYPEDESC";
         }
 
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int tp = 1; // wood
-            string val = ((this.cbDepartment.SelectedItem as DataRowView)[this.cbDepartment.ValueMember]).ToString();
-            if (int.TryParse(val, out tp))
+            //int tp = 1; // wood
+            //string val = ((this.cbDepartment.SelectedItem as DataRowView)[this.cbDepartment.ValueMember]).ToString();
+            //if (int.TryParse(val, out tp))
+            //{
+            //    this.OpType = tp;
+            //    this.PropertySet.cutlistData.OpType = tp;
+            //}
+            if (Selected != null)
             {
-                this.OpType = tp;
-                this.PropertySet.cutlistData.OpType = tp;
+                Selected(this, e);
             }
+        }
+
+        private void OnSelected(object sender, EventArgs e)
+        {
+            this.OpType = this.cbDepartment.SelectedIndex + 1;
+            this.PropertySet.cutlistData.OpType = this.OpType;
+            this.PropertySet.GetProperty("DEPARTMENT").Value = this.OpType.ToString();
+            this.PropertySet.GetProperty("DEPARTMENT").ResValue = this.cbDepartment.Text;
+            int idx = this.OpType - 1; // Don't sort the table, and this works well.
+            this.cbDepartment.SelectedIndex = idx;
+            this.cbDepartment.DisplayMember = "TYPEDESC";
         }
 
         private void LinkControlToProperty()
@@ -91,6 +112,7 @@ namespace Redbrick_Addin
             }
             return 1;
         }
+
 
         public SwProperties PropertySet { get; set; }
         public int OpType { get; set; }
