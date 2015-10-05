@@ -163,6 +163,7 @@ namespace Redbrick_Addin
             }
 
             int opt = this.cutlistData.GetOpTypeIDByName(resVal.ToUpper());
+            this.GetProperty("DEPARTMENT").Value = opt.ToString();
             return opt;
         }
         

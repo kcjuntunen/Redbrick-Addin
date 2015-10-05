@@ -73,6 +73,7 @@ namespace Redbrick_Addin
             string dept;
             if (this.PropertySet.Contains(pn))
             {
+                this.PropertySet.GetProperty(pn).Ctl = this.cbDepartment;
                 dept = this.PropertySet.GetProperty(pn).Value;
                 int tp = 1;
 

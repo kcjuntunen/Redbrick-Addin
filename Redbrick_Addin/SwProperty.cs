@@ -98,7 +98,7 @@ namespace Redbrick_Addin
                 if (this.Global)
                 {
                     // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-                    if (this.Name.Contains("OP"))
+                    if (this.Name.Contains("OP") || this.Name.ToUpper().Contains("DEPARTMENT"))
                     {
                         System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
                         string v = drv.Row.ItemArray[0].ToString();
