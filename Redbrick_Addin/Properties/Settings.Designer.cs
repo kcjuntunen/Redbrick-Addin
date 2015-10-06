@@ -23,16 +23,6 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING")]
-        public string ConnectionString {
-            get {
-                return ((string)(this["ConnectionString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("500")]
@@ -160,6 +150,55 @@ namespace Redbrick_Addin.Properties {
             }
             set {
                 this["EditRevLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING")]
+        public string ConnectionString {
+            get {
+                return ((string)(this["ConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("kcjuntunen@amstore.com")]
+        public string Dev {
+            get {
+                return ((string)(this["Dev"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Error in property wizard")]
+        public string SubjectLine {
+            get {
+                return ((string)(this["SubjectLine"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-22")]
+        public string NetPath {
+            get {
+                return ((string)(this["NetPath"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\setup.bmp")]
+        public string Icon {
+            get {
+                return ((string)(this["Icon"]));
+            }
+            set {
+                this["Icon"] = value;
             }
         }
     }

@@ -29,7 +29,7 @@ namespace Redbrick_Addin
         protected AssemblyDoc ad;
         protected PartDoc pd;
         protected DrawingDoc dd;
-
+        
         DepartmentSelector ds;
         ConfigurationSpecific cs;
         GeneralProperties gp;
@@ -64,12 +64,34 @@ namespace Redbrick_Addin
 
         int SwApp_DestroyNotify()
         {
+            if (this.PartSetup)
+                if (this.mrb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
+            if (this.DrawSetup)
+                if (this.drb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
             // Solidworks closed
             return 0;
         }
 
         int SwApp_ActiveDocChangeNotify()
         {
+            if (this.PartSetup)
+            {
+                if (this.mrb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+            }
+
+            if (this.DrawSetup)
+                if (this.drb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
             this.ClearControls(this);                   // SW level doc switching
 
             if (this.SwApp == null)
@@ -81,7 +103,7 @@ namespace Redbrick_Addin
         }
 
          private void ConnectSelection()
-        {                          
+        {
             this.prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
             this.prop.GetPropertyData(this.Document);                               // get new ones.
             swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();    // what sort of doc is open?
@@ -124,7 +146,6 @@ namespace Redbrick_Addin
                     this.SetupOther();                                              // OK, whatever.
                     break;
             }
-
         }
 
         private void SetupAssy()
@@ -205,6 +226,7 @@ namespace Redbrick_Addin
             if ((this.Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !this.AssmEventsAssigned)
             {
                 ad = (AssemblyDoc)this.Document;
+                ad.UserSelectionPreNotify += ad_UserSelectionPreNotify;
                 ad.UserSelectionPostNotify += ad_UserSelectionPostNotify;                           // user clicks part/subassembly
                 ad.DestroyNotify2 += ad_DestroyNotify2;                                             // doc closing, I think.
                 ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;     // Not sure, and not implemented yet.
@@ -240,6 +262,7 @@ namespace Redbrick_Addin
         {
             if (this.AssmEventsAssigned)                                                            // unhook 'em all
             {
+                ad.UserSelectionPreNotify -= ad_UserSelectionPreNotify;
                 ad.UserSelectionPostNotify -= ad_UserSelectionPostNotify;
                 ad.DestroyNotify2 -= ad_DestroyNotify2;
                 ad.ActiveDisplayStateChangePostNotify -= ad_ActiveDisplayStateChangePostNotify;
@@ -265,8 +288,41 @@ namespace Redbrick_Addin
             }
         }
 
+        private bool MaybeSave()
+        {
+            swMessageBoxResult_e dr = (swMessageBoxResult_e)this.SwApp.SendMsgToUser2(Properties.Resources.MaybeSave, 
+                (int)swMessageBoxIcon_e.swMbQuestion, 
+                (int)swMessageBoxBtn_e.swMbYesNo);
+
+            switch (dr)
+            {
+                case swMessageBoxResult_e.swMbHitAbort:
+                    break;
+                case swMessageBoxResult_e.swMbHitCancel:
+                    break;
+                case swMessageBoxResult_e.swMbHitIgnore:
+                    break;
+                case swMessageBoxResult_e.swMbHitNo:
+                    return false;
+                case swMessageBoxResult_e.swMbHitOk:
+                    break;
+                case swMessageBoxResult_e.swMbHitRetry:
+                    break;
+                case swMessageBoxResult_e.swMbHitYes:
+                    return true;
+                default:
+                    return false;
+            }
+
+            return false;
+        }
+
         int ad_ActiveViewChangeNotify()
         {
+            if (this.mrb.IsDirty)
+                if (MaybeSave())
+                    this.Write();
+
             this.Document = this.SwApp.ActiveDoc;                                                   // a different doc is active,
             this.ConnectSelection();                                                                // let's reconnect.
             return 0;                                                                               // 
@@ -279,13 +335,26 @@ namespace Redbrick_Addin
 
         int ad_DestroyNotify2(int DestroyType)
         {
+            if (this.mrb.IsDirty)
+                if (MaybeSave())
+                    this.Write();
+
             this.Document = null;                                                                   // In VBA, it would delete files from the
             this.SwApp = null;                                                                      // network if the references still pointed to their objects.
             return 0;                                                                               // 
         }
 
+        int ad_UserSelectionPreNotify(int SelType)
+        {
+            return 0;
+        }
+
         int ad_UserSelectionPostNotify()
         {
+            if (this.mrb.IsDirty)
+                if (MaybeSave())
+                    this.Write();
+
             this.swSelComp = swSelMgr.GetSelectedObjectsComponent2(1);                              // What do we got?
             if (swSelComp != null)
             {
@@ -304,6 +373,10 @@ namespace Redbrick_Addin
 
         int pd_ActiveConfigChangePostNotify()
         {
+            if (this.mrb.IsDirty)
+                if (MaybeSave())
+                    this.Write();
+
             this.ConnectSelection();                                                                // Different config! Look again!
             return 0;
         }
@@ -319,7 +392,22 @@ namespace Redbrick_Addin
 
             if (this.DrawSetup)
             {
-                this.drb.Write((DrawingDoc)this._swApp.ActiveDoc);                                  // update doc metadata & rebuild & save
+                this.drb.Write(dd);                                  // update doc metadata & rebuild & save
+            }
+        }
+
+        public void Write(SldWorks s)
+        {
+            if (this.PartSetup)
+            {
+                this.mrb.Write((ModelDoc2)s.ActiveDoc);                                                      // update doc metadata & rebuild & save
+                this.ConnectSelection();                                                            // rescoop new metadata
+                this.mrb.Update(ref this.prop);                                                     // show it
+            }
+
+            if (this.DrawSetup)
+            {
+                this.drb.Write((DrawingDoc)s.ActiveDoc);                                  // update doc metadata & rebuild & save
             }
         }
 

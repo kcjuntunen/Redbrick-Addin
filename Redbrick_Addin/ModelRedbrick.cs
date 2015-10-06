@@ -25,6 +25,7 @@ namespace Redbrick_Addin
         private bool deptEvents = false;
 
         protected SwProperties props;
+        private DirtTracker dirtTracker;
 
         public ModelRedbrick(ref SwProperties p)
         {
@@ -78,6 +79,7 @@ namespace Redbrick_Addin
             this.op.Update(ref p);
             this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
             this.SetupDeptSelectEvent();
+            this.dirtTracker = new DirtTracker(this);
         }
 
         private void SetupDeptSelectEvent()
@@ -106,6 +108,13 @@ namespace Redbrick_Addin
             int wrn = 0;
             swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
             doc.Save3((int)op, ref err, ref wrn);                               // This isn't too slow. Might be too slow in DrawingRedbrick though.
+            this.dirtTracker = null;
+        }
+
+        public bool IsDirty 
+        {
+            get { return this.dirtTracker.IsDirty; }
+            set { this.dirtTracker.IsDirty = value; }
         }
 
         protected SldWorks RequestSW()

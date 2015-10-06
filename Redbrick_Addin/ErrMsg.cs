@@ -67,7 +67,9 @@ namespace RedbrickErr
         private void bSend_Click(object sender, EventArgs e)
         {
             //Clipboard.SetText(textBox1.Text);
-            string sMailToLink = @"mailto:kcjuntunen@amstore.com?subject=Error in PDF Archiver&body=" + tbxMsg.Text;
+            
+            string sMailToLink = @"mailto:" + Redbrick_Addin.Properties.Settings.Default.Dev + 
+                "subject=" + Redbrick_Addin.Properties.Settings.Default.SubjectLine + "&body=" + tbxMsg.Text;
             System.Diagnostics.Process.Start(sMailToLink.Replace("\r\n", "%0A"));
             this.Close();
         }

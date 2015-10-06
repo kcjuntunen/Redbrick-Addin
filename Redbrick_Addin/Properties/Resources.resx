@@ -124,4 +124,10 @@
   <data name="MustOpenDocument" xml:space="preserve">
     <value>A SolidWorks document must be open.</value>
   </data>
+  <data name="MaybeSave" xml:space="preserve">
+    <value>Do you wish to save your changes?</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Amstore™ Property Editor©</value>
+  </data>
 </root>

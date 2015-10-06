@@ -41,12 +41,15 @@ namespace Redbrick_Addin
         {
             try
             {
-                taskpaneView = swApp.CreateTaskpaneView2(string.Empty, "Property Editor");
+                taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath + 
+                    Properties.Settings.Default.Icon
+                    , Properties.Resources.Title);
+
                 taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
                 taskpaneHost.OnRequestSW += new Func<SldWorks>(delegate { return this.swApp; });
 
                 bool result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Ok, "OK");
-                result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Close, "Close");
+                //result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Close, "Close");
 
                 taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
 

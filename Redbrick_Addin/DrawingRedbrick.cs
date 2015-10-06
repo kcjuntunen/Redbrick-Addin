@@ -13,6 +13,8 @@ namespace Redbrick_Addin
 {
     public partial class DrawingRedbrick : UserControl //Form
     {
+        private DirtTracker dirtTracker;
+
         public DrawingRedbrick(SldWorks sw)
         {
             this._swApp = sw;
@@ -29,8 +31,7 @@ namespace Redbrick_Addin
 
             this.GetData();
             t();
-
-
+            this.dirtTracker = new DirtTracker(this);
         }
 
         public void t()
@@ -194,6 +195,12 @@ namespace Redbrick_Addin
             }
         }
 
+        public bool IsDirty
+        {
+            get { return this.dirtTracker.IsDirty; }
+            set { this.dirtTracker.IsDirty = value; }
+        }
+
         private DrawingProperties _propSet;
 
 	    public DrawingProperties PropertySet
@@ -253,6 +260,7 @@ namespace Redbrick_Addin
             this.PropertySet.Write(this.SwApp);
             this.RevSet.Write(this.SwApp);
             (this.SwApp.ActiveDoc as DrawingDoc).ForceRebuild();
+            this.dirtTracker = null;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

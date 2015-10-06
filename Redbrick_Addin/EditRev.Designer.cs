@@ -51,6 +51,16 @@ namespace Redbrick_Addin
             this.SuspendLayout();
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditRev_FormClosing);
             this.ResumeLayout(false);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditRev));
+            this.SuspendLayout();
+            // 
+            // EditRev
+            // 
+            //this.ClientSize = new System.Drawing.Size(292, 270);
+            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            //this.Name = "EditRev";
+            //this.ResumeLayout(false);
+
 	
             // 
             // tableLayoutPanel1
@@ -235,6 +245,7 @@ namespace Redbrick_Addin
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "EditRev";
             this.Text = "EditRev";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
