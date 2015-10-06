@@ -93,6 +93,21 @@ namespace Redbrick_Addin
             }
         }
 
+        public void ClearProps(ModelDoc2 md)
+        {
+            CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
+            int res;
+
+            for (int i = 1; i <= Properties.Settings.Default.RevLimit; i++)
+            {
+                res = glP.Delete2("REVISION " + (char)(i + 65));
+                res = glP.Delete2("ECO " + i.ToString());
+                res = glP.Delete2("DESCRIPTION " + i.ToString());
+                res = glP.Delete2("LIST " + i.ToString());
+                res = glP.Delete2("DATE " + i.ToString());
+            }
+        }
+
         public void Write()
         {
             this.ClearProps();
@@ -100,6 +115,16 @@ namespace Redbrick_Addin
             foreach (DrawingRev dr in this._innerArray)
             {
                 dr.Write();
+            }
+        }
+
+        public void Write(ModelDoc2 md)
+        {
+            this.ClearProps(md);
+
+            foreach (DrawingRev dr in this._innerArray)
+            {
+                dr.Write(md);
             }
         }
 

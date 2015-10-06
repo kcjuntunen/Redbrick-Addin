@@ -79,7 +79,7 @@ namespace Redbrick_Addin
         /// <param name="md">A ModelDoc2 object</param>
         public void Write(ModelDoc2 md)
         {
-            if (this.SwApp != null)
+            if (md != null)
             {
                 Configuration cf = md.ConfigurationManager.ActiveConfiguration;
 
@@ -131,7 +131,7 @@ namespace Redbrick_Addin
             else
             {
     #if DEBUG
-                System.Diagnostics.Debug.Print(string.Format("{0}: SwApp is undefined", this.Name));
+                System.Diagnostics.Debug.Print(string.Format("{0}: ModelDoc2 md is undefined", this.Name));
     #endif
             }
         }

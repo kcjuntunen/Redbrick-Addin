@@ -210,6 +210,23 @@ namespace Redbrick_Addin
             }
         }
 
+        public void ClearProps(ModelDoc2 md)
+        {
+            if (md.GetType() == (int)swDocumentTypes_e.swDocDRAWING)
+            {
+                CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
+                string[] ss = (string[])glP.GetNames();
+
+                if (ss != null)
+                {
+                    foreach (string s in ss)
+                    {
+                        glP.Delete2(s);
+                    }
+                }
+            }
+        }
+
         public void Write()
         {
             ModelDoc2 md = (ModelDoc2)this._swApp.ActiveDoc;
@@ -219,6 +236,17 @@ namespace Redbrick_Addin
             foreach (SwProperty p in this._innerArray)
             {
                 p.Write();
+            }
+        }
+
+        public void Write(ModelDoc2 md)
+        {
+            CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
+
+            this.ClearProps(md);
+            foreach (SwProperty p in this._innerArray)
+            {
+                p.Write(md);
             }
         }
 

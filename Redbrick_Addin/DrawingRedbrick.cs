@@ -259,7 +259,16 @@ namespace Redbrick_Addin
             this.PropertySet.ReadControls();
             this.PropertySet.Write(this.SwApp);
             this.RevSet.Write(this.SwApp);
-            (this.SwApp.ActiveDoc as DrawingDoc).ForceRebuild();
+            (doc).ForceRebuild();
+            this.dirtTracker = null;
+        }
+
+        public void Write(ModelDoc2 md)
+        {
+            this.PropertySet.ReadControls();
+            this.PropertySet.Write(md);
+            this.RevSet.Write(md);
+            (md as DrawingDoc).ForceRebuild();
             this.dirtTracker = null;
         }
 

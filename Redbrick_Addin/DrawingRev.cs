@@ -53,6 +53,16 @@ namespace Redbrick_Addin
             this.Date.Write();
         }
 
+        public void Write(ModelDoc2 md)
+        {
+            //System.Diagnostics.Debug.Print("Writing " + this.Revision.Value);
+            this.Revision.Write(md);
+            this.Eco.Write(md);
+            this.Description.Write(md);
+            this.List.Write(md);
+            this.Date.Write(md);
+        }
+
         public void Write(SldWorks sw)
         {
             this.SwApp = sw;

@@ -392,7 +392,7 @@ namespace Redbrick_Addin
 
             if (this.DrawSetup)
             {
-                this.drb.Write(dd);                                  // update doc metadata & rebuild & save
+                this.drb.Write(this.Document);                                                      // update doc metadata & rebuild & save
             }
         }
 
@@ -400,14 +400,14 @@ namespace Redbrick_Addin
         {
             if (this.PartSetup)
             {
-                this.mrb.Write((ModelDoc2)s.ActiveDoc);                                                      // update doc metadata & rebuild & save
+                this.mrb.Write((ModelDoc2)s.ActiveDoc);                                             // update doc metadata & rebuild & save
                 this.ConnectSelection();                                                            // rescoop new metadata
                 this.mrb.Update(ref this.prop);                                                     // show it
             }
 
             if (this.DrawSetup)
             {
-                this.drb.Write((DrawingDoc)s.ActiveDoc);                                  // update doc metadata & rebuild & save
+                this.drb.Write((DrawingDoc)s.ActiveDoc);                                            // update doc metadata & rebuild & save
             }
         }
 
