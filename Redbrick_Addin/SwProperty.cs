@@ -98,7 +98,7 @@ namespace Redbrick_Addin
                 if (this.Global)
                 {
                     // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-                    if (this.Name.Contains("OP") || this.Name.ToUpper().Contains("DEPARTMENT"))
+                    if (this.Name.ToUpper().Contains("OP") || this.Name.ToUpper().Contains("DEPARTMENT"))
                     {
                         System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
                         string v = drv.Row.ItemArray[0].ToString();
@@ -106,6 +106,14 @@ namespace Redbrick_Addin
     #if DEBUG
                         System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
     #endif
+                    }
+                    else if (this.Name.ToUpper().Contains("UPDATE"))
+                    {
+                        this.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
+                        if ((this.Ctl as System.Windows.Forms.CheckBox).Checked)
+                            res = gcpm.Add3(this.Name, (int)this.Type, "Yes", (int)ao);
+                        else
+                            res = gcpm.Add3(this.Name, (int)this.Type, "NO", (int)ao);
                     }
                     else // Regular text, double, and date type global props can just be written.
                     {

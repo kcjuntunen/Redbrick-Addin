@@ -340,6 +340,7 @@ namespace Redbrick_Addin
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, global);
                 x.SwApp = this.swApp;
                 x.Ctl = c;
+                this.Add(x);
             }
         }
 

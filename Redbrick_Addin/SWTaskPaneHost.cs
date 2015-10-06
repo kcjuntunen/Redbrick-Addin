@@ -60,7 +60,10 @@ namespace Redbrick_Addin
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
             this.SwApp.FileCloseNotify += SwApp_FileCloseNotify;
             this.Document = this.SwApp.ActiveDoc;
-            this.ConnectSelection();
+            if (this.Document != null)
+            {
+                this.ConnectSelection();
+            }
         }
 
         int SwApp_FileCloseNotify(string FileName, int reason)

@@ -25,7 +25,10 @@ namespace Redbrick_Addin
             if (ds.Tables[0].Rows.Count > 0)
             {
                 this.cbCutlist.DataSource = ds.Tables[0];
-                this.cbCutlist.SelectedIndex = GetIndex(Properties.Settings.Default.CurrentCutlist);
+                int idx = GetIndex(Properties.Settings.Default.CurrentCutlist);
+
+                if (idx < this.cbCutlist.Items.Count)
+                    this.cbCutlist.SelectedIndex = idx;
             }
             else
             {

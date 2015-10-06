@@ -43,6 +43,8 @@ namespace Redbrick_Addin
             this.tbOverW = new System.Windows.Forms.TextBox();
             this.tbBlankL = new System.Windows.Forms.TextBox();
             this.tbBlankW = new System.Windows.Forms.TextBox();
+            this.lchUpdate = new System.Windows.Forms.Label();
+            this.chUpdate = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,10 +56,12 @@ namespace Redbrick_Addin
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lchUpdate, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbCNC1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tbCNC2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbPPB, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.chUpdate, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbPPB, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label5, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
@@ -96,11 +100,26 @@ namespace Redbrick_Addin
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "CNC2";
+            //
+            // lchUpdate
+            //
+            this.lchUpdate.AutoSize = true;
+            this.lchUpdate.Location = new System.Drawing.Point(213, 0);
+            this.lchUpdate.Name = "lchUpdate";
+            this.lchUpdate.Size = new System.Drawing.Size(63, 13);
+            this.lchUpdate.TabIndex = 2;
+            this.lchUpdate.Text = "Update CNC";
+            //
+            // chUpdate
+            //
+            this.chUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chUpdate.Location = new System.Drawing.Point(213, 16);
+            this.chUpdate.Name = "chUpdate";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(213, 0);
+            this.label3.Location = new System.Drawing.Point(213, 39);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 2;
@@ -125,7 +144,7 @@ namespace Redbrick_Addin
             // tbPPB
             // 
             this.tbPPB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPPB.Location = new System.Drawing.Point(213, 16);
+            this.tbPPB.Location = new System.Drawing.Point(213, 55);
             this.tbPPB.Name = "tbPPB";
             this.tbPPB.Size = new System.Drawing.Size(100, 20);
             this.tbPPB.TabIndex = 5;
@@ -222,5 +241,7 @@ namespace Redbrick_Addin
         private System.Windows.Forms.TextBox tbOverW;
         private System.Windows.Forms.TextBox tbBlankL;
         private System.Windows.Forms.TextBox tbBlankW;
+        private System.Windows.Forms.Label lchUpdate;
+        private System.Windows.Forms.CheckBox chUpdate;
     }
 }

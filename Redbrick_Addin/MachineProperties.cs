@@ -81,6 +81,12 @@ namespace Redbrick_Addin
             this.propertySet.LinkControlToProperty("CNC2", true, this.tbCNC2);
             this.propertySet.LinkControlToProperty("OVERL", true, this.tbOverL);
             this.propertySet.LinkControlToProperty("OVERW", true, this.tbOverW);
+            this.propertySet.LinkControlToProperty("UPDATE CNC", true, this.chUpdate);
+
+            if (this.propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES"))
+                this.chUpdate.Checked = true;
+            else
+                this.chUpdate.Checked = false;
         }
 
         private void LinkControlToProperty(string property, Control c)
