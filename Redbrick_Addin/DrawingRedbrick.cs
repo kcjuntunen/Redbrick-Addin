@@ -23,11 +23,8 @@ namespace Redbrick_Addin
             this.fillAuthor();
             this.fillCustomer();
 
-            //this.SetLocation();
-
             this.PropertySet = new DrawingProperties(this._swApp);
             this.RevSet = new DrawingRevs(this._swApp);
-            //this.dataGridTest();
 
             this.GetData();
             t();
@@ -39,8 +36,6 @@ namespace Redbrick_Addin
             tvRevs t = new tvRevs(ref this._propSet, ref this._revSet);
             this.tableLayoutPanel1.Controls.Add(t, 0, 2);
             t.Dock = DockStyle.Fill;
-            //this.tableLayoutPanel1.SetColumnSpan(t, 2);
-            //this.tableLayoutPanel1.SetRowSpan(t, 2);
         }
 
         private void SetLocation()
@@ -53,9 +48,6 @@ namespace Redbrick_Addin
         {
             this.PropertySet.Read();
             this.RevSet.Read();
-            //this.RevSet.listBox = this.lbRevs;
-
-            //System.Windows.Forms.MessageBox.Show(this.RevSet.ToString());
 
             this.FillBoxes();
         }

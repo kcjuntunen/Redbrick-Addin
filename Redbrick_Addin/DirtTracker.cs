@@ -22,7 +22,7 @@ namespace Redbrick_Addin
         {
             foreach (Control c in cc)
             {
-                if ((c is TextBox) && (!c.Name.ToUpper().Contains("BLANK")))
+                if ((c is TextBox) && (!c.Name.ToUpper().Contains("BLANK") || !c.Name.ToUpper().Contains("CUTLIST")))
                     (c as TextBox).TextChanged += new EventHandler(DirtTracker_TextChanged);
 
                 if (c is CheckBox)

@@ -34,6 +34,7 @@ namespace Redbrick_Addin
             this.gbSpecProp = new System.Windows.Forms.GroupBox();
             this.gbOp = new System.Windows.Forms.GroupBox();
             this.tlp1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gbCutlist = new System.Windows.Forms.GroupBox();
             this.tlpMain.SuspendLayout();
             this.gbOp.SuspendLayout();
             this.SuspendLayout();
@@ -48,15 +49,16 @@ namespace Redbrick_Addin
             this.tlpMain.Controls.Add(this.gbGlobProp, 0, 1);
             this.tlpMain.Controls.Add(this.gbSpecProp, 0, 0);
             this.tlpMain.Controls.Add(this.gbOp, 0, 3);
+            this.tlpMain.Controls.Add(this.gbCutlist, 0, 4);
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 5;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 280F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tlpMain.Size = new System.Drawing.Size(258, 1205);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 350F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tlpMain.Size = new System.Drawing.Size(258, 1300);
             this.tlpMain.TabIndex = 0;
             // 
             // gbMachProp
@@ -114,10 +116,21 @@ namespace Redbrick_Addin
             this.tlp1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlp1.Location = new System.Drawing.Point(3, 16);
             this.tlp1.Name = "tlp1";
-            this.tlp1.RowCount = 1;
-            this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp1.RowCount = 2;
+            this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tlp1.Size = new System.Drawing.Size(246, 325);
             this.tlp1.TabIndex = 0;
+            // 
+            // gbCutlist
+            // 
+            this.gbCutlist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbCutlist.Location = new System.Drawing.Point(3, 1203);
+            this.gbCutlist.Name = "gbCutlist";
+            this.gbCutlist.Size = new System.Drawing.Size(252, 94);
+            this.gbCutlist.TabIndex = 5;
+            this.gbCutlist.TabStop = false;
+            this.gbCutlist.Text = "Cutlist";
             // 
             // ModelRedbrick
             // 
@@ -126,7 +139,7 @@ namespace Redbrick_Addin
             this.AutoScroll = true;
             this.Controls.Add(this.tlpMain);
             this.Name = "ModelRedbrick";
-            this.Size = new System.Drawing.Size(262, 707);
+            this.Size = new System.Drawing.Size(245, 690);
             this.Load += new System.EventHandler(this.ModelRedbrick_Load);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
@@ -144,5 +157,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.GroupBox gbGlobProp;
         private System.Windows.Forms.GroupBox gbSpecProp;
         private System.Windows.Forms.TableLayoutPanel tlp1;
+        private System.Windows.Forms.GroupBox gbCutlist;
     }
 }

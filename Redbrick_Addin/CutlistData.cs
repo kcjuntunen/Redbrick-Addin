@@ -196,10 +196,10 @@ namespace Redbrick_Addin
 
         public DataSet GetWherePartUsed(int partID)
         {
-            string SQL = string.Format("SELECT dbo_CUT_CUTLISTS.CLID, dbo_CUT_CUTLISTS.PARTNUM, dbo_CUT_CUTLISTS.REV, dbo_CUT_CUTLISTS.DESCR FROM " +
-                "(dbo_CUT_CUTLIST_PARTS INNER JOIN dbo_CUT_PARTS ON dbo_CUT_CUTLIST_PARTS.PARTID = dbo_CUT_PARTS.PARTID) INNER JOIN " +
-                "dbo_CUT_CUTLISTS ON dbo_CUT_CUTLIST_PARTS.CLID = dbo_CUT_CUTLISTS.CLID WHERE " +
-                "(((dbo_CUT_PARTS.PARTID)={0}));", partID);
+            string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR FROM " +
+                "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
+                "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
+                "(((CUT_PARTS.PARTID)={0}));", partID);
             using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
                 using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
@@ -215,10 +215,10 @@ namespace Redbrick_Addin
 
         public DataSet GetWherePartUsed(string partDescr)
         {
-            string SQL = string.Format("SELECT dbo_CUT_CUTLISTS.CLID, dbo_CUT_CUTLISTS.PARTNUM, dbo_CUT_CUTLISTS.REV, dbo_CUT_CUTLISTS.DESCR FROM " +
-                "(dbo_CUT_CUTLIST_PARTS INNER JOIN dbo_CUT_PARTS ON dbo_CUT_CUTLIST_PARTS.PARTID = dbo_CUT_PARTS.PARTID) INNER JOIN " +
-                "dbo_CUT_CUTLISTS ON dbo_CUT_CUTLIST_PARTS.CLID = dbo_CUT_CUTLISTS.CLID WHERE " +
-                "(((dbo_CUT_PARTS.PARTNUM) Like '{0}'));", partDescr);
+            string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR FROM " +
+                "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
+                "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
+                "(((CUT_PARTS.PARTNUM) Like '{0}'));", partDescr);
             using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
                 using (OdbcDataAdapter da = new OdbcDataAdapter(comm))

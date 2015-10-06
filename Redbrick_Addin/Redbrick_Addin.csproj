@@ -75,6 +75,12 @@
     </Compile>
     <Compile Include="ConfigurationSpecific.Designer.cs" />
     <Compile Include="CutlistData.cs" />
+    <Compile Include="CutlistHandler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CutlistHandler.Designer.cs">
+      <DependentUpon>CutlistHandler.cs</DependentUpon>
+    </Compile>
     <Compile Include="DepartmentSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConfigurationSpecific.resx" />
+    <EmbeddedResource Include="CutlistHandler.resx">
+      <DependentUpon>CutlistHandler.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DepartmentSelector.resx">
       <DependentUpon>DepartmentSelector.cs</DependentUpon>
     </EmbeddedResource>

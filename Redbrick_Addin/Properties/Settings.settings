@@ -98,7 +98,7 @@
       <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\setup.bmp</Value>
     </Setting>
     <Setting Name="CurrentCutlist" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">645</Value>
     </Setting>
     <Setting Name="UserDept" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">6</Value>

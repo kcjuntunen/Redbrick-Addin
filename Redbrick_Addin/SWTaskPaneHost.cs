@@ -58,8 +58,24 @@ namespace Redbrick_Addin
             this.prop = new SwProperties(this._swApp);
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
+            this.SwApp.FileCloseNotify += SwApp_FileCloseNotify;
             this.Document = this.SwApp.ActiveDoc;
             this.ConnectSelection();
+        }
+
+        int SwApp_FileCloseNotify(string FileName, int reason)
+        {
+            if (this.PartSetup)
+                if (this.mrb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
+            if (this.DrawSetup)
+                if (this.drb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
+            return 0;
         }
 
         int SwApp_DestroyNotify()
@@ -105,6 +121,9 @@ namespace Redbrick_Addin
          private void ConnectSelection()
         {
             this.prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
+            System.IO.FileInfo fi = 
+                new System.IO.FileInfo(this.Document.GetPathName());
+            this.prop.PartName = fi.Name.Split(' ', '.')[0];
             this.prop.GetPropertyData(this.Document);                               // get new ones.
             swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();    // what sort of doc is open?
             switch (docT)

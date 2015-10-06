@@ -21,6 +21,7 @@ namespace Redbrick_Addin
         private GeneralProperties gp;
         private MachineProperties mp;
         private Ops op;
+        private CutlistHandler ch;
 
         private bool deptEvents = false;
 
@@ -49,6 +50,8 @@ namespace Redbrick_Addin
             mp.Dock = d;
             op = new Ops(ref this.props);
             op.Dock = d;
+            ch = new CutlistHandler(ref this.props);
+            ch.Dock = d;
 
             //this.tlpMain.Controls.Add(cs, 0, 0);                // Add them, in order to the main table.
             //this.tlpMain.Controls.Add(gp, 0, 1);                // But I think something's not right here.
@@ -66,6 +69,7 @@ namespace Redbrick_Addin
             this.gbMachProp.Controls.Add(mp);
             this.tlp1.Controls.Add(ds);
             this.tlp1.Controls.Add(op);
+            this.gbCutlist.Controls.Add(ch);
             this.tlpMain.ResumeLayout(true);
         }
 
@@ -79,6 +83,7 @@ namespace Redbrick_Addin
             this.gp.Update(ref p);
             this.op.Update(ref p);
             this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
+            this.ch.Update(ref p);
             this.SetupDeptSelectEvent();
             this.dirtTracker = new DirtTracker(this);
         }
@@ -104,6 +109,7 @@ namespace Redbrick_Addin
         {
             this.props.ReadControls();                                          // OK, so the controls were linked on update. This reads whatever was
             this.props.Write(doc);                                              // entered into the controls, then writes to SW.
+            this.ch.Write();
             doc.ForceRebuild3(false);                                           // Show changes.
             int err = 0;
             int wrn = 0;

@@ -21,6 +21,7 @@ namespace Redbrick_Addin
 
         public ModelDoc2 modeldoc { get; set; }
         public string configName { get; set; }
+        public string PartName { get; set; }
 
         public SwProperties(SldWorks sw)
         {
