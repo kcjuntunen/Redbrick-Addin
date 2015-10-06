@@ -169,5 +169,10 @@ namespace Redbrick_Addin
         {
             get { return this.op; }
         }
+
+        private void ModelRedbrick_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

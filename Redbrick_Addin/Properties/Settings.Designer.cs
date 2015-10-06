@@ -201,5 +201,26 @@ namespace Redbrick_Addin.Properties {
                 this["Icon"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CurrentCutlist {
+            get {
+                return ((int)(this["CurrentCutlist"]));
+            }
+            set {
+                this["CurrentCutlist"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int UserDept {
+            get {
+                return ((int)(this["UserDept"]));
+            }
+        }
     }
 }

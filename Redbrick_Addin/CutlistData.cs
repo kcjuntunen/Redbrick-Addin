@@ -43,16 +43,21 @@ namespace Redbrick_Addin
                     start = DateTime.Now;
 #endif
                     string SQL = "SELECT MATID,DESCR,COLOR FROM CUT_MATERIALS ORDER BY DESCR;";
-                    //conn.Open();
-                    OdbcCommand comm = new OdbcCommand(SQL, conn);
-                    OdbcDataAdapter da = new OdbcDataAdapter(comm);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
+                    using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                    {
+                        using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                        {
+                            using (DataSet ds = new DataSet())
+                            {
+                                da.Fill(ds);
 #if DEBUG
-                    end = DateTime.Now;
-                    System.Diagnostics.Debug.Print("*** MAT ***<<< " + (end - start).ToString() + " >>>");
+                                end = DateTime.Now;
+                                System.Diagnostics.Debug.Print("*** MAT ***<<< " + (end - start).ToString() + " >>>");
 #endif
-                    return ds;
+                                return ds;
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -71,25 +76,30 @@ namespace Redbrick_Addin
                 start = DateTime.Now;
 #endif
                 string SQL = "SELECT EDGEID,DESCR,COLOR,THICKNESS FROM CUT_EDGES ORDER BY DESCR;";
-                //conn.Open();
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataAdapter da = new OdbcDataAdapter(comm);
-                DataSet ds = new DataSet();
-                //conn.Close();
-                da.Fill(ds);
-                
-                DataRow dar = ds.Tables[0].NewRow();
-                dar[0] = 0;
-                dar[1] = string.Empty;
-                dar[2] = "None";
-                dar[3] = 0.0;
 
-                ds.Tables[0].Rows.Add(dar); ;
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+
+                            DataRow dar = ds.Tables[0].NewRow();
+                            dar[0] = 0;
+                            dar[1] = string.Empty;
+                            dar[2] = "None";
+                            dar[3] = 0.0;
+
+                            ds.Tables[0].Rows.Add(dar); ;
 #if DEBUG
-                end = DateTime.Now;
-                System.Diagnostics.Debug.Print("*** EDG ***<<< " + (end - start).ToString() + " >>>");
+                            end = DateTime.Now;
+                            System.Diagnostics.Debug.Print("*** EDG ***<<< " + (end - start).ToString() + " >>>");
 #endif
-                return ds;
+                            return ds;
+                        }
+                    }
+                }
             }
         }
 
@@ -102,20 +112,24 @@ namespace Redbrick_Addin
                     this.OpType = opType;
                     string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_PART_TYPES "
                         + "INNER JOIN CUT_OPS ON CUT_PART_TYPES.TYPEID = CUT_OPS.OPTYPE WHERE CUT_PART_TYPES.TYPEID = {0} ORDER BY OPDESCR", opType);
-                    //string SQL = "SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS ORDER BY OPDESCR";
-                    //conn.Open();
-                    OdbcCommand comm = new OdbcCommand(SQL, conn);
-                    OdbcDataAdapter da = new OdbcDataAdapter(comm);
-                    DataSet ds = new DataSet();
-                    da.Fill(ds);
-                    //conn.Close();
-                    DataRow dar = ds.Tables[0].NewRow();
-                    dar[0] = 0;
-                    dar[1] = string.Empty;
-                    dar[2] = string.Empty;
-                    ds.Tables[0].Rows.Add(dar);
-                    this.Ops = ds;
-                    return this.Ops;
+                    using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                    {
+                        using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                        {
+                            using (DataSet ds = new DataSet())
+                            {
+                                da.Fill(ds);
+                                //conn.Close();
+                                DataRow dar = ds.Tables[0].NewRow();
+                                dar[0] = 0;
+                                dar[1] = string.Empty;
+                                dar[2] = string.Empty;
+                                ds.Tables[0].Rows.Add(dar);
+                                this.Ops = ds;
+                                return this.Ops;
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -129,28 +143,32 @@ namespace Redbrick_Addin
             lock (threadLock)
             {
                 string SQL =string.Format("SELECT * FROM CUT_OPS WHERE OPTYPE = {0} ORDER BY OPDESCR", this.OpType);
-                //string SQL = "SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS ORDER BY OPDESCR";
-                //conn.Open();
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataAdapter da = new OdbcDataAdapter(comm);
-                DataSet ds = new DataSet();
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
 
-                try
-                {
-                    da.Fill(ds);
-                }
-                catch (StackOverflowException sofe)
-                {
-                    throw sofe;
-                }
-                finally
-                {
-                    DataRow dar = ds.Tables[0].NewRow();
-                    dar[0] = 0;
-                    dar[1] = string.Empty;
-                    dar[2] = string.Empty;
-                    ds.Tables[0].Rows.Add(dar);             
-                    this.Ops = ds;
+                            try
+                            {
+                                da.Fill(ds);
+                            }
+                            catch (StackOverflowException sofe)
+                            {
+                                throw sofe;
+                            }
+                            finally
+                            {
+                                DataRow dar = ds.Tables[0].NewRow();
+                                dar[0] = 0;
+                                dar[1] = string.Empty;
+                                dar[2] = string.Empty;
+                                ds.Tables[0].Rows.Add(dar);
+                                this.Ops = ds;
+                            }
+                        }
+                    }
                 }
                 return this.Ops;
             }
@@ -161,27 +179,72 @@ namespace Redbrick_Addin
             lock (threadLock)
             {
                 string SQL = "SELECT * FROM CUT_PART_TYPES ORDER BY TYPEID";
-                //string SQL = "SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS ORDER BY OPDESCR";
-                //conn.Open();
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataAdapter da = new OdbcDataAdapter(comm);
-                DataSet ds = new DataSet();
-                da.Fill(ds);
-                //conn.Close();
-                this.OpTypes = ds;
-                return this.OpTypes;
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                    {
+                        using (DataSet ds = new DataSet())
+                        {
+                            da.Fill(ds);
+                            this.OpTypes = ds;
+                            return this.OpTypes;
+                        }
+                    }
+                }
+            }
+        }
+
+        public DataSet GetWherePartUsed(int partID)
+        {
+            string SQL = string.Format("SELECT dbo_CUT_CUTLISTS.CLID, dbo_CUT_CUTLISTS.PARTNUM, dbo_CUT_CUTLISTS.REV, dbo_CUT_CUTLISTS.DESCR FROM " +
+                "(dbo_CUT_CUTLIST_PARTS INNER JOIN dbo_CUT_PARTS ON dbo_CUT_CUTLIST_PARTS.PARTID = dbo_CUT_PARTS.PARTID) INNER JOIN " +
+                "dbo_CUT_CUTLISTS ON dbo_CUT_CUTLIST_PARTS.CLID = dbo_CUT_CUTLISTS.CLID WHERE " +
+                "(((dbo_CUT_PARTS.PARTID)={0}));", partID);
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                {
+                    using (DataSet ds = new DataSet())
+                    {
+                        da.Fill(ds);
+                        return ds;
+                    }
+                }
+            }
+        }
+
+        public DataSet GetWherePartUsed(string partDescr)
+        {
+            string SQL = string.Format("SELECT dbo_CUT_CUTLISTS.CLID, dbo_CUT_CUTLISTS.PARTNUM, dbo_CUT_CUTLISTS.REV, dbo_CUT_CUTLISTS.DESCR FROM " +
+                "(dbo_CUT_CUTLIST_PARTS INNER JOIN dbo_CUT_PARTS ON dbo_CUT_CUTLIST_PARTS.PARTID = dbo_CUT_PARTS.PARTID) INNER JOIN " +
+                "dbo_CUT_CUTLISTS ON dbo_CUT_CUTLIST_PARTS.CLID = dbo_CUT_CUTLISTS.CLID WHERE " +
+                "(((dbo_CUT_PARTS.PARTNUM) Like '{0}'));", partDescr);
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                {
+                    using (DataSet ds = new DataSet())
+                    {
+                        da.Fill(ds);
+                        return ds;
+                    }
+                }
             }
         }
 
         public double GetEdgeThickness(int ID)
         {
             string SQL = string.Format("SELECT THICKNESS FROM CUT_EDGES WHERE EDGEID = {0}", ID.ToString());
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
-                return dr.GetDouble(0);
-            else
-                return 0.0;
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                        return dr.GetDouble(0);
+                    else
+                        return 0.0;
+                }
+            }
         }
 
         public int GetMaterialID(string description)
@@ -190,12 +253,16 @@ namespace Redbrick_Addin
                 return 0;
 
             string SQL = string.Format("SELECT MATID FROM CUT_MATERIALS WHERE DESCR = '{0}'", description);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
-                return dr.GetInt32(0);
-            else
-                return 0;
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                        return dr.GetInt32(0);
+                    else
+                        return 0;
+                }
+            }
         }
 
         public int GetOpID(string description)
@@ -204,12 +271,16 @@ namespace Redbrick_Addin
                 return 0;
 
             string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPDESCR = '{0}'", description);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
-                return dr.GetInt32(0);
-            else
-                return 0;
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                        return dr.GetInt32(0);
+                    else
+                        return 0;
+                }
+            }
         }
 
         public int GetEdgeID(string description)
@@ -218,12 +289,16 @@ namespace Redbrick_Addin
                 return 0;
 
             string SQL = string.Format("SELECT EDGEID FROM CUT_EDGES WHERE DESCR = '{0}'", description);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
-                return dr.GetInt32(0);
-            else
-                return 0;
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                        return dr.GetInt32(0);
+                    else
+                        return 0;
+                }
+            }
         }
 
         public int GetOpIDByName(string name)
@@ -232,12 +307,16 @@ namespace Redbrick_Addin
                 return 0;
 
             string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPNAME Like '{0}'", name);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
-                return dr.GetInt32(0);
-            else
-                return 0;
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                        return dr.GetInt32(0);
+                    else
+                        return 0;
+                }
+            }
         }
 
         public List<string> GetOpDataByName(string name)
@@ -246,20 +325,24 @@ namespace Redbrick_Addin
                 return null;
 
             string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like '{0}' AND OPTYPE = {1}", name, this.OpType);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
-                List<string> x = new List<string>();
-                x.Add(dr.GetString(0));
-                x.Add(dr.GetString(1));
-                x.Add(dr.GetString(2));
-                x.Add(dr.GetString(3));
-                return x;
-            }
-            else
-            {
-                return null;
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        List<string> x = new List<string>();
+                        x.Add(dr.GetString(0));
+                        x.Add(dr.GetString(1));
+                        x.Add(dr.GetString(2));
+                        x.Add(dr.GetString(3));
+                        return x;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
             }
         }
 
@@ -269,16 +352,20 @@ namespace Redbrick_Addin
                 return 1;
 
             string SQL = string.Format("SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC Like '{0}'", name);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            if (dr.HasRows)
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
-                int res = dr.GetInt32(0);
-                return res;
-            }
-            else
-            {
-                return 1;
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        int res = dr.GetInt32(0);
+                        return res;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
             }
         }
 
@@ -292,12 +379,16 @@ namespace Redbrick_Addin
             {
 
                 string SQL = string.Format("SELECT DESCR FROM CUT_MATERIALS WHERE MATID = {0}", id);
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataReader dr = comm.ExecuteReader();
-                if (dr.HasRows)
-                    return dr.GetString(0);
-                else
-                    return "TBD MATERIAL";
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataReader dr = comm.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                            return dr.GetString(0);
+                        else
+                            return "TBD MATERIAL";
+                    }
+                }
             }
             return "TBD MATERIAL";
         }
@@ -311,12 +402,16 @@ namespace Redbrick_Addin
             if (int.TryParse(id, out tp))
             {
                 string SQL = string.Format("SELECT DESCR FROM CUT_EDGES WHERE EDGEID = {0}", id);
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataReader dr = comm.ExecuteReader();
-                if (dr.HasRows)
-                    return dr.GetString(0);
-                else
-                    return string.Empty;
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataReader dr = comm.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                            return dr.GetString(0);
+                        else
+                            return string.Empty;
+                    }
+                }
             }
             return string.Empty;
         }
@@ -330,12 +425,16 @@ namespace Redbrick_Addin
             if (int.TryParse(id, out tp))
             {
                 string SQL = string.Format("SELECT OPDESCR FROM CUT_OPS WHERE OPID = {0}", id);
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataReader dr = comm.ExecuteReader();
-                if (dr.HasRows)
-                    return dr.GetString(0);
-                else
-                    return string.Empty;
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataReader dr = comm.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                            return dr.GetString(0);
+                        else
+                            return string.Empty;
+                    }
+                }
             }
             return string.Empty;
         }
@@ -349,17 +448,21 @@ namespace Redbrick_Addin
                 "LEFT JOIN ECR_STATUS ON ECR_MAIN.STATUS = ECR_STATUS.STAT_ID WHERE " +
                 "(((ECR_MAIN.[ECR_NUM])={0}));", ecoNumber);
             //conn.Open(); 
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            OdbcDataReader dr = comm.ExecuteReader();
-            e.EcrNumber = int.Parse(ecoNumber);
-            if (dr.HasRows)
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
-                e.Changes = ReturnString(dr, 2);
-                e.ErrDescription = ReturnString(dr, 4);
-                e.Revision = ReturnString(dr, 5);
-                e.Status = ReturnString(dr, 3);
-                e.RequestedBy = ReturnString(dr, 0) + " " + ReturnString(dr, 1);
-                dr.Close();
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    e.EcrNumber = int.Parse(ecoNumber);
+                    if (dr.HasRows)
+                    {
+                        e.Changes = ReturnString(dr, 2);
+                        e.ErrDescription = ReturnString(dr, 4);
+                        e.Revision = ReturnString(dr, 5);
+                        e.Status = ReturnString(dr, 3);
+                        e.RequestedBy = ReturnString(dr, 0) + " " + ReturnString(dr, 1);
+                        dr.Close();
+                    }
+                }
             }
             return e;
         }
@@ -367,30 +470,26 @@ namespace Redbrick_Addin
         public DataSet GetAuthors()
         {
 #if DEBUG
-                DateTime start;
-                DateTime end;
-                start = DateTime.Now;
+            DateTime start;
+            DateTime end;
+            start = DateTime.Now;
 #endif
-                string SQL = "SELECT GEN_USERS.* FROM GEN_USERS WHERE (((GEN_USERS.DEPT)=6));";
-                //conn.Open();
-                OdbcCommand comm = new OdbcCommand(SQL, conn);
-                OdbcDataAdapter da = new OdbcDataAdapter(comm);
-                DataSet ds = new DataSet();
-                //conn.Close();
-                da.Fill(ds);
-                
-                //DataRow dar = ds.Tables[0].NewRow();
-                //dar[0] = 0;
-                //dar[1] = string.Empty;
-                //dar[2] = "None";
-                //dar[3] = 0.0;
-
-                //ds.Tables[0].Rows.Add(dar); ;
+            string SQL = string.Format("SELECT GEN_USERS.* FROM GEN_USERS WHERE (((GEN_USERS.DEPT)={0}));", Properties.Settings.Default.UserDept);
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                {
+                    using (DataSet ds = new DataSet())
+                    {
+                        da.Fill(ds);
 #if DEBUG
-                end = DateTime.Now;
-                System.Diagnostics.Debug.Print("*** AUTH ***<<< " + (end - start).ToString() + " >>>");
+                        end = DateTime.Now;
+                        System.Diagnostics.Debug.Print("*** AUTH ***<<< " + (end - start).ToString() + " >>>");
 #endif
-                return ds;
+                        return ds;
+                    }
+                }
+            }
         }
 
         public string GetAuthorUserName(string initial)
@@ -399,22 +498,22 @@ namespace Redbrick_Addin
                 return string.Empty;
 
             string SQL = string.Format("SELECT username FROM GEN_USERS WHERE INITIAL LIKE '{0}%';", initial);
-            OdbcCommand comm = new OdbcCommand(SQL, conn);
-            while (conn.State == ConnectionState.Fetching)
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
 
-            }
-            OdbcDataReader dr = comm.ExecuteReader();
-            
-            if (dr.HasRows)
-            {
-                string x = dr.GetString(0);
-                dr.Close();
-                return x;
-            }
-            else
-            {
-                return string.Empty;
+                    if (dr.HasRows)
+                    {
+                        string x = dr.GetString(0);
+                        dr.Close();
+                        return x;
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
             }
         }
 

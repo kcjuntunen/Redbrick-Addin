@@ -54,9 +54,9 @@ namespace Redbrick_Addin
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 280F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
-            this.tlpMain.Size = new System.Drawing.Size(222, 1155);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tlpMain.Size = new System.Drawing.Size(258, 1205);
             this.tlpMain.TabIndex = 0;
             // 
             // gbMachProp
@@ -66,7 +66,7 @@ namespace Redbrick_Addin
             this.gbMachProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbMachProp.Location = new System.Drawing.Point(3, 653);
             this.gbMachProp.Name = "gbMachProp";
-            this.gbMachProp.Size = new System.Drawing.Size(216, 194);
+            this.gbMachProp.Size = new System.Drawing.Size(252, 194);
             this.gbMachProp.TabIndex = 2;
             this.gbMachProp.TabStop = false;
             this.gbMachProp.Text = "Machine Properties";
@@ -78,7 +78,7 @@ namespace Redbrick_Addin
             this.gbGlobProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbGlobProp.Location = new System.Drawing.Point(3, 283);
             this.gbGlobProp.Name = "gbGlobProp";
-            this.gbGlobProp.Size = new System.Drawing.Size(216, 364);
+            this.gbGlobProp.Size = new System.Drawing.Size(252, 364);
             this.gbGlobProp.TabIndex = 1;
             this.gbGlobProp.TabStop = false;
             this.gbGlobProp.Text = "Global Properties";
@@ -89,7 +89,7 @@ namespace Redbrick_Addin
             this.gbSpecProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbSpecProp.Location = new System.Drawing.Point(3, 3);
             this.gbSpecProp.Name = "gbSpecProp";
-            this.gbSpecProp.Size = new System.Drawing.Size(216, 274);
+            this.gbSpecProp.Size = new System.Drawing.Size(252, 274);
             this.gbSpecProp.TabIndex = 0;
             this.gbSpecProp.TabStop = false;
             this.gbSpecProp.Text = "Configuration Specific";
@@ -102,7 +102,7 @@ namespace Redbrick_Addin
             this.gbOp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbOp.Location = new System.Drawing.Point(3, 853);
             this.gbOp.Name = "gbOp";
-            this.gbOp.Size = new System.Drawing.Size(216, 294);
+            this.gbOp.Size = new System.Drawing.Size(252, 344);
             this.gbOp.TabIndex = 4;
             this.gbOp.TabStop = false;
             this.gbOp.Text = "Ops";
@@ -116,7 +116,7 @@ namespace Redbrick_Addin
             this.tlp1.Name = "tlp1";
             this.tlp1.RowCount = 1;
             this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlp1.Size = new System.Drawing.Size(210, 275);
+            this.tlp1.Size = new System.Drawing.Size(246, 325);
             this.tlp1.TabIndex = 0;
             // 
             // ModelRedbrick
@@ -126,7 +126,8 @@ namespace Redbrick_Addin
             this.AutoScroll = true;
             this.Controls.Add(this.tlpMain);
             this.Name = "ModelRedbrick";
-            this.Size = new System.Drawing.Size(1143, 668);
+            this.Size = new System.Drawing.Size(262, 707);
+            this.Load += new System.EventHandler(this.ModelRedbrick_Load);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
             this.gbOp.ResumeLayout(false);
