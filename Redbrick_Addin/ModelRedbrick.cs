@@ -50,11 +50,11 @@ namespace Redbrick_Addin
             op = new Ops(ref this.props);
             op.Dock = d;
 
-            this.tlpMain.Controls.Add(cs, 0, 0);                // Add them, in order to the main table.
-            this.tlpMain.Controls.Add(gp, 0, 1);                // But I think something's not right here.
-            this.tlpMain.Controls.Add(mp, 0, 2);                // TODO: have a close look at what's going on here.
-            this.tlpMain.Controls.Add(ds, 0, 3);
-            this.tlpMain.Controls.Add(op, 0, 4);
+            //this.tlpMain.Controls.Add(cs, 0, 0);                // Add them, in order to the main table.
+            //this.tlpMain.Controls.Add(gp, 0, 1);                // But I think something's not right here.
+            //this.tlpMain.Controls.Add(mp, 0, 2);                // TODO: have a close look at what's going on here.
+            //this.tlpMain.Controls.Add(ds, 0, 3);
+            //this.tlpMain.Controls.Add(op, 0, 4);
 
             foreach (Control item in this.tlpMain.Controls)     // If anything's not docked, dock it.
             {
@@ -64,7 +64,8 @@ namespace Redbrick_Addin
             this.gbSpecProp.Controls.Add(cs);
             this.gbGlobProp.Controls.Add(gp);
             this.gbMachProp.Controls.Add(mp);
-            this.gbOp.Controls.Add(op);
+            this.tlp1.Controls.Add(ds);
+            this.tlp1.Controls.Add(op);
             this.tlpMain.ResumeLayout(true);
         }
 

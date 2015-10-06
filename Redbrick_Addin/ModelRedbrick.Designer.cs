@@ -33,7 +33,9 @@ namespace Redbrick_Addin
             this.gbGlobProp = new System.Windows.Forms.GroupBox();
             this.gbSpecProp = new System.Windows.Forms.GroupBox();
             this.gbOp = new System.Windows.Forms.GroupBox();
+            this.tlp1 = new System.Windows.Forms.TableLayoutPanel();
             this.tlpMain.SuspendLayout();
+            this.gbOp.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -45,16 +47,16 @@ namespace Redbrick_Addin
             this.tlpMain.Controls.Add(this.gbMachProp, 0, 2);
             this.tlpMain.Controls.Add(this.gbGlobProp, 0, 1);
             this.tlpMain.Controls.Add(this.gbSpecProp, 0, 0);
-            this.tlpMain.Controls.Add(this.gbOp, 0, 4);
+            this.tlpMain.Controls.Add(this.gbOp, 0, 3);
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 5;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 280F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            this.tlpMain.Size = new System.Drawing.Size(222, 1150);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 350F));
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
+            this.tlpMain.Size = new System.Drawing.Size(222, 1155);
             this.tlpMain.TabIndex = 0;
             // 
             // gbMachProp
@@ -96,6 +98,7 @@ namespace Redbrick_Addin
             // 
             this.gbOp.AutoSize = true;
             this.gbOp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.gbOp.Controls.Add(this.tlp1);
             this.gbOp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbOp.Location = new System.Drawing.Point(3, 853);
             this.gbOp.Name = "gbOp";
@@ -104,6 +107,18 @@ namespace Redbrick_Addin
             this.gbOp.TabStop = false;
             this.gbOp.Text = "Ops";
             // 
+            // tlp1
+            // 
+            this.tlp1.ColumnCount = 1;
+            this.tlp1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlp1.Location = new System.Drawing.Point(3, 16);
+            this.tlp1.Name = "tlp1";
+            this.tlp1.RowCount = 1;
+            this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlp1.Size = new System.Drawing.Size(210, 275);
+            this.tlp1.TabIndex = 0;
+            // 
             // ModelRedbrick
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,9 +126,10 @@ namespace Redbrick_Addin
             this.AutoScroll = true;
             this.Controls.Add(this.tlpMain);
             this.Name = "ModelRedbrick";
-            this.Size = new System.Drawing.Size(1160, 668);
+            this.Size = new System.Drawing.Size(1143, 668);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();
+            this.gbOp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,5 +142,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.GroupBox gbMachProp;
         private System.Windows.Forms.GroupBox gbGlobProp;
         private System.Windows.Forms.GroupBox gbSpecProp;
+        private System.Windows.Forms.TableLayoutPanel tlp1;
     }
 }
