@@ -59,11 +59,29 @@ namespace Redbrick_Addin
             this.SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             this.SwApp.DestroyNotify += SwApp_DestroyNotify;
             this.SwApp.FileCloseNotify += SwApp_FileCloseNotify;
+            //this.SwApp.CommandCloseNotify += SwApp_CommandCloseNotify;
             this.Document = this.SwApp.ActiveDoc;
-            if (this.Document != null)
+            this.ConnectSelection();
+        }
+
+        int SwApp_CommandCloseNotify(int Command, int reason)
+        {
+            if (this.PartSetup)
+                if (this.mrb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
+            if (this.DrawSetup)
+                if (this.drb.IsDirty)
+                    if (MaybeSave())
+                        this.Write();
+
+            if ((swCommands_e)Command == swCommands_e.swCommands_Close || (swCommands_e)Command == swCommands_e.swCommands_Close_)
             {
-                this.ConnectSelection();
+                this.ClearControls(this);
             }
+
+            return 0;
         }
 
         int SwApp_FileCloseNotify(string FileName, int reason)
@@ -77,6 +95,8 @@ namespace Redbrick_Addin
                 if (this.drb.IsDirty)
                     if (MaybeSave())
                         this.Write();
+            System.Windows.Forms.MessageBox.Show(string.Format("fn: {0} :: res: {1}", FileName, reason));
+            this.ClearControls(this);
 
             return 0;
         }
@@ -93,6 +113,7 @@ namespace Redbrick_Addin
                     if (MaybeSave())
                         this.Write();
 
+            this.ClearControls(this);
             // Solidworks closed
             return 0;
         }
@@ -111,7 +132,7 @@ namespace Redbrick_Addin
                     if (MaybeSave())
                         this.Write();
 
-            this.ClearControls(this);                   // SW level doc switching
+            //this.ClearControls(this);                   // SW level doc switching
 
             if (this.SwApp == null)
                 this.SwApp = this.RequestSW();
@@ -124,50 +145,59 @@ namespace Redbrick_Addin
          private void ConnectSelection()
         {
             this.prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
-            System.IO.FileInfo fi = 
-                new System.IO.FileInfo(this.Document.GetPathName());
-            this.prop.PartName = fi.Name.Split(' ', '.')[0];
-            this.prop.GetPropertyData(this.Document);                               // get new ones.
-            swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();    // what sort of doc is open?
-            switch (docT)
+
+            if (this.Document != null)
             {
-                case swDocumentTypes_e.swDocASSEMBLY:
-                    if (!this.PartSetup)
-                    {
-                        this.SetupPart();                                           // Part/assembly props are about the same
-                        this.mrb.Update(ref this.prop);                             // link whatever's in the prop to the controls
-                    }
-                    else
-                    {
-                        this.mrb.Update(ref this.prop);                             // already set up. We can re-link with out re-setting-up.
-                    }
-                    if (!AssySetup)
-                        this.SetupAssy();                                           // this pretty much only assigns the selection manager and sets up
-                    break;                                                          // events
-                case swDocumentTypes_e.swDocDRAWING:
-                    this.SetupDrawing();                                            // set up and link all controls, and any events.
-                    break;
-                case swDocumentTypes_e.swDocNONE:
-                    this.SetupOther();                                              // What's this? 
-                    break;
-                case swDocumentTypes_e.swDocPART:
-                    if (!this.PartSetup)
-                    {
-                        this.SetupPart();                                           // setup
-                        this.mrb.Update(ref this.prop);                             // link
-                    }
-                    else
-                    {
-                        this.mrb.Update(ref this.prop);                             // or just link
-                    }
-                    break;
-                case swDocumentTypes_e.swDocSDM:
-                    this.SetupOther();                                              // What's this?
-                    break;
-                default:
-                    this.SetupOther();                                              // OK, whatever.
-                    break;
+                System.IO.FileInfo fi =
+                    new System.IO.FileInfo(this.Document.GetPathName());
+                this.prop.PartName = fi.Name.Split(' ', '.')[0];
+                this.prop.GetPropertyData(this.Document);                               // get new ones.
+                swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();    // what sort of doc is open?
+                switch (docT)
+                {
+                    case swDocumentTypes_e.swDocASSEMBLY:
+                        if (!this.PartSetup)
+                        {
+                            this.ClearControls(this);
+                            this.SetupPart();                                           // Part/assembly props are about the same
+                            this.mrb.Update(ref this.prop);                             // link whatever's in the prop to the controls
+                        }
+                        else
+                        {
+                            this.mrb.Update(ref this.prop);                             // already set up. We can re-link with out re-setting-up.
+                        }
+                        if (!AssySetup)
+                            this.SetupAssy();                                           // this pretty much only assigns the selection manager and sets up
+                        break;                                                          // events
+                    case swDocumentTypes_e.swDocDRAWING:
+                        this.ClearControls(this);
+                        this.SetupDrawing();
+                        break;
+                    case swDocumentTypes_e.swDocNONE:
+                        this.SetupOther();                                              // What's this? 
+                        break;
+                    case swDocumentTypes_e.swDocPART:
+                        if (!this.PartSetup)
+                        {
+                            this.ClearControls(this);
+                            this.SetupPart();                                           // setup
+                            this.mrb.Update(ref this.prop);                             // link
+                        }
+                        else
+                        {
+                            this.mrb.Update(ref this.prop);                             // or just link
+                        }
+                        break;
+                    case swDocumentTypes_e.swDocSDM:
+                        this.SetupOther();                                              // What's this?
+                        break;
+                    default:
+                        this.SetupOther();                                              // OK, whatever.
+                        break;
+                }
             }
+            else
+                this.ClearControls(this);
         }
 
         private void SetupAssy()
@@ -237,6 +267,8 @@ namespace Redbrick_Addin
 
         private void SetupOther()                           // if this ever comes up, I suppose it's because the wrong kind of
         {                                                   // doc is open.
+
+            this.ClearControls(this);                       // Blow out any existing controls, and dump events.
             this.SwApp.SendMsgToUser2(
                 Properties.Resources.MustOpenDocument, 
                 (int)swMessageBoxIcon_e.swMbInformation, 
@@ -266,8 +298,29 @@ namespace Redbrick_Addin
             if (this.Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING && !this.DrawEventsAssigned)
             {
                 dd = (DrawingDoc)this.Document;                                                     // Dunno yet.
+                //dd.ChangeCustomPropertyNotify += dd_ChangeCustomPropertyNotify;
+                dd.DestroyNotify2 += dd_DestroyNotify2;
+                //dd.DestroyNotify += dd_DestroyNotify;
                 this.DrawEventsAssigned = true;
             }
+        }
+
+        int dd_DestroyNotify()
+        {
+            this.ConnectSelection();
+            return 0;
+        }
+
+        int dd_DestroyNotify2(int DestroyType)
+        {
+            this.ClearControls(this);
+            return 0;
+        }
+
+        int dd_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType)
+        {
+            this.ConnectSelection();                                                                // let's reconnect.
+            return 0;     
         }
 
         private void ConnectPartEvents()
@@ -276,8 +329,22 @@ namespace Redbrick_Addin
             {
                 pd = (PartDoc)this.Document;
                 pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;                 // When the config changes, the app knows.
+               // pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
+                pd.DestroyNotify2 += pd_DestroyNotify2;
                 this.PartEventsAssigned = true;
             }
+        }
+
+        int pd_DestroyNotify2(int DestroyType)
+        {
+            this.ClearControls(this);
+            return 0;
+        }
+
+        int pd_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType)
+        {
+            this.ConnectSelection();                                                                // let's reconnect.
+            return 0;     
         }
 
         private void DisconnectAssemblyEvents()
@@ -298,6 +365,8 @@ namespace Redbrick_Addin
             if (this.PartEventsAssigned)                                                            // unhook 'em all
             {
                 pd.ActiveConfigChangePostNotify -= pd_ActiveConfigChangePostNotify;
+                pd.DestroyNotify2 -= pd_DestroyNotify2;
+                //pd.ChangeCustomPropertyNotify -= pd_ChangeCustomPropertyNotify;
                 this.PartEventsAssigned = false;
             }
         }
@@ -306,6 +375,9 @@ namespace Redbrick_Addin
         {
             if (this.DrawEventsAssigned)                                                            // unhook 'em all
             {
+                //dd.ChangeCustomPropertyNotify -= dd_ChangeCustomPropertyNotify;
+                dd.DestroyNotify2 -= dd_DestroyNotify2;
+                //dd.DestroyNotify -= dd_DestroyNotify;
                 this.DrawEventsAssigned = false;
             }
         }
@@ -361,6 +433,7 @@ namespace Redbrick_Addin
                 if (MaybeSave())
                     this.Write();
 
+            this.ClearControls(this);
             this.Document = null;                                                                   // In VBA, it would delete files from the
             this.SwApp = null;                                                                      // network if the references still pointed to their objects.
             return 0;                                                                               // 
