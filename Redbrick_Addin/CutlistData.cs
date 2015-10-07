@@ -9,8 +9,8 @@ namespace Redbrick_Addin
 {	
     public class CutlistData : IDisposable
     {
+        private bool ENABLE_DB_WRITE = Properties.Settings.Default.EnableDBWrite;
         private object threadLock = new object();
-
         private OdbcConnection conn;
 
         public OdbcConnection Connection
@@ -515,6 +515,68 @@ namespace Redbrick_Addin
                     }
                 }
             }
+        }
+
+        public int UpdateParts(SwProperties p)
+        {
+            int rowsAffected = -1;
+            if (ENABLE_DB_WRITE)
+            {
+                string dscr = p.GetProperty("Description").ResValue;
+                string finL = p.GetProperty("LENGTH").ResValue;
+                string finW = p.GetProperty("WIDTH").ResValue;
+                string thkn = p.GetProperty("THICKNESS").ResValue;
+                string ovrL = p.GetProperty("OVERL").ResValue;
+                string ovrW = p.GetProperty("OVERW").ResValue;
+                string cnc1 = p.GetProperty("CNC1").ResValue;
+                string cnc2 = p.GetProperty("CNC2").ResValue;
+                string blnk = p.GetProperty("BLANK QTY").ResValue;
+                string cmnt = p.GetProperty("COMMENT").ResValue;
+                string updt = "False";
+
+                if (p.GetProperty("UPDATE CNC").ResValue.ToUpper() == "YES")
+                    updt = "True";
+
+                string Op1 = p.GetProperty("OP1").ResValue;
+                string Op2 = p.GetProperty("OP2").ResValue;
+                string Op3 = p.GetProperty("OP3").ResValue;
+                string Op4 = p.GetProperty("OP4").ResValue;
+                string Op5 = p.GetProperty("OP5").ResValue;
+
+                string SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{0}', FIN_L = {1}, FIN_W = {2}, THICKNESS = {3}, CNC1 = '{4}', CNC2 = '{5}'," +
+                    "BLANKQTY = '{6}', OVER_L = {7}, OVER_W = {8}, OP1ID = {9}, OP2ID = {10}, OP3ID = {11}, OP4ID = {12}, OP5ID = {13}, COMMENT = '{14}'" +
+                    "UPDATE_CNC = {15}, TYPE = {16} WHERE PARTNUM = '{17}'", dscr, finL, finW, thkn, cnc1, cnc2,
+                    blnk, ovrL, ovrW, Op1, Op2, Op3, Op4, Op5, cmnt,
+                    updt, this.OpType.ToString(), p.PartName);
+
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    try
+                    {
+                        rowsAffected = comm.ExecuteNonQuery();
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        throw ioe;
+                    }
+                }
+            }
+            return rowsAffected;
+        }
+
+        public int UpdateCutlistParts(SwProperties p)
+        {
+            int rowsAffected = -1;
+            if (ENABLE_DB_WRITE)
+            {
+                string SQL = string.Format("");
+            }
+            return rowsAffected;
+        }
+
+        public int UpdateMachinePrograms()
+        {
+            return -1;
         }
 
         private string ReturnString(OdbcDataReader dr, int i)

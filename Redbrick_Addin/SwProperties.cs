@@ -452,6 +452,7 @@ namespace Redbrick_Addin
                 p.Del(md);
                 p.Write(md);
             }
+            cutlistData.UpdateParts(this);
         }
 
         public override string ToString()

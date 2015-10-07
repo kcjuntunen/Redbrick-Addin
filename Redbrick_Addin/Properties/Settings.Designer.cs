@@ -222,5 +222,17 @@ namespace Redbrick_Addin.Properties {
                 return ((int)(this["UserDept"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableDBWrite {
+            get {
+                return ((bool)(this["EnableDBWrite"]));
+            }
+            set {
+                this["EnableDBWrite"] = value;
+            }
+        }
     }
 }
