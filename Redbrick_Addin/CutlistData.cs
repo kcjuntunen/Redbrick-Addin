@@ -564,13 +564,41 @@ namespace Redbrick_Addin
             return rowsAffected;
         }
 
-        public int UpdateCutlistParts(SwProperties p)
+        public int UpdateCutlistParts(SwProperties p, int clid, int qty)
         {
             int rowsAffected = -1;
+            string cmid = p.GetProperty("CUTLIST MATERIAL").ResValue;
+            string efid = p.GetProperty("EDGE FRONT (L)").ResValue;
+            string ebid = p.GetProperty("EDGE BACK (L)").ResValue;
+            string elid = p.GetProperty("EDGE LEFT (W)").ResValue;
+            string erid = p.GetProperty("EDGE RIGHT (W)").ResValue;
+
             if (ENABLE_DB_WRITE)
             {
-                string SQL = string.Format("");
+                string SQL = string.Format("UPDATE (CUT_CUTLIST_PARTS INNER JOIN CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID) " +
+                                    "INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID SET " +
+                                    "CUT_CUTLIST_PARTS.MATID = {0}, " +
+                                    "CUT_CUTLIST_PARTS.EDGEID_LF = {1}, " +
+                                    "CUT_CUTLIST_PARTS.EDGEID_LB = {2}, " +
+                                    "CUT_CUTLIST_PARTS.EDGEID_WR = {3}, " +
+                                    "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, " +
+                                    "CUT_CUTLIST_PARTS.QTY = {5} " +
+                                    "WHERE (((CUT_CUTLISTS.CLID)={6}) AND ((CUT_PARTS.PARTNUM)='{7}'));",
+                                    cmid, efid, ebid, erid, elid, qty,clid, p.PartName);
+
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    try
+                    {
+                        rowsAffected = comm.ExecuteNonQuery();
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        throw ioe;
+                    }
+                }
             }
+
             return rowsAffected;
         }
 
