@@ -77,6 +77,8 @@ namespace Redbrick_Addin
             this.cs.Update(ref p);
             this.gbSpecProp.Text = p.PartName + " - " + p.configName;
             this.gp.Update(ref p);
+            CRC crc = new CRC(p.PartFileInfo.DirectoryName + p.PartFileInfo.FullName);
+            this.gbGlobProp.Text = crc.Hash.ToString();
             this.op.Update(ref p);
             this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
             this.ch.Update(ref p);

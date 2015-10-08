@@ -74,6 +74,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ConfigurationSpecific.Designer.cs" />
+    <Compile Include="CRC.cs" />
     <Compile Include="CutlistData.cs" />
     <Compile Include="CutlistHandler.cs">
       <SubType>UserControl</SubType>

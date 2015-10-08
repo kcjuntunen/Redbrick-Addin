@@ -21,7 +21,6 @@ namespace Redbrick_Addin
 
         public ModelDoc2 modeldoc { get; set; }
         public string configName { get; set; }
-        public string PartName { get; set; }
 
         public SwProperties(SldWorks sw)
         {
@@ -569,6 +568,11 @@ namespace Redbrick_Addin
             return res;
         }
 
+        public override int GetHashCode()
+        {
+            return this.modeldoc.GetHashCode();
+        }
+
         public virtual SwProperty this[int index]
         {
             get
@@ -590,6 +594,25 @@ namespace Redbrick_Addin
         }
 	
         #endregion
+
+        public System.IO.FileInfo PartFileInfo { get; set; }
+
+        public string PartName
+        {
+            get
+            {
+                if (this.PartFileInfo != null)
+                {
+                    return this.PartFileInfo.Name.Split(' ', '.')[0];   
+                }
+                return this.GetHashCode().ToString();
+            }
+
+            set
+            {
+                this.PartName = value;
+            }
+        }
 
         private CutlistData _cutlistData;
 

@@ -152,7 +152,7 @@ namespace Redbrick_Addin
                 try
                 {
                     fi = new System.IO.FileInfo(this.Document.GetPathName());
-                    this.prop.PartName = fi.Name.Split(' ', '.')[0];
+                    this.prop.PartFileInfo = fi;
                 }
                 catch (ArgumentException ae)
                 {
