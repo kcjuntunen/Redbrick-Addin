@@ -148,9 +148,21 @@ namespace Redbrick_Addin
 
             if (this.Document != null)
             {
-                System.IO.FileInfo fi =
-                    new System.IO.FileInfo(this.Document.GetPathName());
-                this.prop.PartName = fi.Name.Split(' ', '.')[0];
+                System.IO.FileInfo fi;
+                try
+                {
+                    fi = new System.IO.FileInfo(this.Document.GetPathName());
+                    this.prop.PartName = fi.Name.Split(' ', '.')[0];
+                }
+                catch (ArgumentException ae)
+                {
+                    this.prop.PartName = ae.HResult.ToString();
+                }
+                catch (Exception e)
+                {
+                    this.prop.PartName = e.HResult.ToString();
+                }
+
                 this.prop.GetPropertyData(this.Document);                               // get new ones.
                 swDocumentTypes_e docT = (swDocumentTypes_e)this.Document.GetType();    // what sort of doc is open?
                 switch (docT)

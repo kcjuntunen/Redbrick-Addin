@@ -79,7 +79,7 @@ namespace Redbrick_Addin
             this.props = p;                                                     // Order matters here. The first thing SwProperties does informs what ds
             this.ds.Update(ref p);                                              // does. Ds informs these other guys.
             this.cs.Update(ref p);
-            this.gbSpecProp.Text = "Configuration Specific - " + p.configName;
+            this.gbSpecProp.Text = p.PartName + " - " + p.configName;
             this.gp.Update(ref p);
             this.op.Update(ref p);
             this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);

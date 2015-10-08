@@ -189,7 +189,13 @@ namespace Redbrick_Addin
 
         public bool IsDirty
         {
-            get { return this.dirtTracker.IsDirty; }
+            get
+            {
+                if (this.dirtTracker != null)                       // TODO: Why is this null sometimes?
+                    return this.dirtTracker.IsDirty;
+                else
+                    return false;
+            }
             set { this.dirtTracker.IsDirty = value; }
         }
 
