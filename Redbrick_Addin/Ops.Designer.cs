@@ -93,7 +93,7 @@ namespace Redbrick_Addin
             this.label2.Location = new System.Drawing.Point(3, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 13);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 0;
             this.label2.Text = "OP2";
             // 
             // label3
@@ -103,7 +103,7 @@ namespace Redbrick_Addin
             this.label3.Location = new System.Drawing.Point(3, 80);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 13);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 0;
             this.label3.Text = "OP3";
             // 
             // label4
@@ -113,7 +113,7 @@ namespace Redbrick_Addin
             this.label4.Location = new System.Drawing.Point(3, 120);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(122, 13);
-            this.label4.TabIndex = 3;
+            this.label4.TabIndex = 0;
             this.label4.Text = "OP4";
             // 
             // label5
@@ -123,7 +123,7 @@ namespace Redbrick_Addin
             this.label5.Location = new System.Drawing.Point(3, 160);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 13);
-            this.label5.TabIndex = 4;
+            this.label5.TabIndex = 0;
             this.label5.Text = "OP5";
             // 
             // cbOp1
@@ -134,7 +134,7 @@ namespace Redbrick_Addin
             this.cbOp1.Name = "cbOp1";
             this.cbOp1.Size = new System.Drawing.Size(122, 21);
             this.cbOp1.Sorted = false;
-            this.cbOp1.TabIndex = 5;
+            this.cbOp1.TabIndex = 1;
             // 
             // cbOp2
             //
@@ -144,7 +144,7 @@ namespace Redbrick_Addin
             this.cbOp2.Name = "cbOp2";
             this.cbOp2.Size = new System.Drawing.Size(122, 21);
             this.cbOp2.Sorted = false;
-            this.cbOp2.TabIndex = 6;
+            this.cbOp2.TabIndex = 2;
             // 
             // cbOp3
             // 
@@ -154,7 +154,7 @@ namespace Redbrick_Addin
             this.cbOp3.Name = "cbOp3";
             this.cbOp3.Size = new System.Drawing.Size(122, 21);
             this.cbOp3.Sorted = false;
-            this.cbOp3.TabIndex = 7;
+            this.cbOp3.TabIndex = 3;
             // 
             // cbOp4
             // 
@@ -164,7 +164,7 @@ namespace Redbrick_Addin
             this.cbOp4.Name = "cbOp4";
             this.cbOp4.Size = new System.Drawing.Size(122, 21);
             this.cbOp4.Sorted = false;
-            this.cbOp4.TabIndex = 8;
+            this.cbOp4.TabIndex = 4;
             // 
             // cbOp5
             // 
@@ -174,7 +174,7 @@ namespace Redbrick_Addin
             this.cbOp5.Name = "cbOp5";
             this.cbOp5.Size = new System.Drawing.Size(122, 21);
             this.cbOp5.Sorted = false;
-            this.cbOp5.TabIndex = 9;
+            this.cbOp5.TabIndex = 5;
             // 
             // Ops
             // 

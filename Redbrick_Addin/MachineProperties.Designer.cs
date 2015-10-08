@@ -98,7 +98,7 @@ namespace Redbrick_Addin
             this.label2.Location = new System.Drawing.Point(108, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 0;
             this.label2.Text = "CNC2";
             //
             // lchUpdate
@@ -115,6 +115,7 @@ namespace Redbrick_Addin
             this.chUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chUpdate.Location = new System.Drawing.Point(213, 16);
             this.chUpdate.Name = "chUpdate";
+            this.chUpdate.TabIndex = 3;
             // 
             // label3
             // 
@@ -122,7 +123,7 @@ namespace Redbrick_Addin
             this.label3.Location = new System.Drawing.Point(213, 39);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Parts/Blank";
             // 
             // tbCNC1
@@ -131,7 +132,7 @@ namespace Redbrick_Addin
             this.tbCNC1.Location = new System.Drawing.Point(3, 16);
             this.tbCNC1.Name = "tbCNC1";
             this.tbCNC1.Size = new System.Drawing.Size(99, 20);
-            this.tbCNC1.TabIndex = 3;
+            this.tbCNC1.TabIndex = 1;
             // 
             // tbCNC2
             // 
@@ -139,7 +140,7 @@ namespace Redbrick_Addin
             this.tbCNC2.Location = new System.Drawing.Point(108, 16);
             this.tbCNC2.Name = "tbCNC2";
             this.tbCNC2.Size = new System.Drawing.Size(99, 20);
-            this.tbCNC2.TabIndex = 4;
+            this.tbCNC2.TabIndex = 2;
             // 
             // tbPPB
             // 
@@ -147,7 +148,7 @@ namespace Redbrick_Addin
             this.tbPPB.Location = new System.Drawing.Point(213, 55);
             this.tbPPB.Name = "tbPPB";
             this.tbPPB.Size = new System.Drawing.Size(100, 20);
-            this.tbPPB.TabIndex = 5;
+            this.tbPPB.TabIndex = 6;
             // 
             // label4
             // 
@@ -155,7 +156,7 @@ namespace Redbrick_Addin
             this.label4.Location = new System.Drawing.Point(3, 39);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(36, 13);
-            this.label4.TabIndex = 6;
+            this.label4.TabIndex = 0;
             this.label4.Text = "OverL";
             // 
             // label5
@@ -164,7 +165,7 @@ namespace Redbrick_Addin
             this.label5.Location = new System.Drawing.Point(108, 39);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 13);
-            this.label5.TabIndex = 7;
+            this.label5.TabIndex = 0;
             this.label5.Text = "OverW";
             // 
             // label6
@@ -173,7 +174,7 @@ namespace Redbrick_Addin
             this.label6.Location = new System.Drawing.Point(3, 78);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 13);
-            this.label6.TabIndex = 8;
+            this.label6.TabIndex = 0;
             this.label6.Text = "Blank Size";
             // 
             // tbOverL
@@ -182,7 +183,7 @@ namespace Redbrick_Addin
             this.tbOverL.Location = new System.Drawing.Point(3, 55);
             this.tbOverL.Name = "tbOverL";
             this.tbOverL.Size = new System.Drawing.Size(99, 20);
-            this.tbOverL.TabIndex = 9;
+            this.tbOverL.TabIndex = 4;
             this.tbOverL.TextChanged += new System.EventHandler(this.tbOverL_TextChanged);
             this.tbOverL.Leave += new System.EventHandler(this.tbOverL_Validated);
             // 
@@ -192,7 +193,7 @@ namespace Redbrick_Addin
             this.tbOverW.Location = new System.Drawing.Point(108, 55);
             this.tbOverW.Name = "tbOverW";
             this.tbOverW.Size = new System.Drawing.Size(99, 20);
-            this.tbOverW.TabIndex = 10;
+            this.tbOverW.TabIndex = 5;
             this.tbOverW.TextChanged += new System.EventHandler(this.tbOverW_TextChanged);
             this.tbOverW.Leave += new System.EventHandler(this.tbOverW_Validated);
             // 
@@ -202,7 +203,7 @@ namespace Redbrick_Addin
             this.tbBlankL.Location = new System.Drawing.Point(3, 94);
             this.tbBlankL.Name = "tbBlankL";
             this.tbBlankL.Size = new System.Drawing.Size(99, 20);
-            this.tbBlankL.TabIndex = 11;
+            this.tbBlankL.TabIndex = 7;
             // 
             // tbBlankW
             // 
@@ -210,7 +211,7 @@ namespace Redbrick_Addin
             this.tbBlankW.Location = new System.Drawing.Point(108, 94);
             this.tbBlankW.Name = "tbBlankW";
             this.tbBlankW.Size = new System.Drawing.Size(99, 20);
-            this.tbBlankW.TabIndex = 12;
+            this.tbBlankW.TabIndex = 8;
             // 
             // MachineProperties
             // 

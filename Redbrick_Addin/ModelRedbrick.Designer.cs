@@ -105,7 +105,7 @@ namespace Redbrick_Addin
             this.gbOp.Location = new System.Drawing.Point(3, 853);
             this.gbOp.Name = "gbOp";
             this.gbOp.Size = new System.Drawing.Size(252, 344);
-            this.gbOp.TabIndex = 4;
+            this.gbOp.TabIndex = 3;
             this.gbOp.TabStop = false;
             this.gbOp.Text = "Ops";
             // 
@@ -128,7 +128,7 @@ namespace Redbrick_Addin
             this.gbCutlist.Location = new System.Drawing.Point(3, 1203);
             this.gbCutlist.Name = "gbCutlist";
             this.gbCutlist.Size = new System.Drawing.Size(252, 94);
-            this.gbCutlist.TabIndex = 5;
+            this.gbCutlist.TabIndex = 4;
             this.gbCutlist.TabStop = false;
             this.gbCutlist.Text = "Cutlist";
             // 

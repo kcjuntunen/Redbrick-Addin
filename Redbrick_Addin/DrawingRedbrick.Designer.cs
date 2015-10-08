@@ -130,7 +130,7 @@ namespace Redbrick_Addin
             this.dpDate.Location = new System.Drawing.Point(3, 95);
             this.dpDate.Name = "dpDate";
             this.dpDate.Size = new System.Drawing.Size(216, 20);
-            this.dpDate.TabIndex = 0;
+            this.dpDate.TabIndex = 5;
             // 
             // cbCustomer
             // 
@@ -139,7 +139,7 @@ namespace Redbrick_Addin
             this.cbCustomer.Location = new System.Drawing.Point(3, 55);
             this.cbCustomer.Name = "cbCustomer";
             this.cbCustomer.Size = new System.Drawing.Size(216, 21);
-            this.cbCustomer.TabIndex = 1;
+            this.cbCustomer.TabIndex = 3;
             // 
             // cbAuthor
             // 
@@ -148,7 +148,7 @@ namespace Redbrick_Addin
             this.cbAuthor.Location = new System.Drawing.Point(225, 55);
             this.cbAuthor.Name = "cbAuthor";
             this.cbAuthor.Size = new System.Drawing.Size(90, 21);
-            this.cbAuthor.TabIndex = 2;
+            this.cbAuthor.TabIndex = 4;
             // 
             // label1
             // 
@@ -157,7 +157,7 @@ namespace Redbrick_Addin
             this.label1.Location = new System.Drawing.Point(3, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(216, 13);
-            this.label1.TabIndex = 3;
+            this.label1.TabIndex = 0;
             this.label1.Text = "Customer";
             // 
             // label2
@@ -167,7 +167,7 @@ namespace Redbrick_Addin
             this.label2.Location = new System.Drawing.Point(225, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Author";
             // 
             // label3
@@ -177,7 +177,7 @@ namespace Redbrick_Addin
             this.label3.Location = new System.Drawing.Point(3, 79);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(216, 13);
-            this.label3.TabIndex = 5;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Date";
             // 
             // tbItemNoRes
@@ -186,7 +186,7 @@ namespace Redbrick_Addin
             this.tbItemNoRes.Location = new System.Drawing.Point(225, 16);
             this.tbItemNoRes.Name = "tbItemNoRes";
             this.tbItemNoRes.Size = new System.Drawing.Size(90, 20);
-            this.tbItemNoRes.TabIndex = 6;
+            this.tbItemNoRes.TabIndex = 2;
             // 
             // tbItemNo
             // 
@@ -194,7 +194,7 @@ namespace Redbrick_Addin
             this.tbItemNo.Location = new System.Drawing.Point(3, 16);
             this.tbItemNo.Name = "tbItemNo";
             this.tbItemNo.Size = new System.Drawing.Size(216, 20);
-            this.tbItemNo.TabIndex = 7;
+            this.tbItemNo.TabIndex = 1;
             // 
             // label4
             // 
@@ -202,7 +202,7 @@ namespace Redbrick_Addin
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 8;
+            this.label4.TabIndex = 0;
             this.label4.Text = "Item #";
             // 
             // groupBox1
@@ -212,7 +212,7 @@ namespace Redbrick_Addin
             this.groupBox1.Location = new System.Drawing.Point(3, 153);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(318, 294);
-            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Materials";
             // 
@@ -275,7 +275,7 @@ namespace Redbrick_Addin
             this.label6.Location = new System.Drawing.Point(3, 40);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(87, 13);
-            this.label6.TabIndex = 1;
+            this.label6.TabIndex = 0;
             this.label6.Text = "Material 2";
             // 
             // label7
@@ -285,7 +285,7 @@ namespace Redbrick_Addin
             this.label7.Location = new System.Drawing.Point(3, 80);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(87, 13);
-            this.label7.TabIndex = 2;
+            this.label7.TabIndex = 0;
             this.label7.Text = "Material 3";
             // 
             // label8
@@ -295,7 +295,7 @@ namespace Redbrick_Addin
             this.label8.Location = new System.Drawing.Point(3, 120);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(87, 13);
-            this.label8.TabIndex = 3;
+            this.label8.TabIndex = 0;
             this.label8.Text = "Material 4";
             // 
             // label9
@@ -305,7 +305,7 @@ namespace Redbrick_Addin
             this.label9.Location = new System.Drawing.Point(3, 160);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(87, 13);
-            this.label9.TabIndex = 4;
+            this.label9.TabIndex = 0;
             this.label9.Text = "Material 5";
             // 
             // label10
@@ -315,7 +315,7 @@ namespace Redbrick_Addin
             this.label10.Location = new System.Drawing.Point(96, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(213, 13);
-            this.label10.TabIndex = 5;
+            this.label10.TabIndex = 0;
             this.label10.Text = "Finish 1";
             // 
             // label11
@@ -325,7 +325,7 @@ namespace Redbrick_Addin
             this.label11.Location = new System.Drawing.Point(96, 40);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(213, 13);
-            this.label11.TabIndex = 6;
+            this.label11.TabIndex = 0;
             this.label11.Text = "Finish 2";
             // 
             // label12
@@ -335,7 +335,7 @@ namespace Redbrick_Addin
             this.label12.Location = new System.Drawing.Point(96, 80);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(213, 13);
-            this.label12.TabIndex = 7;
+            this.label12.TabIndex = 0;
             this.label12.Text = "Finish 3";
             // 
             // label13
@@ -345,7 +345,7 @@ namespace Redbrick_Addin
             this.label13.Location = new System.Drawing.Point(96, 120);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(213, 13);
-            this.label13.TabIndex = 8;
+            this.label13.TabIndex = 0;
             this.label13.Text = "Finish 4";
             // 
             // label14
@@ -355,7 +355,7 @@ namespace Redbrick_Addin
             this.label14.Location = new System.Drawing.Point(96, 160);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(213, 13);
-            this.label14.TabIndex = 9;
+            this.label14.TabIndex = 0;
             this.label14.Text = "Finish 5";
             // 
             // cbM1
@@ -365,7 +365,7 @@ namespace Redbrick_Addin
             this.cbM1.Location = new System.Drawing.Point(3, 16);
             this.cbM1.Name = "cbM1";
             this.cbM1.Size = new System.Drawing.Size(87, 21);
-            this.cbM1.TabIndex = 10;
+            this.cbM1.TabIndex = 6;
             // 
             // cbM2
             // 
@@ -374,7 +374,7 @@ namespace Redbrick_Addin
             this.cbM2.Location = new System.Drawing.Point(3, 56);
             this.cbM2.Name = "cbM2";
             this.cbM2.Size = new System.Drawing.Size(87, 21);
-            this.cbM2.TabIndex = 11;
+            this.cbM2.TabIndex = 8;
             // 
             // cbM3
             // 
@@ -383,7 +383,7 @@ namespace Redbrick_Addin
             this.cbM3.Location = new System.Drawing.Point(3, 96);
             this.cbM3.Name = "cbM3";
             this.cbM3.Size = new System.Drawing.Size(87, 21);
-            this.cbM3.TabIndex = 12;
+            this.cbM3.TabIndex = 10;
             // 
             // cbM4
             // 
@@ -392,7 +392,7 @@ namespace Redbrick_Addin
             this.cbM4.Location = new System.Drawing.Point(3, 136);
             this.cbM4.Name = "cbM4";
             this.cbM4.Size = new System.Drawing.Size(87, 21);
-            this.cbM4.TabIndex = 13;
+            this.cbM4.TabIndex = 12;
             // 
             // cbM5
             // 
@@ -409,7 +409,7 @@ namespace Redbrick_Addin
             this.tbFinish1.Location = new System.Drawing.Point(96, 16);
             this.tbFinish1.Name = "tbFinish1";
             this.tbFinish1.Size = new System.Drawing.Size(213, 20);
-            this.tbFinish1.TabIndex = 15;
+            this.tbFinish1.TabIndex = 7;
             // 
             // tbFinish2
             // 
@@ -417,7 +417,7 @@ namespace Redbrick_Addin
             this.tbFinish2.Location = new System.Drawing.Point(96, 56);
             this.tbFinish2.Name = "tbFinish2";
             this.tbFinish2.Size = new System.Drawing.Size(213, 20);
-            this.tbFinish2.TabIndex = 16;
+            this.tbFinish2.TabIndex = 9;
             // 
             // tbFinish3
             // 
@@ -425,7 +425,7 @@ namespace Redbrick_Addin
             this.tbFinish3.Location = new System.Drawing.Point(96, 96);
             this.tbFinish3.Name = "tbFinish3";
             this.tbFinish3.Size = new System.Drawing.Size(213, 20);
-            this.tbFinish3.TabIndex = 17;
+            this.tbFinish3.TabIndex = 11;
             // 
             // tbFinish4
             // 
@@ -433,7 +433,7 @@ namespace Redbrick_Addin
             this.tbFinish4.Location = new System.Drawing.Point(96, 136);
             this.tbFinish4.Name = "tbFinish4";
             this.tbFinish4.Size = new System.Drawing.Size(213, 20);
-            this.tbFinish4.TabIndex = 18;
+            this.tbFinish4.TabIndex = 13;
             // 
             // tbFinish5
             // 
@@ -441,7 +441,7 @@ namespace Redbrick_Addin
             this.tbFinish5.Location = new System.Drawing.Point(96, 176);
             this.tbFinish5.Name = "tbFinish5";
             this.tbFinish5.Size = new System.Drawing.Size(213, 20);
-            this.tbFinish5.TabIndex = 19;
+            this.tbFinish5.TabIndex = 15;
             // 
             // tableLayoutPanel4
             // 
@@ -456,7 +456,7 @@ namespace Redbrick_Addin
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(318, 34);
-            this.tableLayoutPanel4.TabIndex = 2;
+            this.tableLayoutPanel4.TabIndex = 0;
             // 
             // btnOK
             // 
@@ -475,7 +475,7 @@ namespace Redbrick_Addin
             this.btnCancel.Location = new System.Drawing.Point(162, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(153, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 0;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);

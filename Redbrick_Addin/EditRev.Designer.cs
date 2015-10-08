@@ -124,7 +124,7 @@ namespace Redbrick_Addin
             this.label2.Location = new System.Drawing.Point(78, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 13);
-            this.label2.TabIndex = 1;
+            this.label2.TabIndex = 0;
             this.label2.Text = "ECO#";
             // 
             // label3
@@ -134,7 +134,7 @@ namespace Redbrick_Addin
             this.label3.Location = new System.Drawing.Point(153, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(183, 13);
-            this.label3.TabIndex = 2;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Description";
             // 
             // label4
@@ -144,7 +144,7 @@ namespace Redbrick_Addin
             this.label4.Location = new System.Drawing.Point(342, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 13);
-            this.label4.TabIndex = 3;
+            this.label4.TabIndex = 0;
             this.label4.Text = "By";
             // 
             // label5
@@ -154,7 +154,7 @@ namespace Redbrick_Addin
             this.label5.Location = new System.Drawing.Point(405, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(216, 13);
-            this.label5.TabIndex = 4;
+            this.label5.TabIndex = 0;
             this.label5.Text = "Date";
             // 
             // cbRev
@@ -164,7 +164,7 @@ namespace Redbrick_Addin
             this.cbRev.Location = new System.Drawing.Point(3, 16);
             this.cbRev.Name = "cbRev";
             this.cbRev.Size = new System.Drawing.Size(69, 21);
-            this.cbRev.TabIndex = 5;
+            this.cbRev.TabIndex = 1;
             // 
             // cbBy
             // 
@@ -173,7 +173,7 @@ namespace Redbrick_Addin
             this.cbBy.Location = new System.Drawing.Point(342, 16);
             this.cbBy.Name = "cbBy";
             this.cbBy.Size = new System.Drawing.Size(57, 21);
-            this.cbBy.TabIndex = 6;
+            this.cbBy.TabIndex = 4;
             // 
             // dtpDate
             // 
@@ -181,7 +181,7 @@ namespace Redbrick_Addin
             this.dtpDate.Location = new System.Drawing.Point(405, 16);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(216, 20);
-            this.dtpDate.TabIndex = 7;
+            this.dtpDate.TabIndex = 5;
             // 
             // tbECO
             // 
@@ -189,7 +189,7 @@ namespace Redbrick_Addin
             this.tbECO.Location = new System.Drawing.Point(78, 16);
             this.tbECO.Name = "tbECO";
             this.tbECO.Size = new System.Drawing.Size(69, 20);
-            this.tbECO.TabIndex = 8;
+            this.tbECO.TabIndex = 2;
             // 
             // tbDesc
             // 
@@ -197,7 +197,7 @@ namespace Redbrick_Addin
             this.tbDesc.Location = new System.Drawing.Point(153, 16);
             this.tbDesc.Name = "tbDesc";
             this.tbDesc.Size = new System.Drawing.Size(183, 20);
-            this.tbDesc.TabIndex = 9;
+            this.tbDesc.TabIndex = 3;
             // 
             // tableLayoutPanel3
             // 
@@ -213,7 +213,7 @@ namespace Redbrick_Addin
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.Size = new System.Drawing.Size(624, 34);
-            this.tableLayoutPanel3.TabIndex = 1;
+            this.tableLayoutPanel3.TabIndex = 0;
             // 
             // btnOK
             // 
@@ -221,7 +221,7 @@ namespace Redbrick_Addin
             this.btnOK.Location = new System.Drawing.Point(3, 3);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(306, 28);
-            this.btnOK.TabIndex = 0;
+            this.btnOK.TabIndex = 6;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -232,7 +232,7 @@ namespace Redbrick_Addin
             this.btnCancel.Location = new System.Drawing.Point(315, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(306, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);

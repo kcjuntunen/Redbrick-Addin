@@ -100,7 +100,7 @@ namespace Redbrick_Addin
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(238, 68);
-            this.tbComment.TabIndex = 10;
+            this.tbComment.TabIndex = 6;
             // 
             // label5
             // 
@@ -109,7 +109,7 @@ namespace Redbrick_Addin
             this.label5.Location = new System.Drawing.Point(3, 195);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(238, 13);
-            this.label5.TabIndex = 6;
+            this.label5.TabIndex = 0;
             this.label5.Text = "Comment";
             this.label5.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -119,7 +119,7 @@ namespace Redbrick_Addin
             this.tbWallThick.Location = new System.Drawing.Point(3, 172);
             this.tbWallThick.Name = "tbWallThick";
             this.tbWallThick.Size = new System.Drawing.Size(238, 20);
-            this.tbWallThick.TabIndex = 9;
+            this.tbWallThick.TabIndex = 5;
             this.tbWallThick.Leave += new System.EventHandler(this.tbWallThick_Leave);
             // 
             // lWallThickness
@@ -129,7 +129,7 @@ namespace Redbrick_Addin
             this.lWallThickness.Location = new System.Drawing.Point(3, 156);
             this.lWallThickness.Name = "lWallThickness";
             this.lWallThickness.Size = new System.Drawing.Size(238, 13);
-            this.lWallThickness.TabIndex = 5;
+            this.lWallThickness.TabIndex = 0;
             this.lWallThickness.Text = "Wall Thickness";
             this.lWallThickness.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -139,7 +139,7 @@ namespace Redbrick_Addin
             this.tbThick.Location = new System.Drawing.Point(3, 133);
             this.tbThick.Name = "tbThick";
             this.tbThick.Size = new System.Drawing.Size(238, 20);
-            this.tbThick.TabIndex = 15;
+            this.tbThick.TabIndex = 4;
             this.tbThick.Leave += new System.EventHandler(this.tbThick_Leave);
             // 
             // label6
@@ -149,7 +149,7 @@ namespace Redbrick_Addin
             this.label6.Location = new System.Drawing.Point(3, 117);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(238, 13);
-            this.label6.TabIndex = 14;
+            this.label6.TabIndex = 0;
             this.label6.Text = "Thickness";
             this.label6.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -159,7 +159,7 @@ namespace Redbrick_Addin
             this.tbWidth.Location = new System.Drawing.Point(3, 94);
             this.tbWidth.Name = "tbWidth";
             this.tbWidth.Size = new System.Drawing.Size(238, 20);
-            this.tbWidth.TabIndex = 8;
+            this.tbWidth.TabIndex = 3;
             this.tbWidth.Leave += new System.EventHandler(this.tbWidth_Leave);
             // 
             // label3
@@ -169,7 +169,7 @@ namespace Redbrick_Addin
             this.label3.Location = new System.Drawing.Point(3, 78);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(238, 13);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 0;
             this.label3.Text = "Width";
             this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -179,7 +179,7 @@ namespace Redbrick_Addin
             this.tbLength.Location = new System.Drawing.Point(3, 55);
             this.tbLength.Name = "tbLength";
             this.tbLength.Size = new System.Drawing.Size(238, 20);
-            this.tbLength.TabIndex = 7;
+            this.tbLength.TabIndex = 2;
             this.tbLength.Leave += new System.EventHandler(this.tbLength_Leave);
             // 
             // label2
@@ -189,7 +189,7 @@ namespace Redbrick_Addin
             this.label2.Location = new System.Drawing.Point(3, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(238, 13);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 0;
             this.label2.Text = "Length";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -219,7 +219,7 @@ namespace Redbrick_Addin
             this.labResWallThickness.Location = new System.Drawing.Point(247, 169);
             this.labResWallThickness.Name = "labResWallThickness";
             this.labResWallThickness.Size = new System.Drawing.Size(55, 26);
-            this.labResWallThickness.TabIndex = 16;
+            this.labResWallThickness.TabIndex = 0;
             this.labResWallThickness.Text = "00.000";
             this.labResWallThickness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -230,7 +230,7 @@ namespace Redbrick_Addin
             this.labResThickness.Location = new System.Drawing.Point(247, 130);
             this.labResThickness.Name = "labResThickness";
             this.labResThickness.Size = new System.Drawing.Size(55, 26);
-            this.labResThickness.TabIndex = 13;
+            this.labResThickness.TabIndex = 0;
             this.labResThickness.Text = "00.000";
             this.labResThickness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -241,7 +241,7 @@ namespace Redbrick_Addin
             this.labResWidth.Location = new System.Drawing.Point(247, 91);
             this.labResWidth.Name = "labResWidth";
             this.labResWidth.Size = new System.Drawing.Size(55, 26);
-            this.labResWidth.TabIndex = 12;
+            this.labResWidth.TabIndex = 0;
             this.labResWidth.Text = "00.000";
             this.labResWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labResWidth.TextChanged += new System.EventHandler(this.labResWidth_TextChanged);
@@ -253,7 +253,7 @@ namespace Redbrick_Addin
             this.labResLength.Location = new System.Drawing.Point(247, 52);
             this.labResLength.Name = "labResLength";
             this.labResLength.Size = new System.Drawing.Size(55, 26);
-            this.labResLength.TabIndex = 11;
+            this.labResLength.TabIndex = 0;
             this.labResLength.Text = "00.000";
             this.labResLength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labResLength.TextChanged += new System.EventHandler(this.labResLength_TextChanged);
@@ -269,6 +269,7 @@ namespace Redbrick_Addin
             this.bCopy.Size = new System.Drawing.Size(22, 27);
             this.bCopy.TabIndex = 2;
             this.bCopy.UseVisualStyleBackColor = true;
+            this.bCopy.Visible = false;                                                 // Who needs it, anyway?
             this.bCopy.Click += new System.EventHandler(this.bCopy_Click);
             // 
             // GeneralProperties

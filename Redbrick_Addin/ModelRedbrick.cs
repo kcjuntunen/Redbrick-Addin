@@ -49,15 +49,11 @@ namespace Redbrick_Addin
             mp = new MachineProperties(ref this.props);
             mp.Dock = d;
             op = new Ops(ref this.props);
+            op.TabIndex = 2;
             op.Dock = d;
             ch = new CutlistHandler(ref this.props);
+            ch.TabIndex = 1;
             ch.Dock = d;
-
-            //this.tlpMain.Controls.Add(cs, 0, 0);                // Add them, in order to the main table.
-            //this.tlpMain.Controls.Add(gp, 0, 1);                // But I think something's not right here.
-            //this.tlpMain.Controls.Add(mp, 0, 2);                // TODO: have a close look at what's going on here.
-            //this.tlpMain.Controls.Add(ds, 0, 3);
-            //this.tlpMain.Controls.Add(op, 0, 4);
 
             foreach (Control item in this.tlpMain.Controls)     // If anything's not docked, dock it.
             {

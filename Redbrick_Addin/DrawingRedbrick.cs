@@ -34,6 +34,7 @@ namespace Redbrick_Addin
         public void t()
         {
             tvRevs t = new tvRevs(ref this._propSet, ref this._revSet);
+            t.TabIndex = 16;
             this.tableLayoutPanel1.Controls.Add(t, 0, 2);
             t.Dock = DockStyle.Fill;
         }

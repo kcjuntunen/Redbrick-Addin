@@ -97,7 +97,7 @@ namespace Redbrick_Addin
             this.cbEr.Location = new System.Drawing.Point(3, 176);
             this.cbEr.Name = "cbEr";
             this.cbEr.Size = new System.Drawing.Size(242, 21);
-            this.cbEr.TabIndex = 3;
+            this.cbEr.TabIndex = 5;
             this.cbEr.SelectedIndexChanged += new System.EventHandler(this.cbEr_SelectedIndexChanged);
             // 
             // lEr
@@ -107,7 +107,7 @@ namespace Redbrick_Addin
             this.lEr.Location = new System.Drawing.Point(3, 160);
             this.lEr.Name = "lEr";
             this.lEr.Size = new System.Drawing.Size(242, 13);
-            this.lEr.TabIndex = 6;
+            this.lEr.TabIndex = 0;
             this.lEr.Text = "Edge Right (W)";
             this.lEr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -119,7 +119,7 @@ namespace Redbrick_Addin
             this.cbEl.Location = new System.Drawing.Point(3, 136);
             this.cbEl.Name = "cbEl";
             this.cbEl.Size = new System.Drawing.Size(242, 21);
-            this.cbEl.TabIndex = 8;
+            this.cbEl.TabIndex = 4;
             this.cbEl.SelectedIndexChanged += new System.EventHandler(this.cbEl_SelectedIndexChanged);
             // 
             // lEl
@@ -129,7 +129,7 @@ namespace Redbrick_Addin
             this.lEl.Location = new System.Drawing.Point(3, 120);
             this.lEl.Name = "lEl";
             this.lEl.Size = new System.Drawing.Size(242, 13);
-            this.lEl.TabIndex = 5;
+            this.lEl.TabIndex = 0;
             this.lEl.Text = "Edge Left (W)";
             this.lEl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -141,7 +141,7 @@ namespace Redbrick_Addin
             this.cbEb.Location = new System.Drawing.Point(3, 96);
             this.cbEb.Name = "cbEb";
             this.cbEb.Size = new System.Drawing.Size(242, 21);
-            this.cbEb.TabIndex = 7;
+            this.cbEb.TabIndex = 3;
             this.cbEb.SelectedIndexChanged += new System.EventHandler(this.cbEb_SelectedIndexChanged);
             // 
             // lEb
@@ -151,7 +151,7 @@ namespace Redbrick_Addin
             this.lEb.Location = new System.Drawing.Point(3, 80);
             this.lEb.Name = "lEb";
             this.lEb.Size = new System.Drawing.Size(242, 13);
-            this.lEb.TabIndex = 4;
+            this.lEb.TabIndex = 0;
             this.lEb.Text = "Edge Back (L)";
             this.lEb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -163,7 +163,7 @@ namespace Redbrick_Addin
             this.cbEf.Location = new System.Drawing.Point(3, 56);
             this.cbEf.Name = "cbEf";
             this.cbEf.Size = new System.Drawing.Size(242, 21);
-            this.cbEf.TabIndex = 9;
+            this.cbEf.TabIndex = 2;
             this.cbEf.SelectedIndexChanged += new System.EventHandler(this.cbEf_SelectedIndexChanged);
             // 
             // lEf
@@ -173,7 +173,7 @@ namespace Redbrick_Addin
             this.lEf.Location = new System.Drawing.Point(3, 40);
             this.lEf.Name = "lEf";
             this.lEf.Size = new System.Drawing.Size(242, 13);
-            this.lEf.TabIndex = 2;
+            this.lEf.TabIndex = 0;
             this.lEf.Text = "Edge Front (L)";
             this.lEf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -207,7 +207,7 @@ namespace Redbrick_Addin
             this.leLColor.Name = "leLColor";
             this.tableLayoutPanel1.SetRowSpan(this.leLColor, 2);
             this.leLColor.Size = new System.Drawing.Size(77, 40);
-            this.leLColor.TabIndex = 13;
+            this.leLColor.TabIndex = 0;
             this.leLColor.Text = "Edge Left Color";
             this.leLColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -219,7 +219,7 @@ namespace Redbrick_Addin
             this.leBColor.Name = "leBColor";
             this.tableLayoutPanel1.SetRowSpan(this.leBColor, 2);
             this.leBColor.Size = new System.Drawing.Size(77, 40);
-            this.leBColor.TabIndex = 12;
+            this.leBColor.TabIndex = 0;
             this.leBColor.Text = "Edge Back Color";
             this.leBColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -231,7 +231,7 @@ namespace Redbrick_Addin
             this.leRColor.Name = "leRColor";
             this.tableLayoutPanel1.SetRowSpan(this.leRColor, 2);
             this.leRColor.Size = new System.Drawing.Size(77, 40);
-            this.leRColor.TabIndex = 14;
+            this.leRColor.TabIndex = 0;
             this.leRColor.Text = "Edge Right Color";
             this.leRColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -243,7 +243,7 @@ namespace Redbrick_Addin
             this.lMatColor.Name = "lMatColor";
             this.tableLayoutPanel1.SetRowSpan(this.lMatColor, 2);
             this.lMatColor.Size = new System.Drawing.Size(77, 40);
-            this.lMatColor.TabIndex = 10;
+            this.lMatColor.TabIndex = 0;
             this.lMatColor.Text = "Material Color";
             this.lMatColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -255,7 +255,7 @@ namespace Redbrick_Addin
             this.leFColor.Name = "leFColor";
             this.tableLayoutPanel1.SetRowSpan(this.leFColor, 2);
             this.leFColor.Size = new System.Drawing.Size(77, 40);
-            this.leFColor.TabIndex = 11;
+            this.leFColor.TabIndex = 0;
             this.leFColor.Text = "Edge Front Color";
             this.leFColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
