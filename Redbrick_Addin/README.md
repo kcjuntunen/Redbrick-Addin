@@ -1,0 +1,1 @@
+﻿Borrowing Crc32.cs unchanged from Damien Guard's DamienGKit <https://github.com/damieng/DamienGKit.git> under Apache License v2.0.

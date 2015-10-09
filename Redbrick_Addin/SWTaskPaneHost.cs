@@ -132,8 +132,6 @@ namespace Redbrick_Addin
                     if (MaybeSave())
                         this.Write();
 
-            //this.ClearControls(this);                   // SW level doc switching
-
             if (this.SwApp == null)
                 this.SwApp = this.RequestSW();
 
@@ -151,8 +149,16 @@ namespace Redbrick_Addin
                 System.IO.FileInfo fi;
                 try
                 {
-                    fi = new System.IO.FileInfo(this.Document.GetPathName());
-                    this.prop.PartFileInfo = fi;
+                    if (!string.IsNullOrWhiteSpace(this.Document.GetPathName()))
+                    {
+                        fi = new System.IO.FileInfo(this.Document.GetPathName());
+                        this.prop.PartFileInfo = fi;
+                        this.prop.Hash = this.GetHash(string.Format("{0}\\{1}", this.prop.PartFileInfo.Directory.FullName, this.prop.PartFileInfo.Name));
+                    }
+                    else
+                    {
+                        //this.prop.PartName = "New Document"; // <-- stack overflow? weird
+                    }
                 }
                 catch (ArgumentException ae)
                 {
@@ -210,6 +216,30 @@ namespace Redbrick_Addin
             }
             else
                 this.ClearControls(this);
+        }
+
+        private int GetHash(string fullPath)
+        {
+
+            DamienG.Security.Cryptography.Crc32 crc = new DamienG.Security.Cryptography.Crc32();
+
+            byte[] b = new byte[fullPath.Length];
+            string hash = string.Empty;
+
+            for (int i = 0; i < fullPath.Length; i++)
+                b[i] = (byte)fullPath[i];
+
+            foreach (byte byt in crc.ComputeHash(b))
+                hash += byt.ToString("x2").ToLower();
+
+            try
+            {
+                return int.Parse(hash, System.Globalization.NumberStyles.HexNumber);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         private void SetupAssy()

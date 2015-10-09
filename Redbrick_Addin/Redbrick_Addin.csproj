@@ -74,7 +74,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ConfigurationSpecific.Designer.cs" />
-    <Compile Include="CRC.cs" />
+    <Compile Include="Crc32.cs" />
     <Compile Include="CutlistData.cs" />
     <Compile Include="CutlistHandler.cs">
       <SubType>UserControl</SubType>
@@ -183,6 +183,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="Resources\clipboard.png" />
   </ItemGroup>
   <ItemGroup>

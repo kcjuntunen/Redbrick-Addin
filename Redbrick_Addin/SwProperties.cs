@@ -527,10 +527,7 @@ namespace Redbrick_Addin
             get { return this._innerArray.Count; }
         }
 
-        public bool IsReadOnly
-        {
-            get { return this._isReadOnly; }
-        }
+        public bool IsReadOnly { get; set;  }
 
         public bool Remove(SwProperty item)
         {
@@ -585,14 +582,6 @@ namespace Redbrick_Addin
             }
         }
 
-        private bool _isReadOnly;
-
-        protected bool MyProperty
-        {
-            get { return _isReadOnly; }
-            set { _isReadOnly = value; }
-        }
-	
         #endregion
 
         public System.IO.FileInfo PartFileInfo { get; set; }
@@ -613,6 +602,8 @@ namespace Redbrick_Addin
                 this.PartName = value;
             }
         }
+
+        public int Hash { get; set; }
 
         private CutlistData _cutlistData;
 
