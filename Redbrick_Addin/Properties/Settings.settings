@@ -104,6 +104,9 @@
       <Value Profile="(Default)">6</Value>
     </Setting>
     <Setting Name="EnableDBWrite" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Testing" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

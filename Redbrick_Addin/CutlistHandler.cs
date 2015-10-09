@@ -38,10 +38,13 @@ namespace Redbrick_Addin
         public void Write()
         {
             int tp = 0;
-            if (int.TryParse((this.cbCutlist.SelectedItem as DataRowView)[0].ToString(), out tp))
+            if (this.cbCustomer.SelectedItem != null)
             {
-                Properties.Settings.Default.CurrentCutlist = tp;
-                Properties.Settings.Default.Save();
+                if (int.TryParse((this.cbCutlist.SelectedItem as DataRowView)[0].ToString(), out tp))
+                {
+                    Properties.Settings.Default.CurrentCutlist = tp;
+                    Properties.Settings.Default.Save();
+                }   
             }
         }
 

@@ -225,13 +225,25 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool EnableDBWrite {
             get {
                 return ((bool)(this["EnableDBWrite"]));
             }
             set {
                 this["EnableDBWrite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Testing {
+            get {
+                return ((bool)(this["Testing"]));
+            }
+            set {
+                this["Testing"] = value;
             }
         }
     }

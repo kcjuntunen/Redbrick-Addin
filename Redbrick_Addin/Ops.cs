@@ -35,11 +35,11 @@ namespace Redbrick_Addin
 
         private void LinkControls()
         {
-            this.propertySet.LinkControlToProperty("OP1", true, this.cbOp1);
-            this.propertySet.LinkControlToProperty("OP2", true, this.cbOp2);
-            this.propertySet.LinkControlToProperty("OP3", true, this.cbOp3);
-            this.propertySet.LinkControlToProperty("OP4", true, this.cbOp4);
-            this.propertySet.LinkControlToProperty("OP5", true, this.cbOp5);
+            this.propertySet.LinkControlToProperty("OP1ID", true, this.cbOp1);
+            this.propertySet.LinkControlToProperty("OP2ID", true, this.cbOp2);
+            this.propertySet.LinkControlToProperty("OP3ID", true, this.cbOp3);
+            this.propertySet.LinkControlToProperty("OP4ID", true, this.cbOp4);
+            this.propertySet.LinkControlToProperty("OP5ID", true, this.cbOp5);
         }
 
         public void GetProperties()

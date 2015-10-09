@@ -51,11 +51,20 @@ namespace Redbrick_Addin
 
         private void LinkControls()
         {
-            this.propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
-            this.propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
-            this.propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
-            this.propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
-            this.propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
+            this.propertySet.LinkControlToProperty("MATID", false, this.cbMat);
+            this.propertySet.LinkControlToProperty("EFID", false, this.cbEf);
+            this.propertySet.LinkControlToProperty("EBID", false, this.cbEb);
+            this.propertySet.LinkControlToProperty("ELID", false, this.cbEl);
+            this.propertySet.LinkControlToProperty("ERID", false, this.cbEr);
+
+            if (Properties.Settings.Default.Testing)
+            {
+                this.propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
+                this.propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
+                this.propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
+                this.propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
+                this.propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
+            }
         }
 
         public void GetProperties()

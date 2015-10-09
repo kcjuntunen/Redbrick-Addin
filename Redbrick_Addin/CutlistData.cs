@@ -264,7 +264,7 @@ namespace Redbrick_Addin
                 }
             }
         }
-
+        
         public int GetOpID(string description)
         {
             if (description == string.Empty)
@@ -425,6 +425,29 @@ namespace Redbrick_Addin
             if (int.TryParse(id, out tp))
             {
                 string SQL = string.Format("SELECT OPDESCR FROM CUT_OPS WHERE OPID = {0}", id);
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    using (OdbcDataReader dr = comm.ExecuteReader())
+                    {
+                        if (dr.HasRows)
+                            return dr.GetString(0);
+                        else
+                            return string.Empty;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        public string GetOpAbbreviationByID(string id)
+        {
+            if (id == string.Empty)
+                return string.Empty;
+
+            int tp = 0;
+            if (int.TryParse(id, out tp))
+            {
+                string SQL = string.Format("SELECT OPNAME FROM CUT_OPS WHERE OPID = {0}", id);
                 using (OdbcCommand comm = new OdbcCommand(SQL, conn))
                 {
                     using (OdbcDataReader dr = comm.ExecuteReader())

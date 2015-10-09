@@ -41,6 +41,15 @@ namespace Redbrick_Addin
         }
 
         /// <summary>
+        /// Rename this property.
+        /// </summary>
+        /// <param name="NewName">The new name. What else?</param>
+        public void Rename(string NewName)
+        {
+            this.Name = NewName;
+        }
+
+        /// <summary>
         /// Write assuming we already have SwApp defined.
         /// </summary>
         public void Write()
@@ -98,10 +107,21 @@ namespace Redbrick_Addin
                 if (this.Global)
                 {
                     // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-                    if (this.Name.ToUpper().Contains("OP") || this.Name.ToUpper().Contains("DEPARTMENT"))
+                    if (this.Name.ToUpper().Contains("OP") && !this.Name.ToUpper().Contains("ID") && this.Ctl != null)
                     {
                         System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
-                        string v = drv.Row.ItemArray[0].ToString();
+                        string v = this.Descr; //drv.Row.ItemArray[1].ToString();
+                        res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
+#if DEBUG
+                        System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
+#endif
+                    }
+
+                    if (((this.Name.ToUpper().Contains("OP") && this.Name.ToUpper().Contains("ID")) || 
+                        this.Name.ToUpper().Contains("DEPARTMENT")) && this.Ctl != null)
+                    {
+                        //System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
+                        string v = this.ID; //drv.Row.ItemArray[0].ToString();
                         res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
     #if DEBUG
                         System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
@@ -123,16 +143,31 @@ namespace Redbrick_Addin
                 else // Configuration specific props.
                 {
                     // We only want material and edging here. It'll get ID #s from the datarow in the combobox.
-                    if (this.Name.Contains("EDGE") || this.Name.Contains("CUTLIST MATERIAL"))
+                    if (this.Name.Contains("ID"))
                     {
-                        string v = "0";
-                        if ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null)
-                            v = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
-                        string name = md.GetPathName();
+                        string v = this.ID;
                         res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-    #if DEBUG
+#if DEBUG
                         System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-    #endif
+#endif
+                    }
+
+                    if (this.Name.Contains("CUTLIST MATERIAL"))
+                    {
+                        string v = this.Descr;
+                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
+#if DEBUG
+                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
+#endif
+                    }
+
+                    if (this.Name.Contains("EDGE"))
+                    {
+                        string v = this.Descr;
+                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
+#if DEBUG
+                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
+#endif
                     }
                 }
             }
@@ -446,7 +481,14 @@ namespace Redbrick_Addin
             get { return _id; }
             set { _id = value; }
         }
-	
+
+        private string _descr;
+
+        public string Descr
+        {
+            get { return _descr; }
+            set { _descr = value; }
+        }
 
         private string _propName;
 
