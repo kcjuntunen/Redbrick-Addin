@@ -111,7 +111,7 @@ namespace Redbrick_Addin
             //int wrn = 0;
             //swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
             //doc.Save3((int)op, ref err, ref wrn);                               // This isn't too slow. Might be too slow in DrawingRedbrick though.
-            this.dirtTracker = null;
+            //this.dirtTracker = null;
         }
 
         public bool IsDirty 

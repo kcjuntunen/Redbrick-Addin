@@ -14,6 +14,9 @@ namespace Redbrick_Addin
         {
             this.PropertySet = prop;
             InitializeComponent();
+
+            for (int i = 100; i < 106; i++)
+                this.cbRev.Items.Add(i.ToString());
         }
 
         public void Update(ref SwProperties prop)
@@ -29,6 +32,14 @@ namespace Redbrick_Addin
 
                 if (idx < this.cbCutlist.Items.Count)
                     this.cbCutlist.SelectedIndex = idx;
+
+                this.tbDescription.Text = (this.cbCutlist.SelectedItem as DataRowView)[3].ToString();
+                this.tbL.Text = (this.cbCutlist.SelectedItem as DataRowView)[4].ToString();
+                this.tbW.Text = (this.cbCutlist.SelectedItem as DataRowView)[5].ToString();
+                this.tbH.Text = (this.cbCutlist.SelectedItem as DataRowView)[6].ToString();
+                this.tbRef.Text = (this.cbCutlist.SelectedItem as DataRowView)[11].ToString();
+                this.dateTimePicker1.Text = (this.cbCutlist.SelectedItem as DataRowView)[7].ToString();
+                this.cbRev.Text = ((this.cbCutlist.SelectedItem as DataRowView)[2].ToString());
             }
             else
             {
