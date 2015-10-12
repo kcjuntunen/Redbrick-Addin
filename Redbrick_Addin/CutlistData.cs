@@ -321,8 +321,9 @@ namespace Redbrick_Addin
 
         public List<string> GetOpDataByName(string name)
         {
+            List<string> defaultList = new List<string> { "0", string.Empty, string.Empty, this.OpType.ToString() };
             if (name == string.Empty)
-                return null;
+                return defaultList;
 
             string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like '{0}' AND OPTYPE = {1}", name, this.OpType);
             using (OdbcCommand comm = new OdbcCommand(SQL, conn))
@@ -340,7 +341,7 @@ namespace Redbrick_Addin
                     }
                     else
                     {
-                        return null;
+                        return defaultList;
                     }
                 }
             }
@@ -364,6 +365,29 @@ namespace Redbrick_Addin
                     else
                     {
                         return 1;
+                    }
+                }
+            }
+        }
+
+        public string GetOpTypeNameByID(int ID)
+        {
+            if (ID == 0)
+                return "WOOD";
+
+            string SQL = string.Format("SELECT TYPEDESC FROM CUT_PART_TYPES WHERE TYPEID = {0}", ID);
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        string res = dr.GetString(0);
+                        return res;
+                    }
+                    else
+                    {
+                        return "WOOD";
                     }
                 }
             }

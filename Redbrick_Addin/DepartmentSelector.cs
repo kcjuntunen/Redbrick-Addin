@@ -41,6 +41,12 @@ namespace Redbrick_Addin
             this.cbDepartment.DisplayMember = "TYPEDESC";
         }
 
+        public void LinkControls()
+        {
+            this.PropertySet.LinkControlToProperty("DEPT", true, this.cbDepartment);
+            this.PropertySet.LinkControlToProperty("DEPARTMENT", true, this.cbDepartment);
+        }
+
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
             //int tp = 1; // wood

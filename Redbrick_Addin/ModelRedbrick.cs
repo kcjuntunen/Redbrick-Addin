@@ -107,9 +107,9 @@ namespace Redbrick_Addin
             this.props.Write(doc);                                              // entered into the controls, then writes to SW.
             this.ch.Write();
             doc.ForceRebuild3(false);                                           // Show changes.
-            int err = 0;
-            int wrn = 0;
-            swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
+            //int err = 0;
+            //int wrn = 0;
+            //swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
             //doc.Save3((int)op, ref err, ref wrn);                               // This isn't too slow. Might be too slow in DrawingRedbrick though.
             this.dirtTracker = null;
         }

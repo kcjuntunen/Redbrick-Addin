@@ -143,36 +143,73 @@ namespace Redbrick_Addin
 
             string[] sa = g.GetNames();
             List<string> ss = new List<string>();
+            const string propName = "DEPARTMENT";
+            const string newPropName = "DEPT";
 
             // Noooo! Null stuff is trouble.
             if (sa != null)
                 ss.AddRange(sa);
 
+            sa = s.GetNames();
+
+            if (sa != null)
+                ss.AddRange(sa);
+
             int res;
+            int opt = 1;
             bool useCached = false;
-            string val = "WOOD";                // If we can't find the prop we want, let's just presume a wood part.
+            // If we can't find the prop we want, let's just presume a wood part.
+            string val = "WOOD";
             string resVal = "WOOD";
             bool wRes = false;
 
-            if (ss.Contains("DEPARTMENT"))
+            SwProperty pOld = new SwProperty();
+            SwProperty pNew = new SwProperty();
+            pOld.Global = true;
+            pNew.Global = true;
+            foreach (string n in ss)
             {
-                res = g.Get5("DEPARTMENT", useCached, out val, out resVal, out wRes);
-            }
-            else // If it wasn't where it was supposed to be, let's look here. Maybe, in the future, we could traverse configs for it too.
-            {
-                sa = s.GetNames();
-                
-                if (sa != null)
-                    ss.AddRange(sa);
+                switch (n)
+                {   
+                    case propName:
+                        // old dept field
+                        res = g.Get5(propName, useCached, out val, out resVal, out wRes);
+                        pOld.Rename(propName);
+                        pNew.Rename(newPropName);
+                        opt = this.cutlistData.GetOpTypeIDByName(resVal.ToUpper());
+                        pOld.ID = opt.ToString();
+                        pOld.Value = val;
+                        pOld.ResValue = resVal;
+                        
+                        pNew.ID = pOld.ID;
+                        pNew.Value = pNew.ID;
+                        pNew.ResValue = resVal;
+                        this.Add(pOld);
+                        this.Add(pNew);
+                        break;
+                    case newPropName:
+                        // new dept field
+                        res = g.Get5(newPropName, useCached, out val, out resVal, out wRes);
+                        pOld.Rename(propName);
+                        pNew.Rename(newPropName);
+                        int tp = 0;
+                        string resName = "WOOD";
+                        if (int.TryParse(val, out tp))
+                            resName = this.cutlistData.GetOpTypeNameByID(tp);
+                        opt = tp;
 
-                if (ss.Contains("DEPARTMENT"))
-                {
-                    res = s.Get5("DEPARTMENT", useCached, out val, out resVal, out wRes);
+                        
+                        pOld.ID = pNew.ID = val;
+                        pOld.Descr = pNew.Descr = resName;
+                        pOld.ResValue = pNew.ResValue = resName;
+                        this.Add(pOld);
+                        this.Add(pNew);
+                        break;
+                    default:
+                        // ignore
+                        break;
                 }
             }
-
-            int opt = this.cutlistData.GetOpTypeIDByName(resVal.ToUpper());
-            this.GetProperty("DEPARTMENT").Value = opt.ToString();
             return opt;
         }
         
@@ -350,113 +387,146 @@ namespace Redbrick_Addin
                     switch (s.ToUpper())
                     {
                         case "CUTLIST MATERIAL":
-                            pNew.Rename("MATID");
-                            pNew.ID = this.cutlistData.GetMaterialID(pNew.Value).ToString();
-                            pOld.ID = pNew.ID;
-                            pNew.Value = pNew.ID;
-                            pOld.Descr = pOld.ResValue;
-                            pNew.Descr = pNew.ResValue;
-                            pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("MATID"))
+                            {
+                                pNew.Rename("MATID");
+                                pNew.ID = this.cutlistData.GetMaterialID(pNew.Value).ToString();
+                                pOld.ID = pNew.ID;
+                                pNew.Value = pNew.ID;
+                                pOld.Descr = pOld.ResValue;
+                                pNew.Descr = pNew.ResValue;
+                                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "MATID":
-                            pOld.Rename("CUTLIST MATERIAL");
-                            pOld.ID = pOld.Value;
-                            pNew.ID = pNew.Value;
-                            pNew.Descr = this.cutlistData.GetMaterialByID(pNew.ID);
-                            pOld.Descr = pNew.Descr;
-                            pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("CUTLIST MATERIAL"))
+                            {
+                                pOld.Rename("CUTLIST MATERIAL");
+                                pOld.ID = pOld.Value;
+                                pNew.ID = pNew.Value;
+                                pNew.Descr = this.cutlistData.GetMaterialByID(pNew.ID);
+                                pOld.Descr = pNew.Descr;
+                                pOld.Type = swCustomInfoType_e.swCustomInfoText;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "EDGE FRONT (L)":
-                            pNew.Rename("EFID");
-                            pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
-                            pNew.Value = pNew.ID;
-                            pOld.ID = pNew.ID;
-                            pOld.Descr = pOld.ResValue;
-                            pNew.Descr = pNew.ResValue;
-                            pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("EFID"))
+                            {
+                                pNew.Rename("EFID");
+                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.Value = pNew.ID;
+                                pOld.ID = pNew.ID;
+                                pOld.Descr = pOld.ResValue;
+                                pNew.Descr = pNew.ResValue;
+                                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "EDGE BACK (L)":
-                            pNew.Rename("EBID");
-                            pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
-                            pNew.Value = pNew.ID;
-                            pOld.ID = pNew.ID;
-                            pOld.Descr = pOld.ResValue;
-                            pNew.Descr = pNew.ResValue;
-                            pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("EBID"))
+                            {
+                                pNew.Rename("EBID");
+                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.Value = pNew.ID;
+                                pOld.ID = pNew.ID;
+                                pOld.Descr = pOld.ResValue;
+                                pNew.Descr = pNew.ResValue;
+                                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "EDGE LEFT (W)":
-                            pNew.Rename("ELID");
-                            pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
-                            pNew.Value = pNew.ID;
-                            pOld.ID = pNew.ID;
-                            pOld.Descr = pOld.ResValue;
-                            pNew.Descr = pNew.ResValue;
-                            pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("ELID"))
+                            {
+                                pNew.Rename("ELID");
+                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.Value = pNew.ID;
+                                pOld.ID = pNew.ID;
+                                pOld.Descr = pOld.ResValue;
+                                pNew.Descr = pNew.ResValue;
+                                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "EDGE RIGHT (W)":
-                            pNew.Rename("ERID");
-                            pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
-                            pNew.Value = pNew.ID;
-                            pOld.ID = pNew.ID;
-                            pOld.Descr = pOld.ResValue;
-                            pNew.Descr = pNew.ResValue;
-                            pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("ERID"))
+                            {
+                                pNew.Rename("ERID");
+                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.Value = pNew.ID;
+                                pOld.ID = pNew.ID;
+                                pOld.Descr = pOld.ResValue;
+                                pNew.Descr = pNew.ResValue;
+                                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "EFID":
-                            pOld.Rename("EDGE FRONT (L)");
-                            pOld.ID = pOld.Value;
-                            pNew.ID = pNew.Value;
-                            pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
-                            pNew.Descr = pOld.Value;
-                            pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("EDGE FRONT (L)"))
+                            {
+                                pOld.Rename("EDGE FRONT (L)");
+                                pOld.ID = pOld.Value;
+                                pNew.ID = pNew.Value;
+                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pNew.Descr = pOld.Value;
+                                pOld.Type = swCustomInfoType_e.swCustomInfoText;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "EBID":
-                            pOld.Rename("EDGE BACK (L)");
-                            pOld.ID = pOld.Value;
-                            pNew.ID = pNew.Value;
-                            pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
-                            pNew.Descr = pOld.Value;
-                            pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("EDGE BACK (L)"))
+                            {
+                                pOld.Rename("EDGE BACK (L)");
+                                pOld.ID = pOld.Value;
+                                pNew.ID = pNew.Value;
+                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pNew.Descr = pOld.Value;
+                                pOld.Type = swCustomInfoType_e.swCustomInfoText;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "ELID":
-                            pOld.Rename("EDGE LEFT (W)");
-                            pOld.ID = pOld.Value;
-                            pNew.ID = pNew.Value;
-                            pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
-                            pNew.Descr = pOld.Value;
-                            pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("EDGE LEFT (W)"))
+                            {
+                                pOld.Rename("EDGE LEFT (W)");
+                                pOld.ID = pOld.Value;
+                                pNew.ID = pNew.Value;
+                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pNew.Descr = pOld.Value;
+                                pOld.Type = swCustomInfoType_e.swCustomInfoText;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         case "ERID":
-                            pOld.Rename("EDGE RIGHT (W)");
-                            pOld.ID = pOld.Value;
-                            pNew.ID = pNew.Value;
-                            pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
-                            pNew.Descr = pOld.Value;
-                            pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                            pOld.Global = false;
-                            pNew.Global = false;
+                            if (!this.Contains("EDGE RIGHT (W)"))
+                            {
+                                pOld.Rename("EDGE RIGHT (W)");
+                                pOld.ID = pOld.Value;
+                                pNew.ID = pNew.Value;
+                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pNew.Descr = pOld.Value;
+                                pOld.Type = swCustomInfoType_e.swCustomInfoText;
+                                pOld.Global = false;
+                                pNew.Global = false;
+                            }
                             break;
                         default:
                             pOld.Global = true;
                             pNew.Global = true;
+                            pOld.Value = pNew.Value = valOut;
+                            pOld.ResValue = pNew.ResValue = resValOut;
+
                             if (s.Contains("OVER"))
                             {
                                 pOld.Type = swCustomInfoType_e.swCustomInfoDouble;
@@ -534,11 +604,11 @@ namespace Redbrick_Addin
                             break;
                     }
 
-                    if (!this.Contains(pOld))
-                        this._innerArray.Add(pOld);
-
                     if (!this.Contains(pNew))
                         this._innerArray.Add(pNew);
+
+                    if (!this.Contains(pOld))
+                        this._innerArray.Add(pOld);
                 }
             }
         }
@@ -552,18 +622,21 @@ namespace Redbrick_Addin
                 System.Diagnostics.Debug.Print(p.ToString());
 #endif
                 p.SwApp = this.swApp;
+                // Only these fields get resolved to something.
                 if (p.Name.ToUpper() == "LENGTH" || p.Name.ToUpper() == "WIDTH"
-                    || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS")  // Only these fields get resolved to something.
+                    || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS")
                 {
                     c.Text = p.Value;
                 }
-                else                                                                            // Otherwise I'm using ResValue to carry cutlist descrs.
+                else
                 {
+                    // Otherwise I'm using ResValue to carry cutlist descrs.
                     if (c is System.Windows.Forms.ComboBox)
                     {
                         if (p.ID == null) p.ID = "0";
                         int idx = (this.GetIndex(
                             ((c as System.Windows.Forms.ComboBox).DataSource as System.Data.DataTable), p.ID));
+
                         if (idx < (c as System.Windows.Forms.ComboBox).Items.Count)
                             (c as System.Windows.Forms.ComboBox).SelectedIndex = idx;
                         else
@@ -587,9 +660,9 @@ namespace Redbrick_Addin
 
         private int GetIndex(System.Data.DataTable dt, string val)
         {
+            int count = -1;
             if (dt != null)
             {
-                int count = 0;
                 foreach (System.Data.DataRow dr in dt.Rows)
                 {
                     count++;
@@ -597,7 +670,7 @@ namespace Redbrick_Addin
                         return count;
                 }
             }
-            return -1;
+            return count;
         }
 
         /// <summary>
@@ -680,6 +753,12 @@ namespace Redbrick_Addin
                 if (p.Ctl != null)
                 {
                     p.Value = p.Ctl.Text;
+                    if (p.Ctl is System.Windows.Forms.ComboBox)
+                    {
+                        p.ID = ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
+                        if (p.Name.ToUpper().StartsWith("OP") && !p.Name.ToUpper().EndsWith("ID"))
+                            p.Descr = this.cutlistData.GetOpAbbreviationByID(p.ID);
+                    }
                 }
             }
         }
@@ -706,7 +785,7 @@ namespace Redbrick_Addin
             foreach (SwProperty p in this._innerArray)
             {
                 p.Del(md);
-                p.Write(md);
+                p.Write2(md);
             }
             cutlistData.UpdateParts(this);
         }

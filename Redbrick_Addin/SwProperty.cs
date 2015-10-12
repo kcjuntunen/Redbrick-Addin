@@ -107,18 +107,20 @@ namespace Redbrick_Addin
                 if (this.Global)
                 {
                     // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-                    if (this.Name.ToUpper().Contains("OP") && !this.Name.ToUpper().Contains("ID") && this.Ctl != null)
+                    if ((((this.Name.ToUpper().Contains("OP") && !this.Name.ToUpper().Contains("ID"))) ||
+                        this.Name.ToUpper().Contains("DEPARTMENT"))
+                        && this.Ctl != null)
                     {
                         System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
                         string v = this.Descr; //drv.Row.ItemArray[1].ToString();
-                        res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
+                        res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
 #if DEBUG
                         System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
 #endif
                     }
 
                     if (((this.Name.ToUpper().Contains("OP") && this.Name.ToUpper().Contains("ID")) || 
-                        this.Name.ToUpper().Contains("DEPARTMENT")) && this.Ctl != null)
+                        this.Name.ToUpper().Contains("DEPT")) && this.Ctl != null)
                     {
                         //System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
                         string v = this.ID; //drv.Row.ItemArray[0].ToString();
@@ -176,6 +178,67 @@ namespace Redbrick_Addin
     #if DEBUG
                 System.Diagnostics.Debug.Print(string.Format("{0}: ModelDoc2 md is undefined", this.Name));
     #endif
+            }
+        }
+
+        public void Write2(ModelDoc2 md)
+        {
+            if (md != null)
+            {
+                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+
+                CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+
+                // Null reference on drawings. Not good. Let's just make everything global if there's no config.
+                if (cf != null)
+                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+
+                // Rather than changing values, we'll just completely overwrite them.
+                swCustomPropertyAddOption_e ao = swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd;
+
+                // This is for checking if the writing actually happened. It usually does. Don't know what I'd do if it didn't.
+                int res;
+                switch (this.Type)
+                {
+                    case swCustomInfoType_e.swCustomInfoDate:
+                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        break;
+                    case swCustomInfoType_e.swCustomInfoDouble:
+                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        break;
+                    case swCustomInfoType_e.swCustomInfoNumber:
+                        if (this.Global)
+                            if (this.Name.ToUpper().Contains("BLANK"))
+                                res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                            else
+                                res = gcpm.Add3(this.Name, (int)this.Type, this.ID, (int)ao);
+                        else
+                            scpm.Add3(this.Name, (int)this.Type, this.ID, (int)ao);
+                        break;
+                    case swCustomInfoType_e.swCustomInfoText:
+                        if (this.Global)
+                            if (this.Name.ToUpper().StartsWith("OP") && !this.Name.ToUpper().EndsWith("ID"))
+                                res = gcpm.Add3(this.Name, (int)this.Type, this.Descr, (int)ao);
+                            else
+                                res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        else
+                            res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        break;
+                    case swCustomInfoType_e.swCustomInfoUnknown:
+                        break;
+                    case swCustomInfoType_e.swCustomInfoYesOrNo:
+                        if (this.Ctl != null)
+                        {
+                            if ((this.Ctl as System.Windows.Forms.CheckBox).Checked)
+                                res = gcpm.Add3(this.Name, (int)this.Type, "Yes", (int)ao);
+                            else
+                                res = gcpm.Add3(this.Name, (int)this.Type, "NO", (int)ao);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

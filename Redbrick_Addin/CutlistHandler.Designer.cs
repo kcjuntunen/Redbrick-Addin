@@ -29,24 +29,26 @@ namespace Redbrick_Addin
         private void InitializeComponent()
         {
             this.tlpCutlist = new System.Windows.Forms.TableLayoutPanel();
-            this.cbCutlist = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbCutlist = new System.Windows.Forms.ComboBox();
             this.cbRev = new System.Windows.Forms.ComboBox();
             this.labItemNo = new System.Windows.Forms.Label();
             this.labRev = new System.Windows.Forms.Label();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.labDate = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.labCust = new System.Windows.Forms.Label();
             this.cbCustomer = new System.Windows.Forms.ComboBox();
-            this.labDescr = new System.Windows.Forms.Label();
-            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tbL = new System.Windows.Forms.TextBox();
+            this.tbW = new System.Windows.Forms.TextBox();
+            this.tbH = new System.Windows.Forms.TextBox();
+            this.labDescr = new System.Windows.Forms.Label();
+            this.tbDescription = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbRef = new System.Windows.Forms.TextBox();
             this.tlpCutlist.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -64,30 +66,24 @@ namespace Redbrick_Addin
             this.tlpCutlist.Controls.Add(this.tableLayoutPanel2, 0, 7);
             this.tlpCutlist.Controls.Add(this.labDescr, 0, 5);
             this.tlpCutlist.Controls.Add(this.tbDescription, 0, 6);
+            this.tlpCutlist.Controls.Add(this.label4, 0, 8);
+            this.tlpCutlist.Controls.Add(this.tbRef, 0, 9);
             this.tlpCutlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpCutlist.Location = new System.Drawing.Point(0, 0);
             this.tlpCutlist.Name = "tlpCutlist";
-            this.tlpCutlist.RowCount = 8;
-            this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tlpCutlist.RowCount = 10;
+            this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpCutlist.Size = new System.Drawing.Size(258, 371);
             this.tlpCutlist.TabIndex = 2;
-            // 
-            // cbCutlist
-            // 
-            this.cbCutlist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbCutlist.FormattingEnabled = true;
-            this.cbCutlist.Location = new System.Drawing.Point(3, 16);
-            this.cbCutlist.Name = "cbCutlist";
-            this.cbCutlist.Size = new System.Drawing.Size(157, 21);
-            this.cbCutlist.TabIndex = 0;
-            this.cbCutlist.SelectedIndexChanged += new System.EventHandler(this.cbCutlist_SelectedIndexChanged);
             // 
             // tableLayoutPanel1
             // 
@@ -104,8 +100,18 @@ namespace Redbrick_Addin
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(252, 39);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(252, 44);
             this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // cbCutlist
+            // 
+            this.cbCutlist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbCutlist.FormattingEnabled = true;
+            this.cbCutlist.Location = new System.Drawing.Point(3, 16);
+            this.cbCutlist.Name = "cbCutlist";
+            this.cbCutlist.Size = new System.Drawing.Size(157, 21);
+            this.cbCutlist.TabIndex = 0;
+            this.cbCutlist.SelectedIndexChanged += new System.EventHandler(this.cbCutlist_SelectedIndexChanged);
             // 
             // cbRev
             // 
@@ -134,31 +140,10 @@ namespace Redbrick_Addin
             this.labRev.TabIndex = 3;
             this.labRev.Text = "Rev";
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.textBox2, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.textBox3, 2, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 166);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(252, 202);
-            this.tableLayoutPanel2.TabIndex = 3;
-            // 
             // labDate
             // 
             this.labDate.AutoSize = true;
-            this.labDate.Location = new System.Drawing.Point(3, 45);
+            this.labDate.Location = new System.Drawing.Point(3, 50);
             this.labDate.Name = "labDate";
             this.labDate.Size = new System.Drawing.Size(30, 13);
             this.labDate.TabIndex = 4;
@@ -167,7 +152,7 @@ namespace Redbrick_Addin
             // dateTimePicker1
             // 
             this.dateTimePicker1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateTimePicker1.Location = new System.Drawing.Point(3, 61);
+            this.dateTimePicker1.Location = new System.Drawing.Point(3, 66);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(252, 20);
             this.dateTimePicker1.TabIndex = 5;
@@ -175,7 +160,7 @@ namespace Redbrick_Addin
             // labCust
             // 
             this.labCust.AutoSize = true;
-            this.labCust.Location = new System.Drawing.Point(3, 84);
+            this.labCust.Location = new System.Drawing.Point(3, 89);
             this.labCust.Name = "labCust";
             this.labCust.Size = new System.Drawing.Size(51, 13);
             this.labCust.TabIndex = 6;
@@ -185,27 +170,31 @@ namespace Redbrick_Addin
             // 
             this.cbCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbCustomer.FormattingEnabled = true;
-            this.cbCustomer.Location = new System.Drawing.Point(3, 100);
+            this.cbCustomer.Location = new System.Drawing.Point(3, 105);
             this.cbCustomer.Name = "cbCustomer";
             this.cbCustomer.Size = new System.Drawing.Size(252, 21);
             this.cbCustomer.TabIndex = 7;
             // 
-            // labDescr
+            // tableLayoutPanel2
             // 
-            this.labDescr.AutoSize = true;
-            this.labDescr.Location = new System.Drawing.Point(3, 124);
-            this.labDescr.Name = "labDescr";
-            this.labDescr.Size = new System.Drawing.Size(60, 13);
-            this.labDescr.TabIndex = 8;
-            this.labDescr.Text = "Description";
-            // 
-            // tbDescription
-            // 
-            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDescription.Location = new System.Drawing.Point(3, 140);
-            this.tbDescription.Name = "tbDescription";
-            this.tbDescription.Size = new System.Drawing.Size(252, 20);
-            this.tbDescription.TabIndex = 9;
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label3, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tbL, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tbW, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tbH, 2, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 171);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(252, 44);
+            this.tableLayoutPanel2.TabIndex = 3;
             // 
             // label1
             // 
@@ -234,29 +223,63 @@ namespace Redbrick_Addin
             this.label3.TabIndex = 2;
             this.label3.Text = "Height";
             // 
-            // textBox1
+            // tbL
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(77, 20);
-            this.textBox1.TabIndex = 3;
+            this.tbL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbL.Location = new System.Drawing.Point(3, 16);
+            this.tbL.Name = "tbL";
+            this.tbL.Size = new System.Drawing.Size(77, 20);
+            this.tbL.TabIndex = 3;
             // 
-            // textBox2
+            // tbW
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(86, 16);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(78, 20);
-            this.textBox2.TabIndex = 4;
+            this.tbW.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbW.Location = new System.Drawing.Point(86, 16);
+            this.tbW.Name = "tbW";
+            this.tbW.Size = new System.Drawing.Size(78, 20);
+            this.tbW.TabIndex = 4;
             // 
-            // textBox3
+            // tbH
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Location = new System.Drawing.Point(170, 16);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(79, 20);
-            this.textBox3.TabIndex = 5;
+            this.tbH.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbH.Location = new System.Drawing.Point(170, 16);
+            this.tbH.Name = "tbH";
+            this.tbH.Size = new System.Drawing.Size(79, 20);
+            this.tbH.TabIndex = 5;
+            // 
+            // labDescr
+            // 
+            this.labDescr.AutoSize = true;
+            this.labDescr.Location = new System.Drawing.Point(3, 129);
+            this.labDescr.Name = "labDescr";
+            this.labDescr.Size = new System.Drawing.Size(60, 13);
+            this.labDescr.TabIndex = 8;
+            this.labDescr.Text = "Description";
+            // 
+            // tbDescription
+            // 
+            this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDescription.Location = new System.Drawing.Point(3, 145);
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(252, 20);
+            this.tbDescription.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 218);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "DWG Reference";
+            // 
+            // tbRef
+            // 
+            this.tbRef.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbRef.Location = new System.Drawing.Point(3, 241);
+            this.tbRef.Name = "tbRef";
+            this.tbRef.Size = new System.Drawing.Size(252, 20);
+            this.tbRef.TabIndex = 11;
             // 
             // CutlistHandler
             // 
@@ -291,10 +314,12 @@ namespace Redbrick_Addin
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbL;
+        private System.Windows.Forms.TextBox tbW;
+        private System.Windows.Forms.TextBox tbH;
         private System.Windows.Forms.Label labDescr;
         private System.Windows.Forms.TextBox tbDescription;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbRef;
     }
 }
