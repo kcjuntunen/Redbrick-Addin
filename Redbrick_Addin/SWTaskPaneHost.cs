@@ -524,7 +524,7 @@ namespace Redbrick_Addin
             {
                 this.mrb.Write(this.Document);                                                      // update doc metadata & rebuild & save
                 this.ConnectSelection();                                                            // rescoop new metadata
-                this.mrb.Update(ref this.prop);                                                     // show it
+                //this.mrb.Update(ref this.prop);                                                     // show it
             }
 
             if (this.DrawSetup)
@@ -539,7 +539,7 @@ namespace Redbrick_Addin
             {
                 this.mrb.Write((ModelDoc2)s.ActiveDoc);                                             // update doc metadata & rebuild & save
                 this.ConnectSelection();                                                            // rescoop new metadata
-                this.mrb.Update(ref this.prop);                                                     // show it
+                //this.mrb.Update(ref this.prop);                                                     // show it
             }
 
             if (this.DrawSetup)

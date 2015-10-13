@@ -17,7 +17,6 @@ namespace Redbrick_Addin
         {
             this.propertySet = prop;
             InitializeComponent();
-            this.LinkControls();
         }
 
         public void Update(ref SwProperties p)

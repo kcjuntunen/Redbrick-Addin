@@ -521,6 +521,15 @@ namespace Redbrick_Addin
                                 pNew.Global = false;
                             }
                             break;
+                        case "UPDATE CNC":
+                            pOld.Global = true;
+                            pNew.Global = true;
+                            pOld.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
+                            pNew.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
+                            pNew.ID = pOld.ID = (!valOut.Contains("YES")).ToString();
+                            pOld.Value = pNew.Value = valOut;
+                            pOld.ResValue = pNew.ResValue = resValOut;
+                            break;
                         default:
                             pOld.Global = true;
                             pNew.Global = true;

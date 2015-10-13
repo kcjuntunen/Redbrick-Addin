@@ -233,10 +233,18 @@ namespace Redbrick_Addin
                             if ((this.Ctl as System.Windows.Forms.CheckBox).Checked)
                                 res = gcpm.Add3(this.Name, (int)this.Type, "Yes", (int)ao);
                             else
-                                res = gcpm.Add3(this.Name, (int)this.Type, "NO", (int)ao);
+                                res = gcpm.Add3(this.Name, (int)this.Type, "N", (int)ao);
+                        }
+                        else
+                        {
+                            res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, this.Value, (int)ao);
                         }
                         break;
                     default:
+                        if (this.Global)
+                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        else
+                            res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
                         break;
                 }
             }

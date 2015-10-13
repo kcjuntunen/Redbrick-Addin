@@ -55,7 +55,8 @@ namespace Redbrick_Addin
             ch.TabIndex = 1;
             ch.Dock = d;
 
-            foreach (Control item in this.tlpMain.Controls)     // If anything's not docked, dock it.
+            // If anything's not docked, dock it.
+            foreach (Control item in this.tlpMain.Controls)
             {
                 item.Dock = d;
             }
@@ -72,8 +73,10 @@ namespace Redbrick_Addin
         public void Update(ref SwProperties p)
         {
             this.TearDownDeptSelectEvent();
-            this.props = p;                                                     // Order matters here. The first thing SwProperties does informs what ds
-            this.ds.Update(ref p);                                              // does. Ds informs these other guys.
+            // Order matters here. The first thing SwProperties does informs what ds
+            // does. Ds informs these other guys.
+            this.props = p;
+            this.ds.Update(ref p);
             this.cs.Update(ref p);
             this.gbSpecProp.Text = p.PartName + " - " + p.configName;
             this.gp.Update(ref p);
@@ -81,6 +84,7 @@ namespace Redbrick_Addin
             this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
             this.ch.Update(ref p);
             this.SetupDeptSelectEvent();
+            // I'll just trust GC to take care of the old one.
             this.dirtTracker = new DirtTracker(this);
         }
 
@@ -103,14 +107,18 @@ namespace Redbrick_Addin
 
         public void Write(ModelDoc2 doc)
         {
-            this.props.ReadControls();                                          // OK, so the controls were linked on update. This reads whatever was
-            this.props.Write(doc);                                              // entered into the controls, then writes to SW.
+            // OK, so the controls were linked on update. This reads whatever was
+            // entered into the controls, then writes to SW.
+            this.props.ReadControls();
+            this.props.Write(doc);
             this.ch.Write();
-            doc.ForceRebuild3(false);                                           // Show changes.
+            // Show changes.
+            doc.ForceRebuild3(false);
+            // This isn't too slow. Might be too slow in DrawingRedbrick though.
             //int err = 0;
             //int wrn = 0;
             //swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
-            //doc.Save3((int)op, ref err, ref wrn);                               // This isn't too slow. Might be too slow in DrawingRedbrick though.
+            //doc.Save3((int)op, ref err, ref wrn);
             //this.dirtTracker = null;
         }
 
