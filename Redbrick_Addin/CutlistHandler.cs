@@ -66,11 +66,13 @@ namespace Redbrick_Addin
 
                 if (prop.cutlistData.ReturnHash(prop) == prop.Hash)
                 {
+                    prop.Primary = true;
                     this.btnOriginal.Enabled = false;
                     //this.btnOriginal.BackColor = System.Drawing.SystemColors.Control;
                 }
                 else
                 {
+                    prop.Primary = false;
                     this.btnOriginal.Enabled = true;
                     //this.btnOriginal.BackColor = System.Drawing.Color.Red;
                 }
@@ -136,6 +138,7 @@ namespace Redbrick_Addin
             if (affrow == 1)
             {   
                 //success
+                PropertySet.Primary = true;
             }
             else if (affrow < 1)
             {

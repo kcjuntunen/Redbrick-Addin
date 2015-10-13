@@ -24,47 +24,9 @@ namespace Redbrick_Addin
 
         public SwProperties(SldWorks sw)
         {
-            this.swApp = sw;
-            this.cutlistData = new CutlistData();
-            this._innerArray = new ArrayList();
-        }
-
-        /// <summary>
-        /// Empty metadata can create a problem.
-        /// </summary>
-        public void CreateDefaultPartSet()
-        {
-            this._innerArray.Add(new SwProperty("MATID", swCustomInfoType_e.swCustomInfoNumber, "TBD MATERIAL", false));
-            this._innerArray.Add(new SwProperty("EDGEID_LF", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-            this._innerArray.Add(new SwProperty("EDGEID_LB", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-            this._innerArray.Add(new SwProperty("EDGEID_WR", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-            this._innerArray.Add(new SwProperty("EDGEID_WL", swCustomInfoType_e.swCustomInfoNumber, string.Empty, false));
-
-            this._innerArray.Add(new SwProperty("Description", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("LENGTH", swCustomInfoType_e.swCustomInfoText, "\"D1@Sketch1\"", true));
-            this._innerArray.Add(new SwProperty("WIDTH", swCustomInfoType_e.swCustomInfoText, "\"D2@Sketch1\"", true));
-            this._innerArray.Add(new SwProperty("THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"D1@Boss-Extrude1\"", true));
-            this._innerArray.Add(new SwProperty("WALL THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"Thickness@Sheet-Metal1\"", true));
-            this._innerArray.Add(new SwProperty("COMMENT", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("BLANK QTY", swCustomInfoType_e.swCustomInfoNumber, "1", true));
-            this._innerArray.Add(new SwProperty("CNC1", swCustomInfoType_e.swCustomInfoText, "NA", true));
-            this._innerArray.Add(new SwProperty("CNC2", swCustomInfoType_e.swCustomInfoText, "NA", true));
-            this._innerArray.Add(new SwProperty("OVERL", swCustomInfoType_e.swCustomInfoDouble, "0.0", true));
-            this._innerArray.Add(new SwProperty("OVERW", swCustomInfoType_e.swCustomInfoDouble, "0.0", true));
-            this._innerArray.Add(new SwProperty("OP1ID", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP2ID", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP3ID", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP4ID", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("OP5ID", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("DEPARTMENT", swCustomInfoType_e.swCustomInfoText, "WOOD", true));
-            this._innerArray.Add(new SwProperty("UPDATE CNC", swCustomInfoType_e.swCustomInfoYesOrNo, "No", true));
-            this._innerArray.Add(new SwProperty("INCLUDE IN CUTLIST", swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true));
-
-            this._innerArray.Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true));
-            this._innerArray.Add(new SwProperty("MATERIAL", swCustomInfoType_e.swCustomInfoText, "\"SW-Material@{0}\"", true));
-            this._innerArray.Add(new SwProperty("WEIGHT", swCustomInfoType_e.swCustomInfoText, "\"SW-Mass@{0}\"", true));
-            this._innerArray.Add(new SwProperty("VOLUME", swCustomInfoType_e.swCustomInfoText, "\"SW-Volume@{0}\"", true));
-            this._innerArray.Add(new SwProperty("COST-TOTALCOST", swCustomInfoType_e.swCustomInfoText, "\"SW-Cost-TotalCost@{0}\"", true));
+            swApp = sw;
+            cutlistData = new CutlistData();
+            _innerArray = new ArrayList();
         }
 
         /// <summary>
@@ -72,22 +34,22 @@ namespace Redbrick_Addin
         /// </summary>
         public void CreateDefaultDrawingSet()
         {
-            this._innerArray.Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoNumber, "$PRP:\"SW-File Name\"", true));
-            this._innerArray.Add(new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
-            this._innerArray.Add(new SwProperty("REVISION LEVEL", swCustomInfoType_e.swCustomInfoNumber, "100", true));
-            this._innerArray.Add(new SwProperty("DrawnBy", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
-            this._innerArray.Add(new SwProperty("DATE", swCustomInfoType_e.swCustomInfoNumber, DateTime.Now.ToShortDateString(), true));
+            _innerArray.Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoNumber, "$PRP:\"SW-File Name\"", true));
+            _innerArray.Add(new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
+            _innerArray.Add(new SwProperty("REVISION LEVEL", swCustomInfoType_e.swCustomInfoNumber, "100", true));
+            _innerArray.Add(new SwProperty("DrawnBy", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
+            _innerArray.Add(new SwProperty("DATE", swCustomInfoType_e.swCustomInfoNumber, DateTime.Now.ToShortDateString(), true));
 
-            this._innerArray.Add(new SwProperty("M1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("FINISH 1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("M2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("FINISH 2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("M3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("FINISH 3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("M4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("FINISH 4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("M5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-            this._innerArray.Add(new SwProperty("FINISH 5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("M1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("FINISH 1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("M2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("FINISH 2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("M3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("FINISH 3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("M4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("FINISH 4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("M5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+            _innerArray.Add(new SwProperty("FINISH 5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
         }
 
         /// <summary>
@@ -96,7 +58,7 @@ namespace Redbrick_Addin
         /// <param name="md">A ModelDoc2 object.</param>
         public void GetPropertyData(ModelDoc2 md)
         {
-            this.modeldoc = md;
+            modeldoc = md;
             if (md != null)
             {
                 swDocumentTypes_e docType = (swDocumentTypes_e)md.GetType();
@@ -118,13 +80,13 @@ namespace Redbrick_Addin
 
                     if (!Properties.Settings.Default.Testing)
                     {
-                        this.ParsePropertyData(g, docType);
-                        this.ParsePropertyData(s, docType);   
+                        ParsePropertyData(g, docType);
+                        ParsePropertyData(s, docType);   
                     }
                     else
                     {
-                        this.ParsePropertyData2(g, docType);
-                        this.ParsePropertyData2(s, docType);
+                        ParsePropertyData2(g, docType);
+                        ParsePropertyData2(s, docType);
                     }
                 }
             }
@@ -176,7 +138,7 @@ namespace Redbrick_Addin
                         res = g.Get5(propName, useCached, out val, out resVal, out wRes);
                         pOld.Rename(propName);
                         pNew.Rename(newPropName);
-                        opt = this.cutlistData.GetOpTypeIDByName(resVal.ToUpper());
+                        opt = cutlistData.GetOpTypeIDByName(resVal.ToUpper());
                         pOld.ID = opt.ToString();
                         pOld.Value = val;
                         pOld.ResValue = resVal;
@@ -184,8 +146,8 @@ namespace Redbrick_Addin
                         pNew.ID = pOld.ID;
                         pNew.Value = pNew.ID;
                         pNew.ResValue = resVal;
-                        this.Add(pOld);
-                        this.Add(pNew);
+                        Add(pOld);
+                        Add(pNew);
                         break;
                     case newPropName:
                         // new dept field
@@ -202,8 +164,8 @@ namespace Redbrick_Addin
                         pOld.ID = pNew.ID = val;
                         pOld.Descr = pNew.Descr = resName;
                         pOld.ResValue = pNew.ResValue = resName;
-                        this.Add(pOld);
-                        this.Add(pNew);
+                        Add(pOld);
+                        Add(pNew);
                         break;
                     default:
                         // ignore
@@ -254,7 +216,7 @@ namespace Redbrick_Addin
                         {
                             if (tp > 0)
                             {
-                                p.ResValue = this.cutlistData.GetMaterialByID(p.Value);
+                                p.ResValue = cutlistData.GetMaterialByID(p.Value);
                             }
                             else                                                                // No mat.
                             {
@@ -263,7 +225,7 @@ namespace Redbrick_Addin
                         }
                         else                                                               
                         {
-                            p.Value = this.cutlistData.GetMaterialID(p.ResValue).ToString();    // Not numerical; must have a descr. Let's get an ID.
+                            p.Value = cutlistData.GetMaterialID(p.ResValue).ToString();    // Not numerical; must have a descr. Let's get an ID.
                         }
                     }
 
@@ -278,7 +240,7 @@ namespace Redbrick_Addin
                         {
                             if (tp > 0)
                             {
-                                p.ResValue = this.cutlistData.GetEdgeByID(p.Value);
+                                p.ResValue = cutlistData.GetEdgeByID(p.Value);
                             }
                             else                                                                // No edge.
                             {
@@ -287,7 +249,7 @@ namespace Redbrick_Addin
                         }
                         else
                         {
-                            p.Value = this.cutlistData.GetEdgeID(p.ResValue).ToString();        // When life gives you descrs, make IDs.
+                            p.Value = cutlistData.GetEdgeID(p.ResValue).ToString();             // When life gives you descrs, make IDs.
                         }
                     }
 
@@ -302,7 +264,7 @@ namespace Redbrick_Addin
                         {
                             if (tp > 0)
                             {
-                                p.ResValue = this.cutlistData.GetOpByID(p.Value);
+                                p.ResValue = cutlistData.GetOpByID(p.Value);
                             }
                             else                                                                // Nothing in there.
                             {
@@ -313,7 +275,7 @@ namespace Redbrick_Addin
                         {
                             if (p.ResValue.Length < 4 && p.ResValue != string.Empty)                        // When it's not numerical, it's probably
                             {                                                                               // abbreviated.
-                                List<string> dr = this.cutlistData.GetOpDataByName(p.ResValue.ToString());  // Getting datarows leads to trouble here
+                                List<string> dr = cutlistData.GetOpDataByName(p.ResValue.ToString());       // Getting datarows leads to trouble here
                                 p.Value = dr[0];                                                            // if they're empty.
                                 p.ResValue = dr[2];
                             }
@@ -325,10 +287,10 @@ namespace Redbrick_Addin
                         }
                     }
 
-                    p.SwApp = this.swApp;
-                    if (!this.Contains(p))                                                                  // Let's add it if we don't already have it.
+                    p.SwApp = swApp;
+                    if (!Contains(p))                                                                           // Let's add it if we don't already have it.
                     {
-                        this._innerArray.Add(p);   
+                        _innerArray.Add(p);   
                     }
 #if DEBUG   
                     System.Diagnostics.Debug.Print(s);
@@ -347,16 +309,16 @@ namespace Redbrick_Addin
                         SwProperty p = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, false);
                         p.ResValue = resValOut;
                         p.Type = (swCustomInfoType_e)g.GetType2(s);
-                        p.SwApp = this.swApp;
+                        p.SwApp = swApp;
 #if DEBUG
                         System.Diagnostics.Debug.Print(s);
 #endif
-                        this._innerArray.Add(p);
+                        _innerArray.Add(p);
                     }
                 }
                 else
                 {
-                    this.CreateDefaultDrawingSet();                                                             // Nothing in there. Let's make stuff up.
+                    CreateDefaultDrawingSet();                                                                  // Nothing in there. Let's make stuff up.
                 }
             }
         }
@@ -377,20 +339,20 @@ namespace Redbrick_Addin
                     SwProperty pOld = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
                     pOld.ResValue = resValOut;
                     pOld.Type = (swCustomInfoType_e)g.GetType2(s);
-                    pOld.SwApp = this.swApp;
+                    pOld.SwApp = swApp;
 
                     SwProperty pNew = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
                     pNew.ResValue = resValOut;
                     pNew.Type = (swCustomInfoType_e)g.GetType2(s);
-                    pNew.SwApp = this.swApp;
+                    pNew.SwApp = swApp;
 
                     switch (s.ToUpper())
                     {
                         case "CUTLIST MATERIAL":
-                            if (!this.Contains("MATID"))
+                            if (!Contains("MATID"))
                             {
                                 pNew.Rename("MATID");
-                                pNew.ID = this.cutlistData.GetMaterialID(pNew.Value).ToString();
+                                pNew.ID = cutlistData.GetMaterialID(pNew.Value).ToString();
                                 pOld.ID = pNew.ID;
                                 pNew.Value = pNew.ID;
                                 pOld.Descr = pOld.ResValue;
@@ -401,12 +363,12 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "MATID":
-                            if (!this.Contains("CUTLIST MATERIAL"))
+                            if (!Contains("CUTLIST MATERIAL"))
                             {
                                 pOld.Rename("CUTLIST MATERIAL");
                                 pOld.ID = pOld.Value;
                                 pNew.ID = pNew.Value;
-                                pNew.Descr = this.cutlistData.GetMaterialByID(pNew.ID);
+                                pNew.Descr = cutlistData.GetMaterialByID(pNew.ID);
                                 pOld.Descr = pNew.Descr;
                                 pOld.Type = swCustomInfoType_e.swCustomInfoText;
                                 pOld.Global = false;
@@ -414,10 +376,10 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "EDGE FRONT (L)":
-                            if (!this.Contains("EFID"))
+                            if (!Contains("EFID"))
                             {
                                 pNew.Rename("EFID");
-                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
                                 pNew.Value = pNew.ID;
                                 pOld.ID = pNew.ID;
                                 pOld.Descr = pOld.ResValue;
@@ -428,10 +390,10 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "EDGE BACK (L)":
-                            if (!this.Contains("EBID"))
+                            if (!Contains("EBID"))
                             {
                                 pNew.Rename("EBID");
-                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
                                 pNew.Value = pNew.ID;
                                 pOld.ID = pNew.ID;
                                 pOld.Descr = pOld.ResValue;
@@ -445,7 +407,7 @@ namespace Redbrick_Addin
                             if (!this.Contains("ELID"))
                             {
                                 pNew.Rename("ELID");
-                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
                                 pNew.Value = pNew.ID;
                                 pOld.ID = pNew.ID;
                                 pOld.Descr = pOld.ResValue;
@@ -459,7 +421,7 @@ namespace Redbrick_Addin
                             if (!this.Contains("ERID"))
                             {
                                 pNew.Rename("ERID");
-                                pNew.ID = this.cutlistData.GetEdgeID(pNew.Value).ToString();
+                                pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
                                 pNew.Value = pNew.ID;
                                 pOld.ID = pNew.ID;
                                 pOld.Descr = pOld.ResValue;
@@ -475,7 +437,7 @@ namespace Redbrick_Addin
                                 pOld.Rename("EDGE FRONT (L)");
                                 pOld.ID = pOld.Value;
                                 pNew.ID = pNew.Value;
-                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                                 pNew.Descr = pOld.Value;
                                 pOld.Type = swCustomInfoType_e.swCustomInfoText;
                                 pOld.Global = false;
@@ -488,7 +450,7 @@ namespace Redbrick_Addin
                                 pOld.Rename("EDGE BACK (L)");
                                 pOld.ID = pOld.Value;
                                 pNew.ID = pNew.Value;
-                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                                 pNew.Descr = pOld.Value;
                                 pOld.Type = swCustomInfoType_e.swCustomInfoText;
                                 pOld.Global = false;
@@ -501,7 +463,7 @@ namespace Redbrick_Addin
                                 pOld.Rename("EDGE LEFT (W)");
                                 pOld.ID = pOld.Value;
                                 pNew.ID = pNew.Value;
-                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                                 pNew.Descr = pOld.Value;
                                 pOld.Type = swCustomInfoType_e.swCustomInfoText;
                                 pOld.Global = false;
@@ -514,7 +476,7 @@ namespace Redbrick_Addin
                                 pOld.Rename("EDGE RIGHT (W)");
                                 pOld.ID = pOld.Value;
                                 pNew.ID = pNew.Value;
-                                pOld.Descr = this.cutlistData.GetEdgeByID(pNew.ID);
+                                pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                                 pNew.Descr = pOld.Value;
                                 pOld.Type = swCustomInfoType_e.swCustomInfoText;
                                 pOld.Global = false;
@@ -556,7 +518,7 @@ namespace Redbrick_Addin
                                     {
                                         if (pOld.ResValue.Length < 4 && pOld.ResValue != string.Empty)
                                         {
-                                            List<string> dr = this.cutlistData.GetOpDataByName(pOld.ResValue.ToString());
+                                            List<string> dr = cutlistData.GetOpDataByName(pOld.ResValue.ToString());
                                             pOld.ID = dr[0];
                                             pNew.ID = pOld.ID;
                                             pOld.Value = dr[1];
@@ -582,9 +544,9 @@ namespace Redbrick_Addin
                                             {
                                                 pOld.ID = tp.ToString();
                                                 pNew.ID = tp.ToString();
-                                                pOld.Value = this.cutlistData.GetOpAbbreviationByID(tp.ToString());
+                                                pOld.Value = cutlistData.GetOpAbbreviationByID(tp.ToString());
                                                 pOld.ResValue = pOld.Value;
-                                                pNew.Descr = this.cutlistData.GetOpByID(tp.ToString());
+                                                pNew.Descr = cutlistData.GetOpByID(tp.ToString());
                                             }
                                             else
                                             {
@@ -613,24 +575,21 @@ namespace Redbrick_Addin
                             break;
                     }
 
-                    if (!this.Contains(pNew))
-                        this._innerArray.Add(pNew);
+                    if (!Contains(pNew))
+                        Add(pNew);
 
-                    if (!this.Contains(pOld))
-                        this._innerArray.Add(pOld);
+                    if (!Contains(pOld))
+                        Add(pOld);
                 }
             }
         }
 
         public void LinkControlToProperty(string property, bool global, System.Windows.Forms.Control c)
         {
-            SwProperty p = this.GetProperty(property);
-            if (this.Contains(p))
+            if (Contains(property))
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print(p.ToString());
-#endif
-                p.SwApp = this.swApp;
+                SwProperty p = GetProperty(property);
+                p.SwApp = swApp;
                 // Only these fields get resolved to something.
                 if (p.Name.ToUpper() == "LENGTH" || p.Name.ToUpper() == "WIDTH"
                     || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS")
@@ -639,11 +598,11 @@ namespace Redbrick_Addin
                 }
                 else
                 {
-                    // Otherwise I'm using ResValue to carry cutlist descrs.
+                    // Otherwise I'm using Descr to carry cutlist descrs.
                     if (c is System.Windows.Forms.ComboBox)
                     {
                         if (p.ID == null) p.ID = "0";
-                        int idx = (this.GetIndex(
+                        int idx = (GetIndex(
                             ((c as System.Windows.Forms.ComboBox).DataSource as System.Data.DataTable), p.ID));
 
                         if (idx < (c as System.Windows.Forms.ComboBox).Items.Count)
@@ -661,9 +620,9 @@ namespace Redbrick_Addin
             else
             {
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, global);
-                x.SwApp = this.swApp;
+                x.SwApp = swApp;
                 x.Ctl = c;
-                this.Add(x);
+                Add(x);
             }
         }
 
@@ -730,7 +689,7 @@ namespace Redbrick_Addin
 
         public SwProperty GetProperty(string name)
         {
-            foreach (SwProperty p in this._innerArray)
+            foreach (SwProperty p in _innerArray)
             {
                 if (name.ToUpper() == p.Name.ToUpper())
                 {
@@ -739,18 +698,16 @@ namespace Redbrick_Addin
             }
             SwProperty q = new SwProperty(name, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
             this._innerArray.Add(q);
+            // Recurse!
             return this.GetProperty(name);
         }
 
         public void ReadProperties()
         {
-            foreach (SwProperty p in this._innerArray)
+            foreach (SwProperty p in _innerArray)
             {
                 if (p.Ctl != null)
                 {
-#if DEBUG
-                    System.Diagnostics.Debug.Print("To " + p.Ctl.Name + " <- " + p.ToString());
-#endif
                     p.Ctl.Text = p.Value;
                 }
             }
@@ -758,7 +715,7 @@ namespace Redbrick_Addin
 
         public void ReadControls()
         {
-            foreach (SwProperty p in this._innerArray)
+            foreach (SwProperty p in _innerArray)
             {
                 if (p.Ctl != null)
                 {
@@ -767,7 +724,7 @@ namespace Redbrick_Addin
                     {
                         p.ID = ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
                         if (p.Name.ToUpper().StartsWith("OP") && !p.Name.ToUpper().EndsWith("ID"))
-                            p.Descr = this.cutlistData.GetOpAbbreviationByID(p.ID);
+                            p.Descr = cutlistData.GetOpAbbreviationByID(p.ID);
                     }
 
                     if (p.Ctl is System.Windows.Forms.CheckBox)
@@ -780,7 +737,7 @@ namespace Redbrick_Addin
 
         public void Write()
         {
-            foreach (SwProperty p in this._innerArray)
+            foreach (SwProperty p in _innerArray)
             {
                 p.Write();
             }
@@ -788,7 +745,7 @@ namespace Redbrick_Addin
 
         public void Write(SldWorks sw)
         {
-            foreach (SwProperty p in this._innerArray)
+            foreach (SwProperty p in _innerArray)
             {
                 p.Write(sw);
             }
@@ -797,7 +754,7 @@ namespace Redbrick_Addin
         public void Write(ModelDoc2 md)
         {
             this.DelSpecific(md);
-            foreach (SwProperty p in this._innerArray)
+            foreach (SwProperty p in _innerArray)
             {
                 p.Del(md);
                 p.Write2(md);
@@ -811,7 +768,7 @@ namespace Redbrick_Addin
             string ret = string.Empty;
             foreach (SwProperty p in this)
             {
-                ret += string.Format("{0}: {1}\n", p.Name, p.Value);
+                ret += string.Format("{0}: {1} => {2} | {3} - {4}\n", p.Name, p.Value, p.ResValue, p.ID, p.Descr);
             }
             return ret;
         }
@@ -826,6 +783,8 @@ namespace Redbrick_Addin
 
         public string CutlistQuantity { get; set; }
 
+        public bool Primary { get; set; }
+
         #region ICollection<SwProperty> Members
 
         public void Add(SwProperty item)
@@ -838,7 +797,7 @@ namespace Redbrick_Addin
 
         public void Clear()
         {
-            this._innerArray.Clear();
+            _innerArray.Clear();
         }
 
         public bool Contains(SwProperty item)
@@ -872,12 +831,12 @@ namespace Redbrick_Addin
 
         public void CopyTo(SwProperty[] array, int arrayIndex)
         {
-            this._innerArray.CopyTo(array, arrayIndex);
+            _innerArray.CopyTo(array, arrayIndex);
         }
 
         public int Count
         {
-            get { return this._innerArray.Count; }
+            get { return _innerArray.Count; }
         }
 
         public bool IsReadOnly { get; set;  }
@@ -886,9 +845,9 @@ namespace Redbrick_Addin
         {
             bool res = false;
 
-            for (int i = 0; i < this._innerArray.Count; i++)
+            for (int i = 0; i < _innerArray.Count; i++)
             {
-                SwProperty obj = (SwProperty)this._innerArray[i];
+                SwProperty obj = (SwProperty)_innerArray[i];
                 if (obj.Name == item.Name)
                 {
                     this._innerArray.RemoveAt(i);
@@ -904,7 +863,7 @@ namespace Redbrick_Addin
         {
             bool res = false;
 
-            for (int i = 0; i < this._innerArray.Count; i++)
+            for (int i = 0; i < _innerArray.Count; i++)
             {
                 SwProperty obj = (SwProperty)this._innerArray[i];
                 if (obj.Name == name)
@@ -943,11 +902,11 @@ namespace Redbrick_Addin
         {
             get
             {
-                if (this.PartFileInfo != null)
+                if (PartFileInfo != null)
                 {
-                    return this.PartFileInfo.Name.Split(' ', '.')[0];   
+                    return PartFileInfo.Name.Split(' ', '.')[0];   
                 }
-                return this.GetHashCode().ToString();
+                return GetHashCode().ToString();
             }
 
             set

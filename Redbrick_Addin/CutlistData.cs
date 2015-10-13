@@ -22,7 +22,7 @@ namespace Redbrick_Addin
         public CutlistData()
         {
             conn = new OdbcConnection(Properties.Settings.Default.ConnectionString);
-            this.OpType = 1;
+            OpType = 1;
             conn.Open();
         }
 
@@ -33,7 +33,7 @@ namespace Redbrick_Addin
 
         private DataSet GetMaterials()
         {
-            if (this._materials == null)
+            if (_materials == null)
             {
                 lock (threadLock)
                 {
@@ -62,7 +62,7 @@ namespace Redbrick_Addin
             }
             else
 	        {
-		         return this._materials;
+		         return _materials;
 	        }
         }
 
@@ -103,15 +103,15 @@ namespace Redbrick_Addin
             }
         }
 
-        public DataSet GetOps(int opType)
+        public DataSet GetOps(int OpType)
         {
             lock (threadLock)
             {
-                if (this.OpType == opType)
+                if (this.OpType != OpType)
                 {
-                    this.OpType = opType;
+                    this.OpType = OpType;
                     string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_PART_TYPES "
-                        + "INNER JOIN CUT_OPS ON CUT_PART_TYPES.TYPEID = CUT_OPS.OPTYPE WHERE CUT_PART_TYPES.TYPEID = {0} ORDER BY OPDESCR", opType);
+                        + "INNER JOIN CUT_OPS ON CUT_PART_TYPES.TYPEID = CUT_OPS.OPTYPE WHERE CUT_PART_TYPES.TYPEID = {0} ORDER BY OPDESCR", OpType);
                     using (OdbcCommand comm = new OdbcCommand(SQL, conn))
                     {
                         using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
@@ -142,7 +142,7 @@ namespace Redbrick_Addin
         {
             lock (threadLock)
             {
-                string SQL =string.Format("SELECT * FROM CUT_OPS WHERE OPTYPE = {0} ORDER BY OPDESCR", this.OpType);
+                string SQL =string.Format("SELECT * FROM CUT_OPS WHERE OPTYPE = {0} ORDER BY OPDESCR", OpType);
                 using (OdbcCommand comm = new OdbcCommand(SQL, conn))
                 {
                     using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
@@ -186,8 +186,8 @@ namespace Redbrick_Addin
                         using (DataSet ds = new DataSet())
                         {
                             da.Fill(ds);
-                            this.OpTypes = ds;
-                            return this.OpTypes;
+                            OpTypes = ds;
+                            return OpTypes;
                         }
                     }
                 }
@@ -196,14 +196,6 @@ namespace Redbrick_Addin
 
         public DataSet GetWherePartUsed(int partID)
         {
-            /* CLID = 0
-             * PARTNUM = 1
-             * REV = 2
-             * DESCR = 3
-             * LENGTH = 4
-             * WIDTH = 5
-             * 
-            */
             string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
                 "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
                 "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY FROM " +
@@ -337,7 +329,7 @@ namespace Redbrick_Addin
             if (name == string.Empty)
                 return defaultList;
 
-            string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like '{0}' AND OPTYPE = {1}", name, this.OpType);
+            string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like '{0}' AND OPTYPE = {1}", name, OpType);
             using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
                 using (OdbcDataReader dr = comm.ExecuteReader())
@@ -578,7 +570,12 @@ namespace Redbrick_Addin
 
         public int InsertIntoCutlist(SwProperties p)
         {
-            throw new NotImplementedException();
+            int affectedRows = 0;
+            if (ENABLE_DB_WRITE && p.Primary)
+            {
+                throw new NotImplementedException();   
+            }
+            return affectedRows;
         }
 
         public int ReturnHash(SwProperties p)
@@ -627,7 +624,7 @@ namespace Redbrick_Addin
         public int UpdateParts(SwProperties p)
         {
             int rowsAffected = -1;
-            if (ENABLE_DB_WRITE)
+            if (ENABLE_DB_WRITE && p.Primary)
             {
                 string dscr = p.GetProperty("Description").Value.Replace("'", "\"");
                 string finL = p.GetProperty("LENGTH").ResValue.Replace("'", "\"");
@@ -651,7 +648,7 @@ namespace Redbrick_Addin
                     "BLANKQTY = {6}, OVER_L = {7}, OVER_W = {8}, OP1ID = {9}, OP2ID = {10}, OP3ID = {11}, OP4ID = {12}, OP5ID = {13}, COMMENT = '{14}', " +
                     "UPDATE_CNC = {15}, TYPE = {16} WHERE PARTNUM = '{17}'", dscr, finL, finW, thkn, cnc1, cnc2,
                     blnk, ovrL, ovrW, Op1, Op2, Op3, Op4, Op5, cmnt,
-                    updt, this.OpType.ToString(), p.PartName);
+                    updt, OpType.ToString(), p.PartName);
 
                 using (OdbcCommand comm = new OdbcCommand(SQL, conn))
                 {
@@ -677,7 +674,7 @@ namespace Redbrick_Addin
             string elid = p.GetProperty("ELID").ID.Replace("'", "\"");
             string erid = p.GetProperty("ERID").ID.Replace("'", "\"");
 
-            if (ENABLE_DB_WRITE && p.CutlistID != null && p.CutlistQuantity != null)
+            if (ENABLE_DB_WRITE && p.Primary && p.CutlistID != null && p.CutlistQuantity != null)
             {
                 string SQL = string.Format("UPDATE CUT_CUTLIST_PARTS " +
                     "SET CUT_CUTLIST_PARTS.MATID = {0}, " +
@@ -734,14 +731,14 @@ namespace Redbrick_Addin
         {
             get
             {
-                if (this._opTypes != null)
+                if (_opTypes != null)
                 {
-                    return this._opTypes.Copy();
+                    return _opTypes.Copy();
                 }
                 else
                 {
-                    this._opTypes = this.GetOpTypes();
-                    return this._opTypes;
+                    _opTypes = GetOpTypes();
+                    return _opTypes;
                 }
             }
             private set { _opTypes = value; }
@@ -751,7 +748,7 @@ namespace Redbrick_Addin
 
         public DataSet Materials
         {
-            get { return this.GetMaterials(); }
+            get { return GetMaterials(); }
             private set { _materials = value; }
         }
 
@@ -761,14 +758,14 @@ namespace Redbrick_Addin
         {
             get
             {
-                if (this._edges != null)
+                if (_edges != null)
                 {
-                    return this._edges.Copy();
+                    return _edges.Copy();
                 }
                 else
                 {
-                    this._edges = this.GetEdges();
-                    return this._edges;
+                    _edges = GetEdges();
+                    return _edges;
                 }
             }
             private set { _edges = value; }
@@ -797,11 +794,11 @@ namespace Redbrick_Addin
             {
                 if ((this._Ops != null) && (this._Ops.Tables[0].Rows[0]["OPTYPE"].ToString() == this.OpType.ToString()))
                 {
-                    return this._Ops.Copy();
+                    return _Ops.Copy();
                 }
 
-                this._Ops = this.GetOps();
-                return this._Ops = this._Ops.Copy();
+                this._Ops = GetOps();
+                return this._Ops = _Ops.Copy();
             }
             private set { _Ops = value; }
         }
