@@ -16,7 +16,7 @@ namespace Redbrick_Addin
         {
             System.Diagnostics.Debug.Print(NodeCount.ToString());
             nodeCount = NodeCount;
-            this._revs = revs;
+            _revs = revs;
             InitializeComponent();
             Init();
         }
@@ -25,31 +25,30 @@ namespace Redbrick_Addin
         {
             CutlistData cd = new CutlistData();
 
-            this.cbBy.DataSource = cd.GetAuthors().Tables[0];
-            this.cbBy.DisplayMember = "INITIAL";
-            this.cbBy.ValueMember = "INITIAL";
+            cbBy.DataSource = cd.GetAuthors().Tables[0];
+            cbBy.DisplayMember = "INITIAL";
+            cbBy.ValueMember = "INITIAL";
 
-            if (!this.Revs.Contains("REVISION " + (char)(nodeCount + 65)))
+            if (!Revs.Contains("REVISION " + (char)(nodeCount + 65)))
             {
-                this.cbBy.SelectedIndex = this.GetIndex((cbBy.DataSource as DataTable), Environment.UserName);
+                cbBy.SelectedIndex = GetIndex((cbBy.DataSource as DataTable), Environment.UserName);
                 string theRev = "REVISION " + (char)(nodeCount + 65);
-                this.Text = "Creating new " + theRev + "...";
+                Text = "Creating new " + theRev + "...";
             }
             else
             {
                 string theRev = "REVISION " + (char)(nodeCount + 65);
-                DrawingRev r = this.Revs.GetRev(theRev);
-                this.tbECO.Text = r.Eco.Value;
-                this.tbDesc.Text = r.Description.Value;
-                this.cbBy.SelectedIndex = this.GetIndex((cbBy.DataSource as DataTable), cd.GetAuthorUserName(r.List.Value));
-                this.Text = "Editing " + theRev + "...";
+                DrawingRev r = Revs.GetRev(theRev);
+                tbECO.Text = r.Eco.Value;
+                tbDesc.Text = r.Description.Value;
+                cbBy.SelectedIndex = GetIndex((cbBy.DataSource as DataTable), cd.GetAuthorUserName(r.List.Value));
+                Text = "Editing " + theRev + "...";
             }
 
             for (int i = 0; i < Properties.Settings.Default.RevLimit; i++)
-            {
-                this.cbRev.Items.Add("A" + (char)(i+65));
-            }
-            this.cbRev.SelectedIndex = (nodeCount);
+                cbRev.Items.Add("A" + (char)(i+65));
+
+            cbRev.SelectedIndex = (nodeCount);
         }
 
         private int GetIndex(DataTable dt, string val)
@@ -84,7 +83,7 @@ namespace Redbrick_Addin
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -92,17 +91,17 @@ namespace Redbrick_Addin
             DrawingRev r;
 
             SolidWorks.Interop.swconst.swCustomInfoType_e tType = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText;
-            SwProperty rev = new SwProperty("REVISION " + (char)(nodeCount + 65), tType, this.cbRev.Text, true);
-            SwProperty eco = new SwProperty("ECO " + (nodeCount + 1).ToString(), tType, this.tbECO.Text, true);
-            SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, this.tbDesc.Text, true);
-            this.cbBy.ValueMember = "INITIAL";
-            SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, this.cbBy.Text.Substring(0, 2), true);
-            this.cbBy.ValueMember = "LAST";
-            SwProperty date = new SwProperty("DATE " + (nodeCount + 1).ToString(), tType, this.dtpDate.Value.ToShortDateString(), true);
+            SwProperty rev = new SwProperty("REVISION " + (char)(nodeCount + 65), tType, cbRev.Text, true);
+            SwProperty eco = new SwProperty("ECO " + (nodeCount + 1).ToString(), tType, tbECO.Text, true);
+            SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, tbDesc.Text, true);
+            cbBy.ValueMember = "INITIAL";
+            SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, cbBy.Text.Substring(0, 2), true);
+            cbBy.ValueMember = "LAST";
+            SwProperty date = new SwProperty("DATE " + (nodeCount + 1).ToString(), tType, dtpDate.Value.ToShortDateString(), true);
 
-            if (this.Revs.Contains("REVISION " + (char)(nodeCount + 65)))
+            if (Revs.Contains("REVISION " + (char)(nodeCount + 65)))
             {
-                r = this.Revs.GetRev("REVISION " + (char)(nodeCount + 65));
+                r = Revs.GetRev("REVISION " + (char)(nodeCount + 65));
                 r.Revision = rev;
                 r.Eco = eco;
                 r.Description = desc;
@@ -112,18 +111,15 @@ namespace Redbrick_Addin
             else
             {
                 r = new DrawingRev(rev, eco, desc, list, date);
-                this.Revs.Add(r);
+                Revs.Add(r);
             }
-#if DEBUG
-            //System.Windows.Forms.MessageBox.Show(this.Revs.ToString());
-#endif
             this.Close();
         }
 
 
         private void EditRev_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.EditRevLocation = this.Location;
+            Properties.Settings.Default.EditRevLocation = Location;
             Properties.Settings.Default.Save();
         }
 

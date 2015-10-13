@@ -19,12 +19,12 @@ namespace RedbrickErr
         {
             InitializeComponent();
             System.Media.SystemSounds.Exclamation.Play();
-            this.tbxMsg.Text = this.ComposeMessage(e);
+            tbxMsg.Text = ComposeMessage(e);
         }
 
         private string ComposeMessage(Exception e)
         {
-            this.Text = String.Format("Error in {0}", e.TargetSite);
+            Text = String.Format("Error in {0}", e.TargetSite);
             StringBuilder msg = new StringBuilder();
             msg.AppendFormat("{0} caused an error: {1}\r\n\r\n in {2}", e.Source, e.Message, e.TargetSite);
             msg.Append("\r\n\r\n");
