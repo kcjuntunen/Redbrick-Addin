@@ -19,58 +19,48 @@ namespace Redbrick_Addin
 
         public ConfigurationSpecific(ref SwProperties prop)
         {
-            this.propertySet = prop;
-            this.cd = prop.cutlistData;
-            this._edgeDiffL = 0.0;
-            this._edgeDiffW = 0.0;
+            propertySet = prop;
+            cd = prop.cutlistData;
+            _edgeDiffL = 0.0;
+            _edgeDiffW = 0.0;
 
             InitializeComponent();
-            this.fillMat();
+            fillMat();
             ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
             foreach (ComboBox c in cc)
-            {
-                this.fillEdg((object)c);
-                
-            }
+                fillEdg((object)c);
             
-            this.LinkControls();
+            LinkControls();
         }
 
         public void Update(ref SwProperties prop)
         {
-            this.propertySet = prop;
-            this.configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
-            this.cd = prop.cutlistData;
-            this._edgeDiffL = 0.0;
-            this._edgeDiffW = 0.0;
-            this.LinkControls();
-            this.ToggleFields(cd.OpType);
-            this.UpdateDiffL(this.cbEf, this.cbEb);
-            this.UpdateDiffW(this.cbEl, this.cbEr);
+            propertySet = prop;
+            configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
+            cd = prop.cutlistData;
+            _edgeDiffL = 0.0;
+            _edgeDiffW = 0.0;
+            LinkControls();
+            ToggleFields(cd.OpType);
+            UpdateDiffL(this.cbEf, this.cbEb);
+            UpdateDiffW(this.cbEl, this.cbEr);
         }
 
         private void LinkControls()
         {
-            this.propertySet.LinkControlToProperty("MATID", false, this.cbMat);
-            this.propertySet.LinkControlToProperty("EFID", false, this.cbEf);
-            this.propertySet.LinkControlToProperty("EBID", false, this.cbEb);
-            this.propertySet.LinkControlToProperty("ELID", false, this.cbEl);
-            this.propertySet.LinkControlToProperty("ERID", false, this.cbEr);
+            propertySet.LinkControlToProperty("MATID", false, this.cbMat);
+            propertySet.LinkControlToProperty("EFID", false, this.cbEf);
+            propertySet.LinkControlToProperty("EBID", false, this.cbEb);
+            propertySet.LinkControlToProperty("ELID", false, this.cbEl);
+            propertySet.LinkControlToProperty("ERID", false, this.cbEr);
 
             if (Properties.Settings.Default.Testing)
             {
-                this.propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
-                this.propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
-                this.propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
-                this.propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
-                this.propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
-            }
-        }
-
-        public void GetProperties()
-        {
-            foreach (Control c in this.tableLayoutPanel1.Controls)
-            {
+                propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
+                propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
+                propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
+                propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
+                propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
             }
         }
 
@@ -91,7 +81,7 @@ namespace Redbrick_Addin
 
         private void fillComboBoxes()
         {
-            Thread t = new Thread(new ThreadStart(this.fillMat));
+            Thread t = new Thread(new ThreadStart(fillMat));
             try
             {
                 t.Start();
@@ -105,10 +95,10 @@ namespace Redbrick_Addin
                 System.Windows.Forms.MessageBox.Show(oome.Message);
             }
 
-            ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
+            ComboBox[] cc = { cbEf, cbEb, cbEl, cbEr };
             foreach (ComboBox c in cc)
             {
-                t = new Thread(new ParameterizedThreadStart(this.fillEdg));
+                t = new Thread(new ParameterizedThreadStart(fillEdg));
                 try
                 {
                     t.Start((object)c);
@@ -126,10 +116,10 @@ namespace Redbrick_Addin
 
         private void fillMat()
         {
-            this.cbMat.DataSource = cd.Materials.Tables[0];
-            this.cbMat.DisplayMember = "DESCR";
-            this.cbMat.ValueMember = "MATID";
-            this.cbMat.Text = string.Empty;
+            cbMat.DataSource = cd.Materials.Tables[0];
+            cbMat.DisplayMember = "DESCR";
+            cbMat.ValueMember = "MATID";
+            cbMat.Text = string.Empty;
         }
 
         private void fillEdg(object occ)
@@ -163,7 +153,7 @@ namespace Redbrick_Addin
 
         private void UpdateDiffW(ComboBox cbl, ComboBox cbr)
         {
-            this._edgeDiffW = 0.0;
+            _edgeDiffW = 0.0;
             double t = 0.0;
             string thk = string.Empty;
             try
@@ -184,9 +174,7 @@ namespace Redbrick_Addin
             }
 
             if (double.TryParse(thk, out t))
-            {
-                this._edgeDiffW += t * -1;
-            }
+                _edgeDiffW += t * -1;
 
             try
             {
@@ -213,7 +201,7 @@ namespace Redbrick_Addin
 
         private void UpdateDiffL(ComboBox cbf, ComboBox cbb)
         {
-            this._edgeDiffL = 0.0;
+            _edgeDiffL = 0.0;
             double t = 0.0;
             string thk = string.Empty;
             try
@@ -235,7 +223,7 @@ namespace Redbrick_Addin
 
             if (double.TryParse(thk, out t))
             {
-                this._edgeDiffL += t * -1;
+                _edgeDiffL += t * -1;
             }
 
             try
@@ -256,100 +244,82 @@ namespace Redbrick_Addin
             }
 
             if (double.TryParse(thk, out t))
-            {
-                this._edgeDiffL += t * -1;
-            }
+                _edgeDiffL += t * -1;
         }
 
         private void cbMat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.cbMat.SelectedValue != null)
-                this.lMatColor.Text = (this.cbMat.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
+            if (cbMat.SelectedValue != null)
+                lMatColor.Text = (cbMat.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
-                this.lMatColor.Text = string.Empty;
+                lMatColor.Text = string.Empty;
         }
 
         private void cbEf_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.cbEf.SelectedValue != null)
-            {
-                this.leFColor.Text = (this.cbEf.SelectedItem as System.Data.DataRowView)[2].ToString();
-            }
+            if (cbEf.SelectedValue != null)
+                leFColor.Text = (cbEf.SelectedItem as System.Data.DataRowView)[2].ToString();
             else
-            {
-                this.leFColor.Text = string.Empty;
-            }
+                leFColor.Text = string.Empty;
 
-            this.UpdateDiffL(this.cbEf, this.cbEb);
+            UpdateDiffL(cbEf, cbEb);
         }
 
         private void cbEb_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.cbEb.SelectedValue != null)
-            {
-                this.leBColor.Text = (this.cbEb.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
-            }
+            if (cbEb.SelectedValue != null)
+                leBColor.Text = (cbEb.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
-            {
-                this.leBColor.Text = string.Empty;
-            }
+                leBColor.Text = string.Empty;
 
-            this.UpdateDiffL(this.cbEf, this.cbEb);
+            UpdateDiffL(cbEf, cbEb);
         }
 
         private void cbEl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.cbEl.SelectedValue != null)
-            {
-                this.leLColor.Text = (this.cbEl.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
-            }
+            if (cbEl.SelectedValue != null)
+                leLColor.Text = (cbEl.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
-            {
-                this.leLColor.Text = string.Empty;
-            }
+                leLColor.Text = string.Empty;
 
-            this.UpdateDiffW(this.cbEl, this.cbEr);
+            UpdateDiffW(cbEl, cbEr);
         }
 
         private void cbEr_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.cbEr.SelectedValue != null)
-            {
-                this.leRColor.Text = (this.cbEr.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
-            }
+                leRColor.Text = (cbEr.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
-            {
-                this.leRColor.Text = string.Empty;
-            }
+                leRColor.Text = string.Empty;
 
-            this.UpdateDiffW(this.cbEl, this.cbEr);
+            UpdateDiffW(cbEl, cbEr);
         }
 
         public string configurationName { get; set; }
 
         public ComboBox GetCutlistMatBox()
         {
-            return this.cbMat;
+            return cbMat;
         }
 
         public ComboBox GetEdgeFrontBox()
         {
-            return this.cbEf;
+            return cbEf;
         }
 
         public ComboBox GetEdgeBackBox()
         {
-            return this.cbEb;
+            return cbEb;
         }
 
         public ComboBox GetEdgeLeftBox()
         {
-            return this.cbEl;
+            return cbEl;
         }
 
         public ComboBox GetEdgeRightBox()
         {
-            return this.cbEr;
+            return cbEr;
         }
 
         private double _edgeDiffL;

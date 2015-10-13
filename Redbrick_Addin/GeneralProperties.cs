@@ -21,34 +21,34 @@ namespace Redbrick_Addin
 
         public void Update(ref SwProperties p)
         {
-            this.propertySet = p;
-            this.LinkControls();
-            this.ToggleFields(this.propertySet.cutlistData.OpType);
+            propertySet = p;
+            LinkControls();
+            ToggleFields(this.propertySet.cutlistData.OpType);
         }
 
         private void LinkControls()
         {
-            this.tbLength.Text = string.Empty;
-            this.tbWidth.Text = string.Empty;
-            this.tbThick.Text = string.Empty;
-            this.tbWallThick.Text = string.Empty;
-            this.tbComment.Text = string.Empty;
+            tbLength.Text = string.Empty;
+            tbWidth.Text = string.Empty;
+            tbThick.Text = string.Empty;
+            tbWallThick.Text = string.Empty;
+            tbComment.Text = string.Empty;
 
-            this.propertySet.LinkControlToProperty("Description", true, this.tbDescription);
-            this.propertySet.LinkControlToProperty("LENGTH", true, this.tbLength);
-            this.propertySet.LinkControlToProperty("WIDTH", true, this.tbWidth);
-            this.propertySet.LinkControlToProperty("THICKNESS", true, this.tbThick);
-            this.propertySet.LinkControlToProperty("WALL THICKNESS", true, this.tbWallThick);
-            this.propertySet.LinkControlToProperty("COMMENT", true, this.tbComment);
+            propertySet.LinkControlToProperty("Description", true, tbDescription);
+            propertySet.LinkControlToProperty("LENGTH", true, tbLength);
+            propertySet.LinkControlToProperty("WIDTH", true, tbWidth);
+            propertySet.LinkControlToProperty("THICKNESS", true, tbThick);
+            propertySet.LinkControlToProperty("WALL THICKNESS", true, tbWallThick);
+            propertySet.LinkControlToProperty("COMMENT", true, tbComment);
 
-            this.UpdateRes(this.propertySet.GetProperty("LENGTH"), this.labResLength);
-            this.UpdateRes(this.propertySet.GetProperty("WIDTH"), this.labResWidth);
-            this.UpdateRes(this.propertySet.GetProperty("THICKNESS"), this.labResThickness);
+            UpdateRes(propertySet.GetProperty("LENGTH"), labResLength);
+            UpdateRes(propertySet.GetProperty("WIDTH"), labResWidth);
+            UpdateRes(propertySet.GetProperty("THICKNESS"), labResThickness);
 
-            if (this.propertySet.GetProperty("WALL THICKNESS") != null)
-                this.UpdateRes(this.propertySet.GetProperty("WALL THICKNESS"), this.labResWallThickness);
+            if (propertySet.GetProperty("WALL THICKNESS") != null)
+                UpdateRes(propertySet.GetProperty("WALL THICKNESS"), labResWallThickness);
 
-            this.UpdateLnW();
+            UpdateLnW();
         }
 
         private void UpdateRes(SwProperty p, Control c)
@@ -58,20 +58,14 @@ namespace Redbrick_Addin
 
         private void LinkControlToProperty(string property, Control c)
         {
-            SwProperty p = this.propertySet.GetProperty(property);
-            if (this.propertySet.Contains(p))
+            SwProperty p = propertySet.GetProperty(property);
+            if (propertySet.Contains(p))
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("Linking " + p.Name + ": " + p.Value);
-#endif
                 p.Ctl = c;
                 c.Text = p.Value;
             }
             else
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("Creating " + property);
-#endif
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
                 x.Ctl = c;
             }
@@ -84,106 +78,106 @@ namespace Redbrick_Addin
 
             tVal = this.labResLength.Text;
             if (double.TryParse(tVal, out dVal))
-                this._length = dVal;
+                _length = dVal;
             else
-                this._length = 0.0;
+                _length = 0.0;
 
             tVal = this.labResWidth.Text;
             if (double.TryParse(tVal, out dVal))
-                this._width = dVal;
+                _width = dVal;
             else
-                this._width = 0.0;
+                _width = 0.0;
         }
 
         public void ToggleFields(int opType)
         {
             bool wood = (opType != 2);
-            this.labResWallThickness.Enabled = !wood;
-            this.lWallThickness.Enabled = !wood;
-            this.tbWallThick.Enabled = !wood;
+            labResWallThickness.Enabled = !wood;
+            lWallThickness.Enabled = !wood;
+            tbWallThick.Enabled = !wood;
         }
 
         public TextBox GetDescriptionBox()
         {
-            return this.tbDescription;
+            return tbDescription;
         }
 
         public TextBox GetLengthBox()
         {
-            return this.tbLength;
+            return tbLength;
         }
 
         public TextBox GetWidthBox()
         {
-            return this.tbWidth;
+            return tbWidth;
         }
 
         public TextBox GetThicknessBox()
         {
-            return this.tbThick;
+            return tbThick;
         }
 
         public TextBox GetWallThicknessBox()
         {
-            return this.tbWallThick;
+            return tbWallThick;
         }
 
         public TextBox GetCommentBox()
         {
-            return this.tbComment;
+            return tbComment;
         }
 
         public void UpdateLengthRes(SwProperty p)
         {
-            this.labResLength.Text = p.ResValue;
+            labResLength.Text = p.ResValue;
         }
 
         public void UpdateWidthRes(SwProperty p)
         {
-            this.labResWidth.Text = p.ResValue;
+            labResWidth.Text = p.ResValue;
         }
 
         public void UpdateThickRes(SwProperty p)
         {
-            this.labResThickness.Text = p.ResValue;
+            labResThickness.Text = p.ResValue;
         }
 
         public void UpdateWallThickRes(SwProperty p)
         {
             if (p != null)
-                this.labResWallThickness.Text = p.ResValue;
+                labResWallThickness.Text = p.ResValue;
         }
 
         private void tbLength_Leave(object sender, EventArgs e)
         {
-            this.propertySet.GetProperty("LENGTH").Value = this.tbLength.Text;
-            this.propertySet.GetProperty("LENGTH").Write();
-            this.propertySet.GetProperty("LENGTH").Get();
-            this.labResLength.Text = this.propertySet.GetProperty("LENGTH").ResValue;
+            propertySet.GetProperty("LENGTH").Value = tbLength.Text;
+            propertySet.GetProperty("LENGTH").Write();
+            propertySet.GetProperty("LENGTH").Get();
+            labResLength.Text = propertySet.GetProperty("LENGTH").ResValue;
         }
 
         private void tbWidth_Leave(object sender, EventArgs e)
         {
-            this.propertySet.GetProperty("WIDTH").Value = this.tbWidth.Text;
-            this.propertySet.GetProperty("WIDTH").Write();
-            this.propertySet.GetProperty("WIDTH").Get();
-            this.labResWidth.Text = this.propertySet.GetProperty("WIDTH").ResValue;
+            propertySet.GetProperty("WIDTH").Value = tbWidth.Text;
+            propertySet.GetProperty("WIDTH").Write();
+            propertySet.GetProperty("WIDTH").Get();
+            labResWidth.Text = propertySet.GetProperty("WIDTH").ResValue;
         }
 
         private void tbThick_Leave(object sender, EventArgs e)
         {
-            this.propertySet.GetProperty("THICKNESS").Value = this.tbThick.Text;
-            this.propertySet.GetProperty("THICKNESS").Write();
-            this.propertySet.GetProperty("THICKNESS").Get();
-            this.labResThickness.Text = this.propertySet.GetProperty("THICKNESS").ResValue;
+            propertySet.GetProperty("THICKNESS").Value = tbThick.Text;
+            propertySet.GetProperty("THICKNESS").Write();
+            propertySet.GetProperty("THICKNESS").Get();
+            labResThickness.Text = propertySet.GetProperty("THICKNESS").ResValue;
         }
 
         private void tbWallThick_Leave(object sender, EventArgs e)
         {
-            this.propertySet.GetProperty("WALL THICKNESS").Value = this.tbWallThick.Text;
-            this.propertySet.GetProperty("WALL THICKNESS").Write();
-            this.propertySet.GetProperty("WALL THICKNESS").Get();
-            this.labResWallThickness.Text = this.propertySet.GetProperty("WALL THICKNESS").ResValue;
+            propertySet.GetProperty("WALL THICKNESS").Value = tbWallThick.Text;
+            propertySet.GetProperty("WALL THICKNESS").Write();
+            propertySet.GetProperty("WALL THICKNESS").Get();
+            labResWallThickness.Text = propertySet.GetProperty("WALL THICKNESS").ResValue;
         }
 
         private double _length;
