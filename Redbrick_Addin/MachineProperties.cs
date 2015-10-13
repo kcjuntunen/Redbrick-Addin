@@ -15,23 +15,23 @@ namespace Redbrick_Addin
         SwProperties propertySet;
         public MachineProperties(ref SwProperties prop)
         {
-            this.propertySet = prop;
+            propertySet = prop;
             InitializeComponent();
         }
 
         public void Update(ref SwProperties p)
         {
-            this.propertySet = p;
-            this.LinkControls();
-            this.ToggleFields(this.propertySet.cutlistData.OpType);
+            propertySet = p;
+            LinkControls();
+            ToggleFields(this.propertySet.cutlistData.OpType);
         }
 
         public void Update(ref SwProperties p, double l, double w)
         {
-            this.propertySet = p;
-            this.LinkControls();
-            this.ToggleFields(this.propertySet.cutlistData.OpType);
-            this.CalculateBlankSize(l, w);
+            propertySet = p;
+            LinkControls();
+            ToggleFields(this.propertySet.cutlistData.OpType);
+            CalculateBlankSize(l, w);
         }
 
         private void CalculateBlankSize(double edgeL, double edgeW)
@@ -41,69 +41,63 @@ namespace Redbrick_Addin
             double finLen = 0.0;
             double blankLen = 0.0;
 
-            if (this.propertySet.Contains("LENGTH"))
+            if (propertySet.Contains("LENGTH"))
             {
-                if (double.TryParse(this.propertySet.GetProperty("LENGTH").ResValue, out finLen))
+                if (double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out finLen))
                     blankLen = finLen;
 
-                if (double.TryParse(this.tbOverL.Text, out dVal))
-                    this._overL = dVal;
+                if (double.TryParse(tbOverL.Text, out dVal))
+                    _overL = dVal;
 
                 this.tbBlankL.Text = Math.Round((blankLen + dVal + edgeW), 3).ToString("N3");
             }
 
             blankLen = 0.0;
-            if (this.propertySet.Contains("WIDTH"))
+            if (propertySet.Contains("WIDTH"))
             {
-                if (double.TryParse(this.propertySet.GetProperty("WIDTH").ResValue, out finLen))
+                if (double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out finLen))
                     blankLen = finLen;
 
                 dVal = 0.0;
-                if (double.TryParse(this.tbOverW.Text, out dVal))
-                    this._overW = dVal;
+                if (double.TryParse(tbOverW.Text, out dVal))
+                    _overW = dVal;
 
-                this.tbBlankW.Text = Math.Round((blankLen + dVal + edgeL), 3).ToString("N3");
+                tbBlankW.Text = Math.Round((blankLen + dVal + edgeL), 3).ToString("N3");
             }
         }
 
         private void LinkControls()
         {
-            this.tbCNC1.Text = string.Empty;
-            this.tbCNC2.Text = string.Empty;
-            this.tbOverL.Text = string.Empty;
-            this.tbOverW.Text = string.Empty;
-            this.tbBlankW.Text = string.Empty;
-            this.tbBlankL.Text = string.Empty;
+            tbCNC1.Text = string.Empty;
+            tbCNC2.Text = string.Empty;
+            tbOverL.Text = string.Empty;
+            tbOverW.Text = string.Empty;
+            tbBlankW.Text = string.Empty;
+            tbBlankL.Text = string.Empty;
 
-            this.propertySet.LinkControlToProperty("BLANK QTY", true, this.tbPPB);
-            this.propertySet.LinkControlToProperty("CNC1", true, this.tbCNC1);
-            this.propertySet.LinkControlToProperty("CNC2", true, this.tbCNC2);
-            this.propertySet.LinkControlToProperty("OVERL", true, this.tbOverL);
-            this.propertySet.LinkControlToProperty("OVERW", true, this.tbOverW);
-            this.propertySet.LinkControlToProperty("UPDATE CNC", true, this.chUpdate);
+            propertySet.LinkControlToProperty("BLANK QTY", true, this.tbPPB);
+            propertySet.LinkControlToProperty("CNC1", true, this.tbCNC1);
+            propertySet.LinkControlToProperty("CNC2", true, this.tbCNC2);
+            propertySet.LinkControlToProperty("OVERL", true, this.tbOverL);
+            propertySet.LinkControlToProperty("OVERW", true, this.tbOverW);
+            propertySet.LinkControlToProperty("UPDATE CNC", true, this.chUpdate);
 
-            if (this.propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES"))
-                this.chUpdate.Checked = true;
+            if (propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES"))
+                chUpdate.Checked = true;
             else
-                this.chUpdate.Checked = false;
+                chUpdate.Checked = false;
         }
 
         private void LinkControlToProperty(string property, Control c)
         {
             SwProperty p = this.propertySet.GetProperty(property);
-            if (this.propertySet.Contains(p))
+            if (propertySet.Contains(p))
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("Linking " + p.Name);
-#endif
                 p.Ctl = c;
                 c.Text = p.Value;
             }
             else
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("Creating " + p.Name);
-#endif
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
                 x.Ctl = c;
             }
@@ -112,48 +106,48 @@ namespace Redbrick_Addin
         public void ToggleFields(int opType)
         {
             bool wood = (opType != 2);
-            this.tbOverL.Enabled = wood;
-            this.tbOverW.Enabled = wood;
-            this.tbBlankL.Enabled = wood;
-            this.tbBlankW.Enabled = wood;
-            this.label4.Enabled = wood;
-            this.label5.Enabled = wood;
-            this.label6.Enabled = wood;
+            tbOverL.Enabled = wood;
+            tbOverW.Enabled = wood;
+            tbBlankL.Enabled = wood;
+            tbBlankW.Enabled = wood;
+            label4.Enabled = wood;
+            label5.Enabled = wood;
+            label6.Enabled = wood;
         }
 
         public TextBox GetCNC1Box()
         {
-            return this.tbCNC1;
+            return tbCNC1;
         }
 
         public TextBox GetCNC2Box()
         {
-            return this.tbCNC2;
+            return tbCNC2;
         }
 
         public TextBox GetPartsPerBlankBox()
         {
-            return this.tbPPB;
+            return tbPPB;
         }
 
         public TextBox GetOverLBox()
         {
-            return this.tbOverL;
+            return tbOverL;
         }
 
         public TextBox GetOverWBox()
         {
-            return this.tbOverW;
+            return tbOverW;
         }
 
         public TextBox GetBlankLBox()
         {
-            return this.tbBlankL;
+            return tbBlankL;
         }
 
         public TextBox GetBlankWBox()
         {
-            return this.tbBlankW;
+            return tbBlankW;
         }
 
         private double _overL;
@@ -174,38 +168,28 @@ namespace Redbrick_Addin
 	
         private void tbOverL_TextChanged(object sender, EventArgs e)
         {
-            this.tbOverL.Text = string.Format("{0:0.000}", this.tbOverL.Text);
+            tbOverL.Text = string.Format("{0:0.000}", tbOverL.Text);
         }
 
         private void tbOverW_TextChanged(object sender, EventArgs e)
         {
-            this.tbOverW.Text = string.Format("{0:0.000}", this.tbOverW.Text);
+            tbOverW.Text = string.Format("{0:0.000}", tbOverW.Text);
         }
 
         private void tbOverL_Validated(object sender, EventArgs e)
         {
-            string tVal = this.tbOverL.Text;
+            string tVal = tbOverL.Text;
             double dVal = 0.0;
             if (double.TryParse(tVal, out dVal))
-            {
-                this._overL = dVal;
-#if DEBUG
-                System.Diagnostics.Debug.Print(double.Parse(tVal).ToString());
-#endif
-            }
+                _overL = dVal;
         }
 
         private void tbOverW_Validated(object sender, EventArgs e)
         {
-            string tVal = this.tbOverW.Text;
+            string tVal = tbOverW.Text;
             double dVal = 0.0;
             if (double.TryParse(tVal, out dVal))
-            {
-                this._overW = dVal;
-#if DEBUG
-                System.Diagnostics.Debug.Print(tVal);
-#endif
-            }
+                _overW = dVal;
         }
     }
 }

@@ -30,8 +30,8 @@ namespace Redbrick_Addin
 
         public ModelRedbrick(ref SwProperties p)
         {
-            this.props = p;
-            this._swApp = p.SwApp;
+            props = p;
+            _swApp = p.SwApp;
             InitializeComponent();                              // MS init
             Init();                                             // my additional init
         }
@@ -61,59 +61,60 @@ namespace Redbrick_Addin
                 item.Dock = d;
             }
 
-            this.gbSpecProp.Controls.Add(cs);
-            this.gbGlobProp.Controls.Add(gp);
-            this.gbMachProp.Controls.Add(mp);
-            this.tlp1.Controls.Add(ds);
-            this.tlp1.Controls.Add(op);
-            this.gbCutlist.Controls.Add(ch);
-            this.tlpMain.ResumeLayout(true);
+            gbSpecProp.Controls.Add(cs);
+            gbGlobProp.Controls.Add(gp);
+            gbMachProp.Controls.Add(mp);
+            tlp1.Controls.Add(ds);
+            tlp1.Controls.Add(op);
+            gbCutlist.Controls.Add(ch);
+            tlpMain.ResumeLayout(true);
         }
 
         public void Update(ref SwProperties p)
         {
-            this.TearDownDeptSelectEvent();
+            TearDownDeptSelectEvent();
             // Order matters here. The first thing SwProperties does informs what ds
             // does. Ds informs these other guys.
-            this.props = p;
-            this.ds.Update(ref p);
-            this.cs.Update(ref p);
-            this.gbSpecProp.Text = p.PartName + " - " + p.configName;
-            this.gp.Update(ref p);
-            this.op.Update(ref p);
-            this.mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
-            this.ch.Update(ref p);
-            this.SetupDeptSelectEvent();
+            props = p;
+            ds.Update(ref p);
+            cs.Update(ref p);
+            gbSpecProp.Text = p.PartName + " - " + p.configName;
+            gp.Update(ref p);
+            op.Update(ref p);
+            mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
+            ch.Update(ref p);
+            SetupDeptSelectEvent();
             // I'll just trust GC to take care of the old one.
-            this.dirtTracker = new DirtTracker(this);
+            dirtTracker = new DirtTracker(this);
         }
 
         private void SetupDeptSelectEvent()
         {
-            if (!this.deptEvents)
-                this.ds.Selected += ds_Selected;
+            if (!deptEvents)
+                ds.Selected += ds_Selected;
         }
 
         private void TearDownDeptSelectEvent()
         {
-            if (this.deptEvents)
-                this.ds.Selected -= ds_Selected; 
+            if (deptEvents)
+                ds.Selected -= ds_Selected; 
         }
 
         void ds_Selected(object d, EventArgs e)
         {
-            this.op.Update(ref this.props);
+            op.Update(ref props);
         }
 
         public void Write(ModelDoc2 doc)
         {
             // OK, so the controls were linked on update. This reads whatever was
             // entered into the controls, then writes to SW.
-            this.ReadControls();
-            this.props.Write(doc);
-            this.ch.Write();
+            ReadControls();
+            props.Write(doc);
+            ch.Write();
             // Show changes.
             doc.ForceRebuild3(false);
+
             // This isn't too slow. Might be too slow in DrawingRedbrick though.
             //int err = 0;
             //int wrn = 0;
@@ -123,15 +124,15 @@ namespace Redbrick_Addin
 
         private void ReadControls()
         {
-            this.props.CutlistID = this.ch.CutlistID;
-            this.props.CutlistQuantity = this.ch.CutlistQty;
-            this.props.ReadControls();
+            props.CutlistID = this.ch.CutlistID;
+            props.CutlistQuantity = this.ch.CutlistQty;
+            props.ReadControls();
         }
 
         public bool IsDirty 
         {
-            get { return this.dirtTracker.IsDirty; }
-            set { this.dirtTracker.IsDirty = value; }
+            get { return dirtTracker.IsDirty; }
+            set { dirtTracker.IsDirty = value; }
         }
 
         protected SldWorks RequestSW()
@@ -158,32 +159,32 @@ namespace Redbrick_Addin
 
         public SldWorks SwApp
         {
-            get { return this._swApp; }
-            set { this._swApp = value; }
+            get { return _swApp; }
+            set { _swApp = value; }
         }
 
         public DepartmentSelector aDepartmentSelector
         {
-            get { return this.ds; }
+            get { return ds; }
         }
         public ConfigurationSpecific aConfigurationSpecific
         {
-            get { return this.cs;  }
+            get { return cs;  }
         }
 
         public GeneralProperties aGeneralProperties
         {
-            get { return this.gp; }
+            get { return gp; }
         }
 
         public MachineProperties aMachineProperties
         {
-            get { return this.mp; }
+            get { return mp; }
         }
 
         public Ops aOps
         {
-            get { return this.op; }
+            get { return op; }
         }
 
         private void ModelRedbrick_Load(object sender, EventArgs e)
