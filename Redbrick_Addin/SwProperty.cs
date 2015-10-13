@@ -18,10 +18,10 @@ namespace Redbrick_Addin
         /// <param name="global">This gets reassigned appropriately on write because so many old models have it wrong.</param>
         public SwProperty(string PropertyName, swCustomInfoType_e swType, string testValue, bool global)
         {
-            this.Name = PropertyName;
-            this.Type = swType;
-            this.Value = testValue;
-            this.Global = global;
+            Name = PropertyName;
+            Type = swType;
+            Value = testValue;
+            Global = global;
         }
 
         /// <summary>
@@ -30,14 +30,15 @@ namespace Redbrick_Addin
         public SwProperty()
         {
             string n = "STUB" + DateTime.Now.ToLongTimeString();
-            this.Name = n;
-            this.Type = swCustomInfoType_e.swCustomInfoText;
-            this.Value = "NULL";
-            this.Global = false;
-
-            this.ID = "0";
-            this.Field = "[Nope]";
-            this.Table = "[No]";
+            Name = n;
+            Type = swCustomInfoType_e.swCustomInfoText;
+            Value = "NULL";
+            ResValue = "NULL";
+            Global = false;
+            Descr = "NULL";
+            ID = "0";
+            Field = "[Nope]";
+            Table = "[No]";
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Redbrick_Addin
         /// <param name="NewName">The new name. What else?</param>
         public void Rename(string NewName)
         {
-            this.Name = NewName;
+            Name = NewName;
         }
 
         /// <summary>
@@ -56,8 +57,8 @@ namespace Redbrick_Addin
         {
             if (this.SwApp != null)
             {
-                ModelDoc2 md = (ModelDoc2)this.SwApp.ActiveDoc;
-                this.Write(md);
+                ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
+                Write(md);
             }
         }
 
@@ -69,16 +70,13 @@ namespace Redbrick_Addin
         {
             if (sw != null)
             {
-                this.SwApp = sw;
-                this.Write();
+                SwApp = sw;
+                Write();
             }
             else
             {
-                if (this.SwApp != null)
-                    this.Write();
-#if DEBUG
-                System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
+                if (SwApp != null)
+                    Write();
             }
         }
 
@@ -104,42 +102,35 @@ namespace Redbrick_Addin
 
                 // This is for checking if the writing actually happened. It usually does. Don't know what I'd do if it didn't.
                 int res;
-                if (this.Global)
+                if (Global)
                 {
                     // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-                    if ((((this.Name.ToUpper().Contains("OP") && !this.Name.ToUpper().Contains("ID"))) ||
-                        this.Name.ToUpper().Contains("DEPARTMENT"))
-                        && this.Ctl != null)
+                    if ((((Name.ToUpper().Contains("OP") && !Name.ToUpper().Contains("ID"))) || Name.ToUpper().Contains("DEPARTMENT"))
+                        && Ctl != null)
                     {
-                        System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
-                        string v = this.Descr; //drv.Row.ItemArray[1].ToString();
-                        res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
-#if DEBUG
-                        System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
-#endif
+                        System.Data.DataRowView drv = ((Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
+                        string v = Descr; //drv.Row.ItemArray[1].ToString();
+                        res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
                     }
 
-                    if (((this.Name.ToUpper().Contains("OP") && this.Name.ToUpper().Contains("ID")) || 
-                        this.Name.ToUpper().Contains("DEPT")) && this.Ctl != null)
+                    if (((Name.ToUpper().Contains("OP") && Name.ToUpper().Contains("ID")) || 
+                        Name.ToUpper().Contains("DEPT")) && Ctl != null)
                     {
                         //System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
                         string v = this.ID; //drv.Row.ItemArray[0].ToString();
                         res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-    #if DEBUG
-                        System.Diagnostics.Debug.Print(string.Format("Writing {0} to {1}: {2}", this.Name, v, this.Value));
-    #endif
                     }
                     else if (this.Name.ToUpper().Contains("UPDATE"))
                     {
                         this.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
-                        if ((this.Ctl as System.Windows.Forms.CheckBox).Checked)
-                            res = gcpm.Add3(this.Name, (int)this.Type, "Yes", (int)ao);
+                        if ((Ctl as System.Windows.Forms.CheckBox).Checked)
+                            res = gcpm.Add3(Name, (int)Type, "Yes", (int)ao);
                         else
-                            res = gcpm.Add3(this.Name, (int)this.Type, "NO", (int)ao);
+                            res = gcpm.Add3(Name, (int)Type, "NO", (int)ao);
                     }
                     else // Regular text, double, and date type global props can just be written.
                     {
-                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                     }
                 }
                 else // Configuration specific props.
@@ -147,37 +138,25 @@ namespace Redbrick_Addin
                     // We only want material and edging here. It'll get ID #s from the datarow in the combobox.
                     if (this.Name.Contains("ID"))
                     {
-                        string v = this.ID;
-                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-#if DEBUG
-                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
+                        string v = ID;
+                        res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
                     }
 
                     if (this.Name.Contains("CUTLIST MATERIAL"))
                     {
-                        string v = this.Descr;
-                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
-#if DEBUG
-                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
+                        string v = Descr;
+                        res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
                     }
 
                     if (this.Name.Contains("EDGE"))
                     {
-                        string v = this.Descr;
-                        res = scpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
-#if DEBUG
-                        System.Diagnostics.Debug.Print(this.Name + " <-- " + this.Value);
-#endif
+                        string v = Descr;
+                        res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
                     }
                 }
             }
             else
             {
-    #if DEBUG
-                System.Diagnostics.Debug.Print(string.Format("{0}: ModelDoc2 md is undefined", this.Name));
-    #endif
             }
         }
 
@@ -202,49 +181,49 @@ namespace Redbrick_Addin
                 switch (this.Type)
                 {
                     case swCustomInfoType_e.swCustomInfoDate:
-                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                         break;
                     case swCustomInfoType_e.swCustomInfoDouble:
-                        res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                        res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                         break;
                     case swCustomInfoType_e.swCustomInfoNumber:
                         if (this.Global)
                             if (this.Name.ToUpper().Contains("BLANK"))
-                                res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                                res = gcpm.Add3(Name, (int)this.Type, Value, (int)ao);
                             else
-                                res = gcpm.Add3(this.Name, (int)this.Type, this.ID, (int)ao);
+                                res = gcpm.Add3(Name, (int)Type, ID, (int)ao);
                         else
-                            scpm.Add3(this.Name, (int)this.Type, this.ID, (int)ao);
+                            scpm.Add3(Name, (int)Type, ID, (int)ao);
                         break;
                     case swCustomInfoType_e.swCustomInfoText:
                         if (this.Global)
-                            if (this.Name.ToUpper().StartsWith("OP") && !this.Name.ToUpper().EndsWith("ID"))
-                                res = gcpm.Add3(this.Name, (int)this.Type, this.Descr, (int)ao);
+                            if (Name.ToUpper().StartsWith("OP") && !Name.ToUpper().EndsWith("ID"))
+                                res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
                             else
-                                res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                                res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                         else
-                            res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                            res = scpm.Add3(Name, (int)Type, Value, (int)ao);
                         break;
                     case swCustomInfoType_e.swCustomInfoUnknown:
                         break;
                     case swCustomInfoType_e.swCustomInfoYesOrNo:
-                        if (this.Ctl != null)
+                        if (Ctl != null)
                         {
                             if ((this.Ctl as System.Windows.Forms.CheckBox).Checked)
-                                res = gcpm.Add3(this.Name, (int)this.Type, "Yes", (int)ao);
+                                res = gcpm.Add3(Name, (int)Type, "Yes", (int)ao);
                             else
-                                res = gcpm.Add3(this.Name, (int)this.Type, "N", (int)ao);
+                                res = gcpm.Add3(Name, (int)Type, "N", (int)ao);
                         }
                         else
                         {
-                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                            res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                         }
                         break;
                     default:
                         if (this.Global)
-                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                            res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                         else
-                            res = scpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
+                            res = scpm.Add3(Name, (int)Type, Value, (int)ao);
                         break;
                 }
             }
@@ -255,8 +234,7 @@ namespace Redbrick_Addin
         /// </summary>
         public void Get()
         {
-            if (this.SwApp != null)
-                if (this.SwApp != null)
+                if (SwApp != null)
                 {
                     ModelDoc2 md = (ModelDoc2)this.SwApp.ActiveDoc;
                     Configuration cf = md.ConfigurationManager.ActiveConfiguration;
@@ -279,27 +257,22 @@ namespace Redbrick_Addin
 
                     if (this.Global)
                     {
-                        res = gcpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
+                        res = gcpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
                         this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
 
 
-                        if (this.Type == swCustomInfoType_e.swCustomInfoNumber && this.Name.ToUpper().Contains("OVER"))
-                            this.Type = swCustomInfoType_e.swCustomInfoDouble;
+                        if (Type == swCustomInfoType_e.swCustomInfoNumber && Name.ToUpper().Contains("OVER"))
+                            Type = swCustomInfoType_e.swCustomInfoDouble;
                     }
                     else
                     {
-                        res = scpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
-                        this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+                        res = scpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
+                        this.Type = (swCustomInfoType_e)gcpm.GetType2(Name);
                     }
-#if DEBUG
-                    System.Diagnostics.Debug.Print(this.Name + " --> " + this.Value);
-#endif
                 }
                 else
                 {
-#if DEBUG
-                    System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
+                    throw new NullReferenceException("sw is null");
                 }
         }
 
@@ -333,27 +306,22 @@ namespace Redbrick_Addin
 
                 if (this.Global)
                 {
-                    res = gcpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
-                    this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+                    res = gcpm.Get5(this.Name, useCached, out _value, out _resValue, out wasResolved);
+                    Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
 
 
-                    if (this.Type == swCustomInfoType_e.swCustomInfoNumber && this.Name.ToUpper().Contains("OVER"))
-                        this.Type = swCustomInfoType_e.swCustomInfoDouble;
+                    if (Type == swCustomInfoType_e.swCustomInfoNumber && Name.ToUpper().Contains("OVER"))
+                        Type = swCustomInfoType_e.swCustomInfoDouble;
                 }
                 else
                 {
-                    res = scpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
-                    this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+                    res = scpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
+                    this.Type = (swCustomInfoType_e)gcpm.GetType2(Name);
                 }
-#if DEBUG
-                System.Diagnostics.Debug.Print(this.Name + " --> " + this.Value);
-#endif
             }
             else
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
+                throw new NullReferenceException("sw is null");
             }
         }
 
@@ -384,12 +352,12 @@ namespace Redbrick_Addin
 
             if (this.Global)
             {
-                res = gcpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
-                this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+                res = gcpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
+                Type = (swCustomInfoType_e)gcpm.GetType2(Name);
 
 
-                if (this.Type == swCustomInfoType_e.swCustomInfoNumber && this.Name.ToUpper().Contains("OVER"))
-                    this.Type = swCustomInfoType_e.swCustomInfoDouble;
+                if (Type == swCustomInfoType_e.swCustomInfoNumber && Name.ToUpper().Contains("OVER"))
+                    Type = swCustomInfoType_e.swCustomInfoDouble;
 
                 if (this.Name.Contains("OP"))
                 {
@@ -397,51 +365,48 @@ namespace Redbrick_Addin
 
                     if (int.TryParse(this._value, out tp))
                     {
-                        this.ID = this._resValue;
-                        this._value = cd.GetOpByID(this._resValue);
+                        ID = _resValue;
+                        _value = cd.GetOpByID(_resValue);
                     }
                     else
                     {
-                        this.ID = cd.GetOpIDByName(this._resValue).ToString();
-                        this._value = cd.GetOpByID(this.ID);
+                        ID = cd.GetOpIDByName(_resValue).ToString();
+                        _value = cd.GetOpByID(ID);
                     }
                 }
             }
             else
             {
-                res = scpm.Get5(this.Name, useCached, out this._value, out this._resValue, out wasResolved);
-                this.Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
-                if (this.Name.ToUpper().Contains("CUTLIST MATERIAL"))
+                res = scpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
+                Type = (swCustomInfoType_e)gcpm.GetType2(Name);
+                if (Name.ToUpper().Contains("CUTLIST MATERIAL"))
                 {
                     int tp = 0;
-                    if (int.TryParse(this._value, out tp))
+                    if (int.TryParse(_value, out tp))
                     {
-                        this.ID = this._resValue;
-                        this._value = cd.GetMaterialByID(this._resValue);
+                        ID = _resValue;
+                        _value = cd.GetMaterialByID(_resValue);
                     }
                     else
                     {
-                        this.ID = cd.GetMaterialID(this._value).ToString();
+                        ID = cd.GetMaterialID(_value).ToString();
                     }
                 }
 
-                if (this.Name.ToUpper().Contains("EDGE"))
+                if (Name.ToUpper().Contains("EDGE"))
                 {
                     int tp = 0;
-                    if (int.TryParse(this._value, out tp))
+                    if (int.TryParse(_value, out tp))
                     {
-                        this.ID = this._resValue;
-                        this._value = cd.GetEdgeByID(this._resValue);
+                        ID = _resValue;
+                        _value = cd.GetEdgeByID(_resValue);
                     }
                     else
                     {
-                        this.ID = cd.GetMaterialID(this._value).ToString();
+                        ID = cd.GetMaterialID(_value).ToString();
                     }
                 }
             }
-#if DEBUG
-            System.Diagnostics.Debug.Print(this.Name + " --> " + this.Value);
-#endif
         }
 
         /// <summary>
@@ -449,7 +414,7 @@ namespace Redbrick_Addin
         /// </summary>
         public void Del()
         {
-            if (this.SwApp != null)
+            if (SwApp != null)
             {
                 ModelDoc2 md = (ModelDoc2)this.SwApp.ActiveDoc;
                 Configuration cf = md.ConfigurationManager.ActiveConfiguration;
@@ -468,15 +433,13 @@ namespace Redbrick_Addin
                 int res;
 
                 if (this.Global)
-                    res = gcpm.Delete2(this.Name);
+                    res = gcpm.Delete2(Name);
                 else
-                    res = scpm.Delete2(this.Name);
+                    res = scpm.Delete2(Name);
             }
             else
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
+                throw new NullReferenceException("sw is null");
             }
         }
 
@@ -488,7 +451,7 @@ namespace Redbrick_Addin
         {
             if (sw != null)
             {
-                this.SwApp = sw;
+                SwApp = sw;
                 ModelDoc2 md = (ModelDoc2)sw.ActiveDoc;
                 Configuration cf = md.ConfigurationManager.ActiveConfiguration;
 
@@ -505,16 +468,14 @@ namespace Redbrick_Addin
 
                 int res;
 
-                if (this.Global)
-                    res = gcpm.Delete2(this.Name);
+                if (Global)
+                    res = gcpm.Delete2(Name);
                 else
-                    res = scpm.Delete2(this.Name);
+                    res = scpm.Delete2(Name);
             }
             else
             {
-#if DEBUG
-                System.Diagnostics.Debug.Print("SwApp is undefined");
-#endif
+                throw new NullReferenceException("sw is null");
             }
         }
 
@@ -540,9 +501,9 @@ namespace Redbrick_Addin
             int res;
 
             if (this.Global)
-                res = gcpm.Delete2(this.Name);
+                res = gcpm.Delete2(Name);
             else
-                res = scpm.Delete2(this.Name);
+                res = scpm.Delete2(Name);
         }
 
         private string _id;
@@ -628,7 +589,7 @@ namespace Redbrick_Addin
 
         public override string ToString()
         {
-            return this.Name + ": " + this.Value + " => " + this.ResValue;
+            return string.Format("{0}: {1} => {2} | {3} - {4}\n", Name, Value, ResValue, ID, Descr);
         }
 
         public override bool Equals(object obj)
@@ -636,7 +597,7 @@ namespace Redbrick_Addin
             if (obj == null || !(obj is SwProperty))
                 return false;
 
-            return (this.Name == (obj as SwProperty).Name) && (this.Value == (obj as SwProperty).Value);
+            return (Name == (obj as SwProperty).Name) && (Value == (obj as SwProperty).Value);
         }
 
         public override int GetHashCode()

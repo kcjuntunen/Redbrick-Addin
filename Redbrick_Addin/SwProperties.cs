@@ -768,7 +768,7 @@ namespace Redbrick_Addin
             string ret = string.Empty;
             foreach (SwProperty p in this)
             {
-                ret += string.Format("{0}: {1} => {2} | {3} - {4}\n", p.Name, p.Value, p.ResValue, p.ID, p.Descr);
+                ret += p.ToString() + "\n";
             }
             return ret;
         }
