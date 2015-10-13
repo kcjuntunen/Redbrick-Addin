@@ -196,9 +196,17 @@ namespace Redbrick_Addin
 
         public DataSet GetWherePartUsed(int partID)
         {
+            /* CLID = 0
+             * PARTNUM = 1
+             * REV = 2
+             * DESCR = 3
+             * LENGTH = 4
+             * WIDTH = 5
+             * 
+            */
             string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
-                "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " + 
-                "CUT_CUTLISTS.DRAWING FROM " +
+                "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
+                "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY FROM " +
                 "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
                 "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
                 "(((CUT_PARTS.PARTID)={0}));", partID);
@@ -219,7 +227,7 @@ namespace Redbrick_Addin
         {
             string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
                 "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
-                "CUT_CUTLISTS.DRAWING FROM " +
+                "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY FROM " +
                 "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
                 "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
                 "(((CUT_PARTS.PARTNUM) Like '{0}'));", partDescr);
@@ -568,34 +576,79 @@ namespace Redbrick_Addin
             }
         }
 
+        public int InsertIntoCutlist(SwProperties p)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int ReturnHash(SwProperties p)
+        {
+            if (p.PartName == string.Empty)
+                return 0;
+
+            string SQL = string.Format("SELECT CUT_PARTS.HASH FROM CUT_PARTS WHERE (((CUT_PARTS.PARTNUM)='{0}'));", p.PartName.Replace("'", "\""));
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataReader dr = comm.ExecuteReader())
+                {
+                    if (dr.HasRows && !dr.IsDBNull(0))
+                        return dr.GetInt32(0);
+                    else
+                        return 0;
+                }
+            }
+        }
+
+        public int MakeOriginal(SwProperties p)
+        {
+            int rowsAffected = -1;
+
+            if (ENABLE_DB_WRITE)
+            {
+                string SQL = string.Format("UPDATE CUT_PARTS SET CUT_PARTS.HASH = {1} " +
+                    "WHERE (((CUT_PARTS.PARTNUM)='{0}'));", p.PartName.Replace("'", "\""), p.Hash);
+
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+                {
+                    try
+                    {
+                        rowsAffected = comm.ExecuteNonQuery();
+                    }
+                    catch (InvalidOperationException ioe)
+                    {
+                        throw ioe;
+                    }
+                }
+            }
+
+            return rowsAffected;
+        }
+
         public int UpdateParts(SwProperties p)
         {
             int rowsAffected = -1;
             if (ENABLE_DB_WRITE)
             {
-                string dscr = p.GetProperty("Description").ResValue;
-                string finL = p.GetProperty("LENGTH").ResValue;
-                string finW = p.GetProperty("WIDTH").ResValue;
-                string thkn = p.GetProperty("THICKNESS").ResValue;
-                string ovrL = p.GetProperty("OVERL").ResValue;
-                string ovrW = p.GetProperty("OVERW").ResValue;
-                string cnc1 = p.GetProperty("CNC1").ResValue;
-                string cnc2 = p.GetProperty("CNC2").ResValue;
-                string blnk = p.GetProperty("BLANK QTY").ResValue;
-                string cmnt = p.GetProperty("COMMENT").ResValue;
-                string updt = "False";
+                string dscr = p.GetProperty("Description").Value.Replace("'", "\"");
+                string finL = p.GetProperty("LENGTH").ResValue.Replace("'", "\"");
+                string finW = p.GetProperty("WIDTH").ResValue.Replace("'", "\"");
+                string thkn = p.GetProperty("THICKNESS").ResValue.Replace("'", "\"");
+                string ovrL = p.GetProperty("OVERL").Value.Replace("'", "\"");
+                string ovrW = p.GetProperty("OVERW").Value.Replace("'", "\"");
+                string cnc1 = p.GetProperty("CNC1").Value.Replace("'", "\"");
+                string cnc2 = p.GetProperty("CNC2").Value.Replace("'", "\"");
+                string blnk = p.GetProperty("BLANK QTY").Value.Replace("'", "\"");
+                string cmnt = p.GetProperty("COMMENT").Value.Replace("'", "\"");
+                string updt = p.GetProperty("UPDATE CNC").ID.Replace("'", "\"");
 
-                if (p.GetProperty("UPDATE CNC").ResValue.ToUpper() == "YES")
-                    updt = "True";
+                string Op1 = p.GetProperty("OP1ID").ID.Replace("'", "\"");
+                string Op2 = p.GetProperty("OP2ID").ID.Replace("'", "\"");
+                string Op3 = p.GetProperty("OP3ID").ID.Replace("'", "\"");
+                string Op4 = p.GetProperty("OP4ID").ID.Replace("'", "\"");
+                string Op5 = p.GetProperty("OP5ID").ID.Replace("'", "\"");
 
-                string Op1 = p.GetProperty("OP1").ResValue;
-                string Op2 = p.GetProperty("OP2").ResValue;
-                string Op3 = p.GetProperty("OP3").ResValue;
-                string Op4 = p.GetProperty("OP4").ResValue;
-                string Op5 = p.GetProperty("OP5").ResValue;
-
-                string SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{0}', FIN_L = {1}, FIN_W = {2}, THICKNESS = {3}, CNC1 = '{4}', CNC2 = '{5}'," +
-                    "BLANKQTY = '{6}', OVER_L = {7}, OVER_W = {8}, OP1ID = {9}, OP2ID = {10}, OP3ID = {11}, OP4ID = {12}, OP5ID = {13}, COMMENT = '{14}'" +
+                string SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{0}', FIN_L = {1}, FIN_W = {2}, THICKNESS = {3}, CNC1 = '{4}', CNC2 = '{5}', " +
+                    "BLANKQTY = {6}, OVER_L = {7}, OVER_W = {8}, OP1ID = {9}, OP2ID = {10}, OP3ID = {11}, OP4ID = {12}, OP5ID = {13}, COMMENT = '{14}', " +
                     "UPDATE_CNC = {15}, TYPE = {16} WHERE PARTNUM = '{17}'", dscr, finL, finW, thkn, cnc1, cnc2,
                     blnk, ovrL, ovrW, Op1, Op2, Op3, Op4, Op5, cmnt,
                     updt, this.OpType.ToString(), p.PartName);
@@ -615,27 +668,27 @@ namespace Redbrick_Addin
             return rowsAffected;
         }
 
-        public int UpdateCutlistParts(SwProperties p, int clid, int qty)
+        public int UpdateCutlistParts(SwProperties p)
         {
             int rowsAffected = -1;
-            string cmid = p.GetProperty("CUTLIST MATERIAL").ResValue;
-            string efid = p.GetProperty("EDGE FRONT (L)").ResValue;
-            string ebid = p.GetProperty("EDGE BACK (L)").ResValue;
-            string elid = p.GetProperty("EDGE LEFT (W)").ResValue;
-            string erid = p.GetProperty("EDGE RIGHT (W)").ResValue;
+            string cmid = p.GetProperty("MATID").ID.Replace("'", "\"");
+            string efid = p.GetProperty("EFID").ID.Replace("'", "\"");
+            string ebid = p.GetProperty("EBID").ID.Replace("'", "\"");
+            string elid = p.GetProperty("ELID").ID.Replace("'", "\"");
+            string erid = p.GetProperty("ERID").ID.Replace("'", "\"");
 
-            if (ENABLE_DB_WRITE)
+            if (ENABLE_DB_WRITE && p.CutlistID != null && p.CutlistQuantity != null)
             {
-                string SQL = string.Format("UPDATE (CUT_CUTLIST_PARTS INNER JOIN CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID) " +
-                                    "INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID SET " +
-                                    "CUT_CUTLIST_PARTS.MATID = {0}, " +
-                                    "CUT_CUTLIST_PARTS.EDGEID_LF = {1}, " +
-                                    "CUT_CUTLIST_PARTS.EDGEID_LB = {2}, " +
-                                    "CUT_CUTLIST_PARTS.EDGEID_WR = {3}, " +
-                                    "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, " +
-                                    "CUT_CUTLIST_PARTS.QTY = {5} " +
-                                    "WHERE (((CUT_CUTLISTS.CLID)={6}) AND ((CUT_PARTS.PARTNUM)='{7}'));",
-                                    cmid, efid, ebid, erid, elid, qty,clid, p.PartName);
+                string SQL = string.Format("UPDATE CUT_CUTLIST_PARTS " +
+                    "SET CUT_CUTLIST_PARTS.MATID = {0}, " +
+                    "CUT_CUTLIST_PARTS.EDGEID_LF = {1}, " +
+                    "CUT_CUTLIST_PARTS.EDGEID_LB = {2}, " +
+                    "CUT_CUTLIST_PARTS.EDGEID_WR = {3}, " +
+                    "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, " +
+                    "CUT_CUTLIST_PARTS.QTY = {5} " +
+                    "FROM CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
+                    "WHERE (((CUT_CUTLIST_PARTS.CLID)={6}) AND ((CUT_PARTS.PARTNUM)='{7}'));",
+                    cmid, efid, ebid, erid, elid, p.CutlistQuantity, p.CutlistID, p.PartName);
 
                 using (OdbcCommand comm = new OdbcCommand(SQL, conn))
                 {

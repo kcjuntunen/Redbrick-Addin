@@ -103,15 +103,15 @@ namespace Redbrick_Addin
 
         int SwApp_DestroyNotify()
         {
-            if (this.PartSetup)
-                if (this.mrb.IsDirty)
-                    if (MaybeSave())
-                        this.Write();
+            //if (this.PartSetup)
+            //    if (this.mrb.IsDirty)
+            //        if (MaybeSave())
+            //            this.Write();
 
-            if (this.DrawSetup)
-                if (this.drb.IsDirty)
-                    if (MaybeSave())
-                        this.Write();
+            //if (this.DrawSetup)
+            //    if (this.drb.IsDirty)
+            //        if (MaybeSave())
+            //            this.Write();
 
             this.ClearControls(this);
             // Solidworks closed

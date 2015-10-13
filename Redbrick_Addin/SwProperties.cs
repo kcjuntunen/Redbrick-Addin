@@ -526,7 +526,7 @@ namespace Redbrick_Addin
                             pNew.Global = true;
                             pOld.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
                             pNew.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
-                            pNew.ID = pOld.ID = (!valOut.Contains("YES")).ToString();
+                            pNew.ID = pOld.ID = valOut.ToUpper().Contains("YES") ? "-1" : "0";
                             pOld.Value = pNew.Value = valOut;
                             pOld.ResValue = pNew.ResValue = resValOut;
                             break;
@@ -738,7 +738,8 @@ namespace Redbrick_Addin
                 }
             }
             SwProperty q = new SwProperty(name, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-            return q;
+            this._innerArray.Add(q);
+            return this.GetProperty(name);
         }
 
         public void ReadProperties()
@@ -767,6 +768,11 @@ namespace Redbrick_Addin
                         p.ID = ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
                         if (p.Name.ToUpper().StartsWith("OP") && !p.Name.ToUpper().EndsWith("ID"))
                             p.Descr = this.cutlistData.GetOpAbbreviationByID(p.ID);
+                    }
+
+                    if (p.Ctl is System.Windows.Forms.CheckBox)
+                    {
+                        p.ID = (p.Ctl as System.Windows.Forms.CheckBox).Checked ? "-1" : "0";
                     }
                 }
             }
@@ -797,6 +803,7 @@ namespace Redbrick_Addin
                 p.Write2(md);
             }
             cutlistData.UpdateParts(this);
+            cutlistData.UpdateCutlistParts(this);
         }
 
         public override string ToString()
@@ -809,14 +816,15 @@ namespace Redbrick_Addin
             return ret;
         }
 
-        private int _clID;
+        private string _clID;
 
-        public int CutlistID
+        public string CutlistID
         {
             get { return _clID; }
             set { _clID = value; }
         }
 
+        public string CutlistQuantity { get; set; }
 
         #region ICollection<SwProperty> Members
 

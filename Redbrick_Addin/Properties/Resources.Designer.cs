@@ -71,6 +71,24 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert Into Cutlist.
+        /// </summary>
+        internal static string InsertIntoCutlistButtonText {
+            get {
+                return ResourceManager.GetString("InsertIntoCutlistButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make Primary.
+        /// </summary>
+        internal static string MakeOriginalButtonText {
+            get {
+                return ResourceManager.GetString("MakeOriginalButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you wish to save your changes?.
         /// </summary>
         internal static string MaybeSave {

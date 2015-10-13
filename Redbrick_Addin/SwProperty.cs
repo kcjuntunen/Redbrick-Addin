@@ -237,7 +237,7 @@ namespace Redbrick_Addin
                         }
                         else
                         {
-                            res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, this.Value, (int)ao);
+                            res = gcpm.Add3(this.Name, (int)this.Type, this.Value, (int)ao);
                         }
                         break;
                     default:

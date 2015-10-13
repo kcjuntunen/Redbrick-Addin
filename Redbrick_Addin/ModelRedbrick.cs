@@ -109,7 +109,7 @@ namespace Redbrick_Addin
         {
             // OK, so the controls were linked on update. This reads whatever was
             // entered into the controls, then writes to SW.
-            this.props.ReadControls();
+            this.ReadControls();
             this.props.Write(doc);
             this.ch.Write();
             // Show changes.
@@ -119,7 +119,13 @@ namespace Redbrick_Addin
             //int wrn = 0;
             //swSaveAsOptions_e op = swSaveAsOptions_e.swSaveAsOptions_Silent;
             //doc.Save3((int)op, ref err, ref wrn);
-            //this.dirtTracker = null;
+        }
+
+        private void ReadControls()
+        {
+            this.props.CutlistID = this.ch.CutlistID;
+            this.props.CutlistQuantity = this.ch.CutlistQty;
+            this.props.ReadControls();
         }
 
         public bool IsDirty 
