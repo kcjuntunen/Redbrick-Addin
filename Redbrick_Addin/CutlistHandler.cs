@@ -117,13 +117,25 @@ namespace Redbrick_Addin
 
         public string CutlistID 
         {
-            get { return (this.cbCutlist.SelectedItem as DataRowView)[(int)WhereUsedRes.CLID].ToString(); }
+            get 
+            {
+                if (this.cbCutlist.SelectedItem != null)
+                    return (this.cbCutlist.SelectedItem as DataRowView)[(int)WhereUsedRes.CLID].ToString();
+                else
+                    return "0";
+            }
             set { CutlistID = value; }
         }
 
         public string CutlistQty
         {
-            get { return this.tbQty.Text; }
+            get 
+            {
+                if (tbQty.Text != string.Empty)
+                    return this.tbQty.Text;
+                else
+                    return "0";
+            }
             set { CutlistQty = value; }
         }
 
