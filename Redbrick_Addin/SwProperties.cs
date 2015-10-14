@@ -138,7 +138,19 @@ namespace Redbrick_Addin
                         res = g.Get5(propName, useCached, out val, out resVal, out wRes);
                         pOld.Rename(propName);
                         pNew.Rename(newPropName);
-                        opt = cutlistData.GetOpTypeIDByName(resVal.ToUpper());
+                        int tp = 0;
+                        string resName = "WOOD";
+
+                        if (int.TryParse(val, out tp))
+                        {
+                            resName = cutlistData.GetOpTypeNameByID(tp);
+                            opt = tp;
+                        }
+                        else
+                        { 
+                           opt = cutlistData.GetOpTypeIDByName(resVal.ToUpper());
+                        }
+
                         pOld.ID = opt.ToString();
                         pOld.Value = val;
                         pOld.ResValue = resVal;
@@ -154,8 +166,8 @@ namespace Redbrick_Addin
                         res = g.Get5(newPropName, useCached, out val, out resVal, out wRes);
                         pOld.Rename(propName);
                         pNew.Rename(newPropName);
-                        int tp = 0;
-                        string resName = "WOOD";
+                        tp = 0;
+                        resName = "WOOD";
                         if (int.TryParse(val, out tp))
                             resName = cutlistData.GetOpTypeNameByID(tp);
                         opt = tp;
@@ -598,15 +610,23 @@ namespace Redbrick_Addin
                 }
                 else
                 {
-                    // Otherwise I'm using Descr to carry cutlist descrs.
                     if (c is System.Windows.Forms.ComboBox)
                     {
-                        if (p.ID == null) p.ID = "0";
+                        if (p.ID == null || p.ID == string.Empty) p.ID = "0";
                         (c as System.Windows.Forms.ComboBox).SelectedValue = int.Parse(p.ID);
+                    }
+                    else if (c is System.Windows.Forms.CheckBox)
+                    {
+                        (c as System.Windows.Forms.CheckBox).Checked = (p.ID == "-1" ? true : false);
                     }
                     else
                     {
-                        c.Text = p.ResValue;
+                        if (p.Descr != null && p.Descr != string.Empty)
+                            c.Text = p.Descr;
+                        else if (p.ResValue != null && p.ResValue != string.Empty)
+                            c.Text = p.ResValue;
+                        else if (p.Value != null && p.Value != string.Empty)
+                            c.Text = p.Value;
                     }
                 }
                 p.Ctl = c;
