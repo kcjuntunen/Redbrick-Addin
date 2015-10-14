@@ -19,35 +19,35 @@ namespace Redbrick_Addin
 
         public Ops(ref SwProperties prop)
         {
-            this.cd = prop.cutlistData;
-            this.propertySet = prop;
+            cd = prop.cutlistData;
+            propertySet = prop;
 
             InitializeComponent();
         }
 
         public void Update(ref SwProperties p)
         {
-            this.propertySet = p;
-            this.OpType = p.cutlistData.OpType;
-            this.RefreshOps(this.OpType);
-            this.LinkControls();
+            propertySet = p;
+            OpType = p.cutlistData.OpType;
+            RefreshOps(this.OpType);
+            LinkControls();
         }
 
         private void LinkControls()
         {
-            this.propertySet.LinkControlToProperty("OP1ID", true, this.cbOp1);
-            this.propertySet.LinkControlToProperty("OP2ID", true, this.cbOp2);
-            this.propertySet.LinkControlToProperty("OP3ID", true, this.cbOp3);
-            this.propertySet.LinkControlToProperty("OP4ID", true, this.cbOp4);
-            this.propertySet.LinkControlToProperty("OP5ID", true, this.cbOp5);
+            propertySet.LinkControlToProperty("OP1ID", true, cbOp1);
+            propertySet.LinkControlToProperty("OP2ID", true, cbOp2);
+            propertySet.LinkControlToProperty("OP3ID", true, cbOp3);
+            propertySet.LinkControlToProperty("OP4ID", true, cbOp4);
+            propertySet.LinkControlToProperty("OP5ID", true, cbOp5);
 
             if (Properties.Settings.Default.Testing)
             {
-                this.propertySet.LinkControlToProperty("OP1", true, this.cbOp1);
-                this.propertySet.LinkControlToProperty("OP2", true, this.cbOp2);
-                this.propertySet.LinkControlToProperty("OP3", true, this.cbOp3);
-                this.propertySet.LinkControlToProperty("OP4", true, this.cbOp4);
-                this.propertySet.LinkControlToProperty("OP5", true, this.cbOp5);
+                propertySet.LinkControlToProperty("OP1", true, cbOp1);
+                propertySet.LinkControlToProperty("OP2", true, cbOp2);
+                propertySet.LinkControlToProperty("OP3", true, cbOp3);
+                propertySet.LinkControlToProperty("OP4", true, cbOp4);
+                propertySet.LinkControlToProperty("OP5", true, cbOp5);
             }
         }
 
@@ -63,32 +63,12 @@ namespace Redbrick_Addin
                     {
                         ComboBox cb = (c as ComboBox);
 
-                        if (!this.propertySet.Contains(op))
-                        {
-                            SwProperty ps = new SwProperty(op, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-                            ps.ID = (cb.SelectedItem as DataRowView).Row.ItemArray[0].ToString();
-                            ps.Value = (cb.SelectedItem as DataRowView).Row.ItemArray[1].ToString();
-                            ps.ResValue = (cb.SelectedItem as DataRowView).Row.ItemArray[2].ToString();
+                        propertySet.GetProperty(op).Ctl = c;
 
-                            ps.Table = "CUT_PARTS";
-                            ps.Field = string.Format("OP{0}ID", c.Name.Split('p')[1]);
-                            ps.SwApp = this.propertySet.SwApp;
-                            this.propertySet.Add(ps);
-                        }
-
-                        this.propertySet.GetProperty(op).Ctl = c;
-                        cb.DisplayMember = "OPID";
-
-                        int idx = this.GetIndex((cb.DataSource as DataTable),
-                            this.propertySet.GetProperty(op).Value);
-
-                        System.Diagnostics.Debug.Print(this.GetIndex((cb.DataSource as DataTable),
-                            this.propertySet.GetProperty(op).Value).ToString());
-
-                        if (idx > cb.Items.Count - 1) idx = 0;
-
-                        cb.SelectedIndex = idx;
+                        cb.ValueMember = "OPID";
                         cb.DisplayMember = "OPDESCR";
+
+                        cb.SelectedValue = int.Parse(propertySet.GetProperty(op).Value);
 
                         SwProperty p = this.propertySet.GetProperty(op);
                         p.ID = (cb.SelectedItem as DataRowView).Row.ItemArray[0].ToString();
@@ -105,20 +85,19 @@ namespace Redbrick_Addin
         private void fillBox(object occ)
         {
             ComboBox c = (ComboBox)occ;
-            //c.DataSource = cd.GetOps(this.OpType).Tables[0];
             c.DisplayMember = "OPDESCR";
-            c.ValueMember = "OPNAME";
-            this.propertySet.cutlistData.OpType = this.OpType;
-            c.DataSource = this.propertySet.cutlistData.Ops.Tables[0];
+            c.ValueMember = "OPID";
+            propertySet.cutlistData.OpType = OpType;
+            c.DataSource = propertySet.cutlistData.Ops.Tables[0];
         }
 
         public void RefreshOps(int opType)
         {
             this.OpType = opType;
-            ComboBox[] cc = { this.cbOp1, this.cbOp2, this.cbOp3, this.cbOp4, this.cbOp5 };
+            ComboBox[] cc = { cbOp1, cbOp2, cbOp3, cbOp4, cbOp5 };
             foreach (ComboBox c in cc)
             {
-                this.fillBox((object)c);
+                fillBox((object)c);
             }
             //this.GetProperties();
         }
@@ -126,7 +105,7 @@ namespace Redbrick_Addin
         public EventArgs RefreshOpBoxes(int opType)
         {
             EventArgs e = new EventArgs();
-            this.RefreshOps(opType);
+            RefreshOps(opType);
             return e;
         }
 
@@ -148,27 +127,27 @@ namespace Redbrick_Addin
 
         public Control GetOp1Box()
         {
-            return this.cbOp1;
+            return cbOp1;
         }
 
         public Control GetOp2Box()
         {
-            return this.cbOp2;
+            return cbOp2;
         }
 
         public Control GetOp3Box()
         {
-            return this.cbOp3;
+            return cbOp3;
         }
 
         public Control GetOp4Box()
         {
-            return this.cbOp4;
+            return cbOp4;
         }
 
         public Control GetOp5Box()
         {
-            return this.cbOp5;
+            return cbOp5;
         }
 
         public int OpType { get; set; }

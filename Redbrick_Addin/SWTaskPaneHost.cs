@@ -142,6 +142,7 @@ namespace Redbrick_Addin
 
          private void ConnectSelection()
         {
+            System.GC.Collect(2, GCCollectionMode.Forced);
             prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
 
             if (Document != null)
@@ -304,9 +305,8 @@ namespace Redbrick_Addin
             foreach (Control item in mrb.Controls)
             {
                 item.Dock = d;
-                item.ResumeLayout(true);
+                //item.ResumeLayout(true);
             }
-            ResumeLayout(true);
 
             // Gonna use access to all these controls.
             ds = mrb.aDepartmentSelector;
@@ -317,6 +317,7 @@ namespace Redbrick_Addin
 
             // Part-related events.
             ConnectPartEvents();
+            //ResumeLayout(true);
             // Boom, we're set up.
             PartSetup = true;
         }
@@ -331,6 +332,7 @@ namespace Redbrick_Addin
                     ClearControls(item);
                 }
                 c.Controls.Remove(item);
+                item.Dispose();
             }
 
             DisconnectAssemblyEvents();

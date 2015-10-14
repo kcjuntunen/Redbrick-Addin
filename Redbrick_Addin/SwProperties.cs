@@ -66,7 +66,7 @@ namespace Redbrick_Addin
                 if (docType == swDocumentTypes_e.swDocDRAWING)
                 {
                     CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
-                    this.ParsePropertyData(g, docType);
+                    ParsePropertyData(g, docType);
                 }
                 else
                 {
@@ -75,8 +75,8 @@ namespace Redbrick_Addin
                     Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
                     CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
                     
-                    this.cutlistData.OpType = ParseDept(md);
-                    this.configName = c.Name;
+                    cutlistData.OpType = ParseDept(md);
+                    configName = c.Name;
 
                     if (!Properties.Settings.Default.Testing)
                     {
@@ -157,7 +157,7 @@ namespace Redbrick_Addin
                         int tp = 0;
                         string resName = "WOOD";
                         if (int.TryParse(val, out tp))
-                            resName = this.cutlistData.GetOpTypeNameByID(tp);
+                            resName = cutlistData.GetOpTypeNameByID(tp);
                         opt = tp;
 
                         
@@ -404,7 +404,7 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "EDGE LEFT (W)":
-                            if (!this.Contains("ELID"))
+                            if (!Contains("ELID"))
                             {
                                 pNew.Rename("ELID");
                                 pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
@@ -418,7 +418,7 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "EDGE RIGHT (W)":
-                            if (!this.Contains("ERID"))
+                            if (!Contains("ERID"))
                             {
                                 pNew.Rename("ERID");
                                 pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
@@ -432,7 +432,7 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "EFID":
-                            if (!this.Contains("EDGE FRONT (L)"))
+                            if (!Contains("EDGE FRONT (L)"))
                             {
                                 pOld.Rename("EDGE FRONT (L)");
                                 pOld.ID = pOld.Value;
@@ -445,7 +445,7 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "EBID":
-                            if (!this.Contains("EDGE BACK (L)"))
+                            if (!Contains("EDGE BACK (L)"))
                             {
                                 pOld.Rename("EDGE BACK (L)");
                                 pOld.ID = pOld.Value;
@@ -458,7 +458,7 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "ELID":
-                            if (!this.Contains("EDGE LEFT (W)"))
+                            if (!Contains("EDGE LEFT (W)"))
                             {
                                 pOld.Rename("EDGE LEFT (W)");
                                 pOld.ID = pOld.Value;
@@ -471,7 +471,7 @@ namespace Redbrick_Addin
                             }
                             break;
                         case "ERID":
-                            if (!this.Contains("EDGE RIGHT (W)"))
+                            if (!Contains("EDGE RIGHT (W)"))
                             {
                                 pOld.Rename("EDGE RIGHT (W)");
                                 pOld.ID = pOld.Value;
@@ -602,13 +602,7 @@ namespace Redbrick_Addin
                     if (c is System.Windows.Forms.ComboBox)
                     {
                         if (p.ID == null) p.ID = "0";
-                        int idx = (GetIndex(
-                            ((c as System.Windows.Forms.ComboBox).DataSource as System.Data.DataTable), p.ID));
-
-                        if (idx < (c as System.Windows.Forms.ComboBox).Items.Count)
-                            (c as System.Windows.Forms.ComboBox).SelectedIndex = idx;
-                        else
-                            (c as System.Windows.Forms.ComboBox).SelectedIndex = (c as System.Windows.Forms.ComboBox).Items.Count - 1;
+                        (c as System.Windows.Forms.ComboBox).SelectedValue = int.Parse(p.ID);
                     }
                     else
                     {

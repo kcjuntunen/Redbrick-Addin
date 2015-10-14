@@ -27,11 +27,11 @@ namespace Redbrick_Addin
 
             cbBy.DataSource = cd.GetAuthors().Tables[0];
             cbBy.DisplayMember = "INITIAL";
-            cbBy.ValueMember = "INITIAL";
+            cbBy.ValueMember = "USERNAME";
 
             if (!Revs.Contains("REVISION " + (char)(nodeCount + 65)))
             {
-                cbBy.SelectedIndex = GetIndex((cbBy.DataSource as DataTable), Environment.UserName);
+                cbBy.SelectedValue = Environment.UserName;
                 string theRev = "REVISION " + (char)(nodeCount + 65);
                 Text = "Creating new " + theRev + "...";
             }
@@ -41,7 +41,7 @@ namespace Redbrick_Addin
                 DrawingRev r = Revs.GetRev(theRev);
                 tbECO.Text = r.Eco.Value;
                 tbDesc.Text = r.Description.Value;
-                cbBy.SelectedIndex = GetIndex((cbBy.DataSource as DataTable), cd.GetAuthorUserName(r.List.Value));
+                cbBy.SelectedValue = cd.GetAuthorUserName(r.List.Value);
                 Text = "Editing " + theRev + "...";
             }
 

@@ -86,7 +86,7 @@ namespace Redbrick_Addin
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlpCutlist.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpCutlist.Size = new System.Drawing.Size(258, 343);
+            this.tlpCutlist.Size = new System.Drawing.Size(258, 331);
             this.tlpCutlist.TabIndex = 2;
             // 
             // tableLayoutPanel1
@@ -285,8 +285,8 @@ namespace Redbrick_Addin
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(252, 119);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(252, 107);
             this.tableLayoutPanel3.TabIndex = 12;
             // 
             // btnOriginal
@@ -294,7 +294,7 @@ namespace Redbrick_Addin
             this.btnOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnOriginal.Location = new System.Drawing.Point(129, 58);
             this.btnOriginal.Name = "btnOriginal";
-            this.btnOriginal.Size = new System.Drawing.Size(120, 58);
+            this.btnOriginal.Size = new System.Drawing.Size(120, 46);
             this.btnOriginal.TabIndex = 0;
             this.btnOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
             this.btnOriginal.UseVisualStyleBackColor = true;
@@ -305,7 +305,7 @@ namespace Redbrick_Addin
             this.btnInsert.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnInsert.Location = new System.Drawing.Point(3, 58);
             this.btnInsert.Name = "btnInsert";
-            this.btnInsert.Size = new System.Drawing.Size(120, 58);
+            this.btnInsert.Size = new System.Drawing.Size(120, 46);
             this.btnInsert.TabIndex = 1;
             this.btnInsert.Text = global::Redbrick_Addin.Properties.Resources.InsertIntoCutlistButtonText;
             this.btnInsert.UseVisualStyleBackColor = true;
@@ -351,7 +351,7 @@ namespace Redbrick_Addin
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tlpCutlist);
             this.Name = "CutlistHandler";
-            this.Size = new System.Drawing.Size(258, 343);
+            this.Size = new System.Drawing.Size(258, 331);
             this.tlpCutlist.ResumeLayout(false);
             this.tlpCutlist.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);

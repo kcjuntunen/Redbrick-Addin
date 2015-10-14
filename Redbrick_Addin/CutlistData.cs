@@ -103,7 +103,7 @@ namespace Redbrick_Addin
             }
         }
 
-        public DataSet GetOps(int OpType)
+        private DataSet GetOps(int OpType)
         {
             lock (threadLock)
             {
@@ -138,7 +138,7 @@ namespace Redbrick_Addin
             }
         }
 
-        public DataSet GetOps()
+        private DataSet GetOps()
         {
             lock (threadLock)
             {
@@ -198,7 +198,7 @@ namespace Redbrick_Addin
         {
             string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
                 "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
-                "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY FROM " +
+                "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
                 "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
                 "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
                 "(((CUT_PARTS.PARTID)={0}));", partID);
@@ -219,10 +219,58 @@ namespace Redbrick_Addin
         {
             string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
                 "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
-                "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY FROM " +
+                "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
                 "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
                 "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
                 "(((CUT_PARTS.PARTNUM) Like '{0}'));", partDescr);
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                {
+                    using (DataSet ds = new DataSet())
+                    {
+                        da.Fill(ds);
+                        return ds;
+                    }
+                }
+            }
+        }
+
+        private DataSet GetCustomers()
+        {
+            string SQL = "SELECT * FROM GEN_CUSTOMERS ORDER BY CUSTOMER;";
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                {
+                    using (DataSet ds = new DataSet())
+                    {
+                        da.Fill(ds);
+                        return ds;
+                    }
+                }
+            }
+        }
+
+        private DataSet GetCustomers(bool current)
+        {
+            string SQL = string.Format("SELECT * FROM GEN_CUSTOMERS WHERE GEN_CUSTOMERS.CUSTACTIVE = {0} ORDER BY GEN_CUSTOMERS.CUSTOMER;", (current ? 1 : 0));
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn))
+            {
+                using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
+                {
+                    using (DataSet ds = new DataSet())
+                    {
+                        da.Fill(ds);
+                        return ds;
+                    }
+                }
+            }
+        }
+
+        private DataSet GetStates()
+        {
+            string SQL = "SELECT * FROM CUT_STATES;";
             using (OdbcCommand comm = new OdbcCommand(SQL, conn))
             {
                 using (OdbcDataAdapter da = new OdbcDataAdapter(comm))
@@ -621,28 +669,63 @@ namespace Redbrick_Addin
             return rowsAffected;
         }
 
+        private void parse(string s, out double d)
+        {
+            double dtp = 0.0f;
+            if (double.TryParse(s, out dtp))
+                d = dtp;
+            else
+                d = 0.0f;
+        }
+
+        private void parse(string s, out int i)
+        {
+            int itp = 0;
+            if (int.TryParse(s, out itp))
+                i = itp;
+            else
+                i = 0;
+        }
+
         public int UpdateParts(SwProperties p)
         {
             int rowsAffected = -1;
             if (ENABLE_DB_WRITE && p.Primary)
             {
                 string dscr = p.GetProperty("Description").Value.Replace("'", "\"");
-                string finL = p.GetProperty("LENGTH").ResValue.Replace("'", "\"");
-                string finW = p.GetProperty("WIDTH").ResValue.Replace("'", "\"");
-                string thkn = p.GetProperty("THICKNESS").ResValue.Replace("'", "\"");
-                string ovrL = p.GetProperty("OVERL").Value.Replace("'", "\"");
-                string ovrW = p.GetProperty("OVERW").Value.Replace("'", "\"");
+
+                double finL = 0.0f;
+                parse(p.GetProperty("LENGTH").ResValue, out finL);
+
+                double finW = 0.0f;
+                parse(p.GetProperty("WIDTH").ResValue, out finW);
+
+                double thkn = 0.0f;
+                parse(p.GetProperty("THICKNESS").ResValue, out thkn);
+
+                double ovrL = 0.0f;
+                parse(p.GetProperty("OVERL").Value, out ovrL);
+
+                double ovrW = 0.0f;
+                parse(p.GetProperty("OVERW").Value, out ovrW);
+
                 string cnc1 = p.GetProperty("CNC1").Value.Replace("'", "\"");
                 string cnc2 = p.GetProperty("CNC2").Value.Replace("'", "\"");
                 string blnk = p.GetProperty("BLANK QTY").Value.Replace("'", "\"");
                 string cmnt = p.GetProperty("COMMENT").Value.Replace("'", "\"");
                 string updt = p.GetProperty("UPDATE CNC").ID.Replace("'", "\"");
 
-                string Op1 = p.GetProperty("OP1ID").ID.Replace("'", "\"");
-                string Op2 = p.GetProperty("OP2ID").ID.Replace("'", "\"");
-                string Op3 = p.GetProperty("OP3ID").ID.Replace("'", "\"");
-                string Op4 = p.GetProperty("OP4ID").ID.Replace("'", "\"");
-                string Op5 = p.GetProperty("OP5ID").ID.Replace("'", "\"");
+
+                int Op1 = 0;
+                parse(p.GetProperty("OP1ID").ID, out Op1);
+                int Op2 = 0;
+                parse(p.GetProperty("OP2ID").ID, out Op1);
+                int Op3 = 0;
+                parse(p.GetProperty("OP3ID").ID, out Op1);
+                int Op4 = 0;
+                parse(p.GetProperty("OP4ID").ID, out Op1);
+                int Op5 = 0;
+                parse(p.GetProperty("OP5ID").ID, out Op1);
 
                 string SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{0}', FIN_L = {1}, FIN_W = {2}, THICKNESS = {3}, CNC1 = '{4}', CNC2 = '{5}', " +
                     "BLANKQTY = {6}, OVER_L = {7}, OVER_W = {8}, OP1ID = {9}, OP2ID = {10}, OP3ID = {11}, OP4ID = {12}, OP5ID = {13}, COMMENT = '{14}', " +
@@ -725,6 +808,54 @@ namespace Redbrick_Addin
             return string.Empty;
         }
 
+        private DataSet _states;
+
+        public DataSet States
+        {
+            get
+            {
+                if (_states != null && _states.Tables[0].Rows.Count > 0)
+                {
+                    return _states;
+                }
+                else
+                {
+                    _states = GetStates();
+                    return _states;
+                }
+            }
+
+            private set
+            {
+                _states = value;
+            }
+        }
+
+        private DataSet _customers;
+
+        public DataSet Customers 
+        {
+            get
+            {
+                if (_customers != null && _customers.Tables[0].Rows.Count > 0)
+                {
+                    return _customers;
+                }
+                else
+                {
+                    if (Properties.Settings.Default.OnlyCurrentCustomers)
+                        _customers = GetCustomers(true);
+                    else
+                        _customers = GetCustomers();
+                    return _customers;
+                }
+            }
+
+            private set
+            {
+                _customers = value;
+            }
+        }
         private DataSet _opTypes;
 
         public DataSet OpTypes

@@ -17,9 +17,6 @@ namespace Redbrick_Addin
         {
             this.PropertySet = prop;
             InitializeComponent();
-
-            for (int i = 100; i < 106; i++)
-                this.cbRev.Items.Add(i.ToString());
         }
 
         public enum WhereUsedRes
@@ -41,40 +38,46 @@ namespace Redbrick_Addin
 
         public void Update(ref SwProperties prop)
         {
-            this.PropertySet = prop;
-            this.cbCutlist.DisplayMember = "PARTNUM";
-            this.cbCutlist.ValueMember = "CLID";
+            PropertySet = prop;
             DataSet ds = prop.cutlistData.GetWherePartUsed(PropertySet.PartName);
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                this.cbCutlist.DataSource = ds.Tables[(int)WhereUsedRes.CLID];
-                int idx = GetIndex(Properties.Settings.Default.CurrentCutlist);
+            cbCutlist.DataSource = ds.Tables[(int)WhereUsedRes.CLID];
+            cbCutlist.DisplayMember = "PARTNUM";
+            cbCutlist.ValueMember = "CLID";
 
-                if (idx < this.cbCutlist.Items.Count)
-                    this.cbCutlist.SelectedIndex = idx;
+            cbCustomer.DataSource = prop.cutlistData.Customers.Tables[0];
+            cbCustomer.ValueMember = "CUSTID";
+            cbCustomer.DisplayMember = "CUSTOMER";
+
+            for (int i = 100; i < 106; i++)
+                this.cbRev.Items.Add(i.ToString());
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {          
+                cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
+
                 DataRowView drv = (this.cbCutlist.SelectedItem as DataRowView);
-                this.tbDescription.Text = drv[(int)WhereUsedRes.DESCR].ToString();
-                this.tbL.Text = drv[(int)WhereUsedRes.LENGTH].ToString();
-                this.tbW.Text = drv[(int)WhereUsedRes.WIDTH].ToString();
-                this.tbH.Text = drv[(int)WhereUsedRes.HEIGHT].ToString();
-                this.tbRef.Text = drv[(int)WhereUsedRes.DRAWING].ToString();
-                this.dateTimePicker1.Text = drv[(int)WhereUsedRes.CDATE].ToString();
-                this.cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
-                this.tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
+                tbDescription.Text = drv[(int)WhereUsedRes.DESCR].ToString();
+                tbL.Text = drv[(int)WhereUsedRes.LENGTH].ToString();
+                tbW.Text = drv[(int)WhereUsedRes.WIDTH].ToString();
+                tbH.Text = drv[(int)WhereUsedRes.HEIGHT].ToString();
+                tbRef.Text = drv[(int)WhereUsedRes.DRAWING].ToString();
+                dateTimePicker1.Text = drv[(int)WhereUsedRes.CDATE].ToString();
+                cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
+                tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
                 prop.CutlistQuantity = drv[(int)WhereUsedRes.QTY].ToString();
                 prop.CutlistID = drv[(int)WhereUsedRes.CLID].ToString();
+
+                cbCustomer.SelectedValue = int.Parse(drv[(int)WhereUsedRes.CUSTID].ToString());
 
                 if (prop.cutlistData.ReturnHash(prop) == prop.Hash)
                 {
                     prop.Primary = true;
-                    this.btnOriginal.Enabled = false;
-                    //this.btnOriginal.BackColor = System.Drawing.SystemColors.Control;
+                    btnOriginal.Enabled = false;
                 }
                 else
                 {
                     prop.Primary = false;
-                    this.btnOriginal.Enabled = true;
-                    //this.btnOriginal.BackColor = System.Drawing.Color.Red;
+                    btnOriginal.Enabled = true;
                 }
             }
             else
@@ -95,15 +98,15 @@ namespace Redbrick_Addin
             }
         }
 
-        private int GetIndex(int clID)
+        private int GetIndex(int ID, ComboBox c)
         {
             int idx = 0;
             int tp = 0;
-            foreach (DataRowView item in this.cbCutlist.Items)
+            foreach (DataRowView item in c.Items)
             {
                 if (int.TryParse(item[0].ToString(), out tp))
                 {
-                    if (tp == clID)
+                    if (tp == ID)
                     {
                         return idx;
                     }   
@@ -141,7 +144,8 @@ namespace Redbrick_Addin
 
         private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            Properties.Settings.Default.CurrentCutlist = int.Parse((cbCutlist.SelectedItem as DataRowView)[0].ToString());
+            Properties.Settings.Default.Save();
         }
 
         private void btnOriginal_Click(object sender, EventArgs e)
@@ -151,6 +155,7 @@ namespace Redbrick_Addin
             {   
                 //success
                 PropertySet.Primary = true;
+                btnOriginal.Enabled = false;
             }
             else if (affrow < 1)
             {
@@ -162,7 +167,7 @@ namespace Redbrick_Addin
                 {
                     this.PropertySet.cutlistData.InsertIntoCutlist(this.PropertySet);
                 }
-                this.btnOriginal.Enabled = false;
+                btnOriginal.Enabled = false;
             }
             else
             {
@@ -172,7 +177,7 @@ namespace Redbrick_Addin
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            this.PropertySet.cutlistData.InsertIntoCutlist(this.PropertySet);
+            PropertySet.cutlistData.InsertIntoCutlist(PropertySet);
         }
     }
 }

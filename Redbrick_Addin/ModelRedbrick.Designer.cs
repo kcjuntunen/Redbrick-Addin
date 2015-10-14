@@ -57,8 +57,8 @@ namespace Redbrick_Addin
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 350F));
-            this.tlpMain.Size = new System.Drawing.Size(258, 1598);
+            this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 450F));
+            this.tlpMain.Size = new System.Drawing.Size(139, 1690);
             this.tlpMain.TabIndex = 0;
             // 
             // gbMachProp
@@ -68,7 +68,7 @@ namespace Redbrick_Addin
             this.gbMachProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbMachProp.Location = new System.Drawing.Point(3, 653);
             this.gbMachProp.Name = "gbMachProp";
-            this.gbMachProp.Size = new System.Drawing.Size(252, 194);
+            this.gbMachProp.Size = new System.Drawing.Size(133, 194);
             this.gbMachProp.TabIndex = 2;
             this.gbMachProp.TabStop = false;
             this.gbMachProp.Text = "Machine Properties";
@@ -80,7 +80,7 @@ namespace Redbrick_Addin
             this.gbGlobProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbGlobProp.Location = new System.Drawing.Point(3, 283);
             this.gbGlobProp.Name = "gbGlobProp";
-            this.gbGlobProp.Size = new System.Drawing.Size(252, 364);
+            this.gbGlobProp.Size = new System.Drawing.Size(133, 364);
             this.gbGlobProp.TabIndex = 1;
             this.gbGlobProp.TabStop = false;
             this.gbGlobProp.Text = "Global Properties";
@@ -91,7 +91,7 @@ namespace Redbrick_Addin
             this.gbSpecProp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbSpecProp.Location = new System.Drawing.Point(3, 3);
             this.gbSpecProp.Name = "gbSpecProp";
-            this.gbSpecProp.Size = new System.Drawing.Size(252, 274);
+            this.gbSpecProp.Size = new System.Drawing.Size(133, 274);
             this.gbSpecProp.TabIndex = 0;
             this.gbSpecProp.TabStop = false;
             this.gbSpecProp.Text = "Configuration Specific";
@@ -104,7 +104,7 @@ namespace Redbrick_Addin
             this.gbOp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbOp.Location = new System.Drawing.Point(3, 853);
             this.gbOp.Name = "gbOp";
-            this.gbOp.Size = new System.Drawing.Size(252, 344);
+            this.gbOp.Size = new System.Drawing.Size(133, 344);
             this.gbOp.TabIndex = 3;
             this.gbOp.TabStop = false;
             this.gbOp.Text = "Ops";
@@ -119,7 +119,7 @@ namespace Redbrick_Addin
             this.tlp1.RowCount = 2;
             this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-            this.tlp1.Size = new System.Drawing.Size(246, 325);
+            this.tlp1.Size = new System.Drawing.Size(127, 325);
             this.tlp1.TabIndex = 0;
             // 
             // gbCutlist
@@ -127,7 +127,7 @@ namespace Redbrick_Addin
             this.gbCutlist.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbCutlist.Location = new System.Drawing.Point(3, 1203);
             this.gbCutlist.Name = "gbCutlist";
-            this.gbCutlist.Size = new System.Drawing.Size(252, 392);
+            this.gbCutlist.Size = new System.Drawing.Size(133, 484);
             this.gbCutlist.TabIndex = 4;
             this.gbCutlist.TabStop = false;
             this.gbCutlist.Text = "Cutlist";
@@ -139,7 +139,7 @@ namespace Redbrick_Addin
             this.AutoScroll = true;
             this.Controls.Add(this.tlpMain);
             this.Name = "ModelRedbrick";
-            this.Size = new System.Drawing.Size(291, 760);
+            this.Size = new System.Drawing.Size(220, 1721);
             this.Load += new System.EventHandler(this.ModelRedbrick_Load);
             this.tlpMain.ResumeLayout(false);
             this.tlpMain.PerformLayout();

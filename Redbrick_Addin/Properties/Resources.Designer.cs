@@ -89,7 +89,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you wish to save your changes?.
+        ///   Looks up a localized string similar to Do you wish to save your property changes?.
         /// </summary>
         internal static string MaybeSave {
             get {

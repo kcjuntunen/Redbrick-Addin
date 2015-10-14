@@ -246,5 +246,17 @@ namespace Redbrick_Addin.Properties {
                 this["Testing"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OnlyCurrentCustomers {
+            get {
+                return ((bool)(this["OnlyCurrentCustomers"]));
+            }
+            set {
+                this["OnlyCurrentCustomers"] = value;
+            }
+        }
     }
 }

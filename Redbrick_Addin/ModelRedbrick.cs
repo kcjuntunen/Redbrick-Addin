@@ -67,7 +67,9 @@ namespace Redbrick_Addin
             tlp1.Controls.Add(ds);
             tlp1.Controls.Add(op);
             gbCutlist.Controls.Add(ch);
-            tlpMain.ResumeLayout(true);
+            //tlpMain.ResumeLayout(true);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         public void Update(ref SwProperties p)
