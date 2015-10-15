@@ -171,6 +171,10 @@ namespace Redbrick_Addin {
                         if (this.Global)
                             if (Name.ToUpper().StartsWith("OP") && !Name.ToUpper().EndsWith("ID"))
                                 res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
+                            else if (Name.ToUpper().EndsWith("ID"))
+                                res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoNumber, ID, (int)ao);
+                            else if (Name.ToUpper().Contains("UPDATE"))
+                                res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, (ID == "-1" ? "Yes" : "N") , (int)ao);
                             else
                                 res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                         else
