@@ -14,6 +14,9 @@ namespace Redbrick_Addin {
         public CutlistHandler(ref SwProperties prop) {
             this.PropertySet = prop;
             InitializeComponent();
+
+            for (int i = 100; i < 106; i++)
+                cbRev.Items.Add(i.ToString());
         }
 
         public enum WhereUsedRes {
@@ -43,25 +46,25 @@ namespace Redbrick_Addin {
             cbCustomer.ValueMember = "CUSTID";
             cbCustomer.DisplayMember = "CUSTOMER";
 
-            for (int i = 100; i < 106; i++)
-                this.cbRev.Items.Add(i.ToString());
-
             if (ds.Tables[0].Rows.Count > 0) {
-                cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
+                if (cbCutlist.Items.Contains(Properties.Settings.Default.CurrentCutlist))
+                    cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
 
-                DataRowView drv = (this.cbCutlist.SelectedItem as DataRowView);
-                tbDescription.Text = drv[(int)WhereUsedRes.DESCR].ToString();
-                tbL.Text = drv[(int)WhereUsedRes.LENGTH].ToString();
-                tbW.Text = drv[(int)WhereUsedRes.WIDTH].ToString();
-                tbH.Text = drv[(int)WhereUsedRes.HEIGHT].ToString();
-                tbRef.Text = drv[(int)WhereUsedRes.DRAWING].ToString();
-                dateTimePicker1.Text = drv[(int)WhereUsedRes.CDATE].ToString();
-                cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
-                tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
-                prop.CutlistQuantity = drv[(int)WhereUsedRes.QTY].ToString();
-                prop.CutlistID = drv[(int)WhereUsedRes.CLID].ToString();
+                if (cbCutlist.SelectedValue != null) {
+                    DataRowView drv = (this.cbCutlist.SelectedItem as DataRowView);
+                    tbDescription.Text = drv[(int)WhereUsedRes.DESCR].ToString();
+                    tbL.Text = drv[(int)WhereUsedRes.LENGTH].ToString();
+                    tbW.Text = drv[(int)WhereUsedRes.WIDTH].ToString();
+                    tbH.Text = drv[(int)WhereUsedRes.HEIGHT].ToString();
+                    tbRef.Text = drv[(int)WhereUsedRes.DRAWING].ToString();
+                    dateTimePicker1.Text = drv[(int)WhereUsedRes.CDATE].ToString();
+                    cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
+                    tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
+                    prop.CutlistQuantity = drv[(int)WhereUsedRes.QTY].ToString();
+                    prop.CutlistID = drv[(int)WhereUsedRes.CLID].ToString();
 
-                cbCustomer.SelectedValue = int.Parse(drv[(int)WhereUsedRes.CUSTID].ToString());
+                    cbCustomer.SelectedValue = int.Parse(drv[(int)WhereUsedRes.CUSTID].ToString());
+                }
 
                 if (prop.cutlistData.ReturnHash(prop) == prop.Hash) {
                     prop.Primary = true;
@@ -121,8 +124,6 @@ namespace Redbrick_Addin {
         }
 
         private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e) {
-            Properties.Settings.Default.CurrentCutlist = int.Parse((cbCutlist.SelectedItem as DataRowView)[0].ToString());
-            Properties.Settings.Default.Save();
         }
 
         private void btnOriginal_Click(object sender, EventArgs e) {
@@ -148,5 +149,8 @@ namespace Redbrick_Addin {
         private void btnInsert_Click(object sender, EventArgs e) {
             PropertySet.cutlistData.InsertIntoCutlist(PropertySet);
         }
+
+        public System.Windows.Forms.ComboBox CutlistComboBox { get { return cbCutlist; } }
+        public System.Windows.Forms.ComboBox RevComboBox { get { return cbRev; } }
     }
 }
