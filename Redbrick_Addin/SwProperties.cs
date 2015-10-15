@@ -99,14 +99,25 @@ namespace Redbrick_Addin
         /// <returns>Returns the ID of an OpType.</returns>
         public int ParseDept(ModelDoc2 md)
         {
+            const string propName = "DEPARTMENT";
+            const string newPropName = "DEPT";
+
+            int res;
+            int opt = 1;
+            bool useCached = false;
+            // If we can't find the prop we want, let's just presume a wood part.
+            string val = "WOOD";
+            string resVal = "WOOD";
+            bool wRes = false;
+            int tp = 0;
+            string resName = "WOOD";
+
             CustomPropertyManager g = md.Extension.get_CustomPropertyManager(string.Empty);
             Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
             CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
 
             string[] sa = g.GetNames();
             List<string> ss = new List<string>();
-            const string propName = "DEPARTMENT";
-            const string newPropName = "DEPT";
 
             // Noooo! Null stuff is trouble.
             if (sa != null)
@@ -117,17 +128,11 @@ namespace Redbrick_Addin
             if (sa != null)
                 ss.AddRange(sa);
 
-            int res;
-            int opt = 1;
-            bool useCached = false;
-            // If we can't find the prop we want, let's just presume a wood part.
-            string val = "WOOD";
-            string resVal = "WOOD";
-            bool wRes = false;
-
             SwProperty pOld = new SwProperty();
             SwProperty pNew = new SwProperty();
+            pOld.Type = swCustomInfoType_e.swCustomInfoText;
             pOld.Global = true;
+            pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
             pNew.Global = true;
             foreach (string n in ss)
             {
@@ -135,11 +140,10 @@ namespace Redbrick_Addin
                 {   
                     case propName:
                         // old dept field
-                        res = g.Get5(propName, useCached, out val, out resVal, out wRes);
+                        if (g.Get5(propName, useCached, out val, out resVal, out wRes) == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent)
+                            s.Get5(propName, useCached, out val, out resVal, out wRes);
                         pOld.Rename(propName);
                         pNew.Rename(newPropName);
-                        int tp = 0;
-                        string resName = "WOOD";
 
                         if (int.TryParse(val, out tp))
                         {
@@ -158,12 +162,11 @@ namespace Redbrick_Addin
                         pNew.ID = pOld.ID;
                         pNew.Value = pNew.ID;
                         pNew.ResValue = resVal;
-                        Add(pOld);
-                        Add(pNew);
                         break;
                     case newPropName:
                         // new dept field
-                        res = g.Get5(newPropName, useCached, out val, out resVal, out wRes);
+                        if (g.Get5(propName, useCached, out val, out resVal, out wRes) == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent)
+                            s.Get5(propName, useCached, out val, out resVal, out wRes);
                         pOld.Rename(propName);
                         pNew.Rename(newPropName);
                         tp = 0;
@@ -172,18 +175,24 @@ namespace Redbrick_Addin
                             resName = cutlistData.GetOpTypeNameByID(tp);
                         opt = tp;
 
-                        
+                        pNew.Value = val;
+                        pNew.ResValue = resVal;
+
                         pOld.ID = pNew.ID = val;
                         pOld.Descr = pNew.Descr = resName;
                         pOld.ResValue = pNew.ResValue = resName;
-                        Add(pOld);
-                        Add(pNew);
                         break;
                     default:
                         // ignore
                         break;
                 }
             }
+            if (!Contains(pOld))
+                Add(pOld);
+
+            if (!Contains(pNew))
+                Add(pNew);
+
             return opt;
         }
         
