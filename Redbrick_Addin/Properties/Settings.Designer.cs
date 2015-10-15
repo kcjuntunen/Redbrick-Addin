@@ -270,5 +270,17 @@ namespace Redbrick_Addin.Properties {
                 this["LastLegacyECR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CurrentRev {
+            get {
+                return ((int)(this["CurrentRev"]));
+            }
+            set {
+                this["CurrentRev"] = value;
+            }
+        }
     }
 }

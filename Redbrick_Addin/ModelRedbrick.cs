@@ -69,6 +69,11 @@ namespace Redbrick_Addin {
         }
 
         public void Update(ref SwProperties p) {
+            if (ch.CutlistComboBox.SelectedItem != null && ch.RevComboBox.Text != string.Empty) {
+                Properties.Settings.Default.CurrentCutlist = int.Parse((ch.CutlistComboBox.SelectedItem as DataRowView)[0].ToString());
+                Properties.Settings.Default.CurrentRev = int.Parse(ch.RevComboBox.Text);
+                Properties.Settings.Default.Save();
+            }
             TearDownDeptSelectEvent();
             // Order matters here. The first thing SwProperties does informs what ds
             // does. Ds informs these other guys.
@@ -121,7 +126,13 @@ namespace Redbrick_Addin {
         }
 
         public bool IsDirty {
-            get { return dirtTracker.IsDirty; }
+            get 
+            {
+                if (dirtTracker != null)
+                    return dirtTracker.IsDirty;
+                else
+                    return false;
+            }
             set { dirtTracker.IsDirty = value; }
         }
 

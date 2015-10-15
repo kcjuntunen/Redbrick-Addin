@@ -115,5 +115,8 @@
     <Setting Name="LastLegacyECR" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8999</Value>
     </Setting>
+    <Setting Name="CurrentRev" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
