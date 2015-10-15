@@ -88,7 +88,7 @@ namespace Redbrick_Addin
         public void Write()
         {
             int tp = 0;
-            if (this.cbCustomer.SelectedItem != null)
+            if (this.cbCutlist.SelectedItem != null)
             {
                 if (int.TryParse((this.cbCutlist.SelectedItem as DataRowView)[0].ToString(), out tp))
                 {
