@@ -452,6 +452,27 @@ namespace Redbrick_Addin {
             return e;
         }
 
+        public eco GetLegacyECOData(string ecoNumber) {
+            eco e = new eco();
+            // ECR_LEGACY.ECRNum is a string field.
+            string SQL = string.Format("SELECT * FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)='{0}'));", ecoNumber.Replace("'", "''")); 
+
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+                using (OdbcDataReader dr = comm.ExecuteReader()) {
+                    if (dr.HasRows)	{
+                        e.EcrNumber = int.Parse(ecoNumber);
+                        e.Revision = ReturnString(dr, 5); // AffectedParts
+                        e.Changes = ReturnString(dr, 6); // Change
+                        string[] dateString = ReturnString(dr, 4).Split('/', ' '); // DateCompleted
+                        System.DateTime dt = new DateTime(int.Parse(dateString[2]), int.Parse(dateString[0]), int.Parse(dateString[1]));
+                        e.RequestedBy = ReturnString(dr, 7); // FinishedBy
+                        e.Status = "Finished on " + dt.ToShortDateString();
+                    }
+                }
+            }
+            return e;
+        }
+
         public DataSet GetAuthors() {
 #if DEBUG
             DateTime start;
