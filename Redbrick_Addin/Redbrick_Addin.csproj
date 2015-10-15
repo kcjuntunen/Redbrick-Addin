@@ -116,11 +116,15 @@
     <Compile Include="GeneralProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GeneralProperties.Designer.cs" />
+    <Compile Include="GeneralProperties.Designer.cs" >
+      <DependentUpon>GeneralProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="MachineProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MachineProperties.Designer.cs" />
+    <Compile Include="MachineProperties.Designer.cs"  >
+      <DependentUpon>MachineProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelRedbrick.cs">
       <SubType>UserControl</SubType>
     </Compile>
