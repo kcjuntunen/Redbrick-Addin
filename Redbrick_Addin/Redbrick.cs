@@ -11,17 +11,14 @@ using SolidWorksTools;
 
 using System.Runtime.InteropServices;
 
-namespace Redbrick_Addin
-{
-    public class Redbrick : ISwAddin
-    {
+namespace Redbrick_Addin {
+    public class Redbrick : ISwAddin {
         public SldWorks swApp;
         private int cookie;
         private TaskpaneView taskpaneView;
         private SWTaskPaneHost taskpaneHost;
 
-        public bool ConnectToSW(object ThisSW, int Cookie)
-        {
+        public bool ConnectToSW(object ThisSW, int Cookie) {
             swApp = (SldWorks)ThisSW;
             cookie = Cookie;
 
@@ -31,17 +28,14 @@ namespace Redbrick_Addin
             return true;
         }
 
-        public bool DisconnectFromSW()
-        {
+        public bool DisconnectFromSW() {
             this.UITearDown();
             return true;
         }
 
-        private void UISetup()
-        {
-            try
-            {
-                taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath + 
+        private void UISetup() {
+            try {
+                taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath +
                     Properties.Settings.Default.Icon
                     , Properties.Resources.Title);
 
@@ -54,18 +48,14 @@ namespace Redbrick_Addin
                 taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
 
                 taskpaneHost.Start();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
                 em.ShowDialog();
             }
         }
 
-        int taskpaneView_TaskPaneToolbarButtonClicked(int ButtonIndex)
-        {
-            switch (ButtonIndex)
-            {
+        int taskpaneView_TaskPaneToolbarButtonClicked(int ButtonIndex) {
+            switch (ButtonIndex) {
                 case 0:
                     this.taskpaneHost.Write();
                     break;
@@ -77,9 +67,8 @@ namespace Redbrick_Addin
             }
             return 1;
         }
-        
-        private void UITearDown()
-        {
+
+        private void UITearDown() {
             taskpaneHost = null;
             taskpaneView.DeleteView();
             Marshal.ReleaseComObject(taskpaneView);
@@ -87,12 +76,10 @@ namespace Redbrick_Addin
         }
 
         [ComRegisterFunction()]
-        private static void ComRegister(Type t)
-        {
+        private static void ComRegister(Type t) {
             string keyPath = String.Format(@"SOFTWARE\SolidWorks\AddIns\{0:b}", t.GUID);
 
-            using (Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.LocalMachine.CreateSubKey(keyPath))
-            {
+            using (Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.LocalMachine.CreateSubKey(keyPath)) {
                 rk.SetValue(null, 1); // Load at startup
                 rk.SetValue("Title", "Redbrick");
                 rk.SetValue("Description", "Change properties the Amstore way.");
@@ -100,8 +87,7 @@ namespace Redbrick_Addin
         }
 
         [ComUnregisterFunction()]
-        private static void ComUnregister(Type t)
-        {
+        private static void ComUnregister(Type t) {
             string keyPath = String.Format(@"SOFTWARE\SolidWorks\AddIns\{0:b}", t.GUID);
             Microsoft.Win32.Registry.LocalMachine.DeleteSubKeyTree(keyPath);
         }

@@ -8,41 +8,34 @@ using System.Windows.Forms;
 
 using SolidWorks.Interop.swconst;
 
-namespace Redbrick_Addin
-{
-    public partial class MachineProperties : UserControl
-    {
+namespace Redbrick_Addin {
+    public partial class MachineProperties : UserControl {
         SwProperties propertySet;
-        public MachineProperties(ref SwProperties prop)
-        {
+        public MachineProperties(ref SwProperties prop) {
             propertySet = prop;
             InitializeComponent();
         }
 
-        public void Update(ref SwProperties p)
-        {
+        public void Update(ref SwProperties p) {
             propertySet = p;
             LinkControls();
             ToggleFields(this.propertySet.cutlistData.OpType);
         }
 
-        public void Update(ref SwProperties p, double l, double w)
-        {
+        public void Update(ref SwProperties p, double l, double w) {
             propertySet = p;
             LinkControls();
             ToggleFields(this.propertySet.cutlistData.OpType);
             CalculateBlankSize(l, w);
         }
 
-        private void CalculateBlankSize(double edgeL, double edgeW)
-        {
+        private void CalculateBlankSize(double edgeL, double edgeW) {
             double dVal = 0.0;
 
             double finLen = 0.0;
             double blankLen = 0.0;
 
-            if (propertySet.Contains("LENGTH"))
-            {
+            if (propertySet.Contains("LENGTH")) {
                 if (double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out finLen))
                     blankLen = finLen;
 
@@ -53,8 +46,7 @@ namespace Redbrick_Addin
             }
 
             blankLen = 0.0;
-            if (propertySet.Contains("WIDTH"))
-            {
+            if (propertySet.Contains("WIDTH")) {
                 if (double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out finLen))
                     blankLen = finLen;
 
@@ -66,8 +58,7 @@ namespace Redbrick_Addin
             }
         }
 
-        private void LinkControls()
-        {
+        private void LinkControls() {
             tbCNC1.Text = string.Empty;
             tbCNC2.Text = string.Empty;
             tbOverL.Text = string.Empty;
@@ -88,23 +79,18 @@ namespace Redbrick_Addin
                 chUpdate.Checked = false;
         }
 
-        private void LinkControlToProperty(string property, Control c)
-        {
+        private void LinkControlToProperty(string property, Control c) {
             SwProperty p = this.propertySet.GetProperty(property);
-            if (propertySet.Contains(p))
-            {
+            if (propertySet.Contains(p)) {
                 p.Ctl = c;
                 c.Text = p.Value;
-            }
-            else
-            {
+            } else {
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
                 x.Ctl = c;
             }
         }
 
-        public void ToggleFields(int opType)
-        {
+        public void ToggleFields(int opType) {
             bool wood = (opType != 2);
             tbOverL.Enabled = wood;
             tbOverW.Enabled = wood;
@@ -115,77 +101,64 @@ namespace Redbrick_Addin
             label6.Enabled = wood;
         }
 
-        public TextBox GetCNC1Box()
-        {
+        public TextBox GetCNC1Box() {
             return tbCNC1;
         }
 
-        public TextBox GetCNC2Box()
-        {
+        public TextBox GetCNC2Box() {
             return tbCNC2;
         }
 
-        public TextBox GetPartsPerBlankBox()
-        {
+        public TextBox GetPartsPerBlankBox() {
             return tbPPB;
         }
 
-        public TextBox GetOverLBox()
-        {
+        public TextBox GetOverLBox() {
             return tbOverL;
         }
 
-        public TextBox GetOverWBox()
-        {
+        public TextBox GetOverWBox() {
             return tbOverW;
         }
 
-        public TextBox GetBlankLBox()
-        {
+        public TextBox GetBlankLBox() {
             return tbBlankL;
         }
 
-        public TextBox GetBlankWBox()
-        {
+        public TextBox GetBlankWBox() {
             return tbBlankW;
         }
 
         private double _overL;
 
-        public double OverL
-        {
+        public double OverL {
             get { return _overL; }
             set { _overL = value; }
         }
 
         private double _overW;
 
-        public double OverW
-        {
+        public double OverW {
             get { return _overW; }
             set { _overW = value; }
         }
-	
-        private void tbOverL_TextChanged(object sender, EventArgs e)
-        {
+
+        private void tbOverL_TextChanged(object sender, EventArgs e) {
             tbOverL.Text = string.Format("{0:0.000}", tbOverL.Text);
         }
 
-        private void tbOverW_TextChanged(object sender, EventArgs e)
-        {
+        private void tbOverW_TextChanged(object sender, EventArgs e) {
             tbOverW.Text = string.Format("{0:0.000}", tbOverW.Text);
         }
 
-        private void tbOverL_Validated(object sender, EventArgs e)
-        {
+        private void tbOverL_Validated(object sender, EventArgs e) {
             string tVal = tbOverL.Text;
             double dVal = 0.0;
             if (double.TryParse(tVal, out dVal))
                 _overL = dVal;
         }
 
-        private void tbOverW_Validated(object sender, EventArgs e)
-        {
+        private void tbOverW_Validated(object sender, EventArgs e) {
             string tVal = tbOverW.Text;
             double dVal = 0.0;
             if (double.TryParse(tVal, out dVal))

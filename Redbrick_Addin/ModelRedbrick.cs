@@ -12,10 +12,8 @@ using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
 using SolidWorksTools;
 
-namespace Redbrick_Addin
-{
-    public partial class ModelRedbrick : UserControl
-    {
+namespace Redbrick_Addin {
+    public partial class ModelRedbrick : UserControl {
         private DepartmentSelector ds;
         private ConfigurationSpecific cs;
         private GeneralProperties gp;
@@ -28,8 +26,7 @@ namespace Redbrick_Addin
         protected SwProperties props;
         private DirtTracker dirtTracker;
 
-        public ModelRedbrick(ref SwProperties p)
-        {
+        public ModelRedbrick(ref SwProperties p) {
             props = p;
             _swApp = p.SwApp;
             InitializeComponent();                              // MS init
@@ -56,8 +53,7 @@ namespace Redbrick_Addin
             ch.Dock = d;
 
             // If anything's not docked, dock it.
-            foreach (Control item in this.tlpMain.Controls)
-            {
+            foreach (Control item in this.tlpMain.Controls) {
                 item.Dock = d;
             }
 
@@ -72,8 +68,7 @@ namespace Redbrick_Addin
             PerformLayout();
         }
 
-        public void Update(ref SwProperties p)
-        {
+        public void Update(ref SwProperties p) {
             TearDownDeptSelectEvent();
             // Order matters here. The first thing SwProperties does informs what ds
             // does. Ds informs these other guys.
@@ -90,25 +85,21 @@ namespace Redbrick_Addin
             dirtTracker = new DirtTracker(this);
         }
 
-        private void SetupDeptSelectEvent()
-        {
+        private void SetupDeptSelectEvent() {
             if (!deptEvents)
                 ds.Selected += ds_Selected;
         }
 
-        private void TearDownDeptSelectEvent()
-        {
+        private void TearDownDeptSelectEvent() {
             if (deptEvents)
-                ds.Selected -= ds_Selected; 
+                ds.Selected -= ds_Selected;
         }
 
-        void ds_Selected(object d, EventArgs e)
-        {
+        void ds_Selected(object d, EventArgs e) {
             op.Update(ref props);
         }
 
-        public void Write(ModelDoc2 doc)
-        {
+        public void Write(ModelDoc2 doc) {
             // OK, so the controls were linked on update. This reads whatever was
             // entered into the controls, then writes to SW.
             ReadControls();
@@ -124,21 +115,18 @@ namespace Redbrick_Addin
             //doc.Save3((int)op, ref err, ref wrn);
         }
 
-        private void ReadControls()
-        {
+        private void ReadControls() {
             props.CutlistID = this.ch.CutlistID;
             props.CutlistQuantity = this.ch.CutlistQty;
             props.ReadControls();
         }
 
-        public bool IsDirty 
-        {
+        public bool IsDirty {
             get { return dirtTracker.IsDirty; }
             set { dirtTracker.IsDirty = value; }
         }
 
-        protected SldWorks RequestSW()
-        {
+        protected SldWorks RequestSW() {
             if (OnRequestSW == null)
                 throw new Exception("No SW!");
 
@@ -149,8 +137,7 @@ namespace Redbrick_Addin
 
         protected SldWorks _swApp;
 
-        protected ModelDoc2 RequestDoc()
-        {
+        protected ModelDoc2 RequestDoc() {
             if (OnRequestDoc == null)
                 throw new Exception("No SW!");
 
@@ -159,38 +146,31 @@ namespace Redbrick_Addin
 
         public Func<ModelDoc2> OnRequestDoc;
 
-        public SldWorks SwApp
-        {
+        public SldWorks SwApp {
             get { return _swApp; }
             set { _swApp = value; }
         }
 
-        public DepartmentSelector aDepartmentSelector
-        {
+        public DepartmentSelector aDepartmentSelector {
             get { return ds; }
         }
-        public ConfigurationSpecific aConfigurationSpecific
-        {
-            get { return cs;  }
+        public ConfigurationSpecific aConfigurationSpecific {
+            get { return cs; }
         }
 
-        public GeneralProperties aGeneralProperties
-        {
+        public GeneralProperties aGeneralProperties {
             get { return gp; }
         }
 
-        public MachineProperties aMachineProperties
-        {
+        public MachineProperties aMachineProperties {
             get { return mp; }
         }
 
-        public Ops aOps
-        {
+        public Ops aOps {
             get { return op; }
         }
 
-        private void ModelRedbrick_Load(object sender, EventArgs e)
-        {
+        private void ModelRedbrick_Load(object sender, EventArgs e) {
 
         }
     }

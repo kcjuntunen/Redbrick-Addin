@@ -5,23 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Redbrick_Addin
-{
-    class DirtTracker
-    {
+namespace Redbrick_Addin {
+    class DirtTracker {
         private UserControl _uc;
 
-        public DirtTracker(UserControl uc)
-        {
+        public DirtTracker(UserControl uc) {
             this.IsDirty = false;
             this._uc = uc;
             AssignHandlers(this._uc.Controls);
         }
 
-        private void AssignHandlers(Control.ControlCollection cc)
-        {
-            foreach (Control c in cc)
-            {
+        private void AssignHandlers(Control.ControlCollection cc) {
+            foreach (Control c in cc) {
                 if ((c is TextBox) && (!c.Name.ToUpper().Contains("BLANK") || !c.Name.ToUpper().Contains("CUTLIST")))
                     (c as TextBox).TextChanged += new EventHandler(DirtTracker_TextChanged);
 
@@ -36,18 +31,15 @@ namespace Redbrick_Addin
             }
         }
 
-        private void DirtTracker_TextChanged(object sender, EventArgs e)
-        {
+        private void DirtTracker_TextChanged(object sender, EventArgs e) {
             this.IsDirty = true;
         }
 
-        private void DirtTracker_CheckChanged(object sender, EventArgs e)
-        {
+        private void DirtTracker_CheckChanged(object sender, EventArgs e) {
             this.IsDirty = true;
         }
 
-        private void DirtTracker_SelectionChanged(object sender, EventArgs e)
-        {
+        private void DirtTracker_SelectionChanged(object sender, EventArgs e) {
             this.IsDirty = true;
         }
 

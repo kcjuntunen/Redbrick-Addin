@@ -7,41 +7,33 @@ using System.Text;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.sldworks;
 
-namespace Redbrick_Addin
-{
-    public class DrawingRevs : ICollection<DrawingRev>
-    {
+namespace Redbrick_Addin {
+    public class DrawingRevs : ICollection<DrawingRev> {
         protected ArrayList _innerArray;
 
-        public DrawingRevs(SldWorks sw)
-        {
+        public DrawingRevs(SldWorks sw) {
             this.SwApp = sw;
             this._innerArray = new ArrayList(15);
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             string ret = string.Empty;
-            if (this._innerArray != null)
-            {
-                foreach (DrawingRev p in this._innerArray)
-                {
+            if (this._innerArray != null) {
+                foreach (DrawingRev p in this._innerArray) {
                     ret += p.ToString();
                 }
             }
-            return ret;   
+            return ret;
         }
 
-        public void Read()
-        {
+        public void Read() {
             ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
             CustomPropertyManager pm = md.Extension.get_CustomPropertyManager(string.Empty);
 
             int revLetterOffset = 64;
             int revLimit = Properties.Settings.Default.RevLimit;
 
-            for (int i = 1; i <= revLimit; i++)
-            {
+            for (int i = 1; i <= revLimit; i++) {
                 string r = "REVISION " + (char)(i + revLetterOffset);
                 string e = "ECO " + i.ToString();
                 string de = "DESCRIPTION " + i.ToString();
@@ -64,27 +56,22 @@ namespace Redbrick_Addin
                 lp.SwApp = this.SwApp;
                 dap.SwApp = this.SwApp;
 
-                if ((rp.Value != "NULL"))
-                {
+                if ((rp.Value != "NULL")) {
                     DrawingRev dr = new DrawingRev(rp, ep, dep, lp, dap);
-                    if (dr != null)
-                    {
+                    if (dr != null) {
                         this._innerArray.Add(dr);
                     }
-                }
-                else
+                } else
                     break;
             }
         }
 
-        public void ClearProps()
-        {
+        public void ClearProps() {
             ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
             CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
             int res;
 
-            for (int i = 1; i <= Properties.Settings.Default.RevLimit; i++)
-            {
+            for (int i = 1; i <= Properties.Settings.Default.RevLimit; i++) {
                 res = glP.Delete2("REVISION " + (char)(i + 65));
                 res = glP.Delete2("ECO " + i.ToString());
                 res = glP.Delete2("DESCRIPTION " + i.ToString());
@@ -93,13 +80,11 @@ namespace Redbrick_Addin
             }
         }
 
-        public void ClearProps(ModelDoc2 md)
-        {
+        public void ClearProps(ModelDoc2 md) {
             CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
             int res;
 
-            for (int i = 1; i <= Properties.Settings.Default.RevLimit; i++)
-            {
+            for (int i = 1; i <= Properties.Settings.Default.RevLimit; i++) {
                 res = glP.Delete2("REVISION " + (char)(i + 65));
                 res = glP.Delete2("ECO " + i.ToString());
                 res = glP.Delete2("DESCRIPTION " + i.ToString());
@@ -108,47 +93,38 @@ namespace Redbrick_Addin
             }
         }
 
-        public void Write()
-        {
+        public void Write() {
             this.ClearProps();
 
-            foreach (DrawingRev dr in this._innerArray)
-            {
+            foreach (DrawingRev dr in this._innerArray) {
                 dr.Write();
             }
         }
 
-        public void Write(ModelDoc2 md)
-        {
+        public void Write(ModelDoc2 md) {
             this.ClearProps(md);
 
-            foreach (DrawingRev dr in this._innerArray)
-            {
+            foreach (DrawingRev dr in this._innerArray) {
                 dr.Write(md);
             }
         }
 
-        public void Write(SldWorks sw)
-        {
+        public void Write(SldWorks sw) {
             this.ClearProps();
 
-            foreach (DrawingRev dr in this._innerArray)
-            {
+            foreach (DrawingRev dr in this._innerArray) {
                 dr.Write(sw);
             }
         }
 
-        public void ReadControls()
-        {
+        public void ReadControls() {
             DataTable dt = (DataTable)this.listBox.DataSource;
 
             this._innerArray.Clear();
             int count = 1;
 
-            foreach (System.Windows.Forms.DataGridViewRow dr in this.listBox.Rows)
-            {
-                if (dr.Cells[0].Value != null && dr.Cells[2].Value != null)
-                {
+            foreach (System.Windows.Forms.DataGridViewRow dr in this.listBox.Rows) {
+                if (dr.Cells[0].Value != null && dr.Cells[2].Value != null) {
                     SwProperty rev = new SwProperty("REVISION " + (char)(count + 64), swCustomInfoType_e.swCustomInfoText, dr.Cells[0].Value.ToString(), true);
                     SwProperty eco = new SwProperty("ECO " + count.ToString(), swCustomInfoType_e.swCustomInfoText, dr.Cells[1].Value.ToString(), true);
                     SwProperty des = new SwProperty("DESCRIPTION " + count.ToString(), swCustomInfoType_e.swCustomInfoText, dr.Cells[2].Value.ToString(), true);
@@ -156,33 +132,28 @@ namespace Redbrick_Addin
                     SwProperty dat = new SwProperty("DATE " + count.ToString(), swCustomInfoType_e.swCustomInfoDate, dr.Cells[4].Value.ToString(), true);
 
                     DrawingRev r = new DrawingRev(rev, eco, des, lis, dat);
-                    r.Del(this.SwApp); 
+                    r.Del(this.SwApp);
 
                     this._innerArray.Add(r);
 
-                    count++;   
+                    count++;
                 }
             }
         }
 
-        public void DelAll()
-        {
-            foreach (DrawingRev dr in this._innerArray)
-            {
+        public void DelAll() {
+            foreach (DrawingRev dr in this._innerArray) {
                 dr.Del();
             }
         }
 
-        public void DelAll(SldWorks sw)
-        {
-            foreach (DrawingRev dr in this._innerArray)
-            {
+        public void DelAll(SldWorks sw) {
+            foreach (DrawingRev dr in this._innerArray) {
                 dr.Del(sw);
             }
         }
 
-        private SwProperty AssignProperty(CustomPropertyManager pm, string name)
-        {
+        private SwProperty AssignProperty(CustomPropertyManager pm, string name) {
             int res;
             int success = (int)swCustomInfoGetResult_e.swCustomInfoGetResult_ResolvedValue;
             bool useCached = false;
@@ -193,18 +164,14 @@ namespace Redbrick_Addin
             SwProperty rp = new SwProperty();
             rp.SwApp = this.SwApp;
 
-            if (!InThere(pm, name))
-            {
+            if (!InThere(pm, name)) {
                 return rp;
-            }
-            else
-            {
+            } else {
             }
 
             res = pm.Get5(name, useCached, out valOut, out resValOut, out wasResolved);
 
-            if (res == success)
-            {
+            if (res == success) {
                 System.Diagnostics.Debug.WriteLine(string.Format("Found {0}.", name));
                 rp.Name = name;
                 rp.Value = valOut;
@@ -215,15 +182,11 @@ namespace Redbrick_Addin
             return rp;
         }
 
-        private bool InThere(CustomPropertyManager c, string name)
-        {
+        private bool InThere(CustomPropertyManager c, string name) {
             string[] ss = (string[])c.GetNames();
-            if (ss != null)
-            {
-                foreach (string p in ss)
-                {
-                    if (p == name)
-                    {
+            if (ss != null) {
+                foreach (string p in ss) {
+                    if (p == name) {
                         return true;
                     }
                 }
@@ -233,74 +196,57 @@ namespace Redbrick_Addin
 
         #region ICollection<SwProperty> Members
 
-        public void Add(DrawingRev item)
-        {
+        public void Add(DrawingRev item) {
             this._innerArray.Add(item);
         }
 
-        public void Clear()
-        {
+        public void Clear() {
             this._innerArray.Clear();
         }
 
-        public bool Contains(SwProperty item)
-        {
-            foreach (SwProperty p in this._innerArray)
-            {
-                if (item.Name == p.Name)
-                {
+        public bool Contains(SwProperty item) {
+            foreach (SwProperty p in this._innerArray) {
+                if (item.Name == p.Name) {
                     return true;
                 }
             }
             return false;
         }
 
-        public bool Contains(DrawingRev rev)
-        {
-            foreach (DrawingRev r in this._innerArray)
-            {
-                if (r.Revision.Name == rev.Revision.Name)
-                {
+        public bool Contains(DrawingRev rev) {
+            foreach (DrawingRev r in this._innerArray) {
+                if (r.Revision.Name == rev.Revision.Name) {
                     return true;
                 }
             }
             return false;
         }
 
-        public bool Contains(string name)
-        {
-            foreach (DrawingRev r in this._innerArray)
-            {
-                if (name == r.Revision.Name)
-                {
+        public bool Contains(string name) {
+            foreach (DrawingRev r in this._innerArray) {
+                if (name == r.Revision.Name) {
                     return true;
                 }
             }
             return false;
         }
 
-        public void CopyTo(DrawingRev[] array, int arrayIndex)
-        {
+        public void CopyTo(DrawingRev[] array, int arrayIndex) {
             this._innerArray.CopyTo(array, arrayIndex);
         }
 
-        public int Count
-        {
+        public int Count {
             get { return this._innerArray.Count; }
         }
 
-        public bool IsReadOnly
-        {
+        public bool IsReadOnly {
             get { return this._innerArray.IsReadOnly; }
         }
 
-        public bool Remove(DrawingRev rev)
-        {
+        public bool Remove(DrawingRev rev) {
             int count = 0;
-            foreach (DrawingRev r in this._innerArray)
-            {
-                if (r.Revision.Name == rev.Revision.Name)
-                {
+            foreach (DrawingRev r in this._innerArray) {
+                if (r.Revision.Name == rev.Revision.Name) {
                     this._innerArray.RemoveAt(count);
                     return true;
                 }
@@ -309,18 +255,14 @@ namespace Redbrick_Addin
             return false;
         }
 
-        public bool Remove(string name)
-        {
+        public bool Remove(string name) {
             int count = 0;
-            foreach (DrawingRev p in this._innerArray)
-            {
-                if (name == p.Revision.Name)
-                {
+            foreach (DrawingRev p in this._innerArray) {
+                if (name == p.Revision.Name) {
                     System.Diagnostics.Debug.Print("=>" + p.Revision.Name);
                     this._innerArray.RemoveAt(count);
                     return true;
-                }
-                else
+                } else
                     System.Diagnostics.Debug.Print(name + ": " + p.Revision.Name);
 
                 count++;
@@ -328,12 +270,9 @@ namespace Redbrick_Addin
             return false;
         }
 
-        public DrawingRev GetRev(string name)
-        {
-            foreach (DrawingRev r in this._innerArray)
-            {
-                if (r.Revision.Name == name)
-                {
+        public DrawingRev GetRev(string name) {
+            foreach (DrawingRev r in this._innerArray) {
+                if (r.Revision.Name == name) {
                     return r;
                 }
             }
@@ -344,8 +283,7 @@ namespace Redbrick_Addin
 
         #region IEnumerable<DrawingRev> Members
 
-        public IEnumerator<DrawingRev> GetEnumerator()
-        {
+        public IEnumerator<DrawingRev> GetEnumerator() {
             return (new List<DrawingRev>(this).GetEnumerator());
         }
 
@@ -353,35 +291,31 @@ namespace Redbrick_Addin
 
         #region IEnumerable Members
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() {
             return this._innerArray.GetEnumerator();
         }
 
         #endregion
 
-        
+
 
         private System.Windows.Forms.DataGridView _lb;
 
-        public System.Windows.Forms.DataGridView listBox
-        {
+        public System.Windows.Forms.DataGridView listBox {
             get { return _lb; }
             set { _lb = value; }
         }
 
         private System.Windows.Forms.TreeView _tv;
 
-        public System.Windows.Forms.TreeView treeView
-        {
+        public System.Windows.Forms.TreeView treeView {
             get { return _tv; }
             set { _tv = value; }
         }
 
         private SldWorks _swApp;
 
-        public SldWorks SwApp
-        {
+        public SldWorks SwApp {
             get { return _swApp; }
             set { _swApp = value; }
         }

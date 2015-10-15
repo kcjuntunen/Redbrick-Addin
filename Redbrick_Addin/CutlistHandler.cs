@@ -9,18 +9,14 @@ using System.Windows.Forms;
 
 using SolidWorks.Interop.swconst;
 
-namespace Redbrick_Addin
-{
-    public partial class CutlistHandler : UserControl
-    {
-        public CutlistHandler(ref SwProperties prop)
-        {
+namespace Redbrick_Addin {
+    public partial class CutlistHandler : UserControl {
+        public CutlistHandler(ref SwProperties prop) {
             this.PropertySet = prop;
             InitializeComponent();
         }
 
-        public enum WhereUsedRes
-        {
+        public enum WhereUsedRes {
             CLID,
             PARTNUM,
             REV,
@@ -36,8 +32,7 @@ namespace Redbrick_Addin
             QTY
         }
 
-        public void Update(ref SwProperties prop)
-        {
+        public void Update(ref SwProperties prop) {
             PropertySet = prop;
             DataSet ds = prop.cutlistData.GetWherePartUsed(PropertySet.PartName);
             cbCutlist.DataSource = ds.Tables[(int)WhereUsedRes.CLID];
@@ -51,8 +46,7 @@ namespace Redbrick_Addin
             for (int i = 100; i < 106; i++)
                 this.cbRev.Items.Add(i.ToString());
 
-            if (ds.Tables[0].Rows.Count > 0)
-            {          
+            if (ds.Tables[0].Rows.Count > 0) {
                 cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
 
                 DataRowView drv = (this.cbCutlist.SelectedItem as DataRowView);
@@ -69,47 +63,35 @@ namespace Redbrick_Addin
 
                 cbCustomer.SelectedValue = int.Parse(drv[(int)WhereUsedRes.CUSTID].ToString());
 
-                if (prop.cutlistData.ReturnHash(prop) == prop.Hash)
-                {
+                if (prop.cutlistData.ReturnHash(prop) == prop.Hash) {
                     prop.Primary = true;
                     btnOriginal.Enabled = false;
-                }
-                else
-                {
+                } else {
                     prop.Primary = false;
                     btnOriginal.Enabled = true;
                 }
-            }
-            else
-            {
+            } else {
             }
         }
 
-        public void Write()
-        {
+        public void Write() {
             int tp = 0;
-            if (this.cbCutlist.SelectedItem != null)
-            {
-                if (int.TryParse((this.cbCutlist.SelectedItem as DataRowView)[0].ToString(), out tp))
-                {
+            if (this.cbCutlist.SelectedItem != null) {
+                if (int.TryParse((this.cbCutlist.SelectedItem as DataRowView)[0].ToString(), out tp)) {
                     Properties.Settings.Default.CurrentCutlist = tp;
                     Properties.Settings.Default.Save();
-                }   
+                }
             }
         }
 
-        private int GetIndex(int ID, ComboBox c)
-        {
+        private int GetIndex(int ID, ComboBox c) {
             int idx = 0;
             int tp = 0;
-            foreach (DataRowView item in c.Items)
-            {
-                if (int.TryParse(item[0].ToString(), out tp))
-                {
-                    if (tp == ID)
-                    {
+            foreach (DataRowView item in c.Items) {
+                if (int.TryParse(item[0].ToString(), out tp)) {
+                    if (tp == ID) {
                         return idx;
-                    }   
+                    }
                 }
                 idx++;
             }
@@ -118,10 +100,8 @@ namespace Redbrick_Addin
 
         public SwProperties PropertySet { get; set; }
 
-        public string CutlistID 
-        {
-            get 
-            {
+        public string CutlistID {
+            get {
                 if (this.cbCutlist.SelectedItem != null)
                     return (this.cbCutlist.SelectedItem as DataRowView)[(int)WhereUsedRes.CLID].ToString();
                 else
@@ -130,10 +110,8 @@ namespace Redbrick_Addin
             set { CutlistID = value; }
         }
 
-        public string CutlistQty
-        {
-            get 
-            {
+        public string CutlistQty {
+            get {
                 if (tbQty.Text != string.Empty)
                     return this.tbQty.Text;
                 else
@@ -142,41 +120,32 @@ namespace Redbrick_Addin
             set { CutlistQty = value; }
         }
 
-        private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e) {
             Properties.Settings.Default.CurrentCutlist = int.Parse((cbCutlist.SelectedItem as DataRowView)[0].ToString());
             Properties.Settings.Default.Save();
         }
 
-        private void btnOriginal_Click(object sender, EventArgs e)
-        {
-            int affrow =this.PropertySet.cutlistData.MakeOriginal(this.PropertySet);
-            if (affrow == 1)
-            {   
+        private void btnOriginal_Click(object sender, EventArgs e) {
+            int affrow = this.PropertySet.cutlistData.MakeOriginal(this.PropertySet);
+            if (affrow == 1) {
                 //success
                 PropertySet.Primary = true;
                 btnOriginal.Enabled = false;
-            }
-            else if (affrow < 1)
-            {
+            } else if (affrow < 1) {
                 // Part didn't exist
                 int diaRes = this.PropertySet.SwApp.SendMsgToUser2("Insert " + this.PropertySet.PartName + " into Cutlist?",
                     (int)swMessageBoxIcon_e.swMbQuestion,
                     (int)swMessageBoxBtn_e.swMbYesNo);
-                if (diaRes == (int)swMessageBoxResult_e.swMbHitYes)
-                {
+                if (diaRes == (int)swMessageBoxResult_e.swMbHitYes) {
                     this.PropertySet.cutlistData.InsertIntoCutlist(this.PropertySet);
                 }
                 btnOriginal.Enabled = false;
-            }
-            else
-            {
+            } else {
                 // We've affected more than one row. Uh-oh.
             }
         }
 
-        private void btnInsert_Click(object sender, EventArgs e)
-        {
+        private void btnInsert_Click(object sender, EventArgs e) {
             PropertySet.cutlistData.InsertIntoCutlist(PropertySet);
         }
     }

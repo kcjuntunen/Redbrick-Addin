@@ -28,8 +28,7 @@ namespace Redbrick_Addin
         /// </summary>
         private void InitializeComponent()
         {
-            this.Location = Properties.Settings.Default.EditRevLocation;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditRev));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,19 +48,6 @@ namespace Redbrick_Addin
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditRev_FormClosing);
-            this.ResumeLayout(false);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditRev));
-            this.SuspendLayout();
-            // 
-            // EditRev
-            // 
-            //this.ClientSize = new System.Drawing.Size(292, 270);
-            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            //this.Name = "EditRev";
-            //this.ResumeLayout(false);
-
-	
             // 
             // tableLayoutPanel1
             // 
@@ -243,9 +229,12 @@ namespace Redbrick_Addin
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 90);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "EditRev";
-            this.Text = "EditRev";
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Location = global::Redbrick_Addin.Properties.Settings.Default.EditRevLocation;
+            this.Name = "EditRev";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "EditRev";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditRev_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();

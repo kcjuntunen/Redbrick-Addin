@@ -7,27 +7,22 @@ using System.Text;
 using System.Windows.Forms;
 using SolidWorks.Interop.swconst;
 
-namespace Redbrick_Addin
-{
-    public partial class GeneralProperties : UserControl
-    {
+namespace Redbrick_Addin {
+    public partial class GeneralProperties : UserControl {
         SwProperties propertySet;
 
-        public GeneralProperties(ref SwProperties prop)
-        {
+        public GeneralProperties(ref SwProperties prop) {
             this.propertySet = prop;
             InitializeComponent();
         }
 
-        public void Update(ref SwProperties p)
-        {
+        public void Update(ref SwProperties p) {
             propertySet = p;
             LinkControls();
             ToggleFields(this.propertySet.cutlistData.OpType);
         }
 
-        private void LinkControls()
-        {
+        private void LinkControls() {
             tbLength.Text = string.Empty;
             tbWidth.Text = string.Empty;
             tbThick.Text = string.Empty;
@@ -51,28 +46,22 @@ namespace Redbrick_Addin
             UpdateLnW();
         }
 
-        private void UpdateRes(SwProperty p, Control c)
-        {
+        private void UpdateRes(SwProperty p, Control c) {
             c.Text = string.Format("{0:N3}", p.ResValue);
         }
 
-        private void LinkControlToProperty(string property, Control c)
-        {
+        private void LinkControlToProperty(string property, Control c) {
             SwProperty p = propertySet.GetProperty(property);
-            if (propertySet.Contains(p))
-            {
+            if (propertySet.Contains(p)) {
                 p.Ctl = c;
                 c.Text = p.Value;
-            }
-            else
-            {
+            } else {
                 SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
                 x.Ctl = c;
             }
         }
 
-        private void UpdateLnW()
-        {
+        private void UpdateLnW() {
             string tVal;
             double dVal;
 
@@ -89,126 +78,106 @@ namespace Redbrick_Addin
                 _width = 0.0;
         }
 
-        public void ToggleFields(int opType)
-        {
+        public void ToggleFields(int opType) {
             bool wood = (opType != 2);
             labResWallThickness.Enabled = !wood;
             lWallThickness.Enabled = !wood;
             tbWallThick.Enabled = !wood;
         }
 
-        public TextBox GetDescriptionBox()
-        {
+        public TextBox GetDescriptionBox() {
             return tbDescription;
         }
 
-        public TextBox GetLengthBox()
-        {
+        public TextBox GetLengthBox() {
             return tbLength;
         }
 
-        public TextBox GetWidthBox()
-        {
+        public TextBox GetWidthBox() {
             return tbWidth;
         }
 
-        public TextBox GetThicknessBox()
-        {
+        public TextBox GetThicknessBox() {
             return tbThick;
         }
 
-        public TextBox GetWallThicknessBox()
-        {
+        public TextBox GetWallThicknessBox() {
             return tbWallThick;
         }
 
-        public TextBox GetCommentBox()
-        {
+        public TextBox GetCommentBox() {
             return tbComment;
         }
 
-        public void UpdateLengthRes(SwProperty p)
-        {
+        public void UpdateLengthRes(SwProperty p) {
             labResLength.Text = p.ResValue;
         }
 
-        public void UpdateWidthRes(SwProperty p)
-        {
+        public void UpdateWidthRes(SwProperty p) {
             labResWidth.Text = p.ResValue;
         }
 
-        public void UpdateThickRes(SwProperty p)
-        {
+        public void UpdateThickRes(SwProperty p) {
             labResThickness.Text = p.ResValue;
         }
 
-        public void UpdateWallThickRes(SwProperty p)
-        {
+        public void UpdateWallThickRes(SwProperty p) {
             if (p != null)
                 labResWallThickness.Text = p.ResValue;
         }
 
-        private void tbLength_Leave(object sender, EventArgs e)
-        {
+        private void tbLength_Leave(object sender, EventArgs e) {
             propertySet.GetProperty("LENGTH").Value = tbLength.Text;
             propertySet.GetProperty("LENGTH").Write();
-            propertySet.GetProperty("LENGTH").Get();
+            propertySet.GetProperty("LENGTH").Get(propertySet.modeldoc, propertySet.cutlistData);
             labResLength.Text = propertySet.GetProperty("LENGTH").ResValue;
         }
 
-        private void tbWidth_Leave(object sender, EventArgs e)
-        {
+        private void tbWidth_Leave(object sender, EventArgs e) {
             propertySet.GetProperty("WIDTH").Value = tbWidth.Text;
             propertySet.GetProperty("WIDTH").Write();
-            propertySet.GetProperty("WIDTH").Get();
+            propertySet.GetProperty("WIDTH").Get(propertySet.modeldoc, propertySet.cutlistData);
             labResWidth.Text = propertySet.GetProperty("WIDTH").ResValue;
         }
 
-        private void tbThick_Leave(object sender, EventArgs e)
-        {
+        private void tbThick_Leave(object sender, EventArgs e) {
             propertySet.GetProperty("THICKNESS").Value = tbThick.Text;
             propertySet.GetProperty("THICKNESS").Write();
-            propertySet.GetProperty("THICKNESS").Get();
+            propertySet.GetProperty("THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
             labResThickness.Text = propertySet.GetProperty("THICKNESS").ResValue;
         }
 
-        private void tbWallThick_Leave(object sender, EventArgs e)
-        {
+        private void tbWallThick_Leave(object sender, EventArgs e) {
             propertySet.GetProperty("WALL THICKNESS").Value = tbWallThick.Text;
             propertySet.GetProperty("WALL THICKNESS").Write();
-            propertySet.GetProperty("WALL THICKNESS").Get();
+            propertySet.GetProperty("WALL THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
             labResWallThickness.Text = propertySet.GetProperty("WALL THICKNESS").ResValue;
         }
 
         private double _length;
 
-        public double PartLength
-        {
+        public double PartLength {
             get { return _length; }
             set { _length = value; }
         }
 
         private double _width;
 
-        public double PartWidth
-        {
+        public double PartWidth {
             get { return _width; }
             set { _width = value; }
         }
 
-        private void labResLength_TextChanged(object sender, EventArgs e)
-        {
-            this.UpdateLnW();
+        private void labResLength_TextChanged(object sender, EventArgs e) {
+            UpdateLnW();
         }
 
-        private void labResWidth_TextChanged(object sender, EventArgs e)
-        {
-            this.UpdateLnW();
+        private void labResWidth_TextChanged(object sender, EventArgs e) {
+            UpdateLnW();
         }
 
-        private void bCopy_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.Clipboard.SetText(this.tbDescription.Text);
+        private void bCopy_Click(object sender, EventArgs e) {
+            System.Windows.Forms.Clipboard.SetText(tbDescription.Text);
         }
     }
 }

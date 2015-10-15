@@ -10,15 +10,12 @@ using System.Windows.Forms;
 
 using SolidWorks.Interop.swconst;
 
-namespace Redbrick_Addin
-{
-    public partial class ConfigurationSpecific : UserControl
-    {
+namespace Redbrick_Addin {
+    public partial class ConfigurationSpecific : UserControl {
         private CutlistData cd;
         private SwProperties propertySet;
 
-        public ConfigurationSpecific(ref SwProperties prop)
-        {
+        public ConfigurationSpecific(ref SwProperties prop) {
             propertySet = prop;
             cd = prop.cutlistData;
             _edgeDiffL = 0.0;
@@ -29,12 +26,11 @@ namespace Redbrick_Addin
             ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
             foreach (ComboBox c in cc)
                 fillEdg((object)c);
-            
+
             LinkControls();
         }
 
-        public void Update(ref SwProperties prop)
-        {
+        public void Update(ref SwProperties prop) {
             propertySet = prop;
             configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
             cd = prop.cutlistData;
@@ -46,16 +42,14 @@ namespace Redbrick_Addin
             UpdateDiffW(this.cbEl, this.cbEr);
         }
 
-        private void LinkControls()
-        {
+        private void LinkControls() {
             propertySet.LinkControlToProperty("MATID", false, this.cbMat);
             propertySet.LinkControlToProperty("EFID", false, this.cbEf);
             propertySet.LinkControlToProperty("EBID", false, this.cbEb);
             propertySet.LinkControlToProperty("ELID", false, this.cbEl);
             propertySet.LinkControlToProperty("ERID", false, this.cbEr);
 
-            if (Properties.Settings.Default.Testing)
-            {
+            if (Properties.Settings.Default.Testing) {
                 propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
                 propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
                 propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
@@ -64,13 +58,10 @@ namespace Redbrick_Addin
             }
         }
 
-        private int GetIndex(DataTable dt, string val)
-        {
-            if (dt != null)
-            {
+        private int GetIndex(DataTable dt, string val) {
+            if (dt != null) {
                 int count = 0;
-                foreach (DataRow dr in dt.Rows)
-                {
+                foreach (DataRow dr in dt.Rows) {
                     count++;
                     if (dr.ItemArray[0].ToString().Trim().ToUpper() == val.Trim().ToUpper())
                         return count;
@@ -79,51 +70,37 @@ namespace Redbrick_Addin
             return -1;
         }
 
-        private void fillComboBoxes()
-        {
+        private void fillComboBoxes() {
             Thread t = new Thread(new ThreadStart(fillMat));
-            try
-            {
+            try {
                 t.Start();
-            }
-            catch (ThreadStateException tse)
-            {
+            } catch (ThreadStateException tse) {
                 System.Windows.Forms.MessageBox.Show(tse.Message);
-            }
-            catch (OutOfMemoryException oome)
-            {
+            } catch (OutOfMemoryException oome) {
                 System.Windows.Forms.MessageBox.Show(oome.Message);
             }
 
             ComboBox[] cc = { cbEf, cbEb, cbEl, cbEr };
-            foreach (ComboBox c in cc)
-            {
+            foreach (ComboBox c in cc) {
                 t = new Thread(new ParameterizedThreadStart(fillEdg));
-                try
-                {
+                try {
                     t.Start((object)c);
-                }
-                catch (ThreadStateException tse)
-                {
+                } catch (ThreadStateException tse) {
                     System.Windows.Forms.MessageBox.Show(tse.Message);
-                }
-                catch (OutOfMemoryException oome)
-                {
+                } catch (OutOfMemoryException oome) {
                     System.Windows.Forms.MessageBox.Show(oome.Message);
                 }
             }
         }
 
-        private void fillMat()
-        {
+        private void fillMat() {
             cbMat.DataSource = cd.Materials.Tables[0];
             cbMat.DisplayMember = "DESCR";
             cbMat.ValueMember = "MATID";
             cbMat.Text = string.Empty;
         }
 
-        private void fillEdg(object occ)
-        {
+        private void fillEdg(object occ) {
             ComboBox c = (ComboBox)occ;
             c.DataSource = cd.Edges.Tables[0];
             c.DisplayMember = "DESCR";
@@ -131,8 +108,7 @@ namespace Redbrick_Addin
             c.Text = string.Empty;
         }
 
-        public void ToggleFields(int opType)
-        {
+        public void ToggleFields(int opType) {
             bool wood = (opType != 2);
             lEf.Enabled = wood;
             leFColor.Enabled = wood;
@@ -151,24 +127,18 @@ namespace Redbrick_Addin
             cbEr.Enabled = wood;
         }
 
-        private void UpdateDiffW(ComboBox cbl, ComboBox cbr)
-        {
+        private void UpdateDiffW(ComboBox cbl, ComboBox cbr) {
             _edgeDiffW = 0.0;
             double t = 0.0;
             string thk = string.Empty;
-            try
-            {
+            try {
                 System.Data.DataRowView drv = (System.Data.DataRowView)cbl.SelectedItem;
                 if (drv != null)
                     thk = drv[3].ToString();
-            }
-            catch (InvalidCastException ice)
-            {
+            } catch (InvalidCastException ice) {
                 ice.Data.Add("Not", "unused.");
                 thk = "0.0";
-            }
-            catch (NullReferenceException nre)
-            {
+            } catch (NullReferenceException nre) {
                 nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
@@ -176,69 +146,51 @@ namespace Redbrick_Addin
             if (double.TryParse(thk, out t))
                 _edgeDiffW += t * -1;
 
-            try
-            {
+            try {
                 System.Data.DataRowView drv = (System.Data.DataRowView)cbr.SelectedItem;
                 if (drv != null)
                     thk = drv[3].ToString();
-            }
-            catch (InvalidCastException ice)
-            {
+            } catch (InvalidCastException ice) {
                 ice.Data.Add("Not", "unused.");
                 thk = "0.0";
-            }
-            catch (NullReferenceException nre)
-            {
+            } catch (NullReferenceException nre) {
                 nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
 
-            if (double.TryParse(thk, out t))
-            {
+            if (double.TryParse(thk, out t)) {
                 this._edgeDiffW += t * -1;
             }
         }
 
-        private void UpdateDiffL(ComboBox cbf, ComboBox cbb)
-        {
+        private void UpdateDiffL(ComboBox cbf, ComboBox cbb) {
             _edgeDiffL = 0.0;
             double t = 0.0;
             string thk = string.Empty;
-            try
-            {
+            try {
                 System.Data.DataRowView drv = (System.Data.DataRowView)cbf.SelectedItem;
                 if (drv != null)
                     thk = drv[3].ToString();
-            }
-            catch (InvalidCastException ice)
-            {
+            } catch (InvalidCastException ice) {
                 ice.Data.Add("Not", "unused.");
                 thk = "0.0";
-            }
-            catch (NullReferenceException nre)
-            {
+            } catch (NullReferenceException nre) {
                 nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
 
-            if (double.TryParse(thk, out t))
-            {
+            if (double.TryParse(thk, out t)) {
                 _edgeDiffL += t * -1;
             }
 
-            try
-            {
+            try {
                 System.Data.DataRowView drv = (System.Data.DataRowView)cbb.SelectedItem;
                 if (drv != null)
                     thk = drv[3].ToString();
-            }
-            catch (InvalidCastException ice)
-            {
+            } catch (InvalidCastException ice) {
                 ice.Data.Add("Not", "unused.");
                 thk = "0.0";
-            }
-            catch (NullReferenceException nre)
-            {
+            } catch (NullReferenceException nre) {
                 nre.Data.Add("Not", "unused.");
                 thk = "0.0";
             }
@@ -247,16 +199,14 @@ namespace Redbrick_Addin
                 _edgeDiffL += t * -1;
         }
 
-        private void cbMat_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cbMat_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbMat.SelectedValue != null)
                 lMatColor.Text = (cbMat.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
                 lMatColor.Text = string.Empty;
         }
 
-        private void cbEf_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cbEf_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbEf.SelectedValue != null)
                 leFColor.Text = (cbEf.SelectedItem as System.Data.DataRowView)[2].ToString();
             else
@@ -265,8 +215,7 @@ namespace Redbrick_Addin
             UpdateDiffL(cbEf, cbEb);
         }
 
-        private void cbEb_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cbEb_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbEb.SelectedValue != null)
                 leBColor.Text = (cbEb.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
@@ -275,8 +224,7 @@ namespace Redbrick_Addin
             UpdateDiffL(cbEf, cbEb);
         }
 
-        private void cbEl_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cbEl_SelectedIndexChanged(object sender, EventArgs e) {
             if (cbEl.SelectedValue != null)
                 leLColor.Text = (cbEl.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
@@ -285,8 +233,7 @@ namespace Redbrick_Addin
             UpdateDiffW(cbEl, cbEr);
         }
 
-        private void cbEr_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cbEr_SelectedIndexChanged(object sender, EventArgs e) {
             if (this.cbEr.SelectedValue != null)
                 leRColor.Text = (cbEr.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
             else
@@ -297,43 +244,36 @@ namespace Redbrick_Addin
 
         public string configurationName { get; set; }
 
-        public ComboBox GetCutlistMatBox()
-        {
+        public ComboBox GetCutlistMatBox() {
             return cbMat;
         }
 
-        public ComboBox GetEdgeFrontBox()
-        {
+        public ComboBox GetEdgeFrontBox() {
             return cbEf;
         }
 
-        public ComboBox GetEdgeBackBox()
-        {
+        public ComboBox GetEdgeBackBox() {
             return cbEb;
         }
 
-        public ComboBox GetEdgeLeftBox()
-        {
+        public ComboBox GetEdgeLeftBox() {
             return cbEl;
         }
 
-        public ComboBox GetEdgeRightBox()
-        {
+        public ComboBox GetEdgeRightBox() {
             return cbEr;
         }
 
         private double _edgeDiffL;
 
-        public double EdgeDiffL
-        {
+        public double EdgeDiffL {
             get { return _edgeDiffL; }
             set { _edgeDiffL = value; }
         }
 
         private double _edgeDiffW;
 
-        public double EdgeDiffW
-        {
+        public double EdgeDiffW {
             get { return _edgeDiffW; }
             set { _edgeDiffW = value; }
         }

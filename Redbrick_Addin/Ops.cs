@@ -10,39 +10,33 @@ using System.Windows.Forms;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
-namespace Redbrick_Addin
-{
-    public partial class Ops : UserControl
-    {
+namespace Redbrick_Addin {
+    public partial class Ops : UserControl {
         private CutlistData cd = new CutlistData();
         public SwProperties propertySet;
 
-        public Ops(ref SwProperties prop)
-        {
+        public Ops(ref SwProperties prop) {
             cd = prop.cutlistData;
             propertySet = prop;
 
             InitializeComponent();
         }
 
-        public void Update(ref SwProperties p)
-        {
+        public void Update(ref SwProperties p) {
             propertySet = p;
             OpType = p.cutlistData.OpType;
             RefreshOps(this.OpType);
             LinkControls();
         }
 
-        private void LinkControls()
-        {
+        private void LinkControls() {
             propertySet.LinkControlToProperty("OP1ID", true, cbOp1);
             propertySet.LinkControlToProperty("OP2ID", true, cbOp2);
             propertySet.LinkControlToProperty("OP3ID", true, cbOp3);
             propertySet.LinkControlToProperty("OP4ID", true, cbOp4);
             propertySet.LinkControlToProperty("OP5ID", true, cbOp5);
 
-            if (Properties.Settings.Default.Testing)
-            {
+            if (Properties.Settings.Default.Testing) {
                 propertySet.LinkControlToProperty("OP1", true, cbOp1);
                 propertySet.LinkControlToProperty("OP2", true, cbOp2);
                 propertySet.LinkControlToProperty("OP3", true, cbOp3);
@@ -51,16 +45,12 @@ namespace Redbrick_Addin
             }
         }
 
-        public void GetProperties()
-        {
-            for (int i = 0; i < 6; i++)
-            {
+        public void GetProperties() {
+            for (int i = 0; i < 6; i++) {
                 string op = string.Format("OP{0}", i.ToString());
 
-                foreach (Control c in this.tableLayoutPanel1.Controls)
-                {
-                    if ((c is ComboBox) && c.Name.ToUpper().Contains(op))
-                    {
+                foreach (Control c in this.tableLayoutPanel1.Controls) {
+                    if ((c is ComboBox) && c.Name.ToUpper().Contains(op)) {
                         ComboBox cb = (c as ComboBox);
 
                         propertySet.GetProperty(op).Ctl = c;
@@ -82,8 +72,7 @@ namespace Redbrick_Addin
             }
         }
 
-        private void fillBox(object occ)
-        {
+        private void fillBox(object occ) {
             ComboBox c = (ComboBox)occ;
             c.DisplayMember = "OPDESCR";
             c.ValueMember = "OPID";
@@ -91,31 +80,25 @@ namespace Redbrick_Addin
             c.DataSource = propertySet.cutlistData.Ops.Tables[0];
         }
 
-        public void RefreshOps(int opType)
-        {
+        public void RefreshOps(int opType) {
             this.OpType = opType;
             ComboBox[] cc = { cbOp1, cbOp2, cbOp3, cbOp4, cbOp5 };
-            foreach (ComboBox c in cc)
-            {
+            foreach (ComboBox c in cc) {
                 fillBox((object)c);
             }
             //this.GetProperties();
         }
 
-        public EventArgs RefreshOpBoxes(int opType)
-        {
+        public EventArgs RefreshOpBoxes(int opType) {
             EventArgs e = new EventArgs();
             RefreshOps(opType);
             return e;
         }
 
-        private int GetIndex(DataTable dt, string val)
-        {
-            if (dt != null)
-            {
+        private int GetIndex(DataTable dt, string val) {
+            if (dt != null) {
                 int count = 0;
-                foreach (DataRow dr in dt.Rows)
-                {
+                foreach (DataRow dr in dt.Rows) {
                     count++;
 
                     if (dr.ItemArray[0].ToString().Trim().ToUpper() == val.Trim().ToUpper())
@@ -125,28 +108,23 @@ namespace Redbrick_Addin
             return -1;
         }
 
-        public Control GetOp1Box()
-        {
+        public Control GetOp1Box() {
             return cbOp1;
         }
 
-        public Control GetOp2Box()
-        {
+        public Control GetOp2Box() {
             return cbOp2;
         }
 
-        public Control GetOp3Box()
-        {
+        public Control GetOp3Box() {
             return cbOp3;
         }
 
-        public Control GetOp4Box()
-        {
+        public Control GetOp4Box() {
             return cbOp4;
         }
 
-        public Control GetOp5Box()
-        {
+        public Control GetOp5Box() {
             return cbOp5;
         }
 
