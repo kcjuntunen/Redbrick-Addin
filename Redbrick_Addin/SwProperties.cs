@@ -102,7 +102,6 @@ namespace Redbrick_Addin
             const string propName = "DEPARTMENT";
             const string newPropName = "DEPT";
 
-            int res;
             int opt = 1;
             bool useCached = false;
             // If we can't find the prop we want, let's just presume a wood part.
