@@ -258,5 +258,17 @@ namespace Redbrick_Addin.Properties {
                 this["OnlyCurrentCustomers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8999")]
+        public int LastLegacyECR {
+            get {
+                return ((int)(this["LastLegacyECR"]));
+            }
+            set {
+                this["LastLegacyECR"] = value;
+            }
+        }
     }
 }
