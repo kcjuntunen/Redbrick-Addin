@@ -28,14 +28,25 @@ namespace Redbrick_Addin {
             foreach (DrawingRev r in revSet) {
                 TreeNode tnList = new TreeNode(r.List.Value);
                 TreeNode tnDate = new TreeNode(r.Date.Value);
-                TreeNode tnECO;
-                TreeNode tnC;
+                TreeNode tnECO = new TreeNode(r.Eco.Value);
+                TreeNode tnC = new TreeNode(r.Revision.Value);
                 int test = 0;
                 CutlistData cd = new CutlistData();
-                eco e;
+                eco e = new eco();
                 if (int.TryParse(r.Eco.Value, out test) && test > Properties.Settings.Default.LastLegacyECR) {
                     e = cd.GetECOData(r.Eco.Value);
-                } else if (r.Eco.Value.Contains("NA") || r.Eco.Value.Trim().Contains(string.Empty)){
+                    TreeNode tnD = new TreeNode("Error Description: " + e.ErrDescription, 0, 0);
+                    TreeNode tnRB = new TreeNode("Requested by: " + e.RequestedBy, 0, 0);
+                    TreeNode tnR = new TreeNode("Revision Description:" + e.Revision, 0, 0);
+                    TreeNode tnS = new TreeNode("Status: " + e.Status, 0, 0);
+                    tnC = new TreeNode("Changes: " + e.Changes);
+                    TreeNode[] ts = { tnC, tnD, tnRB, tnR, tnS };
+                    TreeNode tnDesc = new TreeNode(r.Description.Value);
+                    TreeNode[] tt = { tnECO, tnDesc, tnList, tnDate };
+
+                    TreeNode tn = new TreeNode(r.Revision.Value, tt);
+                    this.tvRevisions.Nodes.Add(tn);
+                } else if (r.Eco.Value.Contains("NA") || r.Eco.Value.Trim().Equals(string.Empty)){
                     tnECO = new TreeNode(r.Eco.Value);
                     TreeNode tnDesc = new TreeNode(r.Description.Value);
                     TreeNode[] tt = { tnECO, tnDesc, tnList, tnDate };
@@ -44,6 +55,7 @@ namespace Redbrick_Addin {
                     this.tvRevisions.Nodes.Add(tn);
                 } else {
                     e = cd.GetLegacyECOData(r.Eco.Value);
+
                     if ((e.Changes != null) && e.Changes.Contains("\n")) {
                         List<TreeNode> nodes = new List<TreeNode>();
                         string[] changeNodes = e.Changes.Split('\n');
@@ -53,21 +65,8 @@ namespace Redbrick_Addin {
                         tnC = new TreeNode("Changes ", nodes.ToArray());
                     } else {
                         tnC = new TreeNode("Changes: " + e.Changes);
-                    }
 
-                    if (test > Properties.Settings.Default.LastLegacyECR) {
-                        TreeNode tnD = new TreeNode("Error Description: " + e.ErrDescription, 0, 0);
-                        TreeNode tnRB = new TreeNode("Requested by: " + e.RequestedBy, 0, 0);
-                        TreeNode tnR = new TreeNode("Revision Description:" + e.Revision, 0, 0);
-                        TreeNode tnS = new TreeNode("Status: " + e.Status, 0, 0);
-                        TreeNode[] ts = { tnC, tnD, tnRB, tnR, tnS };
-                        tnECO = new TreeNode(r.Eco.Value, ts);
-                        TreeNode tnDesc = new TreeNode(r.Description.Value);
-                        TreeNode[] tt = { tnECO, tnDesc, tnList, tnDate };
 
-                        TreeNode tn = new TreeNode(r.Revision.Value, tt);
-                        this.tvRevisions.Nodes.Add(tn);
-                    } else {
                         TreeNode tnRB = new TreeNode("Finished by: " + e.RequestedBy, 0, 0);
                         TreeNode tnR = new TreeNode("Affected Parts:" + e.Revision, 0, 0);
                         TreeNode tnS = new TreeNode("Status: " + e.Status, 0, 0);
