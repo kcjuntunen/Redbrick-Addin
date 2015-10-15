@@ -81,7 +81,6 @@ namespace Redbrick_Addin {
             mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
             ch.Update(ref p);
             SetupDeptSelectEvent();
-            // I'll just trust GC to take care of the old one.
             dirtTracker = new DirtTracker(this);
         }
 
