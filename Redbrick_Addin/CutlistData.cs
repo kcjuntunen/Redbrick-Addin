@@ -237,7 +237,7 @@ namespace Redbrick_Addin {
 
         public int GetMaterialID(string description) {
             if (description == null)
-                return 0;
+                return 2929;
 
             string SQL = string.Format("SELECT MATID FROM CUT_MATERIALS WHERE DESCR = '{0}'", description);
             using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -245,7 +245,7 @@ namespace Redbrick_Addin {
                     if (dr.HasRows)
                         return dr.GetInt32(0);
                     else
-                        return 0;
+                        return 2929;
                 }
             }
         }
@@ -428,27 +428,48 @@ namespace Redbrick_Addin {
             return string.Empty;
         }
 
+        enum ECODataColumns {
+            USER_FIRST,
+            USER_LAST,
+            CHANGES,
+            STATUS,
+            DESC,
+            REVISION
+        }
+
         public eco GetECOData(string ecoNumber) {
             eco e = new eco();
-            string SQL = string.Format("SELECT GEN_USERS.FIRST, GEN_USERS.LAST, ECR_MAIN.CHANGES, " +
-                "ECR_STATUS.STATUS, ECR_MAIN.ERR_DESC, ECR_MAIN.REVISION FROM " +
-                "(ECR_MAIN LEFT JOIN GEN_USERS ON ECR_MAIN.REQ_BY = GEN_USERS.UID) " +
-                "LEFT JOIN ECR_STATUS ON ECR_MAIN.STATUS = ECR_STATUS.STAT_ID WHERE " +
-                "(((ECR_MAIN.[ECR_NUM])={0}));", ecoNumber);
-            //conn.Open(); 
-            using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-                using (OdbcDataReader dr = comm.ExecuteReader()) {
-                    e.EcrNumber = int.Parse(ecoNumber);
-                    if (dr.HasRows) {
-                        e.Changes = ReturnString(dr, 2);
-                        e.ErrDescription = ReturnString(dr, 4);
-                        e.Revision = ReturnString(dr, 5);
-                        e.Status = ReturnString(dr, 3);
-                        e.RequestedBy = ReturnString(dr, 0) + " " + ReturnString(dr, 1);
-                        dr.Close();
+            int en;
+
+            if (int.TryParse(ecoNumber, out en)) {
+                string SQL = string.Empty;
+
+                if (en > Properties.Settings.Default.LastLegacyECR) {
+                    SQL = string.Format("SELECT GEN_USERS.FIRST, GEN_USERS.LAST, ECR_MAIN.CHANGES, " +
+                        "ECR_STATUS.STATUS, ECR_MAIN.ERR_DESC, ECR_MAIN.REVISION FROM " +
+                        "(ECR_MAIN LEFT JOIN GEN_USERS ON ECR_MAIN.REQ_BY = GEN_USERS.UID) " +
+                        "LEFT JOIN ECR_STATUS ON ECR_MAIN.STATUS = ECR_STATUS.STAT_ID WHERE " +
+                        "(((ECR_MAIN.[ECR_NUM])={0}));", ecoNumber.Replace("'", "''"));
+                } else {
+                    SQL = string.Format("SELECT Engineer, Engineer, Change, (IF (Holder = 'Completed')) AS STATUS, Change, Change FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)='{0}'));", ecoNumber.Replace("'", "''")); 
+                }
+                //conn.Open(); 
+                using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+                    using (OdbcDataReader dr = comm.ExecuteReader()) {
+                        e.EcrNumber = int.Parse(ecoNumber);
+                        if (dr.HasRows) {
+                            e.Changes = ReturnString(dr, (int)ECODataColumns.CHANGES);
+                            e.ErrDescription = ReturnString(dr, (int)ECODataColumns.DESC);
+                            e.Revision = ReturnString(dr, (int)ECODataColumns.REVISION);
+                            e.Status = ReturnString(dr, (int)ECODataColumns.STATUS);
+                            e.RequestedBy = ReturnString(dr, (int)ECODataColumns.USER_FIRST) + " " + ReturnString(dr, (int)ECODataColumns.USER_FIRST);
+                            dr.Close();
+                        }
                     }
                 }
+                return e;
             }
+
             return e;
         }
 
