@@ -150,10 +150,17 @@ namespace Redbrick_Addin {
                     prop.PartName = e.HResult.ToString();
                 }
 
-                // get new ones.
-                prop.GetPropertyData(Document);
                 // what sort of doc is open?
                 swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
+
+                // get new ones.
+                if (swSelMgr != null && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
+                    Component2 comp = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
+                    //docT = (swDocumentTypes_e)comp.GetModelDoc2().GetType();
+                    prop.GetPropertyData(comp);
+                } else {
+                    prop.GetPropertyData(Document);
+                }
                 switch (docT) {
                     case swDocumentTypes_e.swDocASSEMBLY:
                         if (!PartSetup) {

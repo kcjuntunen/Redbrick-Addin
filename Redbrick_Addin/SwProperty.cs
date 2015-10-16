@@ -208,7 +208,8 @@ namespace Redbrick_Addin {
         public void Get() {
             if (SwApp != null) {
                 ModelDoc2 md = (ModelDoc2)this.SwApp.ActiveDoc;
-                Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+                ConfigurationManager cfMgr = md.ConfigurationManager;
+                Configuration cf = cfMgr.ActiveConfiguration;
 
                 CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
                 CustomPropertyManager scpm;
@@ -217,9 +218,9 @@ namespace Redbrick_Addin {
                 bool useCached = false;
 
                 if (cf != null) {
-                    scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+                    scpm = cf.CustomPropertyManager;
                 } else {
-                    scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+                    scpm = gcpm;
                 }
                 int res;
 
