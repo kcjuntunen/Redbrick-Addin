@@ -19,7 +19,7 @@ namespace Redbrick_Addin {
         public void Update(ref SwProperties p) {
             propertySet = p;
             LinkControls();
-            ToggleFields(this.propertySet.cutlistData.OpType);
+            ToggleFields(propertySet.cutlistData.OpType);
         }
 
         private void LinkControls() {

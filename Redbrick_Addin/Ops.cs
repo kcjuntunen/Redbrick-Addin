@@ -25,7 +25,7 @@ namespace Redbrick_Addin {
         public void Update(ref SwProperties p) {
             propertySet = p;
             OpType = p.cutlistData.OpType;
-            RefreshOps(this.OpType);
+            RefreshOps(OpType);
             LinkControls();
         }
 
@@ -81,7 +81,7 @@ namespace Redbrick_Addin {
         }
 
         public void RefreshOps(int opType) {
-            this.OpType = opType;
+            OpType = opType;
             ComboBox[] cc = { cbOp1, cbOp2, cbOp3, cbOp4, cbOp5 };
             foreach (ComboBox c in cc) {
                 fillBox((object)c);

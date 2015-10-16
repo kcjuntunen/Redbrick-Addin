@@ -83,20 +83,24 @@ namespace Redbrick_Addin {
             gbSpecProp.Text = p.PartName + " - " + p.configName;
             gp.Update(ref p);
             op.Update(ref p);
-            mp.Update(ref p, this.cs.EdgeDiffL, this.cs.EdgeDiffW);
+            mp.Update(ref p, cs.EdgeDiffL, cs.EdgeDiffW);
             ch.Update(ref p);
             SetupDeptSelectEvent();
             dirtTracker = new DirtTracker(this);
         }
 
         private void SetupDeptSelectEvent() {
-            if (!deptEvents)
+            if (!deptEvents) {
                 ds.Selected += ds_Selected;
+                deptEvents = true;
+            }
         }
 
         private void TearDownDeptSelectEvent() {
-            if (deptEvents)
+            if (deptEvents) {
                 ds.Selected -= ds_Selected;
+                deptEvents = false;
+            }
         }
 
         void ds_Selected(object d, EventArgs e) {
