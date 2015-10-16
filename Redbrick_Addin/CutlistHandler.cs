@@ -22,7 +22,7 @@ namespace Redbrick_Addin {
         public enum WhereUsedRes {
             CLID,
             PARTNUM,
-            REV,
+            //REV,
             DESCR,
             LENGTH,
             WIDTH,
@@ -58,7 +58,7 @@ namespace Redbrick_Addin {
                     tbH.Text = drv[(int)WhereUsedRes.HEIGHT].ToString();
                     tbRef.Text = drv[(int)WhereUsedRes.DRAWING].ToString();
                     dateTimePicker1.Text = drv[(int)WhereUsedRes.CDATE].ToString();
-                    cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
+                    //cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
                     tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
                     prop.CutlistQuantity = drv[(int)WhereUsedRes.QTY].ToString();
                     prop.CutlistID = drv[(int)WhereUsedRes.CLID].ToString();

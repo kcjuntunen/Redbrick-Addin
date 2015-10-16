@@ -30,17 +30,15 @@ namespace Redbrick_Addin {
         public void Update(ref SwProperties p) {
             PropertySet = p;
             LinkControlToProperty();
-            PropertySet.cutlistData.OpType = this.OpType;
-            int idx = this.OpType - 1; // Don't sort the table, and this works well.
-            cbDepartment.SelectedIndex = idx;
-            cbDepartment.DisplayMember = "TYPEDESC";
+            PropertySet.cutlistData.OpType = OpType;
+            cbDepartment.SelectedValue = OpType;
         }
 
         public void LinkControls() {
             PropertySet.GetProperty("DEPT").Type = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoNumber;
             PropertySet.GetProperty("DEPTARTMENT").Type = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText;
-            PropertySet.LinkControlToProperty("DEPT", true, this.cbDepartment);
-            PropertySet.LinkControlToProperty("DEPARTMENT", true, this.cbDepartment);
+            PropertySet.LinkControlToProperty("DEPT", true, cbDepartment);
+            PropertySet.LinkControlToProperty("DEPARTMENT", true, cbDepartment);
         }
 
         private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e) {

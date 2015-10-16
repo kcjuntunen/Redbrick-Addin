@@ -125,6 +125,7 @@ namespace Redbrick_Addin
             this.cbRev.Name = "cbRev";
             this.cbRev.Size = new System.Drawing.Size(83, 21);
             this.cbRev.TabIndex = 1;
+            this.cbRev.Visible = false;
             // 
             // labItemNo
             // 
@@ -143,6 +144,7 @@ namespace Redbrick_Addin
             this.labRev.Size = new System.Drawing.Size(27, 13);
             this.labRev.TabIndex = 3;
             this.labRev.Text = "Rev";
+            this.labRev.Visible = false;
             // 
             // labDate
             // 

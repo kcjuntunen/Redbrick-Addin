@@ -12,7 +12,7 @@ namespace Redbrick_Addin {
         SwProperties propertySet;
 
         public GeneralProperties(ref SwProperties prop) {
-            this.propertySet = prop;
+            propertySet = prop;
             InitializeComponent();
         }
 
@@ -29,7 +29,7 @@ namespace Redbrick_Addin {
             tbWallThick.Text = string.Empty;
             tbComment.Text = string.Empty;
 
-            propertySet.LinkControlToProperty("Description", true, tbDescription);
+            propertySet.LinkControlToProperty("DESCRIPTION", true, tbDescription);
             propertySet.LinkControlToProperty("LENGTH", true, tbLength);
             propertySet.LinkControlToProperty("WIDTH", true, tbWidth);
             propertySet.LinkControlToProperty("THICKNESS", true, tbThick);

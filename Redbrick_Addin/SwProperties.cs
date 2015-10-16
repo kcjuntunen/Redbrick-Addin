@@ -643,9 +643,12 @@ namespace Redbrick_Addin {
                 if (p.Ctl != null) {
                     p.Value = p.Ctl.Text;
                     if (p.Ctl is System.Windows.Forms.ComboBox) {
-                        p.ID = ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
-                        if (p.Name.ToUpper().StartsWith("OP") && !p.Name.ToUpper().EndsWith("ID"))
-                            p.Descr = cutlistData.GetOpAbbreviationByID(p.ID);
+                        if ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null) {
+                            p.ID = ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
+
+                            if (p.Name.ToUpper().StartsWith("OP") && !p.Name.ToUpper().EndsWith("ID"))
+                                p.Descr = cutlistData.GetOpAbbreviationByID(p.ID);
+                        }
                     }
 
                     if (p.Ctl is System.Windows.Forms.CheckBox) {
