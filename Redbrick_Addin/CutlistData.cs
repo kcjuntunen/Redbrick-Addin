@@ -463,10 +463,22 @@ namespace Redbrick_Addin {
                         e.EcrNumber = int.Parse(ecoNumber);
                         e.Revision = ReturnString(dr, 5); // AffectedParts
                         e.Changes = ReturnString(dr, 6); // Change
-                        string[] dateString = ReturnString(dr, 4).Split('/', ' '); // DateCompleted
-                        System.DateTime dt = new DateTime(int.Parse(dateString[2]), int.Parse(dateString[0]), int.Parse(dateString[1]));
+                        string dString = ReturnString(dr, 4);
+                        if (dString != string.Empty) {
+                            string[] dateString = dString.Split('/', ' '); // DateCompleted
+                            System.DateTime dt = new DateTime(int.Parse(dateString[2]), int.Parse(dateString[0]), int.Parse(dateString[1]));
+                            e.Status = "Finished on " + dt.ToShortDateString();
+                        } else {
+                            dString = ReturnString(dr, 3);
+                            string[] dateString = dString.Split('/', ' '); // DateCompleted
+                            if (dateString.Length > 2) {
+                                System.DateTime dt = new DateTime(int.Parse(dateString[2]), int.Parse(dateString[0]), int.Parse(dateString[1]));
+                                e.Status = "Requested on " + dt.ToShortDateString();
+                            } else {
+                                e.Status = dString;
+                            }
+                        }
                         e.RequestedBy = ReturnString(dr, 7); // FinishedBy
-                        e.Status = "Finished on " + dt.ToShortDateString();
                     }
                 }
             }
