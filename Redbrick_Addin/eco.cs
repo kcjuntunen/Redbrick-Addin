@@ -45,6 +45,5 @@ namespace Redbrick_Addin {
             get { return _rev; }
             set { _rev = value; }
         }
-
     }
 }
