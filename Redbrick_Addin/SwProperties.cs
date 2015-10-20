@@ -84,26 +84,28 @@ namespace Redbrick_Addin {
         /// </summary>
         /// <param name="md">A ModelDoc2 object.</param>
         public void GetPropertyData(Component2 comp) {
-            modeldoc = comp.GetModelDoc2();
-            if (modeldoc != null) {
-                swDocumentTypes_e docType = (swDocumentTypes_e)modeldoc.GetType();
-                // Drawings only have global props.
-                CustomPropertyManager g = modeldoc.Extension.get_CustomPropertyManager(string.Empty);
-                if (docType == swDocumentTypes_e.swDocDRAWING) {
-                    ParsePropertyData(g, docType);
-                } else {
-                    // Getting specific props.
-                    configName = comp.ReferencedConfiguration;
-                    CustomPropertyManager s = modeldoc.Extension.get_CustomPropertyManager(configName);
-
-                    cutlistData.OpType = ParseDept(modeldoc);
-
-                    if (!Properties.Settings.Default.Testing) {
+            if (comp != null) {
+                modeldoc = comp.GetModelDoc2();
+                if (modeldoc != null) {
+                    swDocumentTypes_e docType = (swDocumentTypes_e)modeldoc.GetType();
+                    // Drawings only have global props.
+                    CustomPropertyManager g = modeldoc.Extension.get_CustomPropertyManager(string.Empty);
+                    if (docType == swDocumentTypes_e.swDocDRAWING) {
                         ParsePropertyData(g, docType);
-                        ParsePropertyData(s, docType);
                     } else {
-                        ParsePropertyData2(g, docType);
-                        ParsePropertyData2(s, docType);
+                        // Getting specific props.
+                        configName = comp.ReferencedConfiguration;
+                        CustomPropertyManager s = modeldoc.Extension.get_CustomPropertyManager(configName);
+
+                        cutlistData.OpType = ParseDept(modeldoc);
+
+                        if (!Properties.Settings.Default.Testing) {
+                            ParsePropertyData(g, docType);
+                            ParsePropertyData(s, docType);
+                        } else {
+                            ParsePropertyData2(g, docType);
+                            ParsePropertyData2(s, docType);
+                        }
                     }
                 }
             }

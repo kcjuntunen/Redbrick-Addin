@@ -50,13 +50,13 @@ namespace Redbrick_Addin {
         }
 
         public void Start() {
-            SwApp = this.RequestSW();
-            prop = new SwProperties(this._swApp);
+            SwApp = RequestSW();
+            prop = new SwProperties(_swApp);
             SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
             SwApp.DestroyNotify += SwApp_DestroyNotify;
             SwApp.FileCloseNotify += SwApp_FileCloseNotify;
             //this.SwApp.CommandCloseNotify += SwApp_CommandCloseNotify;
-            Document = this.SwApp.ActiveDoc;
+            Document = SwApp.ActiveDoc;
             ConnectSelection();
         }
 
@@ -88,7 +88,6 @@ namespace Redbrick_Addin {
                 if (drb.IsDirty)
                     if (MaybeSave())
                         Write();
-            System.Windows.Forms.MessageBox.Show(string.Format("fn: {0} :: res: {1}", FileName, reason));
             ClearControls(this);
 
             return 0;
@@ -153,18 +152,24 @@ namespace Redbrick_Addin {
                 // what sort of doc is open?
                 swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
 
-                // get new ones.
-                if (swSelMgr != null && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
+                if (swSelMgr != null && docT != swDocumentTypes_e.swDocDRAWING && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
                     Component2 comp = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
-                    //docT = (swDocumentTypes_e)comp.GetModelDoc2().GetType();
-                    prop.GetPropertyData(comp);
+                    if (comp != null) {
+                        ModelDoc2 cmd = (ModelDoc2)comp.GetModelDoc2();
+                        docT = (swDocumentTypes_e)cmd.GetType();
+                        prop.GetPropertyData(comp);
+                    } else {
+                        prop.GetPropertyData(Document);
+                    }
                 } else {
                     prop.GetPropertyData(Document);
                 }
+
                 switch (docT) {
                     case swDocumentTypes_e.swDocASSEMBLY:
                         if (!PartSetup) {
                             ClearControls(this);
+                            prop.GetPropertyData(Document);
                             // Part/assembly props are about the same
                             SetupPart();
                             // link whatever's in the prop to the controls
@@ -175,7 +180,7 @@ namespace Redbrick_Addin {
                         }
                         // this pretty much only assigns the selection manager and sets up events
                         if (!AssySetup)
-                            this.SetupAssy();
+                            SetupAssy();
                         break;
                     case swDocumentTypes_e.swDocDRAWING:
                         ClearControls(this);
@@ -206,8 +211,9 @@ namespace Redbrick_Addin {
                         SetupOther();
                         break;
                 }
-            } else
+            } else {
                 ClearControls(this);
+            }
         }
 
         private int GetHash(string fullPath) {
