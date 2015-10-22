@@ -546,14 +546,6 @@ namespace Redbrick_Addin {
       }
     }
 
-    public int InsertIntoCutlist(SwProperties p) {
-      int affectedRows = 0;
-      if (ENABLE_DB_WRITE && p.Primary) {
-        throw new NotImplementedException();
-      }
-      return affectedRows;
-    }
-
     public int ReturnHash(SwProperties p) {
       if (p.PartName == string.Empty)
         return 0;
@@ -569,6 +561,114 @@ namespace Redbrick_Addin {
       }
     }
 
+    int GetCurrentAuthor() {
+      string SQL = string.Format("SELECT UID FROM GEN_USERS WHERE USERNAME = '{0}';", Environment.UserName.Replace("'", "\""));
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows && !dr.IsDBNull(0))
+            return dr.GetInt32(0);
+          else
+            return 0;
+        }
+      }
+    }
+
+    public int NewCutlist(Dictionary<string, Part> prt, string itemNo, string drawing, ushort rev, string descr, int custid, double l, double w, double h, int qty) {
+      int currentAuthor = GetCurrentAuthor();
+      int affected = 0;
+      int partID = 0;
+      int clid = 0;
+      if (ENABLE_DB_WRITE) {
+        string SQL = string.Format("INSERT INTO CUT_CUTLISTS (PARTNUM, REV, DRAWING, CUSTID, CDATE, DESCR, LENGTH, WIDTH, HEIGHT, SETUP_BY, STATE_BY, STATEID) VALUES " +
+          "('{0}', {1}, '{2}', {3}, '{4}', '{5}', {6}, {7}, {8}, {9}, {10}, {11});", itemNo.Replace("'", "\""), rev, drawing.Replace("'", "\""), custid, 
+          DateTime.Now, descr.Replace("'", "\""), l, w, h, currentAuthor, currentAuthor, Properties.Settings.Default.DefaultState);
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          affected = comm.ExecuteNonQuery();
+        }
+        if (affected == 1) {
+          foreach (KeyValuePair<string, Part> item in prt) {
+            partID = GetCreatePart(item);
+            clid = GetCutlistID(itemNo);
+            if (partID > 0 && clid > 0) {
+              affected = InsertCutlistPart(clid, partID, item, qty);
+	          }
+            
+          }
+        }
+      }
+      return affected;
+    }
+
+    public int InsertCutlistPart(int clid, int partid, KeyValuePair<string, Part> prt, int qty) {
+      int affected = 0;
+      if (ENABLE_DB_WRITE) {
+        Part p = prt.Value;
+        string SQL = string.Format("INSERT INTO CUT_CUTLIST_PARTS (CLID, PARTID, MATID, EDGEID_LF, EDGEID_LB, EDGEID_WR, EDGEID_WL, QTY) VALUES " +
+          "({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})", clid, partid, p.MaterialID, p.EdgeFrontID, p.EdgeBackID, p.EdgeRightID, p.EdgeLeftID, qty);
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          affected = comm.ExecuteNonQuery();
+        }
+      }
+      return affected;
+    }
+
+    public int InsertIntoCutlist(Dictionary<string, Part> p) {
+      int affected = 0;
+      if (ENABLE_DB_WRITE) {
+        throw new NotImplementedException("Nope");
+      }
+      return affected;
+    }
+
+    /// <summary>
+    /// Gets and/or creates a part.
+    /// </summary>
+    /// <returns>PartID</returns>
+    public int GetCreatePart(KeyValuePair<string, Part> kp) {
+      int partID = 0;
+      int affected = 0;
+      partID = GetPartID(kp.Key);
+      if (partID == 0) {
+        if (ENABLE_DB_WRITE) {
+          Part p = kp.Value;
+          string SQL = string.Format("INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
+            "OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE) VALUES " +
+            "({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17})", kp.Key, p.Description,
+            p.Length, p.Width, p.Thickness, p.CNC1, p.CNC2, p.BlankQty, p.OverL, p.OverW, p.get_OpID(0), p.get_OpID(1), p.get_OpID(2), p.get_OpID(3), p.get_OpID(4),
+            p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID);
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            affected = comm.ExecuteNonQuery();
+          }
+          return GetPartID(kp.Key);
+        }
+      }
+      return partID;
+    }
+
+    public int GetPartID(string prt) {
+      string SQL = string.Format("SELECT CUT_PARTS.PARTID FROM CUT_PARTS WHERE (((CUT_PARTS.PARTNUM)='{0}'))", prt.Replace("'", "\""));
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows && !dr.IsDBNull(0))
+            return dr.GetInt32(0);
+          else
+            return 0;
+        }
+      }
+    }
+
+    public int GetCutlistID(string item) {
+      string SQL = string.Format("SELECT CUT_CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)='{0}'))", item.Replace("'", "\""));
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows && !dr.IsDBNull(0))
+            return dr.GetInt32(0);
+          else
+            return 0;
+        }
+      }
+    }
+    
     public int MakeOriginal(SwProperties p) {
       int rowsAffected = -1;
 

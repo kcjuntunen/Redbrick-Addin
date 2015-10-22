@@ -282,5 +282,14 @@ namespace Redbrick_Addin.Properties {
                 this["CurrentRev"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int DefaultState {
+            get {
+                return ((int)(this["DefaultState"]));
+            }
+        }
     }
 }
