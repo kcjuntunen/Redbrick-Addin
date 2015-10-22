@@ -70,6 +70,7 @@ namespace Redbrick_Addin
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -108,6 +109,7 @@ namespace Redbrick_Addin
             this.tableLayoutPanel2.Controls.Add(this.tbItemNoRes, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.tbItemNo, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.button1, 1, 5);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -479,6 +481,16 @@ namespace Redbrick_Addin
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(225, 95);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // DrawingRedbrick
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -536,5 +548,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button button1;
     }
 }

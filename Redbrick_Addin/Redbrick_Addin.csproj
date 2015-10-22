@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -56,6 +56,9 @@
     <Reference Include="solidworkstools">
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks (3)\DriveWorksXpress\solidworkstools.dll</HintPath>
     </Reference>
+    <Reference Include="swTableType">
+      <HintPath>..\..\swTableType\Release\swTableType.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -95,7 +98,7 @@
     <Compile Include="DrawingRedbrick.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DrawingRedbrick.Designer.cs" >
+    <Compile Include="DrawingRedbrick.Designer.cs">
       <DependentUpon>DrawingRedbrick.cs</DependentUpon>
     </Compile>
     <Compile Include="DrawingRev.cs" />
@@ -104,25 +107,25 @@
     <Compile Include="EditRev.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditRev.Designer.cs" >
+    <Compile Include="EditRev.Designer.cs">
       <DependentUpon>EditRev.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrMsg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ErrMsg.Designer.cs" >
+    <Compile Include="ErrMsg.Designer.cs">
       <DependentUpon>ErrMsg.cs</DependentUpon>
     </Compile>
     <Compile Include="GeneralProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GeneralProperties.Designer.cs" >
+    <Compile Include="GeneralProperties.Designer.cs">
       <DependentUpon>GeneralProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="MachineProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MachineProperties.Designer.cs"  >
+    <Compile Include="MachineProperties.Designer.cs">
       <DependentUpon>MachineProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelRedbrick.cs">
@@ -134,7 +137,7 @@
     <Compile Include="Ops.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Ops.Designer.cs"  >
+    <Compile Include="Ops.Designer.cs">
       <DependentUpon>Ops.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -161,12 +164,12 @@
     <Compile Include="tvRevs.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="tvRevs.Designer.cs" >
+    <Compile Include="tvRevs.Designer.cs">
       <DependentUpon>tvRevs.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConfigurationSpecific.resx" >
+    <EmbeddedResource Include="ConfigurationSpecific.resx">
       <DependentUpon>ConfigurationSpecific.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CutlistHandler.resx">
@@ -175,25 +178,25 @@
     <EmbeddedResource Include="DepartmentSelector.resx">
       <DependentUpon>DepartmentSelector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DrawingRedbrick.resx" >
+    <EmbeddedResource Include="DrawingRedbrick.resx">
       <DependentUpon>DrawingRedbrick.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditRev.resx" >
+    <EmbeddedResource Include="EditRev.resx">
       <DependentUpon>EditRev.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ErrMsg.resx" >
+    <EmbeddedResource Include="ErrMsg.resx">
       <DependentUpon>ErrMsg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GeneralProperties.resx" >
+    <EmbeddedResource Include="GeneralProperties.resx">
       <DependentUpon>GeneralProperties.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MachineProperties.resx" >
+    <EmbeddedResource Include="MachineProperties.resx">
       <DependentUpon>MachineProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModelRedbrick.resx">
       <DependentUpon>ModelRedbrick.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ops.resx" >
+    <EmbeddedResource Include="Ops.resx">
       <DependentUpon>Ops.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -203,7 +206,7 @@
     <EmbeddedResource Include="SWTaskPaneHost.resx">
       <DependentUpon>SWTaskPaneHost.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="tvRevs.resx" >
+    <EmbeddedResource Include="tvRevs.resx">
       <DependentUpon>tvRevs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

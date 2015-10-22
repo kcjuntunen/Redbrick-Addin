@@ -254,5 +254,10 @@ namespace Redbrick_Addin {
         }
 
         public event EventHandler Closing;
+        
+        private void button1_Click(object sender, EventArgs e) {
+            swTableType.swTableType tt = new swTableType.swTableType((ModelDoc2)_swApp.ActiveDoc);
+            Dictionary<string, Part> pp = tt.GetParts();
+        }
     }
 }
