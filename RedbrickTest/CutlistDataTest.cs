@@ -7,17 +7,17 @@ namespace RedbrickTest {
   [TestClass]
   public class CutlistDataTest {
     CutlistData cd = new CutlistData();
-    [TestMethod]
-    public void GetECODataTest() {
-      eco eco = cd.GetECOData("8042");
-      Debug.Assert(eco.RequestedBy == "S.PALMER");
+    //[TestMethod]
+    //public void GetECODataTest() {
+    //  eco eco = cd.GetECOData("8042");
+    //  Debug.Assert(eco.RequestedBy == "S.PALMER");
 
-      eco = cd.GetECOData("xxxx");
-      Debug.Assert(eco.RequestedBy == string.Empty);
+    //  eco = cd.GetECOData("xxxx");
+    //  Debug.Assert(eco.RequestedBy == string.Empty);
 
-      eco = cd.GetECOData("9000");
-      Debug.Assert(eco.Changes == "ANOTHER STERLING NITPICK.");
-    }
+    //  eco = cd.GetECOData("9000");
+    //  Debug.Assert(eco.Changes == "ANOTHER STERLING NITPICK.");
+    //}
 
     [TestMethod]
     public void GetLegacyECODataTest() {

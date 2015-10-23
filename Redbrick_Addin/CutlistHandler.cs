@@ -138,7 +138,7 @@ namespace Redbrick_Addin {
             (int)swMessageBoxIcon_e.swMbQuestion,
             (int)swMessageBoxBtn_e.swMbYesNo);
         if (diaRes == (int)swMessageBoxResult_e.swMbHitYes) {
-          this.PropertySet.cutlistData.InsertIntoCutlist(this.PropertySet);
+          //PropertySet.cutlistData.InsertIntoCutlist(MakePartFromPropertySet(PropertySet));
         }
         btnOriginal.Enabled = false;
       } else {
@@ -147,7 +147,37 @@ namespace Redbrick_Addin {
     }
 
     private void btnInsert_Click(object sender, EventArgs e) {
-      PropertySet.cutlistData.InsertIntoCutlist(PropertySet);
+      CutlistData cd = PropertySet.cutlistData;
+      string[] clnrev = cbCutlist.Text.Split(new string[] { "REV" }, System.StringSplitOptions.None);
+      //cd.UpdateCutlist(clnrev[0].Trim(), tbRef.Text, clnrev[1].Trim(), tbDescription.Text,
+      //  cbCustomer.SelectedValue, tbL.Text, tbW.Text, tbH.Text, tbQty.Text, Properties.Settings.Default.DefaultState, 
+      //  MakePartFromPropertySet(PropertySet));
+    }
+
+    Part MakePartFromPropertySet(SwProperties swp) {
+      Part p = new Part();
+      p.Hash = (uint)swp.Hash;
+      p.FileInformation = swp.PartFileInfo;
+      p.SetBlankQty(swp.CutlistQuantity);
+      p.SetDeptID(swp.GetProperty("DEPT").ID);
+      p.SetEdgeFrontID(swp.GetProperty("EFID").ID);
+      p.SetEdgeBackID(swp.GetProperty("EBID").ID);
+      p.SetEdgeLeftID(swp.GetProperty("ELID").ID);
+      p.SetEdgeRightID(swp.GetProperty("ERID").ID);
+      p.SetLength(swp.GetProperty("LENGTH").ResValue);
+      p.SetWidth(swp.GetProperty("WIDTH").ID);
+      p.SetThickness(swp.GetProperty("THICKNESS").ID);
+      p.SetMaterialID(swp.GetProperty("MATID").ID);
+      p.SetOpID(swp.GetProperty("OP1ID").ID, 0);
+      p.SetOpID(swp.GetProperty("OP2ID").ID, 1);
+      p.SetOpID(swp.GetProperty("OP3ID").ID, 2);
+      p.SetOpID(swp.GetProperty("OP4ID").ID, 3);
+      p.SetOpID(swp.GetProperty("OP5ID").ID, 4);
+      p.SetOverL(swp.GetProperty("OVERL").Value);
+      p.SetOverW(swp.GetProperty("OVERW").Value);
+      p.SetQuantity(swp.CutlistQuantity);
+      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").ID);
+      return p;
     }
 
     public System.Windows.Forms.ComboBox CutlistComboBox { get { return cbCutlist; } }

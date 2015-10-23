@@ -709,7 +709,6 @@ namespace Redbrick_Addin {
         p.Write2(md);
       }
       cutlistData.UpdateParts(this);
-      cutlistData.UpdateCutlistParts(this);
     }
 
     public override string ToString() {
