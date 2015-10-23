@@ -512,7 +512,8 @@ namespace Redbrick_Addin {
       DateTime end;
       start = DateTime.Now;
 #endif
-      string SQL = string.Format("SELECT GEN_USERS.* FROM GEN_USERS WHERE (((GEN_USERS.DEPT)={0}));", Properties.Settings.Default.UserDept);
+      string SQL = string.Format("SELECT UID, USERNAME, (FIRST + ' ' + LAST) AS NAME, INITIAL " +
+        "FROM GEN_USERS WHERE (((GEN_USERS.DEPT)={0}));", Properties.Settings.Default.UserDept);
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
@@ -561,7 +562,7 @@ namespace Redbrick_Addin {
       }
     }
 
-    int GetCurrentAuthor() {
+    public int GetCurrentAuthor() {
       string SQL = string.Format("SELECT UID FROM GEN_USERS WHERE USERNAME = '{0}';", Environment.UserName.Replace("'", "\""));
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataReader dr = comm.ExecuteReader()) {

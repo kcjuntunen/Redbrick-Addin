@@ -12,6 +12,7 @@ namespace Redbrick_Addin {
 
     public DrawingProperties(SldWorks sw) {
       this._swApp = sw;
+      CutlistData = new CutlistData();
       this._innerArray = new ArrayList();
     }
 
@@ -242,6 +243,8 @@ namespace Redbrick_Addin {
         }
       }
     }
+
+    public CutlistData CutlistData { get; set; }
 
     private SldWorks _swApp;
 
