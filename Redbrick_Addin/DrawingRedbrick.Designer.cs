@@ -45,7 +45,7 @@ namespace Redbrick_Addin
       this.tbItemNoRes = new System.Windows.Forms.TextBox();
       this.tbItemNo = new System.Windows.Forms.TextBox();
       this.label4 = new System.Windows.Forms.Label();
-      this.button1 = new System.Windows.Forms.Button();
+      this.btnCreate = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.label5 = new System.Windows.Forms.Label();
@@ -109,7 +109,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel2.Controls.Add(this.tbItemNoRes, 1, 1);
       this.tableLayoutPanel2.Controls.Add(this.tbItemNo, 0, 1);
       this.tableLayoutPanel2.Controls.Add(this.label4, 0, 0);
-      this.tableLayoutPanel2.Controls.Add(this.button1, 1, 5);
+      this.tableLayoutPanel2.Controls.Add(this.btnCreate, 1, 5);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -206,15 +206,16 @@ namespace Redbrick_Addin
       this.label4.TabIndex = 0;
       this.label4.Text = "Item #";
       // 
-      // button1
+      // btnCreate
       // 
-      this.button1.Location = new System.Drawing.Point(225, 95);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(75, 23);
-      this.button1.TabIndex = 6;
-      this.button1.Text = "button1";
-      this.button1.UseVisualStyleBackColor = true;
-      this.button1.Click += new System.EventHandler(this.button1_Click);
+      this.btnCreate.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnCreate.Location = new System.Drawing.Point(225, 95);
+      this.btnCreate.Name = "btnCreate";
+      this.btnCreate.Size = new System.Drawing.Size(90, 46);
+      this.btnCreate.TabIndex = 6;
+      this.btnCreate.Text = "Create/Update Cutlist";
+      this.btnCreate.UseVisualStyleBackColor = true;
+      this.btnCreate.Click += new System.EventHandler(this.button1_Click);
       // 
       // groupBox1
       // 
@@ -548,6 +549,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCreate;
     }
 }

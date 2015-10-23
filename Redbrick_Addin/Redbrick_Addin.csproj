@@ -56,7 +56,7 @@
     <Reference Include="solidworkstools">
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks (3)\DriveWorksXpress\solidworkstools.dll</HintPath>
     </Reference>
-    <Reference Include="swTableType, Version=1.0.5774.12396, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="swTableType, Version=1.0.5774.20773, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\swTableType\x64\Release\swTableType.dll</HintPath>
     </Reference>
@@ -87,6 +87,12 @@
     </Compile>
     <Compile Include="CutlistHandler.Designer.cs">
       <DependentUpon>CutlistHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CutlistHeaderInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CutlistHeaderInfo.Designer.cs">
+      <DependentUpon>CutlistHeaderInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="DepartmentSelector.cs">
       <SubType>UserControl</SubType>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CutlistHandler.resx">
       <DependentUpon>CutlistHandler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CutlistHeaderInfo.resx">
+      <DependentUpon>CutlistHeaderInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DepartmentSelector.resx">
       <DependentUpon>DepartmentSelector.cs</DependentUpon>
