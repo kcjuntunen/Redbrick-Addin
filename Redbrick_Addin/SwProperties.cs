@@ -362,7 +362,7 @@ namespace Redbrick_Addin {
                 pNew.Rename("MATID");
                 pNew.ID = cutlistData.GetMaterialID(pNew.Value).ToString();
                 pOld.ID = pNew.ID;
-                pNew.Value = pNew.ID;
+                //pNew.Value = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
                 pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
@@ -373,8 +373,8 @@ namespace Redbrick_Addin {
             case "MATID":
               if (!Contains("CUTLIST MATERIAL")) {
                 pOld.Rename("CUTLIST MATERIAL");
-                pOld.ID = pOld.Value;
                 pNew.ID = pNew.Value;
+                pOld.ID = pNew.ID;
                 pNew.Descr = cutlistData.GetMaterialByID(pNew.ID);
                 pOld.Descr = pNew.Descr;
                 pOld.Type = swCustomInfoType_e.swCustomInfoText;
@@ -578,11 +578,14 @@ namespace Redbrick_Addin {
           c.Text = p.Value;
         } else {
           if (c is System.Windows.Forms.ComboBox) {
-            if (p.ID == null || p.ID == string.Empty) p.ID = "0";
-            (c as System.Windows.Forms.ComboBox).SelectedValue = int.Parse(p.ID);
+            //if (p.ID == null || p.ID == string.Empty) p.ID = "0";
+            int tp = -1;
+            if (int.TryParse(p.ID, out tp))
+              (c as System.Windows.Forms.ComboBox).SelectedValue = tp;
           } else if (c is System.Windows.Forms.CheckBox) {
             (c as System.Windows.Forms.CheckBox).Checked = (p.ID == "-1" ? true : false);
           } else {
+            c.Text = string.Empty;
             if (p.Descr != null && p.Descr != string.Empty)
               c.Text = p.Descr;
             else if (p.ResValue != null && p.ResValue != string.Empty)

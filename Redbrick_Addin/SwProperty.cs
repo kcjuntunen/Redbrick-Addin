@@ -91,17 +91,16 @@ namespace Redbrick_Addin {
         int res;
         if (Global) {
           // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-          if ((((Name.ToUpper().Contains("OP") && !Name.ToUpper().Contains("ID"))) || Name.ToUpper().Contains("DEPARTMENT"))
+          if ((((Name.ToUpper().StartsWith("OP") && !Name.ToUpper().EndsWith("ID"))) || Name.ToUpper().Contains("DEPARTMENT"))
               && Ctl != null) {
             System.Data.DataRowView drv = ((Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
-            string v = Descr; //drv.Row.ItemArray[1].ToString();
+            string v = Descr;
             res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
           }
 
-          if (((Name.ToUpper().Contains("OP") && Name.ToUpper().Contains("ID")) ||
+          if (((Name.ToUpper().EndsWith("ID")) ||
               Name.ToUpper().Contains("DEPT")) && Ctl != null) {
-            //System.Data.DataRowView drv = ((this.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
-            string v = this.ID; //drv.Row.ItemArray[0].ToString();
+            string v = ID;
             res = gcpm.Add3(this.Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
           } else if (this.Name.ToUpper().Contains("UPDATE")) {
             this.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
@@ -113,14 +112,8 @@ namespace Redbrick_Addin {
                     {
             res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
           }
-        } else // Configuration specific props.
-                {
-          // We only want material and edging here. It'll get ID #s from the datarow in the combobox.
-          if (this.Name.Contains("ID")) {
-            string v = ID;
-            res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoNumber, v, (int)ao);
-          }
-
+        } else {
+          // Configuration specific props.
           if (this.Name.Contains("CUTLIST MATERIAL")) {
             string v = Descr;
             res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
@@ -184,7 +177,7 @@ namespace Redbrick_Addin {
             break;
           case swCustomInfoType_e.swCustomInfoYesOrNo:
             if (Ctl != null) {
-              if ((this.Ctl as System.Windows.Forms.CheckBox).Checked)
+              if ((Ctl as System.Windows.Forms.CheckBox).Checked)
                 res = gcpm.Add3(Name, (int)Type, "Yes", (int)ao);
               else
                 res = gcpm.Add3(Name, (int)Type, "N", (int)ao);
@@ -193,10 +186,12 @@ namespace Redbrick_Addin {
             }
             break;
           default:
-            if (this.Global)
-              res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
-            else
-              res = scpm.Add3(Name, (int)Type, Value, (int)ao);
+            if (!Name.StartsWith("STUB")) {
+              if (Global)
+                res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
+              else
+                res = scpm.Add3(Name, (int)Type, Value, (int)ao);
+            }
             break;
         }
       }

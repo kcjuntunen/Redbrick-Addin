@@ -81,7 +81,7 @@ namespace Redbrick_Addin {
       SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, tbDesc.Text, true);
       cbBy.ValueMember = "INITIAL";
       SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, cbBy.Text.Substring(0, 2), true);
-      cbBy.ValueMember = "LAST";
+      //cbBy.ValueMember = "LAST";
       SwProperty date = new SwProperty("DATE " + (nodeCount + 1).ToString(), tType, dtpDate.Value.ToShortDateString(), true);
 
       if (Revs.Contains("REVISION " + (char)(nodeCount + 65))) {

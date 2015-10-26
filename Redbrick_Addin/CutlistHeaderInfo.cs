@@ -57,9 +57,8 @@ namespace Redbrick_Addin {
     public swTableType.swTableType table { get; set; }
 
     private void btnCreate_Click(object sender, EventArgs e) {
-      uint
-      CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, 100, cbDescription.Text,
-        cbCustomer.SelectedValue, tbL.Text, tbW.Text, tbH.Text, 0, Properties.Settings.Default.DefaultState, table.GetParts() );
+      //CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, 100, cbDescription.Text,
+      //  cbCustomer.SelectedValue, tbL.Text, tbW.Text, tbH.Text, 0, Properties.Settings.Default.DefaultState, table.GetParts() );
     }
   }
 }

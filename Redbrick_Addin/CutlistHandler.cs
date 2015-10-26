@@ -35,8 +35,22 @@ namespace Redbrick_Addin {
       QTY
     }
 
+    private void BlankCtrls(Control ctrl) {
+      foreach (Control c in ctrl.Controls) {
+        if (c is ComboBox) {
+          (c as ComboBox).SelectedIndex = -1;
+        } else if (c is TextBox) {
+          c.Text = string.Empty;
+        }
+        if (c.HasChildren) {
+          BlankCtrls(c);
+        }
+      }
+    }
+
     public void Update(ref SwProperties prop) {
       PropertySet = prop;
+      BlankCtrls(this);
       DataSet ds = prop.cutlistData.GetWherePartUsed(PropertySet.PartName);
       cbCutlist.DataSource = ds.Tables[(int)WhereUsedRes.CLID];
       cbCutlist.DisplayMember = "PARTNUM";
