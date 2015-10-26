@@ -12,11 +12,18 @@ using SolidWorks.Interop.swconst;
 namespace Redbrick_Addin {
   public partial class CutlistHandler : UserControl {
     public CutlistHandler(ref SwProperties prop) {
-      this.PropertySet = prop;
+      PropertySet = prop;
       InitializeComponent();
+      FillBoxes();
+    }
 
-      for (int i = 100; i < 106; i++)
+    private void FillBoxes() {
+      for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
+
+      cbStatus.DataSource = PropertySet.cutlistData.States.Tables[0];
+      cbStatus.DisplayMember = "STATE";
+      cbStatus.ValueMember = "ID";
     }
 
     public enum WhereUsedRes {
@@ -24,15 +31,13 @@ namespace Redbrick_Addin {
       PARTNUM,
       //REV,
       DESCR,
-      LENGTH,
-      WIDTH,
-      HEIGHT,
+      LENGTH, WIDTH, HEIGHT,
       CDATE,
       CUSTID,
-      SETUP_BY,
-      STATE_BY,
+      SETUP_BY, STATE_BY,
       DRAWING,
-      QTY
+      QTY,
+      STATEID
     }
 
     private void BlankCtrls(Control ctrl) {
@@ -63,7 +68,7 @@ namespace Redbrick_Addin {
       if (ds.Tables[0].Rows.Count > 0) {
         if (cbCutlist.Items.Contains(Properties.Settings.Default.CurrentCutlist))
           cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
-
+        
         if (cbCutlist.SelectedValue != null) {
           DataRowView drv = (this.cbCutlist.SelectedItem as DataRowView);
           tbDescription.Text = drv[(int)WhereUsedRes.DESCR].ToString();
@@ -74,6 +79,7 @@ namespace Redbrick_Addin {
           dateTimePicker1.Text = drv[(int)WhereUsedRes.CDATE].ToString();
           //cbRev.Text = drv[(int)WhereUsedRes.REV].ToString();
           tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
+          cbStatus.SelectedValue = drv[(int)WhereUsedRes.STATEID].ToString();
           prop.CutlistQuantity = drv[(int)WhereUsedRes.QTY].ToString();
           prop.CutlistID = drv[(int)WhereUsedRes.CLID].ToString();
 
@@ -161,11 +167,14 @@ namespace Redbrick_Addin {
     }
 
     private void btnInsert_Click(object sender, EventArgs e) {
-      CutlistData cd = PropertySet.cutlistData;
-      string[] clnrev = cbCutlist.Text.Split(new string[] { "REV" }, System.StringSplitOptions.None);
-      //cd.UpdateCutlist(clnrev[0].Trim(), tbRef.Text, clnrev[1].Trim(), tbDescription.Text,
-      //  cbCustomer.SelectedValue, tbL.Text, tbW.Text, tbH.Text, tbQty.Text, Properties.Settings.Default.DefaultState, 
-      //  MakePartFromPropertySet(PropertySet));
+      string[] s = cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
+      if (s.Length > 1) {
+        CutlistHeaderInfo chi = new CutlistHeaderInfo(MakePartFromPropertySet(PropertySet), PropertySet.cutlistData, s[0].Trim(), s[1].Trim());
+        chi.ShowDialog();
+      } else {
+        CutlistHeaderInfo chi = new CutlistHeaderInfo(MakePartFromPropertySet(PropertySet), PropertySet.cutlistData);
+        chi.ShowDialog();
+      }
     }
 
     Part MakePartFromPropertySet(SwProperties swp) {

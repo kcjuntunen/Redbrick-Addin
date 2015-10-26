@@ -315,5 +315,14 @@ namespace Redbrick_Addin.Properties {
                 this["CutlistHeaderSize"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int RevNoLimit {
+            get {
+                return ((int)(this["RevNoLimit"]));
+            }
+        }
     }
 }
