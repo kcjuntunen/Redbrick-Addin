@@ -14,6 +14,7 @@ namespace Redbrick_Addin {
   public partial class ConfigurationSpecific : UserControl {
     private CutlistData cd;
     private SwProperties propertySet;
+    private bool changingwithmouse = false;
 
     public ConfigurationSpecific(ref SwProperties prop) {
       propertySet = prop;
@@ -23,6 +24,7 @@ namespace Redbrick_Addin {
 
       InitializeComponent();
       fillMat();
+      fillStatus();
       ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
       foreach (ComboBox c in cc)
         fillEdg((object)c);
@@ -30,10 +32,28 @@ namespace Redbrick_Addin {
       LinkControls();
     }
 
+    private void fillStatus() {
+      cbStatus.DataSource = propertySet.cutlistData.States.Tables[0];
+      cbStatus.DisplayMember = "STATE";
+      cbStatus.ValueMember = "ID";
+    }
+
     public void Update(ref SwProperties prop) {
       propertySet = prop;
       configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
       cd = prop.cutlistData;
+      DataSet ds = cd.GetWherePartUsed(propertySet.PartName);
+      cbCutlist.DataSource = ds.Tables[(int)CutlistData.WhereUsedRes.CLID];
+      cbCutlist.DisplayMember = "PARTNUM";
+      cbCutlist.ValueMember = "CLID";
+      
+      int recentCutlist =  Properties.Settings.Default.CurrentCutlist;
+
+      cbCutlist.SelectedValue = recentCutlist;
+
+      if (cbCutlist.SelectedItem != null)
+        cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+
       _edgeDiffL = 0.0;
       _edgeDiffW = 0.0;
       LinkControls();
@@ -229,6 +249,19 @@ namespace Redbrick_Addin {
     public double EdgeDiffW {
       get { return _edgeDiffW; }
       set { _edgeDiffW = value; }
+    }
+
+    private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e) {
+      if (changingwithmouse) {
+        Properties.Settings.Default.CurrentCutlist = int.Parse(cbCutlist.SelectedValue.ToString());
+        Properties.Settings.Default.Save();
+        cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+        changingwithmouse = false;
+      }
+    }
+
+    private void cbCutlist_MouseClick(object sender, MouseEventArgs e) {
+      changingwithmouse = true;
     }
   }
 }

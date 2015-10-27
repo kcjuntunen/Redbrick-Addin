@@ -23,7 +23,7 @@ namespace Redbrick_Addin {
         if (c is CheckBox)
           (c as CheckBox).CheckedChanged += new EventHandler(DirtTracker_CheckChanged);
 
-        if (c is ComboBox)
+        if ((c is ComboBox) && !c.Name.ToUpper().Contains("CUTLIST"))
           (c as ComboBox).SelectedIndexChanged += new EventHandler(DirtTracker_SelectionChanged);
 
         if (c.HasChildren)

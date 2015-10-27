@@ -26,6 +26,40 @@ namespace Redbrick_Addin {
       conn.Close();
     }
 
+    public enum ECODataColumns {
+      USER_FIRST,
+      USER_LAST,
+      CHANGES,
+      STATUS,
+      DESC,
+      REVISION
+    }
+
+    public enum WhereUsedRes {
+      CLID,
+      PARTNUM, //REV,
+      DESCR,
+      LENGTH, WIDTH, HEIGHT,
+      CDATE,
+      CUSTID,
+      SETUP_BY, STATE_BY,
+      DRAWING,
+      QTY,
+      STATEID
+    }
+
+    public enum CutlistDataFieldsJoined {
+      CLID,
+      PARTNUM, // REV,
+      DRAWING,
+      CUSTID,
+      CDATE,
+      DESCR,
+      LENGTH, WIDTH, HEIGHT,
+      SETUP_BY, STATE_BY,
+      STATEID
+    }
+
     private DataSet GetMaterials() {
       if (_materials == null) {
         lock (threadLock) {
@@ -428,15 +462,6 @@ namespace Redbrick_Addin {
       return string.Empty;
     }
 
-    public enum ECODataColumns {
-      USER_FIRST,
-      USER_LAST,
-      CHANGES,
-      STATUS,
-      DESC,
-      REVISION
-    }
-
     public eco GetECOData(string ecoNumber) {
       eco e = new eco();
       int en;
@@ -662,13 +687,13 @@ namespace Redbrick_Addin {
         System.Windows.Forms.MessageBox.Show(SQL);
         //using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
 
-        object hashres = GetAnything("HASH", "CUT_PARTS", string.Format("PARTNUM = '{0}", kp.Key));
+        object hashres = GetAnything("HASH", "CUT_PARTS", string.Format("PARTNUM = '{0}'", kp.Key));
         if (affected < 1 && (int.Parse(hashres.ToString()) == p.Hash)) {
           SQL = string.Format("INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
             "OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
             "({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18})", kp.Key, p.Description,
             p.Length, p.Width, p.Thickness, p.CNC1, p.CNC2, p.BlankQty, p.OverL, p.OverW, p.get_OpID(0), p.get_OpID(1), p.get_OpID(2), p.get_OpID(3), p.get_OpID(4),
-            p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID);
+            p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID, p.Hash);
           System.Windows.Forms.MessageBox.Show(SQL);
           //using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
         }
@@ -737,18 +762,6 @@ namespace Redbrick_Addin {
           }
         }
       }
-    }
-
-    public enum CutlistDataFieldsJoined {
-      CLID,
-      PARTNUM,// REV,
-      DRAWING,
-      CUSTID,
-      CDATE,
-      DESCR,
-      LENGTH, WIDTH, HEIGHT,
-      SETUP_BY, STATE_BY,
-      STATEID
     }
 
     public DataSet GetCutlists() {

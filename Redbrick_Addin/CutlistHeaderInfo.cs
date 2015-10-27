@@ -43,7 +43,7 @@ namespace Redbrick_Addin {
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
       cbCustomer.ValueMember = "CUSTID";
-      cbCustomer.SelectedIndex = cbCustomer.FindString(DrawingPropertySet.GetProperty("CUSTOMER").Value.Split(' ')[0]);
+      cbCustomer.SelectedIndex = cbCustomer.FindString(DrawingPropertySet.GetProperty("CUSTOMER").Value.Split('-')[0].Trim());
 
       cbSetupBy.DataSource = CutlistData.GetAuthors().Tables[0];
       cbSetupBy.DisplayMember = "NAME";

@@ -24,7 +24,6 @@ namespace Redbrick_Addin {
 
       bool res = swApp.SetAddinCallbackInfo(0, this, cookie);
       this.UISetup();
-
       return true;
     }
 

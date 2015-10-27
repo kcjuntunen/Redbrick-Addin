@@ -19,7 +19,7 @@ namespace Redbrick_Addin {
     private GeneralProperties gp;
     private MachineProperties mp;
     private Ops op;
-    private CutlistHandler ch;
+    //private CutlistHandler ch;
 
     private bool deptEvents = false;
 
@@ -48,9 +48,9 @@ namespace Redbrick_Addin {
       op = new Ops(ref this.props);
       op.TabIndex = 2;
       op.Dock = d;
-      ch = new CutlistHandler(ref this.props);
-      ch.TabIndex = 1;
-      ch.Dock = d;
+      //ch = new CutlistHandler(ref this.props);
+      //ch.TabIndex = 1;
+      //ch.Dock = d;
 
       // If anything's not docked, dock it.
       foreach (Control item in this.tlpMain.Controls) {
@@ -62,18 +62,18 @@ namespace Redbrick_Addin {
       gbMachProp.Controls.Add(mp);
       tlp1.Controls.Add(ds);
       tlp1.Controls.Add(op);
-      gbCutlist.Controls.Add(ch);
+      //gbCutlist.Controls.Add(ch);
       //tlpMain.ResumeLayout(true);
       ResumeLayout(false);
       PerformLayout();
     }
 
     public void Update(ref SwProperties p) {
-      if (ch.CutlistComboBox.SelectedItem != null && ch.RevComboBox.Text != string.Empty) {
-        Properties.Settings.Default.CurrentCutlist = int.Parse((ch.CutlistComboBox.SelectedItem as DataRowView)[0].ToString());
-        Properties.Settings.Default.CurrentRev = int.Parse(ch.RevComboBox.Text);
-        Properties.Settings.Default.Save();
-      }
+      //if (ch.CutlistComboBox.SelectedItem != null && ch.RevComboBox.Text != string.Empty) {
+      //  Properties.Settings.Default.CurrentCutlist = int.Parse((ch.CutlistComboBox.SelectedItem as DataRowView)[0].ToString());
+      //  Properties.Settings.Default.CurrentRev = int.Parse(ch.RevComboBox.Text);
+      //  Properties.Settings.Default.Save();
+      //}
       TearDownDeptSelectEvent();
       // Order matters here. The first thing SwProperties does informs what ds
       // does. Ds informs these other guys.
@@ -84,7 +84,7 @@ namespace Redbrick_Addin {
       gp.Update(ref p);
       op.Update(ref p);
       mp.Update(ref p, cs.EdgeDiffL, cs.EdgeDiffW);
-      ch.Update(ref p);
+      //ch.Update(ref p);
       SetupDeptSelectEvent();
       dirtTracker = new DirtTracker(this);
     }
@@ -112,7 +112,7 @@ namespace Redbrick_Addin {
       // entered into the controls, then writes to SW.
       ReadControls();
       props.Write(doc);
-      ch.Write();
+      //ch.Write();
       // Show changes.
       doc.ForceRebuild3(false);
 
@@ -124,8 +124,8 @@ namespace Redbrick_Addin {
     }
 
     private void ReadControls() {
-      props.CutlistID = this.ch.CutlistID;
-      props.CutlistQuantity = this.ch.CutlistQty;
+      //props.CutlistID = this.ch.CutlistID;
+      //props.CutlistQuantity = this.ch.CutlistQty;
       props.ReadControls();
     }
 
