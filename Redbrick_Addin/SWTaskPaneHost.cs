@@ -139,7 +139,14 @@ namespace Redbrick_Addin {
           if (!string.IsNullOrWhiteSpace(Document.GetPathName())) {
             fi = new System.IO.FileInfo(Document.GetPathName());
             prop.PartFileInfo = fi;
-            prop.Hash = GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
+
+            if (!prop.Contains("CRC32")) {
+              prop.Hash = GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
+              SwProperty p = new SwProperty("CRC32", swCustomInfoType_e.swCustomInfoNumber, prop.Hash.ToString(), true);
+              prop.Add(p);
+            } else {
+              
+            }
           } else {
             //this.prop.PartName = "New Document"; // <-- stack overflow? weird
           }
@@ -175,7 +182,7 @@ namespace Redbrick_Addin {
           case swDocumentTypes_e.swDocASSEMBLY:
             if (!PartSetup) {
               ClearControls(this);
-              prop.GetPropertyData(Document);
+              //prop.GetPropertyData(Document);
               // Part/assembly props are about the same
               SetupPart();
               // link whatever's in the prop to the controls
@@ -222,7 +229,7 @@ namespace Redbrick_Addin {
       }
     }
 
-    private int GetHash(string fullPath) {
+    static private int GetHash(string fullPath) {
 
       DamienG.Security.Cryptography.Crc32 crc = new DamienG.Security.Cryptography.Crc32();
 

@@ -200,6 +200,8 @@ namespace Redbrick_Addin {
       p.SetOverW(swp.GetProperty("OVERW").Value);
       p.SetQuantity(swp.CutlistQuantity);
       p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").ID);
+      string hash = string.Format("{0:X}", swp.GetProperty("CRC32").Value);
+      p.Hash = uint.Parse(hash, System.Globalization.NumberStyles.HexNumber);
       return p;
     }
 

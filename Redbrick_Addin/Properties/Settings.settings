@@ -130,5 +130,8 @@
     <Setting Name="RevNoLimit" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">7</Value>
     </Setting>
+    <Setting Name="MasterTableHash" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C6-2E-80-9C-3B-A4-97-7C-2A-98-B9-D6-48-9A-BF-A1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

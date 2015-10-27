@@ -85,6 +85,10 @@ namespace Redbrick_Addin {
       op.Update(ref p);
       mp.Update(ref p, cs.EdgeDiffL, cs.EdgeDiffW);
       //ch.Update(ref p);
+      int hash = Redbrick.GetHash(string.Format("{0}\\{1}", props.PartFileInfo.Directory.FullName, props.PartFileInfo.Name));
+      if (int.Parse(props.GetProperty("CRC32").Value) != hash) {
+        props.GetProperty("CRC32").Value = hash.ToString();
+      }
       SetupDeptSelectEvent();
       dirtTracker = new DirtTracker(this);
     }

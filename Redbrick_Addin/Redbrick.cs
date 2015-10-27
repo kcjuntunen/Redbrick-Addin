@@ -74,6 +74,26 @@ namespace Redbrick_Addin {
       taskpaneView = null;
     }
 
+    static public int GetHash(string fullPath) {
+
+      DamienG.Security.Cryptography.Crc32 crc = new DamienG.Security.Cryptography.Crc32();
+
+      byte[] b = new byte[fullPath.Length];
+      string hash = string.Empty;
+
+      for (int i = 0; i < fullPath.Length; i++)
+        b[i] = (byte)fullPath[i];
+
+      foreach (byte byt in crc.ComputeHash(b))
+        hash += byt.ToString("x2").ToLower();
+
+      try {
+        return int.Parse(hash, System.Globalization.NumberStyles.HexNumber);
+      } catch (Exception) {
+        return 0;
+      }
+    }
+
     [ComRegisterFunction()]
     private static void ComRegister(Type t) {
       string keyPath = String.Format(@"SOFTWARE\SolidWorks\AddIns\{0:b}", t.GUID);

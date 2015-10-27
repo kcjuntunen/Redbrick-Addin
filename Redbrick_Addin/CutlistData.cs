@@ -605,28 +605,23 @@ namespace Redbrick_Addin {
       int affected = 0;
       if (ENABLE_DB_WRITE) {
         string SQL = string.Empty;
+        SQL = string.Format("UPDATE CUT_CUTLISTS SET DRAWING = '{0}', CUSTID = {1}, CDATE = {2}, DESCR = '{3}', " +
+         "LENGTH = {4}, WIDTH = {5}, HEIGHT = {6}, STATE_BY = {7}, STATEID = {8} " +
+         "WHERE PARTNUM='{9}' AND REV='{10}';", drawing.Replace("'", "\""), custid, "GETDATE()", descr.Replace("'", "\""), l, w, h,
+         currentAuthor, state, itemNo.Replace("'", "\""), rev);
 
-        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-          SQL = string.Format("UPDATE CUT_CUTLISTS SET CUT_CUTLISTS.DRAWING = '{0}', CUT_CUTLISTS.CUSTID = {1}, CUT_CUTLISTS.CDATE = {2}, CUT_CUTLISTS.DESCR = '{3}', " +
-           "CUT_CUTLISTS.LENGTH = {4}, CUT_CUTLISTS.WIDTH = {5}, CUT_CUTLISTS.HEIGHT = {6}, CUT_CUTLISTS.STATE_BY = {7}, CUT_CUTLISTS.STATEID = {8} " +
-           "WHERE (((CUT_CUTLISTS.PARTNUM)='{9}') AND ((CUT_CUTLISTS.REV)='{10}'));", drawing.Replace("'", "\""), custid, DateTime.Now, descr.Replace("'", "\""), l, w, h,
-           currentAuthor, state, itemNo.Replace("'", "\""), rev);
-          System.Windows.Forms.MessageBox.Show(SQL);
-          //affected = comm.ExecuteNonQuery();
-        }
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
         if (affected < 1) {
-          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-            SQL = string.Format("INSERT INTO CUT_CUTLISTS (PARTNUM, REV, DRAWING, CUSTID, CDATE, DESCR, LENGTH, WIDTH, HEIGHT, SETUP_BY, STATE_BY, STATEID) VALUES " +
-              "('{0}', {1}, '{2}', {3}, '{4}', '{5}', {6}, {7}, {8}, {9}, {10}, {11});", itemNo.Replace("'", "\""), rev, drawing.Replace("'", "\""), custid,
-              DateTime.Now, descr.Replace("'", "\""), l, w, h, currentAuthor, currentAuthor, Properties.Settings.Default.DefaultState);
-            System.Windows.Forms.MessageBox.Show(SQL);
-
-            //affected = comm.ExecuteNonQuery();
-          }
-
-          if (affected == 1) {
-            foreach (KeyValuePair<string, Part> item in prts) {
-              UpdatePart(item);
+          SQL = string.Format("INSERT INTO CUT_CUTLISTS (PARTNUM, REV, DRAWING, CUSTID, CDATE, DESCR, LENGTH, WIDTH, HEIGHT, SETUP_BY, STATE_BY, STATEID) VALUES " +
+            "('{0}', {1}, '{2}', {3}, {4}, '{5}', {6}, {7}, {8}, {9}, {10}, {11});", itemNo.Replace("'", "\""), rev, drawing.Replace("'", "\""), custid,
+            "GETDATE()", descr.Replace("'", "\""), l, w, h, currentAuthor, currentAuthor, Properties.Settings.Default.DefaultState);
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+        }
+        if (affected == 1) {
+          foreach (KeyValuePair<string, Part> item in prts) {
+            UpdatePart(item);
+            if (string.Format("{0:X}", item.Value.Hash) ==
+              GetAnything("HASH", "CUT_PARTS", string.Format("PARTNUM = '{0}'", item.Key)).ToString()) {
               UpdateCutlistPart(itemNo, item, item.Value.Qty);
             }
           }
@@ -640,15 +635,14 @@ namespace Redbrick_Addin {
       if (ENABLE_DB_WRITE) {
         string prt = kpprt.Key;
         Part p = kpprt.Value;
-        string SQL = string.Format("UPDATE (CUT_CUTLIST_PARTS INNER JOIN CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID) " +
-          "INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
+        string SQL = string.Format("UPDATE CUT_CUTLIST_PARTS " +
           "SET CUT_CUTLIST_PARTS.MATID = {0}, CUT_CUTLIST_PARTS.EDGEID_LF = {1}, CUT_CUTLIST_PARTS.EDGEID_LB = {2}, CUT_CUTLIST_PARTS.EDGEID_WR = {3}, " +
-          "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, CUT_CUTLIST_PARTS.QTY = {5} " +
+          "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, CUT_CUTLIST_PARTS.QTY = {5} FROM (CUT_CUTLIST_PARTS INNER JOIN CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID) " +
+          "INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
           "WHERE (((CUT_CUTLISTS.PARTNUM)='{6}') AND ((CUT_PARTS.PARTNUM)='{7}'));", p.MaterialID, p.EdgeFrontID, p.EdgeBackID, p.EdgeRightID, p.EdgeLeftID,
           p.Qty, cl, prt);
 
-        //using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
-        System.Windows.Forms.MessageBox.Show(SQL);
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
         if (affected < 1) {
           // Seems like this should work every time given what went before.
           throw new Exception(string.Format("Couldn't execute this:\n{0}", SQL));
@@ -656,17 +650,6 @@ namespace Redbrick_Addin {
       }
       return affected;
     }
-
-    //private int InsertIntoCutlist(int clid, int partid, Part p, int qty) {
-    //  int affected = 0;
-    //  if (ENABLE_DB_WRITE) {
-    //    string SQL;
-    //    SQL = string.Format("INSERT INTO CUT_CUTLIST_PARTS (CLID, PARTID, MATID, EDGEID_LF, EDGEID_LB, EDGEID_WR, EDGEID_WL, QTY) VALUES " +
-    //      "({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7})", clid, partid, p.MaterialID, p.EdgeFrontID, p.EdgeBackID, p.EdgeRightID, p.EdgeLeftID, qty);
-    //    using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
-    //  }
-    //  return affected;
-    //}
 
     /// <summary>
     /// Gets and/or creates a part.
@@ -677,25 +660,22 @@ namespace Redbrick_Addin {
       if (ENABLE_DB_WRITE) {
         Part p = kp.Value;
         string SQL;
-        SQL = string.Format("UPDATE CUT_PARTS SET CUT_PARTS.DESCR = '{1}', CUT_PARTS.FIN_L = {2}, CUT_PARTS.FIN_W = {3}, CUT_PARTS.THICKNESS = {4}, " +
-          "CUT_PARTS.CNC1 = '{5}', CUT_PARTS.CNC2 = '{6}', CUT_PARTS.BLANKQTY = {7}, CUT_PARTS.OVER_L = {8}, CUT_PARTS.OVER_W = {9}, CUT_PARTS.OP1ID = {10}, " +
-          "CUT_PARTS.OP2ID = {11}, CUT_PARTS.OP3ID = {12}, CUT_PARTS.OP4ID = {13}, CUT_PARTS.OP5ID = {14}, CUT_PARTS.COMMENT = '{15}', CUT_PARTS.UPDATE_CNC = {16}, " +
-          "CUT_PARTS.TYPE = {17}, WHERE (((CUT_PARTS.PARTNUM)='{0}') AND ((CUT_PARTS.HASH)='{18}'));", kp.Key, p.Description,
+        SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{1}', FIN_L = {2}, FIN_W = {3}, THICKNESS = {4}, " +
+          "CNC1 = '{5}', CNC2 = '{6}', BLANKQTY = {7}, OVER_L = {8}, OVER_W = {9}, OP1ID = {10}, " +
+          "OP2ID = {11}, OP3ID = {12}, OP4ID = {13}, OP5ID = {14}, COMMENT = '{15}', UPDATE_CNC = {16}, " +
+          "TYPE = {17} WHERE PARTNUM='{0}' AND HASH='{18}';", kp.Key, p.Description,
           p.Length, p.Width, p.Thickness, p.CNC1, p.CNC2, p.BlankQty, p.OverL, p.OverW, p.get_OpID(0), p.get_OpID(1), p.get_OpID(2), p.get_OpID(3), p.get_OpID(4),
           p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID, p.Hash);
 
-        System.Windows.Forms.MessageBox.Show(SQL);
-        //using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
 
-        object hashres = GetAnything("HASH", "CUT_PARTS", string.Format("PARTNUM = '{0}'", kp.Key));
-        if (affected < 1 && (int.Parse(hashres.ToString()) == p.Hash)) {
+        if (affected < 1 && (GetPartID(kp.Key) < 1)) {
           SQL = string.Format("INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
             "OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
-            "({0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18})", kp.Key, p.Description,
+            "('{0}', '{1}', {2}, {3}, {4}, '{5}', '{6}', {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, '{15}', {16}, {17}, {18})", kp.Key, p.Description,
             p.Length, p.Width, p.Thickness, p.CNC1, p.CNC2, p.BlankQty, p.OverL, p.OverW, p.get_OpID(0), p.get_OpID(1), p.get_OpID(2), p.get_OpID(3), p.get_OpID(4),
             p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID, p.Hash);
-          System.Windows.Forms.MessageBox.Show(SQL);
-          //using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
         }
         return GetPartID(kp.Key);
       }
@@ -727,7 +707,7 @@ namespace Redbrick_Addin {
     }
 
     public int GetCutlistID(string item, string rev) {
-      string SQL = string.Format("SELECT CUT_CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)='{0}')) AND (((CUT_CUTLISTS.REV)='{1}'))", 
+      string SQL = string.Format("SELECT CUT_CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)='{0}')) AND (((CUT_CUTLISTS.REV)='{1}'))",
         item.Replace("'", "\""), rev.Replace("'", "\""));
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataReader dr = comm.ExecuteReader()) {

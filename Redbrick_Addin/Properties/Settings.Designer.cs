@@ -324,5 +324,14 @@ namespace Redbrick_Addin.Properties {
                 return ((int)(this["RevNoLimit"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C6-2E-80-9C-3B-A4-97-7C-2A-98-B9-D6-48-9A-BF-A1")]
+        public string MasterTableHash {
+            get {
+                return ((string)(this["MasterTableHash"]));
+            }
+        }
     }
 }

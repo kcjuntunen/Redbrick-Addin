@@ -152,8 +152,8 @@ namespace Redbrick_Addin {
             res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
             break;
           case swCustomInfoType_e.swCustomInfoNumber:
-            if (this.Global)
-              if (this.Name.ToUpper().Contains("BLANK"))
+            if (Global)
+              if (Name.ToUpper().Contains("BLANK") || Name.ToUpper().Contains("CRC"))
                 res = gcpm.Add3(Name, (int)this.Type, Value, (int)ao);
               else
                 res = gcpm.Add3(Name, (int)Type, ID, (int)ao);
@@ -505,6 +505,7 @@ namespace Redbrick_Addin {
     }
 
     private SldWorks _swApp;
+    private swCustomInfoType_e swCustomInfoType_e;
 
     public SldWorks SwApp {
       get { return _swApp; }

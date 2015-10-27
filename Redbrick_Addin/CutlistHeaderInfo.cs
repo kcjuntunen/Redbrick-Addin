@@ -99,20 +99,16 @@ namespace Redbrick_Addin {
       cbSetupBy.DisplayMember = "NAME";
       cbSetupBy.ValueMember = "UID";
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
-
-      //DataSet dr = CutlistData.GetCutlistData(itemNo, Rev);
-      //cbCustomer.SelectedValue = int.Parse(dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.CUSTID].ToString());
-      //cbItemNo.Text = dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.PARTNUM].ToString();
-      //cbDescription.Text = dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.DESCR].ToString();
-      //tbL.Text = dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.LENGTH].ToString();
-      //tbW.Text = dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.WIDTH].ToString();
-      //tbH.Text = dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.HEIGHT].ToString();
-      //cbDrawingReference.Text = dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.DRAWING].ToString();
-      //cbSetupBy.SelectedValue = int.Parse(dr.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.SETUP_BY].ToString());
     }
 
     private void InitTableData() {
-      table = new swTableType.swTableType(DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2);
+      try {
+        table = new swTableType.swTableType((DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2),
+          Properties.Settings.Default.MasterTableHash);
+      } catch (Exception e) {
+        
+        throw;
+      }
     }
 
     private void CutlistHeaderInfo_FormClosing(object sender, FormClosingEventArgs e) {
@@ -155,6 +151,7 @@ namespace Redbrick_Addin {
         CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, itpRev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, d);
       }
+      Close();
     }
 
     private double ParseFloat(string number) {
