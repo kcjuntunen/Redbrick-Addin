@@ -133,5 +133,11 @@
     <Setting Name="MasterTableHash" Type="System.String" Scope="Application">
       <Value Profile="(Default)">C6-2E-80-9C-3B-A4-97-7C-2A-98-B9-D6-48-9A-BF-A1</Value>
     </Setting>
+    <Setting Name="DataDisplayLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="DataDisplaySize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

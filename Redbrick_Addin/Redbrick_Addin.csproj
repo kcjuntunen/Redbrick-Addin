@@ -94,6 +94,12 @@
     <Compile Include="CutlistHeaderInfo.Designer.cs">
       <DependentUpon>CutlistHeaderInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataDisplay.Designer.cs">
+      <DependentUpon>DataDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="DepartmentSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CutlistHeaderInfo.resx">
       <DependentUpon>CutlistHeaderInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataDisplay.resx">
+      <DependentUpon>DataDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DepartmentSelector.resx">
       <DependentUpon>DepartmentSelector.cs</DependentUpon>

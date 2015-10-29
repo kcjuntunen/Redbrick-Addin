@@ -164,5 +164,10 @@ namespace Redbrick_Addin {
       if (double.TryParse(tVal, out dVal))
         _overW = dVal;
     }
+
+    private void btnWhere_Click(object sender, EventArgs e) {
+      DataDisplay dd = new DataDisplay(propertySet.cutlistData.GetWhereProgUsed(tbCNC1.Text));
+      dd.ShowDialog();
+    }
   }
 }

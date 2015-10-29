@@ -261,6 +261,21 @@ namespace Redbrick_Addin {
       }
     }
 
+    public DataTable GetWhereProgUsed(string prog) {
+      string SQL = @"SELECT * FROM [CUT_PARTS] WHERE [CNC1]=? OR [CNC2]=?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@proga", prog);
+        comm.Parameters.AddWithValue("@progb", prog);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataTable dt = new DataTable()) {
+            dt.Locale = System.Globalization.CultureInfo.InvariantCulture;
+            da.Fill(dt);
+            return dt;
+          }
+        }
+      }
+    }
+
     public double GetEdgeThickness(int ID) {
       string SQL = @"SELECT THICKNESS FROM CUT_EDGES WHERE EDGEID = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {

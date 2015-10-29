@@ -333,5 +333,29 @@ namespace Redbrick_Addin.Properties {
                 return ((string)(this["MasterTableHash"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point DataDisplayLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["DataDisplayLocation"]));
+            }
+            set {
+                this["DataDisplayLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size DataDisplaySize {
+            get {
+                return ((global::System.Drawing.Size)(this["DataDisplaySize"]));
+            }
+            set {
+                this["DataDisplaySize"] = value;
+            }
+        }
     }
 }
