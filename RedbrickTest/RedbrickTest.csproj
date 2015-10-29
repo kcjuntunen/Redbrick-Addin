@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SolidWorks.Interop.swconst">
+      <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks (3)\api\redist\CLR2\SolidWorks.Interop.swconst.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
   </ItemGroup>

@@ -345,12 +345,14 @@ namespace Redbrick_Addin {
         foreach (string s in ss) {
           res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
           SwProperty pOld = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
+          pOld.Old = true;
           pOld.Value = valOut;
           pOld.ResValue = resValOut;
           pOld.Type = (swCustomInfoType_e)g.GetType2(s);
           pOld.SwApp = swApp;
 
           SwProperty pNew = new SwProperty(s, swCustomInfoType_e.swCustomInfoText, valOut, true);
+          pOld.Old = false;
           pNew.Value = valOut;
           pNew.ResValue = resValOut;
           pNew.Type = (swCustomInfoType_e)g.GetType2(s);

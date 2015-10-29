@@ -68,7 +68,7 @@ namespace Redbrick_Addin {
           DateTime end;
           start = DateTime.Now;
 #endif
-          string SQL = "SELECT MATID,DESCR,COLOR FROM CUT_MATERIALS ORDER BY DESCR;";
+          string SQL = @"SELECT MATID,DESCR,COLOR FROM CUT_MATERIALS ORDER BY DESCR";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
             using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
               using (DataSet ds = new DataSet()) {
@@ -94,7 +94,7 @@ namespace Redbrick_Addin {
         DateTime end;
         start = DateTime.Now;
 #endif
-        string SQL = "SELECT EDGEID,DESCR,COLOR,THICKNESS FROM CUT_EDGES ORDER BY DESCR;";
+        string SQL = @"SELECT EDGEID,DESCR,COLOR,THICKNESS FROM CUT_EDGES ORDER BY DESCR";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
@@ -119,17 +119,17 @@ namespace Redbrick_Addin {
       }
     }
 
-    private DataSet GetOps(int OpType) {
+    private DataSet GetOps(int optype) {
       lock (threadLock) {
-        if (this.OpType != OpType) {
-          this.OpType = OpType;
-          string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_PART_TYPES "
-              + "INNER JOIN CUT_OPS ON CUT_PART_TYPES.TYPEID = CUT_OPS.OPTYPE WHERE CUT_PART_TYPES.TYPEID = {0} ORDER BY OPDESCR", OpType);
+        if (OpType != optype) {
+          OpType = optype;
+          string SQL = @"SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_PART_TYPES "
+              + @"INNER JOIN CUT_OPS ON CUT_PART_TYPES.TYPEID = CUT_OPS.OPTYPE WHERE CUT_PART_TYPES.TYPEID = ? ORDER BY OPDESCR";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@OpType", optype);
             using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
               using (DataSet ds = new DataSet()) {
                 da.Fill(ds);
-                //conn.Close();
                 DataRow dar = ds.Tables[0].NewRow();
                 dar[0] = 0;
                 dar[1] = string.Empty;
@@ -148,8 +148,9 @@ namespace Redbrick_Addin {
 
     private DataSet GetOps() {
       lock (threadLock) {
-        string SQL = string.Format("SELECT * FROM CUT_OPS WHERE OPTYPE = {0} ORDER BY OPDESCR", OpType);
+        string SQL = @"SELECT * FROM CUT_OPS WHERE OPTYPE = ? ORDER BY OPDESCR";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@OpType", OpType);
           using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
             using (DataSet ds = new DataSet()) {
 
@@ -174,7 +175,7 @@ namespace Redbrick_Addin {
 
     public DataSet GetOpTypes() {
       lock (threadLock) {
-        string SQL = "SELECT * FROM CUT_PART_TYPES ORDER BY TYPEID";
+        string SQL = @"SELECT * FROM CUT_PART_TYPES ORDER BY TYPEID";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
             using (DataSet ds = new DataSet()) {
@@ -187,42 +188,8 @@ namespace Redbrick_Addin {
       }
     }
 
-    public DataSet GetWherePartUsed(int partID) {
-      string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
-          "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
-          "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
-          "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
-          "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
-          "(((CUT_PARTS.PARTID)={0}));", partID);
-      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
-          using (DataSet ds = new DataSet()) {
-            da.Fill(ds);
-            return ds;
-          }
-        }
-      }
-    }
-
-    public DataSet GetWherePartUsed(string partDescr) {
-      string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
-          "CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
-          "CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
-          "(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
-          "CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
-          "(((CUT_PARTS.PARTNUM) Like '{0}'));", partDescr);
-      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
-          using (DataSet ds = new DataSet()) {
-            da.Fill(ds);
-            return ds;
-          }
-        }
-      }
-    }
-
     private DataSet GetCustomers() {
-      string SQL = "SELECT * FROM GEN_CUSTOMERS ORDER BY CUSTOMER;";
+      string SQL = @"SELECT * FROM GEN_CUSTOMERS ORDER BY CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
@@ -234,8 +201,9 @@ namespace Redbrick_Addin {
     }
 
     private DataSet GetCustomers(bool current) {
-      string SQL = string.Format("SELECT * FROM GEN_CUSTOMERS WHERE GEN_CUSTOMERS.CUSTACTIVE = {0} ORDER BY GEN_CUSTOMERS.CUSTOMER;", (current ? 1 : 0));
+      string SQL = @"SELECT * FROM GEN_CUSTOMERS WHERE GEN_CUSTOMERS.CUSTACTIVE = ? ORDER BY GEN_CUSTOMERS.CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@current", current);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
@@ -246,7 +214,7 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetStates() {
-      string SQL = "SELECT * FROM CUT_STATES;";
+      string SQL = @"SELECT * FROM CUT_STATES";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
@@ -257,9 +225,46 @@ namespace Redbrick_Addin {
       }
     }
 
-    public double GetEdgeThickness(int ID) {
-      string SQL = string.Format("SELECT THICKNESS FROM CUT_EDGES WHERE EDGEID = {0}", ID.ToString());
+    public DataSet GetWherePartUsed(int partID) {
+      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
+          @"CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
+          @"CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
+          @"(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
+          @"CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
+          @"(((CUT_PARTS.PARTID)=?))";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@PartID", partID);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds;
+          }
+        }
+      }
+    }
+
+    public DataSet GetWherePartUsed(string partDescr) {
+      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
+          @"CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
+          @"CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
+          @"(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
+          @"CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
+          @"(((CUT_PARTS.PARTNUM) Like ?))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@PartName", partDescr);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds;
+          }
+        }
+      }
+    }
+
+    public double GetEdgeThickness(int ID) {
+      string SQL = @"SELECT THICKNESS FROM CUT_EDGES WHERE EDGEID = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@EdgeID", ID);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetDouble(0);
@@ -273,8 +278,9 @@ namespace Redbrick_Addin {
       if (description == null)
         return 2929;
 
-      string SQL = string.Format("SELECT MATID FROM CUT_MATERIALS WHERE DESCR = '{0}'", description);
+      string SQL = @"SELECT MATID FROM CUT_MATERIALS WHERE DESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@description", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetInt32(0);
@@ -288,8 +294,9 @@ namespace Redbrick_Addin {
       if (description == string.Empty)
         return 0;
 
-      string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPDESCR = '{0}'", description);
+      string SQL = @"SELECT OPID FROM CUT_OPS WHERE OPDESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@descr", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetInt32(0);
@@ -303,8 +310,9 @@ namespace Redbrick_Addin {
       if (description == string.Empty)
         return 0;
 
-      string SQL = string.Format("SELECT EDGEID FROM CUT_EDGES WHERE DESCR = '{0}'", description);
+      string SQL = @"SELECT EDGEID FROM CUT_EDGES WHERE DESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@descr", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetInt32(0);
@@ -318,8 +326,9 @@ namespace Redbrick_Addin {
       if (name == string.Empty)
         return 0;
 
-      string SQL = string.Format("SELECT OPID FROM CUT_OPS WHERE OPNAME Like '{0}'", name);
+      string SQL = @"SELECT OPID FROM CUT_OPS WHERE OPNAME Like ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@name", name);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetInt32(0);
@@ -331,11 +340,14 @@ namespace Redbrick_Addin {
 
     public List<string> GetOpDataByName(string name) {
       List<string> defaultList = new List<string> { "0", string.Empty, string.Empty, this.OpType.ToString() };
+
       if (name == string.Empty)
         return defaultList;
 
-      string SQL = string.Format("SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like '{0}' AND OPTYPE = {1}", name, OpType);
+      string SQL = @"SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPNAME Like ? AND OPTYPE = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@OpName", name);
+        comm.Parameters.AddWithValue("@OpType", OpType);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows) {
             List<string> x = new List<string>();
@@ -355,8 +367,9 @@ namespace Redbrick_Addin {
       if (name == string.Empty)
         return 1;
 
-      string SQL = string.Format("SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC Like '{0}'", name);
+      string SQL = @"SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC Like ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@Name", name);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows) {
             int res = dr.GetInt32(0);
@@ -370,16 +383,17 @@ namespace Redbrick_Addin {
 
     public string GetOpTypeNameByID(int ID) {
       if (ID == 0)
-        return "WOOD";
+        return @"WOOD";
 
-      string SQL = string.Format("SELECT TYPEDESC FROM CUT_PART_TYPES WHERE TYPEID = {0}", ID);
+      string SQL = @"SELECT TYPEDESC FROM CUT_PART_TYPES WHERE TYPEID = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@ID", ID);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows) {
             string res = dr.GetString(0);
             return res;
           } else {
-            return "WOOD";
+            return @"WOOD";
           }
         }
       }
@@ -387,22 +401,23 @@ namespace Redbrick_Addin {
 
     public string GetMaterialByID(string id) {
       if (id == string.Empty)
-        return "TBD MATERIAL";
+        return @"TBD MATERIAL";
 
       int tp = 0;
       if (int.TryParse(id, out tp)) {
 
-        string SQL = string.Format("SELECT DESCR FROM CUT_MATERIALS WHERE MATID = {0}", id);
+        string SQL = @"SELECT DESCR FROM CUT_MATERIALS WHERE MATID = ?";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@id", id);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
             if (dr.HasRows)
               return dr.GetString(0);
             else
-              return "TBD MATERIAL";
+              return @"TBD MATERIAL";
           }
         }
       }
-      return "TBD MATERIAL";
+      return @"TBD MATERIAL";
     }
 
     public string GetEdgeByID(string id) {
@@ -411,8 +426,9 @@ namespace Redbrick_Addin {
 
       int tp = 0;
       if (int.TryParse(id, out tp)) {
-        string SQL = string.Format("SELECT DESCR FROM CUT_EDGES WHERE EDGEID = {0}", id);
+        string SQL = @"SELECT DESCR FROM CUT_EDGES WHERE EDGEID = ?";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@id", id);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
             if (dr.HasRows)
               return dr.GetString(0);
@@ -430,8 +446,9 @@ namespace Redbrick_Addin {
 
       int tp = 0;
       if (int.TryParse(id, out tp)) {
-        string SQL = string.Format("SELECT OPDESCR FROM CUT_OPS WHERE OPID = {0}", id);
+        string SQL = @"SELECT OPDESCR FROM CUT_OPS WHERE OPID = ?";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@OpID", id);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
             if (dr.HasRows)
               return dr.GetString(0);
@@ -449,8 +466,9 @@ namespace Redbrick_Addin {
 
       int tp = 0;
       if (int.TryParse(id, out tp)) {
-        string SQL = string.Format("SELECT OPNAME FROM CUT_OPS WHERE OPID = {0}", id);
+        string SQL = @"SELECT OPNAME FROM CUT_OPS WHERE OPID = ?";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@id", tp);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
             if (dr.HasRows)
               return dr.GetString(0);
@@ -470,61 +488,75 @@ namespace Redbrick_Addin {
         string SQL = string.Empty;
 
         if (en > Properties.Settings.Default.LastLegacyECR) {
-          SQL = string.Format("SELECT GEN_USERS.FIRST, GEN_USERS.LAST, ECR_MAIN.CHANGES, " +
-              "ECR_STATUS.STATUS, ECR_MAIN.ERR_DESC, ECR_MAIN.REVISION FROM " +
-              "(ECR_MAIN LEFT JOIN GEN_USERS ON ECR_MAIN.REQ_BY = GEN_USERS.UID) " +
-              "LEFT JOIN ECR_STATUS ON ECR_MAIN.STATUS = ECR_STATUS.STAT_ID WHERE " +
-              "(((ECR_MAIN.[ECR_NUM])={0}));", ecoNumber.Replace("'", "''"));
+          SQL = @"SELECT GEN_USERS.FIRST, GEN_USERS.LAST, ECR_MAIN.CHANGES, " +
+              @"ECR_STATUS.STATUS, ECR_MAIN.ERR_DESC, ECR_MAIN.REVISION FROM " +
+              @"(ECR_MAIN LEFT JOIN GEN_USERS ON ECR_MAIN.REQ_BY = GEN_USERS.UID) " +
+              @"LEFT JOIN ECR_STATUS ON ECR_MAIN.STATUS = ECR_STATUS.STAT_ID WHERE " +
+              @"(((ECR_MAIN.[ECR_NUM])=?))";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@ecrNo", en);
+            using (OdbcDataReader dr = comm.ExecuteReader()) {
+              e.EcrNumber = int.Parse(ecoNumber);
+              if (dr.HasRows) {
+                e.Changes = dr.GetString((int)ECODataColumns.CHANGES);
+                e.ErrDescription = dr.GetString((int)ECODataColumns.DESC);
+                e.Revision = dr.GetString((int)ECODataColumns.REVISION);
+                e.Status = dr.GetString((int)ECODataColumns.STATUS);
+                e.RequestedBy = dr.GetString((int)ECODataColumns.USER_FIRST) + " " + dr.GetString((int)ECODataColumns.USER_FIRST);
+                dr.Close();
+              }
+            }
+          }
         } else {
-          SQL = string.Format("SELECT Engineer, Engineer, Change, (IF (Holder = 'Completed')) AS STATUS, Change, Change FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)='{0}'));", ecoNumber.Replace("'", "''"));
-        }
-        //conn.Open(); 
-        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-          using (OdbcDataReader dr = comm.ExecuteReader()) {
-            e.EcrNumber = int.Parse(ecoNumber);
-            if (dr.HasRows) {
-              e.Changes = ReturnString(dr, (int)ECODataColumns.CHANGES);
-              e.ErrDescription = ReturnString(dr, (int)ECODataColumns.DESC);
-              e.Revision = ReturnString(dr, (int)ECODataColumns.REVISION);
-              e.Status = ReturnString(dr, (int)ECODataColumns.STATUS);
-              e.RequestedBy = ReturnString(dr, (int)ECODataColumns.USER_FIRST) + " " + ReturnString(dr, (int)ECODataColumns.USER_FIRST);
-              dr.Close();
+          SQL = @"SELECT Engineer, Engineer, Change, Holder AS STATUS, " +
+              @"Change, Change FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)=?))";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@ecrNo", ecoNumber);
+            using (OdbcDataReader dr = comm.ExecuteReader()) {
+              e.EcrNumber = int.Parse(ecoNumber);
+              if (dr.HasRows) {
+                e.Changes = dr.GetString((int)ECODataColumns.CHANGES);
+                e.ErrDescription = dr.GetString((int)ECODataColumns.DESC);
+                e.Revision = dr.GetString((int)ECODataColumns.REVISION);
+                e.Status = dr.GetString((int)ECODataColumns.STATUS);
+                e.RequestedBy = dr.GetString((int)ECODataColumns.USER_FIRST) + " " + dr.GetString((int)ECODataColumns.USER_FIRST);
+              }
             }
           }
         }
         return e;
       }
-
       return e;
     }
 
     public eco GetLegacyECOData(string ecoNumber) {
       eco e = new eco();
       // ECR_LEGACY.ECRNum is a string field.
-      string SQL = string.Format("SELECT * FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)='{0}'));", ecoNumber.Replace("'", "''"));
+      string SQL = @"SELECT * FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)=?))";
 
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@ecoNumber", ecoNumber);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows) {
             e.EcrNumber = int.Parse(ecoNumber);
-            e.Revision = ReturnString(dr, 5); // AffectedParts
-            e.Changes = ReturnString(dr, 6); // Change
-            string dString = ReturnString(dr, 4);
+            e.Revision = dr.GetString(5); // AffectedParts
+            e.Changes = dr.GetString(6); // Change
+            string dString = dr.GetDate(4).ToString();
             if (dString != string.Empty) {
               string[] dateString = dString.Split('/', ' '); // DateCompleted
               System.DateTime dt = new DateTime(int.Parse(dateString[2]), int.Parse(dateString[0]), int.Parse(dateString[1]));
-              e.Status = "Finished on " + dt.ToShortDateString();
+              e.Status = @"Finished on " + dt.ToShortDateString();
             } else {
-              dString = ReturnString(dr, 3);
+              dString = dr.GetDate(3).ToString();
               string[] dateString = dString.Split('/', ' '); // DateCompleted
               if (dateString.Length > 2) {
                 System.DateTime dt = new DateTime(int.Parse(dateString[2]), int.Parse(dateString[0]), int.Parse(dateString[1]));
-                e.Status = "Requested on " + dt.ToShortDateString();
+                e.Status = @"Requested on " + dt.ToShortDateString();
               } else {
                 e.Status = dString;
               }
             }
-            e.RequestedBy = ReturnString(dr, 7); // FinishedBy
+            e.RequestedBy = dr.GetString(7); // FinishedBy
           }
         }
       }
@@ -537,9 +569,10 @@ namespace Redbrick_Addin {
       DateTime end;
       start = DateTime.Now;
 #endif
-      string SQL = string.Format("SELECT UID, USERNAME, (FIRST + ' ' + LAST) AS NAME, INITIAL " +
-        "FROM GEN_USERS WHERE (((GEN_USERS.DEPT)={0})) ORDER BY LAST;", Properties.Settings.Default.UserDept);
+      string SQL = @"SELECT UID, USERNAME, (FIRST + ' ' + LAST) AS NAME, INITIAL " +
+        "FROM GEN_USERS WHERE (((GEN_USERS.DEPT)=?)) ORDER BY LAST";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@dept", Properties.Settings.Default.UserDept);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
@@ -557,10 +590,10 @@ namespace Redbrick_Addin {
       if (initial == string.Empty)
         return string.Empty;
 
-      string SQL = string.Format("SELECT username FROM GEN_USERS WHERE INITIAL LIKE '{0}%';", initial);
+      string SQL = @"SELECT username FROM GEN_USERS WHERE INITIAL LIKE ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@initial", initial);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-
           if (dr.HasRows) {
             string x = dr.GetString(0);
             dr.Close();
@@ -576,8 +609,9 @@ namespace Redbrick_Addin {
       if (p.PartName == string.Empty)
         return 0;
 
-      string SQL = string.Format("SELECT CUT_PARTS.HASH FROM CUT_PARTS WHERE (((CUT_PARTS.PARTNUM)='{0}'));", p.PartName.Replace("'", "\""));
+      string SQL = @"SELECT CUT_PARTS.HASH FROM CUT_PARTS WHERE (((CUT_PARTS.PARTNUM)=?))";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@partnum", p.PartName);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows && !dr.IsDBNull(0))
             return dr.GetInt32(0);
@@ -588,8 +622,9 @@ namespace Redbrick_Addin {
     }
 
     public int GetCurrentAuthor() {
-      string SQL = string.Format("SELECT UID FROM GEN_USERS WHERE USERNAME = '{0}';", Environment.UserName.Replace("'", "\""));
+      string SQL = @"SELECT UID FROM GEN_USERS WHERE USERNAME = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@uname", Environment.UserName);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows && !dr.IsDBNull(0))
             return dr.GetInt32(0);
@@ -605,24 +640,48 @@ namespace Redbrick_Addin {
       int affected = 0;
       if (ENABLE_DB_WRITE) {
         string SQL = string.Empty;
-        SQL = string.Format("UPDATE CUT_CUTLISTS SET DRAWING = '{0}', CUSTID = {1}, CDATE = {2}, DESCR = '{3}', " +
-         "LENGTH = {4}, WIDTH = {5}, HEIGHT = {6}, STATE_BY = {7}, STATEID = {8} " +
-         "WHERE PARTNUM='{9}' AND REV='{10}';", drawing.Replace("'", "\""), custid, "GETDATE()", descr.Replace("'", "\""), l, w, h,
-         currentAuthor, state, itemNo.Replace("'", "\""), rev);
+        SQL = @"UPDATE CUT_CUTLISTS SET DRAWING = ?, CUSTID = ?, CDATE = GETDATE(), DESCR = ?, " +
+         @"LENGTH = ?, WIDTH = ?, HEIGHT = ?, STATE_BY = ?, STATEID = ? " +
+         @"WHERE PARTNUM=? AND REV=?;";
 
-        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@drawing", drawing);
+          comm.Parameters.AddWithValue("@custid", Convert.ToInt32(custid));
+          comm.Parameters.AddWithValue("@descr", descr);
+          comm.Parameters.AddWithValue("@l", l);
+          comm.Parameters.AddWithValue("@w", w);
+          comm.Parameters.AddWithValue("@h", h);
+          comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
+          comm.Parameters.AddWithValue("@stateid", Convert.ToInt32(state));
+          comm.Parameters.AddWithValue("@partnum", itemNo);
+          comm.Parameters.AddWithValue("@rev", Convert.ToInt32(rev));
+          affected = comm.ExecuteNonQuery();
+        }
         if (affected < 1) {
-          SQL = string.Format("INSERT INTO CUT_CUTLISTS (PARTNUM, REV, DRAWING, CUSTID, CDATE, DESCR, LENGTH, WIDTH, HEIGHT, SETUP_BY, STATE_BY, STATEID) VALUES " +
-            "('{0}', {1}, '{2}', {3}, {4}, '{5}', {6}, {7}, {8}, {9}, {10}, {11});", itemNo.Replace("'", "\""), rev, drawing.Replace("'", "\""), custid,
-            "GETDATE()", descr.Replace("'", "\""), l, w, h, currentAuthor, currentAuthor, Properties.Settings.Default.DefaultState);
-          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+          SQL = @"INSERT INTO CUT_CUTLISTS (PARTNUM, REV, DRAWING, CUSTID, CDATE, DESCR, LENGTH, WIDTH, HEIGHT, SETUP_BY, STATE_BY, STATEID) VALUES " +
+            @"(?, ?, ?, ?, GETDATE(), ?, ?, ?, ?, ?, ?, ?);";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@partnum", itemNo);
+            comm.Parameters.AddWithValue("@rev", Convert.ToInt32(rev));
+            comm.Parameters.AddWithValue("@drawing", drawing);
+            comm.Parameters.AddWithValue("@custid", Convert.ToInt32(custid));
+            comm.Parameters.AddWithValue("@descr", descr);
+            comm.Parameters.AddWithValue("@l", l);
+            comm.Parameters.AddWithValue("@w", w);
+            comm.Parameters.AddWithValue("@h", h);
+            comm.Parameters.AddWithValue("@setupby", currentAuthor);
+            comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
+            comm.Parameters.AddWithValue("@stateid", Convert.ToInt32(Properties.Settings.Default.DefaultState));
+            affected = comm.ExecuteNonQuery();
+          }
         }
         if (affected == 1) {
           foreach (KeyValuePair<string, Part> item in prts) {
-            UpdatePart(item);
-            if (string.Format("{0:X}", item.Value.Hash) ==
-              GetAnything("HASH", "CUT_PARTS", string.Format("PARTNUM = '{0}'", item.Key)).ToString()) {
-              UpdateCutlistPart(itemNo, item, item.Value.Qty);
+            int partID = UpdatePart(item);
+            string itemHash = string.Format("{0:X}", item.Value.Hash);
+            string recordHash = string.Format("{0:X}", GetHash(item.Key));
+            if (itemHash == recordHash) {
+              UpdateCutlistPart(GetCutlistID(itemNo, rev.ToString()), partID, item);
             }
           }
         }
@@ -630,22 +689,41 @@ namespace Redbrick_Addin {
       return affected;
     }
 
-    public int UpdateCutlistPart(string cl, KeyValuePair<string, Part> kpprt, int qty) {
+    public int UpdateCutlistPart(int clid, int prtid, KeyValuePair<string, Part> kpprt) {
       int affected = 0;
       if (ENABLE_DB_WRITE) {
         string prt = kpprt.Key;
         Part p = kpprt.Value;
-        string SQL = string.Format("UPDATE CUT_CUTLIST_PARTS " +
-          "SET CUT_CUTLIST_PARTS.MATID = {0}, CUT_CUTLIST_PARTS.EDGEID_LF = {1}, CUT_CUTLIST_PARTS.EDGEID_LB = {2}, CUT_CUTLIST_PARTS.EDGEID_WR = {3}, " +
-          "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, CUT_CUTLIST_PARTS.QTY = {5} FROM (CUT_CUTLIST_PARTS INNER JOIN CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID) " +
-          "INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
-          "WHERE (((CUT_CUTLISTS.PARTNUM)='{6}') AND ((CUT_PARTS.PARTNUM)='{7}'));", p.MaterialID, p.EdgeFrontID, p.EdgeBackID, p.EdgeRightID, p.EdgeLeftID,
-          p.Qty, cl, prt);
+        string SQL = @"UPDATE CUT_CUTLIST_PARTS " +
+          @"SET MATID = ?, EDGEID_LF = ?, EDGEID_LB = ?, EDGEID_WR = ?, EDGEID_WL = ?, " +
+          @"QTY = ? WHERE CLID=? AND PARTID=?";
 
-        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@matid", Convert.ToInt32(p.MaterialID));
+          comm.Parameters.AddWithValue("@efid", Convert.ToInt32(p.EdgeFrontID));
+          comm.Parameters.AddWithValue("@ebid", Convert.ToInt32(p.EdgeBackID));
+          comm.Parameters.AddWithValue("@erid", Convert.ToInt32(p.EdgeRightID));
+          comm.Parameters.AddWithValue("@elid", Convert.ToInt32(p.EdgeLeftID));
+          comm.Parameters.AddWithValue("@qty", Convert.ToInt32(p.Qty));
+          comm.Parameters.AddWithValue("@clid", clid);
+          comm.Parameters.AddWithValue("@prtid", prtid);
+          affected = comm.ExecuteNonQuery();
+        }
         if (affected < 1) {
-          // Seems like this should work every time given what went before.
-          throw new Exception(string.Format("Couldn't execute this:\n{0}", SQL));
+
+          SQL = @"INSERT INTO CUT_CUTLIST_PARTS (CLID, PARTID, MATID, EDGEID_LF, EDGEID_LB, EDGEID_WR, EDGEID_WL, QTY) " +
+            @"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@clid", clid);
+            comm.Parameters.AddWithValue("@prtid", prtid);
+            comm.Parameters.AddWithValue("@matid", Convert.ToInt32(p.MaterialID));
+            comm.Parameters.AddWithValue("@efid", Convert.ToInt32(p.EdgeFrontID));
+            comm.Parameters.AddWithValue("@ebid", Convert.ToInt32(p.EdgeBackID));
+            comm.Parameters.AddWithValue("@erid", Convert.ToInt32(p.EdgeRightID));
+            comm.Parameters.AddWithValue("@elid", Convert.ToInt32(p.EdgeLeftID));
+            comm.Parameters.AddWithValue("@qty", Convert.ToInt32(p.Qty));
+            affected = comm.ExecuteNonQuery();
+          }
         }
       }
       return affected;
@@ -660,22 +738,54 @@ namespace Redbrick_Addin {
       if (ENABLE_DB_WRITE) {
         Part p = kp.Value;
         string SQL;
-        SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{1}', FIN_L = {2}, FIN_W = {3}, THICKNESS = {4}, " +
-          "CNC1 = '{5}', CNC2 = '{6}', BLANKQTY = {7}, OVER_L = {8}, OVER_W = {9}, OP1ID = {10}, " +
-          "OP2ID = {11}, OP3ID = {12}, OP4ID = {13}, OP5ID = {14}, COMMENT = '{15}', UPDATE_CNC = {16}, " +
-          "TYPE = {17} WHERE PARTNUM='{0}' AND HASH='{18}';", kp.Key, p.Description,
-          p.Length, p.Width, p.Thickness, p.CNC1, p.CNC2, p.BlankQty, p.OverL, p.OverW, p.get_OpID(0), p.get_OpID(1), p.get_OpID(2), p.get_OpID(3), p.get_OpID(4),
-          p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID, p.Hash);
+        string hash = string.Format("{0:X}", p.Hash);
+        SQL = @"UPDATE CUT_PARTS SET DESCR = ?, FIN_L = ?, FIN_W = ?, THICKNESS = ?, CNC1 = ?, CNC2 = ?, BLANKQTY = ?, OVER_L = ?, OVER_W = ?, OP1ID = ?, " +
+          @"OP2ID = ?, OP3ID = ?, OP4ID = ?, OP5ID = ?, COMMENT = ?, UPDATE_CNC = ?, TYPE = ? WHERE PARTNUM=? AND HASH=?;";
 
-        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@descr", p.Description);
+          comm.Parameters.AddWithValue("@finl", Convert.ToDouble(p.Length));
+          comm.Parameters.AddWithValue("@finw", Convert.ToDouble(p.Width));
+          comm.Parameters.AddWithValue("@thk", Convert.ToDouble(p.Thickness));
+          comm.Parameters.AddWithValue("@cnc1", p.CNC1);
+          comm.Parameters.AddWithValue("@cnc2", p.CNC2);
+          comm.Parameters.AddWithValue("@blnkqty", Convert.ToInt32(p.BlankQty));
+          comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
+          comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
+          for (ushort i = 0; i < 5; i++)
+            comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
+          comm.Parameters.AddWithValue("@comment", p.Comment);
+          comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
+          comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
+          comm.Parameters.AddWithValue("@prtNo", p.PartNumber);
+          comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
+
+          affected = comm.ExecuteNonQuery();
+        }
 
         if (affected < 1 && (GetPartID(kp.Key) < 1)) {
-          SQL = string.Format("INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
-            "OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
-            "('{0}', '{1}', {2}, {3}, {4}, '{5}', '{6}', {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, '{15}', {16}, {17}, {18})", kp.Key, p.Description,
-            p.Length, p.Width, p.Thickness, p.CNC1, p.CNC2, p.BlankQty, p.OverL, p.OverW, p.get_OpID(0), p.get_OpID(1), p.get_OpID(2), p.get_OpID(3), p.get_OpID(4),
-            p.Comment, (p.UpdateCNC ? 1 : 0), p.DepartmentID, p.Hash);
-          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) { affected = comm.ExecuteNonQuery(); }
+          SQL = @"INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
+            @"OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
+            @"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@prtNo", p.PartNumber);
+            comm.Parameters.AddWithValue("@descr", p.Description);
+            comm.Parameters.AddWithValue("@finl", Convert.ToDouble(p.Length));
+            comm.Parameters.AddWithValue("@finw", Convert.ToDouble(p.Width));
+            comm.Parameters.AddWithValue("@thk", Convert.ToDouble(p.Thickness));
+            comm.Parameters.AddWithValue("@cnc1", p.CNC1);
+            comm.Parameters.AddWithValue("@cnc2", p.CNC2);
+            comm.Parameters.AddWithValue("@blnkqty", Convert.ToInt32(p.BlankQty));
+            comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
+            comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
+            for (ushort i = 0; i < 5; i++)
+              comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
+            comm.Parameters.AddWithValue("@comment", p.Comment);
+            comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
+            comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
+            comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
+            affected = comm.ExecuteNonQuery();
+          }
         }
         return GetPartID(kp.Key);
       }
@@ -683,8 +793,9 @@ namespace Redbrick_Addin {
     }
 
     public int GetPartID(string prt) {
-      string SQL = string.Format("SELECT CUT_PARTS.PARTID FROM CUT_PARTS WHERE (((CUT_PARTS.PARTNUM)='{0}'))", prt.Replace("'", "\""));
+      string SQL = @"SELECT CUT_PARTS.PARTID FROM CUT_PARTS WHERE (((CUT_PARTS.PARTNUM)=?))";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@partnum", prt);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows && !dr.IsDBNull(0))
             return dr.GetInt32(0);
@@ -695,8 +806,9 @@ namespace Redbrick_Addin {
     }
 
     public int GetCutlistID(string item) {
-      string SQL = string.Format("SELECT CUT_CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)='{0}'))", item.Replace("'", "\""));
+      string SQL = @"SELECT CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)=?))";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@itemno", item);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows && !dr.IsDBNull(0))
             return dr.GetInt32(0);
@@ -707,9 +819,22 @@ namespace Redbrick_Addin {
     }
 
     public int GetCutlistID(string item, string rev) {
-      string SQL = string.Format("SELECT CUT_CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)='{0}')) AND (((CUT_CUTLISTS.REV)='{1}'))",
-        item.Replace("'", "\""), rev.Replace("'", "\""));
+      string SQL = @"SELECT CLID FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)=?)) AND (((CUT_CUTLISTS.REV)=?))";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@itemNo", item);
+        comm.Parameters.AddWithValue("@rev", rev);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows && !dr.IsDBNull(0))
+            return dr.GetInt32(0);
+          else
+            return 0;
+        }
+      }
+    }
+
+    public int GetHash(string partNum) {
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT HASH FROM CUT_PARTS WHERE PARTNUM = ?", conn)) {
+        comm.Parameters.AddWithValue("@prtNo", partNum);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows && !dr.IsDBNull(0))
             return dr.GetInt32(0);
@@ -732,9 +857,10 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetCutlistData(string item, string rev) {
-      string SQL = string.Format("SELECT * FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)='{0}')) AND (((CUT_CUTLISTS.REV)='{1}'));",
-        item.Replace("'", "\""), rev.Replace("'", "\""));
+      string SQL = @"SELECT * FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)=?)) AND (((CUT_CUTLISTS.REV)=?));";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@item", item);
+        comm.Parameters.AddWithValue("@rev", rev);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
@@ -745,9 +871,9 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetCutlists() {
-      string SQL = string.Format("SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DRAWING, " +
-        "CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, " +
-        "CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, CUT_CUTLISTS.STATEID FROM CUT_CUTLISTS;");
+      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DRAWING, " +
+        @"CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, " +
+        @"CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, CUT_CUTLISTS.STATEID FROM CUT_CUTLISTS";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
@@ -758,26 +884,15 @@ namespace Redbrick_Addin {
       }
     }
 
-    public object GetAnything(string field, string table, string filter) {
-      string SQL = SQL = string.Format("SELECT {1}.{0} FROM  {1} WHERE {2}", field, table, filter);
-      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
-            return dr.GetValue(0);
-          else
-            return 0;
-        }
-      }
-    }
-
     public int MakeOriginal(SwProperties p) {
       int rowsAffected = -1;
 
       if (ENABLE_DB_WRITE) {
-        string SQL = string.Format("UPDATE CUT_PARTS SET CUT_PARTS.HASH = {1} " +
-            "WHERE (((CUT_PARTS.PARTNUM)='{0}'));", p.PartName.Replace("'", "\""), p.Hash);
+        string SQL = @"UPDATE CUT_PARTS SET CUT_PARTS.HASH = ? WHERE (((CUT_PARTS.PARTNUM)=?));";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@hash", p.Hash);
+          comm.Parameters.AddWithValue("@partNo", p.PartName);
           try {
             rowsAffected = comm.ExecuteNonQuery();
           } catch (InvalidOperationException ioe) {
@@ -806,50 +921,67 @@ namespace Redbrick_Addin {
     }
 
     public int UpdateParts(SwProperties p) {
-      int rowsAffected = -1;
-      if (ENABLE_DB_WRITE && p.Primary) {
-        string dscr = p.GetProperty("Description").Value.Replace("'", "\"");
-
-        double finL = 0.0f;
-        parse(p.GetProperty("LENGTH").ResValue, out finL);
-
-        double finW = 0.0f;
-        parse(p.GetProperty("WIDTH").ResValue, out finW);
-
-        double thkn = 0.0f;
-        parse(p.GetProperty("THICKNESS").ResValue, out thkn);
-
-        double ovrL = 0.0f;
-        parse(p.GetProperty("OVERL").Value, out ovrL);
-
-        double ovrW = 0.0f;
-        parse(p.GetProperty("OVERW").Value, out ovrW);
-
-        string cnc1 = p.GetProperty("CNC1").Value.Replace("'", "\"");
-        string cnc2 = p.GetProperty("CNC2").Value.Replace("'", "\"");
-        string blnk = p.GetProperty("BLANK QTY").Value.Replace("'", "\"");
-        string cmnt = p.GetProperty("COMMENT").Value.Replace("'", "\"");
-        string updt = p.GetProperty("UPDATE CNC").ID.Replace("'", "\"");
-
-
-        int Op1 = 0;
-        parse(p.GetProperty("OP1ID").ID, out Op1);
-        int Op2 = 0;
-        parse(p.GetProperty("OP2ID").ID, out Op1);
-        int Op3 = 0;
-        parse(p.GetProperty("OP3ID").ID, out Op1);
-        int Op4 = 0;
-        parse(p.GetProperty("OP4ID").ID, out Op1);
-        int Op5 = 0;
-        parse(p.GetProperty("OP5ID").ID, out Op1);
-
-        string SQL = string.Format("UPDATE CUT_PARTS SET DESCR = '{0}', FIN_L = {1}, FIN_W = {2}, THICKNESS = {3}, CNC1 = '{4}', CNC2 = '{5}', " +
-            "BLANKQTY = {6}, OVER_L = {7}, OVER_W = {8}, OP1ID = {9}, OP2ID = {10}, OP3ID = {11}, OP4ID = {12}, OP5ID = {13}, COMMENT = '{14}', " +
-            "UPDATE_CNC = {15}, TYPE = {16} WHERE PARTNUM = '{17}'", dscr, finL, finW, thkn, cnc1, cnc2,
-            blnk, ovrL, ovrW, Op1, Op2, Op3, Op4, Op5, cmnt,
-            updt, OpType.ToString(), p.PartName);
+      int rowsAffected = 0;
+      if (ENABLE_DB_WRITE) {
+        string SQL = @"UPDATE CUT_PARTS SET DESCR = ?, FIN_L = ?, FIN_W = ?, THICKNESS = ?, CNC1 = ?, CNC2 = ?, " +
+            "BLANKQTY = ?, OVER_L = ?, OVER_W = ?, OP1ID = ?, OP2ID = ?, OP3ID = ?, OP4ID = ?, OP5ID = ?, COMMENT = ?, " +
+            "UPDATE_CNC = ?, TYPE = ? WHERE PARTNUM = ? AND HASH = ?";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          string dscr = p.GetProperty("Description").Value.Replace("'", "\"");
+
+          double finL = 0.0f;
+          parse(p.GetProperty("LENGTH").ResValue, out finL);
+
+          double finW = 0.0f;
+          parse(p.GetProperty("WIDTH").ResValue, out finW);
+
+          double thkn = 0.0f;
+          parse(p.GetProperty("THICKNESS").ResValue, out thkn);
+
+          double ovrL = 0.0f;
+          parse(p.GetProperty("OVERL").Value, out ovrL);
+
+          double ovrW = 0.0f;
+          parse(p.GetProperty("OVERW").Value, out ovrW);
+
+          string cnc1 = p.GetProperty("CNC1").Value.Replace("'", "\"");
+          string cnc2 = p.GetProperty("CNC2").Value.Replace("'", "\"");
+          string blnk = p.GetProperty("BLANK QTY").Value.Replace("'", "\"");
+          string cmnt = p.GetProperty("COMMENT").Value.Replace("'", "\"");
+          string updt = p.GetProperty("UPDATE CNC").ID.Replace("'", "\"");
+
+
+          int Op1 = 0;
+          parse(p.GetProperty("OP1ID").ID, out Op1);
+          int Op2 = 0;
+          parse(p.GetProperty("OP2ID").ID, out Op1);
+          int Op3 = 0;
+          parse(p.GetProperty("OP3ID").ID, out Op1);
+          int Op4 = 0;
+          parse(p.GetProperty("OP4ID").ID, out Op1);
+          int Op5 = 0;
+          parse(p.GetProperty("OP5ID").ID, out Op1);
+          comm.Parameters.AddWithValue("@descr", dscr);
+          comm.Parameters.AddWithValue("@finl", finL);
+          comm.Parameters.AddWithValue("@finw", finW);
+          comm.Parameters.AddWithValue("@thkn", thkn);
+          comm.Parameters.AddWithValue("@cnc1", cnc1);
+          comm.Parameters.AddWithValue("@cnc2", cnc2);
+          comm.Parameters.AddWithValue("@blnk", blnk);
+          comm.Parameters.AddWithValue("@ovrL", ovrL);
+          comm.Parameters.AddWithValue("@ovrW", ovrW);
+          comm.Parameters.AddWithValue("@op1", Op1);
+          comm.Parameters.AddWithValue("@op2", Op2);
+          comm.Parameters.AddWithValue("@op3", Op3);
+          comm.Parameters.AddWithValue("@op4", Op4);
+          comm.Parameters.AddWithValue("@op5", Op5);
+          comm.Parameters.AddWithValue("@comment", cmnt);
+          comm.Parameters.AddWithValue("@updtCnc", (updt == "1"));
+          comm.Parameters.AddWithValue("@opType", OpType);
+          comm.Parameters.AddWithValue("@prtName", p.PartName);
+          comm.Parameters.AddWithValue("@hash", p.Hash);
+
           try {
             rowsAffected = comm.ExecuteNonQuery();
           } catch (InvalidOperationException ioe) {
@@ -859,38 +991,6 @@ namespace Redbrick_Addin {
       }
       return rowsAffected;
     }
-
-    //public int UpdateCutlistParts(SwProperties p) {
-    //  int rowsAffected = -1;
-    //  string cmid = p.GetProperty("MATID").ID.Replace("'", "\"");
-    //  string efid = p.GetProperty("EFID").ID.Replace("'", "\"");
-    //  string ebid = p.GetProperty("EBID").ID.Replace("'", "\"");
-    //  string elid = p.GetProperty("ELID").ID.Replace("'", "\"");
-    //  string erid = p.GetProperty("ERID").ID.Replace("'", "\"");
-
-    //  if (ENABLE_DB_WRITE && p.Primary && p.CutlistID != null && p.CutlistQuantity != null) {
-    //    string SQL = string.Format("UPDATE CUT_CUTLIST_PARTS " +
-    //        "SET CUT_CUTLIST_PARTS.MATID = {0}, " +
-    //        "CUT_CUTLIST_PARTS.EDGEID_LF = {1}, " +
-    //        "CUT_CUTLIST_PARTS.EDGEID_LB = {2}, " +
-    //        "CUT_CUTLIST_PARTS.EDGEID_WR = {3}, " +
-    //        "CUT_CUTLIST_PARTS.EDGEID_WL = {4}, " +
-    //        "CUT_CUTLIST_PARTS.QTY = {5} " +
-    //        "FROM CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
-    //        "WHERE (((CUT_CUTLIST_PARTS.CLID)={6}) AND ((CUT_PARTS.PARTNUM)='{7}'));",
-    //        cmid, efid, ebid, erid, elid, p.CutlistQuantity, p.CutlistID, p.PartName);
-
-    //    using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-    //      try {
-    //        rowsAffected = comm.ExecuteNonQuery();
-    //      } catch (InvalidOperationException ioe) {
-    //        throw ioe;
-    //      }
-    //    }
-    //  }
-
-    //  return rowsAffected;
-    //}
 
     public int UpdateMachinePrograms() {
       return -1;

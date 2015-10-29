@@ -33,8 +33,9 @@ namespace Redbrick_Addin {
         int test = 0;
         CutlistData cd = new CutlistData();
         eco e = new eco();
+        e = cd.GetECOData(r.Eco.Value);
+
         if (int.TryParse(r.Eco.Value, out test) && test > Properties.Settings.Default.LastLegacyECR) {
-          e = cd.GetECOData(r.Eco.Value);
           TreeNode tnD = new TreeNode("Error Description: " + e.ErrDescription, 0, 0);
           TreeNode tnRB = new TreeNode("Requested by: " + e.RequestedBy, 0, 0);
           TreeNode tnR = new TreeNode("Revision Description:" + e.Revision, 0, 0);
@@ -54,8 +55,6 @@ namespace Redbrick_Addin {
           TreeNode tn = new TreeNode(r.Revision.Value, tt);
           this.tvRevisions.Nodes.Add(tn);
         } else {
-          e = cd.GetLegacyECOData(r.Eco.Value);
-
           if ((e.Changes != null) && e.Changes.Contains("\n")) {
             List<TreeNode> nodes = new List<TreeNode>();
             string[] changeNodes = e.Changes.Split('\n');

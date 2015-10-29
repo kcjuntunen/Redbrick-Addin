@@ -6,7 +6,6 @@ using System.Diagnostics;
 namespace RedbrickTest {
   [TestClass]
   public class CutlistDataTest {
-    CutlistData cd = new CutlistData();
     //[TestMethod]
     //public void GetECODataTest() {
     //  eco eco = cd.GetECOData("8042");
@@ -20,7 +19,15 @@ namespace RedbrickTest {
     //}
 
     [TestMethod]
+    public void GetHashTest() {
+      CutlistData cd = new CutlistData();
+      int i = cd.GetHash("ZASC1505-02-06");
+      Debug.Assert(i == 246268142);
+    }
+
+    [TestMethod]
     public void GetLegacyECODataTest() {
+      CutlistData cd = new CutlistData();
       eco eco = cd.GetLegacyECOData("8042");
       Debug.Assert(eco.RequestedBy == "S.PALMER");
 
@@ -30,6 +37,7 @@ namespace RedbrickTest {
 
     [TestMethod]
     public void GetMaterialIDTest() {
+      CutlistData cd = new CutlistData();
       int res = cd.GetMaterialID("SHT SST 430 #4 POLISH 24GA");
       Debug.Assert(res == 1311);
 
@@ -45,6 +53,7 @@ namespace RedbrickTest {
 
     [TestMethod]
     public void GetMaterialByIDTest() {
+      CutlistData cd = new CutlistData();
       string res = cd.GetMaterialByID("1311");
       Debug.Assert(res == "SHT SST 430 #4 POLISH 24GA");
 
@@ -54,6 +63,7 @@ namespace RedbrickTest {
 
     [TestMethod]
     public void GetOpDataByNameTest() {
+      CutlistData cd = new CutlistData();
       System.Collections.Generic.List<string> l = new System.Collections.Generic.List<string>();
       l = cd.GetOpDataByName("NOT");
       Debug.Assert(l[0] == "20");
@@ -61,6 +71,26 @@ namespace RedbrickTest {
       cd.OpType = 2;
       l = cd.GetOpDataByName("NOT");
       Debug.Assert(l[0] == "21");
+    }
+
+    [TestMethod]
+    public void TestTypeEnum() {
+      Debug.Print(string.Format("{0}\n{1}\n{3}\n{4}n{5}",
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoDate,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoDouble,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoNumber,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoUnknown,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoYesOrNo));
+      System.Console.Write(string.Format("{0}\n{1}\n{3}\n{4}n{5}",
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoDate,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoDouble,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoNumber,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoUnknown,
+        SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoYesOrNo));
+      Debug.Assert(SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoDate == 0);
+      System.Console.ReadKey();
     }
   }
 }

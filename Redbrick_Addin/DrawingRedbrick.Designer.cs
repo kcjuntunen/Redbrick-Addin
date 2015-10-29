@@ -213,7 +213,7 @@ namespace Redbrick_Addin
       this.btnCreate.Name = "btnCreate";
       this.btnCreate.Size = new System.Drawing.Size(90, 46);
       this.btnCreate.TabIndex = 6;
-      this.btnCreate.Text = "Create/Update Cutlist";
+      this.btnCreate.Text = "Create/Update";
       this.btnCreate.UseVisualStyleBackColor = true;
       this.btnCreate.Click += new System.EventHandler(this.button1_Click);
       // 
