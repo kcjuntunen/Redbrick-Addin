@@ -48,6 +48,7 @@ namespace Redbrick_Addin
       this.label2 = new System.Windows.Forms.Label();
       this.cbCutlist = new System.Windows.Forms.ComboBox();
       this.cbStatus = new System.Windows.Forms.ComboBox();
+      this.btnMakeOriginal = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -77,10 +78,11 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.label2, 1, 10);
       this.tableLayoutPanel1.Controls.Add(this.cbCutlist, 0, 11);
       this.tableLayoutPanel1.Controls.Add(this.cbStatus, 1, 11);
+      this.tableLayoutPanel1.Controls.Add(this.btnMakeOriginal, 0, 12);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 12;
+      this.tableLayoutPanel1.RowCount = 13;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -93,7 +95,8 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 278);
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 319);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // cbEr
@@ -304,6 +307,17 @@ namespace Redbrick_Addin
       this.cbStatus.Size = new System.Drawing.Size(94, 21);
       this.cbStatus.TabIndex = 9;
       // 
+      // btnMakeOriginal
+      // 
+      this.btnMakeOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnMakeOriginal.Location = new System.Drawing.Point(3, 243);
+      this.btnMakeOriginal.Name = "btnMakeOriginal";
+      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 73);
+      this.btnMakeOriginal.TabIndex = 10;
+      this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
+      this.btnMakeOriginal.UseVisualStyleBackColor = true;
+      this.btnMakeOriginal.Click += new System.EventHandler(this.btnMakeOriginal_Click);
+      // 
       // ConfigurationSpecific
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -312,7 +326,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ConfigurationSpecific";
-      this.Size = new System.Drawing.Size(331, 278);
+      this.Size = new System.Drawing.Size(331, 319);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);
@@ -342,5 +356,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbCutlist;
         private System.Windows.Forms.ComboBox cbStatus;
+        private System.Windows.Forms.Button btnMakeOriginal;
     }
 }

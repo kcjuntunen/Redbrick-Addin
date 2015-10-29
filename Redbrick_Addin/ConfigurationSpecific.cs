@@ -46,8 +46,8 @@ namespace Redbrick_Addin {
       cbCutlist.DataSource = ds.Tables[(int)CutlistData.WhereUsedRes.CLID];
       cbCutlist.DisplayMember = "PARTNUM";
       cbCutlist.ValueMember = "CLID";
-      
-      int recentCutlist =  Properties.Settings.Default.CurrentCutlist;
+
+      int recentCutlist = Properties.Settings.Default.CurrentCutlist;
 
       cbCutlist.SelectedValue = recentCutlist;
 
@@ -75,6 +75,14 @@ namespace Redbrick_Addin {
         propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
         propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
         propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
+      }
+
+      if (propertySet.cutlistData.ReturnHash(propertySet) == propertySet.Hash) {
+        propertySet.Primary = true;
+        btnMakeOriginal.Enabled = false;
+      } else {
+        propertySet.Primary = false;
+        btnMakeOriginal.Enabled = true;
       }
     }
 
@@ -262,6 +270,10 @@ namespace Redbrick_Addin {
 
     private void cbCutlist_MouseClick(object sender, MouseEventArgs e) {
       changingwithmouse = true;
+    }
+
+    private void btnMakeOriginal_Click(object sender, EventArgs e) {
+      propertySet.cutlistData.MakeOriginal(propertySet);
     }
   }
 }
