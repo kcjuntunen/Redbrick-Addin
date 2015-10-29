@@ -31,7 +31,6 @@ namespace Redbrick_Addin {
         TreeNode tnECO = new TreeNode(r.Eco.Value);
         TreeNode tnC = new TreeNode(r.Revision.Value);
         int test = 0;
-        CutlistData cd = new CutlistData();
         eco e = new eco();
         e = cd.GetECOData(r.Eco.Value);
 
@@ -43,8 +42,8 @@ namespace Redbrick_Addin {
           tnC = new TreeNode("Changes: " + e.Changes);
           TreeNode[] ts = { tnC, tnD, tnRB, tnR, tnS };
           TreeNode tnDesc = new TreeNode(r.Description.Value);
+          tnECO = new TreeNode(r.Eco.Value, ts);
           TreeNode[] tt = { tnECO, tnDesc, tnList, tnDate };
-
           TreeNode tn = new TreeNode(r.Revision.Value, tt);
           this.tvRevisions.Nodes.Add(tn);
         } else if (r.Eco.Value.Contains("NA") || r.Eco.Value.Trim().Equals(string.Empty)) {
@@ -65,9 +64,16 @@ namespace Redbrick_Addin {
           } else {
             tnC = new TreeNode("Changes: " + e.Changes);
 
-
             TreeNode tnRB = new TreeNode("Finished by: " + e.RequestedBy, 0, 0);
-            TreeNode tnR = new TreeNode("Affected Parts:" + e.Revision, 0, 0);
+            string[] affectedParts = e.Revision.Split(',', '&');
+            TreeNode tnT = new TreeNode("");
+
+            List<TreeNode> nodes = new List<TreeNode>();
+            foreach (string item in affectedParts) {
+              nodes.Add(new TreeNode(item.Trim()));
+            }
+            TreeNode tnR = new TreeNode("Affected Parts:", nodes.ToArray());
+
             TreeNode tnS = new TreeNode("Status: " + e.Status, 0, 0);
             TreeNode[] ts = { tnC, tnRB, tnR, tnS };
             tnECO = new TreeNode(r.Eco.Value, ts);

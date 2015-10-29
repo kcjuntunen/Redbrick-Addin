@@ -498,28 +498,38 @@ namespace Redbrick_Addin {
             using (OdbcDataReader dr = comm.ExecuteReader()) {
               e.EcrNumber = int.Parse(ecoNumber);
               if (dr.HasRows) {
-                e.Changes = dr.GetString((int)ECODataColumns.CHANGES);
-                e.ErrDescription = dr.GetString((int)ECODataColumns.DESC);
-                e.Revision = dr.GetString((int)ECODataColumns.REVISION);
-                e.Status = dr.GetString((int)ECODataColumns.STATUS);
-                e.RequestedBy = dr.GetString((int)ECODataColumns.USER_FIRST) + " " + dr.GetString((int)ECODataColumns.USER_FIRST);
+                if (!dr.IsDBNull((int)ECODataColumns.CHANGES))
+                  e.Changes = dr.GetString((int)ECODataColumns.CHANGES);
+                if (!dr.IsDBNull((int)ECODataColumns.DESC))
+                  e.ErrDescription = dr.GetString((int)ECODataColumns.DESC);
+                if (!dr.IsDBNull((int)ECODataColumns.REVISION))
+                  e.Revision = dr.GetString((int)ECODataColumns.REVISION);
+                if (!dr.IsDBNull((int)ECODataColumns.STATUS))
+                  e.Status = dr.GetString((int)ECODataColumns.STATUS);
+                if (!dr.IsDBNull((int)ECODataColumns.USER_FIRST) && !dr.IsDBNull((int)ECODataColumns.USER_LAST))
+                  e.RequestedBy = dr.GetString((int)ECODataColumns.USER_FIRST) + " " + dr.GetString((int)ECODataColumns.USER_LAST);
                 dr.Close();
               }
             }
           }
         } else {
-          SQL = @"SELECT Engineer, Engineer, Change, Holder AS STATUS, " +
-              @"Change, Change FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)=?))";
+          // ECR_LEGACY.ECRNum is a string field.
+          SQL = @"SELECT * FROM ECR_LEGACY WHERE (((ECR_LEGACY.ECRNum)=?))";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
             comm.Parameters.AddWithValue("@ecrNo", ecoNumber);
             using (OdbcDataReader dr = comm.ExecuteReader()) {
               e.EcrNumber = int.Parse(ecoNumber);
               if (dr.HasRows) {
-                e.Changes = dr.GetString((int)ECODataColumns.CHANGES);
-                e.ErrDescription = dr.GetString((int)ECODataColumns.DESC);
-                e.Revision = dr.GetString((int)ECODataColumns.REVISION);
-                e.Status = dr.GetString((int)ECODataColumns.STATUS);
-                e.RequestedBy = dr.GetString((int)ECODataColumns.USER_FIRST) + " " + dr.GetString((int)ECODataColumns.USER_FIRST);
+                if (!dr.IsDBNull(6))
+                  e.Changes = dr.GetString(6);
+                if (!dr.IsDBNull(4))
+                  e.Status = @"Finished on " + dr.GetDate(4).ToString().Split(' ')[0];
+                else if (!dr.IsDBNull(3))
+                  e.Status = @"Requested on " + dr.GetDate(3).ToString().Split(' ')[0];
+                if (!dr.IsDBNull(5))
+                  e.Revision = dr.GetString(5);
+                if (!dr.IsDBNull(7))
+                  e.RequestedBy = dr.GetString(7);
               }
             }
           }
