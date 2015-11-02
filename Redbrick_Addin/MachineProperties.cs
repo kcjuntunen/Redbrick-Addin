@@ -166,7 +166,7 @@ namespace Redbrick_Addin {
     }
 
     private void btnWhere_Click(object sender, EventArgs e) {
-      DataDisplay dd = new DataDisplay(propertySet.cutlistData.GetWhereProgUsed(tbCNC1.Text));
+      DataDisplay dd = new DataDisplay(propertySet.cutlistData.GetWhereProgUsed(tbCNC1.Text), tbCNC1.Text);
       dd.ShowDialog();
     }
   }

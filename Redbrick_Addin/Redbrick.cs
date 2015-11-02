@@ -35,13 +35,14 @@ namespace Redbrick_Addin {
     private void UISetup() {
       try {
         taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath +
-            Properties.Settings.Default.Icon
-            , Properties.Resources.Title);
+            Properties.Settings.Default.Icon, 
+            Properties.Resources.Title);
 
         taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
         taskpaneHost.OnRequestSW += new Func<SldWorks>(delegate { return this.swApp; });
 
         bool result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Ok, "OK");
+        result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Options, "Configuration");
         //result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Close, "Close");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
@@ -56,10 +57,11 @@ namespace Redbrick_Addin {
     int taskpaneView_TaskPaneToolbarButtonClicked(int ButtonIndex) {
       switch (ButtonIndex) {
         case 0:
-          this.taskpaneHost.Write();
+          taskpaneHost.Write();
           break;
         case 1:
-          this.DisconnectFromSW();
+          RedbrickConfiguration rbc = new RedbrickConfiguration();
+          rbc.ShowDialog();
           break;
         default:
           break;

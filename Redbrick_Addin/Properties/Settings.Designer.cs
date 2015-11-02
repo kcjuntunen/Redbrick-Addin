@@ -214,12 +214,15 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("6")]
         public int UserDept {
             get {
                 return ((int)(this["UserDept"]));
+            }
+            set {
+                this["UserDept"] = value;
             }
         }
         
@@ -316,12 +319,15 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("7")]
         public int RevNoLimit {
             get {
                 return ((int)(this["RevNoLimit"]));
+            }
+            set {
+                this["RevNoLimit"] = value;
             }
         }
         
@@ -355,6 +361,30 @@ namespace Redbrick_Addin.Properties {
             }
             set {
                 this["DataDisplaySize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point RBConfigLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["RBConfigLocation"]));
+            }
+            set {
+                this["RBConfigLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size RBConfigSize {
+            get {
+                return ((global::System.Drawing.Size)(this["RBConfigSize"]));
+            }
+            set {
+                this["RBConfigSize"] = value;
             }
         }
     }

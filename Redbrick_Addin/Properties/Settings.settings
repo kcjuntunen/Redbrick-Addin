@@ -100,7 +100,7 @@
     <Setting Name="CurrentCutlist" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">645</Value>
     </Setting>
-    <Setting Name="UserDept" Type="System.Int32" Scope="Application">
+    <Setting Name="UserDept" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">6</Value>
     </Setting>
     <Setting Name="EnableDBWrite" Type="System.Boolean" Scope="User">
@@ -127,7 +127,7 @@
     <Setting Name="CutlistHeaderSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
-    <Setting Name="RevNoLimit" Type="System.Int32" Scope="Application">
+    <Setting Name="RevNoLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
     </Setting>
     <Setting Name="MasterTableHash" Type="System.String" Scope="Application">
@@ -137,6 +137,12 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="DataDisplaySize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="RBConfigLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="RBConfigSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
   </Settings>

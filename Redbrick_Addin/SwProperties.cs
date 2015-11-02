@@ -564,7 +564,7 @@ namespace Redbrick_Addin {
           if (!Contains(pNew))
             Add(pNew);
 
-          if (!Contains(pOld))
+          if (Properties.Settings.Default.Testing && !Contains(pOld))
             Add(pOld);
         }
       }

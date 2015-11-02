@@ -12,8 +12,9 @@ namespace Redbrick_Addin {
       InitializeComponent();
     }
 
-    public DataDisplay(DataTable dt) {
+    public DataDisplay(DataTable dt, string search) {
       InitializeComponent();
+      Text = string.Format(@"Where {0} is used...", search);
       dataGridView1.DataSource = dt;
     }
 

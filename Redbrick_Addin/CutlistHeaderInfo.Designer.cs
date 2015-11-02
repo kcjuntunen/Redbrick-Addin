@@ -492,6 +492,7 @@ namespace Redbrick_Addin {
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(379, 349);
       this.Controls.Add(this.tlpMain);
+      this.MinimumSize = new System.Drawing.Size(387, 379);
       this.Name = "CutlistHeaderInfo";
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "CutlistHeaderInfo";

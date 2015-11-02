@@ -274,6 +274,7 @@ namespace Redbrick_Addin {
 
     private void btnMakeOriginal_Click(object sender, EventArgs e) {
       propertySet.cutlistData.MakeOriginal(propertySet);
+      btnMakeOriginal.Enabled = false;
     }
   }
 }

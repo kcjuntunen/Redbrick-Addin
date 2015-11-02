@@ -164,7 +164,7 @@ namespace Redbrick_Addin {
                 dar[1] = string.Empty;
                 dar[2] = string.Empty;
                 ds.Tables[0].Rows.Add(dar);
-                this.Ops = ds;
+                Ops = ds;
               }
             }
           }
@@ -263,7 +263,7 @@ namespace Redbrick_Addin {
 
     public DataTable GetWhereProgUsed(string prog) {
       string SQL = @"SELECT CUT_PARTS.PARTNUM, CUT_PARTS.DESCR, CUT_PARTS.FIN_L, CUT_PARTS.FIN_W, CUT_PARTS.THICKNESS, CUT_PARTS.CNC1, CUT_PARTS.CNC2, " +
-        @"CUT_PARTS.BLANKQTY, CUT_PARTS.OVER_L, CUT_PARTS.OVER_W, CUT_OPS.OPDESCR, CUT_OPS_1.OPDESCR, CUT_OPS_2.OPDESCR, CUT_OPS_3.OPDESCR, CUT_OPS_4.OPDESCR, "+
+        @"CUT_PARTS.BLANKQTY, CUT_PARTS.OVER_L, CUT_PARTS.OVER_W, CUT_OPS.OPDESCR, CUT_OPS_1.OPDESCR, CUT_OPS_2.OPDESCR, CUT_OPS_3.OPDESCR, CUT_OPS_4.OPDESCR, " +
         @"CUT_PARTS.COMMENT, CUT_PARTS.UPDATE_CNC FROM CUT_OPS AS CUT_OPS_4 " +
         @"RIGHT JOIN (CUT_OPS AS CUT_OPS_3 RIGHT JOIN (CUT_OPS AS CUT_OPS_2 RIGHT JOIN (CUT_OPS AS CUT_OPS_1 RIGHT JOIN " +
         @"(CUT_PARTS LEFT JOIN CUT_OPS ON CUT_PARTS.OP1ID = CUT_OPS.OPID) ON CUT_OPS_1.OPID = CUT_PARTS.OP2ID) ON CUT_OPS_2.OPID = CUT_PARTS.OP3ID) " +
@@ -660,6 +660,18 @@ namespace Redbrick_Addin {
             return dr.GetInt32(0);
           else
             return 0;
+        }
+      }
+    }
+
+    public DataSet GetDepartments() {
+      string SQL = @"SELECT DEPT_ID, DEPT_NAME, DEPT_PRIOR FROM GEN_DEPTS";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds;
+          }
         }
       }
     }
@@ -1120,7 +1132,6 @@ namespace Redbrick_Addin {
           _opType = value;
       }
     }
-
 
     private DataSet _Ops;
 
