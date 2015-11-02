@@ -106,8 +106,8 @@ namespace Redbrick_Addin {
         table = new swTableType.swTableType((DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2),
           Properties.Settings.Default.MasterTableHash);
       } catch (Exception e) {
-        
-        throw;
+        RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
+        em.ShowDialog();
       }
     }
 

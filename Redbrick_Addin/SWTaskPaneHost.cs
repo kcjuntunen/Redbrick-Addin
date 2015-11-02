@@ -129,7 +129,7 @@ namespace Redbrick_Addin {
       return 0;
     }
 
-    private void ConnectSelection() {
+    public void ConnectSelection() {
       System.GC.Collect(2, GCCollectionMode.Forced);
       prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
 

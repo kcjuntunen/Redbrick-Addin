@@ -62,6 +62,7 @@ namespace Redbrick_Addin {
         case 1:
           RedbrickConfiguration rbc = new RedbrickConfiguration();
           rbc.ShowDialog();
+          taskpaneHost.ConnectSelection();
           break;
         default:
           break;

@@ -88,10 +88,10 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 4;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(324, 690);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
@@ -119,10 +119,8 @@ namespace Redbrick_Addin
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(318, 144);
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(318, 154);
       this.tableLayoutPanel2.TabIndex = 0;
       // 
       // dpDate
@@ -211,7 +209,7 @@ namespace Redbrick_Addin
       this.btnCreate.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCreate.Location = new System.Drawing.Point(225, 95);
       this.btnCreate.Name = "btnCreate";
-      this.btnCreate.Size = new System.Drawing.Size(90, 46);
+      this.btnCreate.Size = new System.Drawing.Size(90, 56);
       this.btnCreate.TabIndex = 6;
       this.btnCreate.Text = "Create/Update";
       this.btnCreate.UseVisualStyleBackColor = true;
@@ -221,7 +219,7 @@ namespace Redbrick_Addin
       // 
       this.groupBox1.Controls.Add(this.tableLayoutPanel3);
       this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox1.Location = new System.Drawing.Point(3, 153);
+      this.groupBox1.Location = new System.Drawing.Point(3, 163);
       this.groupBox1.Name = "groupBox1";
       this.groupBox1.Size = new System.Drawing.Size(318, 294);
       this.groupBox1.TabIndex = 0;
