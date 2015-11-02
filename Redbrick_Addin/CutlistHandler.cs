@@ -81,7 +81,7 @@ namespace Redbrick_Addin {
           tbQty.Text = drv[(int)WhereUsedRes.QTY].ToString();
           cbStatus.SelectedValue = drv[(int)WhereUsedRes.STATEID].ToString();
           prop.CutlistQuantity = drv[(int)WhereUsedRes.QTY].ToString();
-          prop.CutlistID = drv[(int)WhereUsedRes.CLID].ToString();
+          prop.CutlistID = int.Parse(drv[(int)WhereUsedRes.CLID].ToString());
 
           cbCustomer.SelectedValue = int.Parse(drv[(int)WhereUsedRes.CUSTID].ToString());
         }

@@ -818,7 +818,7 @@ namespace Redbrick_Addin {
     /// Gets and/or creates a part.
     /// </summary>
     /// <returns>PartID</returns>
-    private int UpdatePart(KeyValuePair<string, Part> kp) {
+    public int UpdatePart(KeyValuePair<string, Part> kp) {
       int affected = 0;
       if (ENABLE_DB_WRITE) {
         Part p = kp.Value;
@@ -1007,7 +1007,7 @@ namespace Redbrick_Addin {
         i = 0;
     }
 
-    public int UpdateParts(SwProperties p) {
+    public int UpdateParts(SwProperties p, int clid) {
       int rowsAffected = 0;
       if (ENABLE_DB_WRITE) {
         string SQL = @"UPDATE CUT_PARTS SET DESCR = ?, FIN_L = ?, FIN_W = ?, THICKNESS = ?, CNC1 = ?, CNC2 = ?, " +
@@ -1070,13 +1070,52 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@hash", p.Hash);
 
           try {
-            rowsAffected = comm.ExecuteNonQuery();
+            comm.ExecuteNonQuery();
           } catch (InvalidOperationException ioe) {
             throw ioe;
           }
         }
       }
       return rowsAffected;
+    }
+
+    static public Part MakePartFromPropertySet(SwProperties swp) {
+      Part p = new Part();
+      p.FileInformation = swp.PartFileInfo;
+      p.PartNumber = swp.PartName;
+      p.SetMaterialID(swp.GetProperty("MATID").ID);
+      p.SetEdgeFrontID(swp.GetProperty("EFID").ID);
+      p.SetEdgeBackID(swp.GetProperty("EBID").ID);
+      p.SetEdgeLeftID(swp.GetProperty("ELID").ID);
+      p.SetEdgeRightID(swp.GetProperty("ERID").ID);
+
+      p.Description = swp.GetProperty("Description").Value;
+      p.SetLength(swp.GetProperty("LENGTH").ResValue);
+      p.SetWidth(swp.GetProperty("WIDTH").ResValue);
+      p.SetThickness(swp.GetProperty("THICKNESS").ResValue);
+
+      p.Comment = swp.GetProperty("COMMENT").Value;
+      p.CNC1 = swp.GetProperty("CNC1").Value;
+      p.CNC2 = swp.GetProperty("CNC2").Value;
+      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").ID);
+
+      p.SetOverL(swp.GetProperty("OVERL").Value);
+      p.SetOverW(swp.GetProperty("OVERW").Value);
+      p.SetBlankQty(swp.GetProperty("BLANK QTY").Value);
+      p.SetDeptID(swp.GetProperty("DEPTID").ID);
+
+      p.SetOpID(swp.GetProperty("OP1ID").ID, 0);
+      p.SetOpID(swp.GetProperty("OP2ID").ID, 1);
+      p.SetOpID(swp.GetProperty("OP3ID").ID, 2);
+      p.SetOpID(swp.GetProperty("OP4ID").ID, 3);
+      p.SetOpID(swp.GetProperty("OP5ID").ID, 4);
+
+      int tp = 0;
+      int.TryParse(swp.GetProperty("CRC32").Value, out tp);
+      string hash = string.Format("{0:X}", tp);
+      p.Hash = uint.Parse(hash, System.Globalization.NumberStyles.HexNumber);
+
+      return p;
     }
 
     public int UpdateMachinePrograms() {

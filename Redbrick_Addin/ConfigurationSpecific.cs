@@ -51,8 +51,10 @@ namespace Redbrick_Addin {
 
       cbCutlist.SelectedValue = recentCutlist;
 
-      if (cbCutlist.SelectedItem != null)
+      if (cbCutlist.SelectedItem != null) {
+        propertySet.CutlistID = recentCutlist;
         cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+      }
 
       _edgeDiffL = 0.0;
       _edgeDiffW = 0.0;
@@ -262,6 +264,7 @@ namespace Redbrick_Addin {
     private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e) {
       if (changingwithmouse) {
         Properties.Settings.Default.CurrentCutlist = int.Parse(cbCutlist.SelectedValue.ToString());
+        propertySet.CutlistID = Properties.Settings.Default.CurrentCutlist;
         Properties.Settings.Default.Save();
         cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
         changingwithmouse = false;

@@ -721,6 +721,12 @@ namespace Redbrick_Addin {
       foreach (SwProperty p in _innerArray) {
         p.Write2(modeldoc);
       }
+      Part prt = CutlistData.MakePartFromPropertySet(this);
+      KeyValuePair<string, Part> pair = new KeyValuePair<string, Part>(prt.PartNumber, prt);
+      int prtNo = cutlistData.UpdatePart(pair);
+      if (CutlistID != 0) {
+        cutlistData.UpdateCutlistPart(CutlistID, prtNo, pair);
+      }
     }
 
     public void Write(SldWorks sw) {
@@ -736,8 +742,6 @@ namespace Redbrick_Addin {
         p.Del(md);
         p.Write2(md);
       }
-      
-      cutlistData.UpdateParts(this);
     }
 
     public override string ToString() {
@@ -748,9 +752,9 @@ namespace Redbrick_Addin {
       return ret;
     }
 
-    private string _clID;
+    private int _clID;
 
-    public string CutlistID {
+    public int CutlistID {
       get { return _clID; }
       set { _clID = value; }
     }
