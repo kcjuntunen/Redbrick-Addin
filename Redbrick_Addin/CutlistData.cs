@@ -48,6 +48,18 @@ namespace Redbrick_Addin {
       STATEID
     }
 
+    public enum CutlistDataFields {
+      CLID,
+      PARTNUM, REV,
+      DRAWING,
+      CUSTID,
+      CDATE,
+      DESCR,
+      LENGTH, WIDTH, HEIGHT,
+      SETUP_BY, STATE_BY,
+      STATEID
+    }
+
     public enum CutlistDataFieldsJoined {
       CLID,
       PARTNUM, // REV,
@@ -58,6 +70,13 @@ namespace Redbrick_Addin {
       LENGTH, WIDTH, HEIGHT,
       SETUP_BY, STATE_BY,
       STATEID
+    }
+
+    public enum OpFields {
+      OPID,
+      OPNAME,
+      OPDESCR,
+      OPTYPE
     }
 
     private DataSet GetMaterials() {
@@ -381,6 +400,30 @@ namespace Redbrick_Addin {
           }
         }
       }
+    }
+
+    public List<string> GetOpDataByID(string ID) {
+      int tp = 0;
+      List<string> defaultList = new List<string> { "0", string.Empty, string.Empty, this.OpType.ToString() };
+
+      if ((ID != string.Empty) && (int.TryParse(ID, out tp))) {
+        string SQL = @"SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPID = ?";
+        using(OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@OpId", tp);
+          using(OdbcDataReader dr = comm.ExecuteReader()) {
+            if (dr.HasRows) {
+              List<string> x = new List<string>();
+              x.Add(dr.GetString(0));
+              x.Add(dr.GetString(1));
+              x.Add(dr.GetString(2));
+              x.Add(dr.GetString(3));
+              return x;
+	          } else {
+            }
+          }
+        }
+      }
+      return defaultList;
     }
 
     public int GetOpTypeIDByName(string name) {
@@ -886,18 +929,6 @@ namespace Redbrick_Addin {
       }
     }
 
-    public enum CutlistDataFields {
-      CLID,
-      PARTNUM, REV,
-      DRAWING,
-      CUSTID,
-      CDATE,
-      DESCR,
-      LENGTH, WIDTH, HEIGHT,
-      SETUP_BY, STATE_BY,
-      STATEID
-    }
-
     public DataSet GetCutlistData(string item, string rev) {
       string SQL = @"SELECT * FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)=?)) AND (((CUT_CUTLISTS.REV)=?));";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -944,6 +975,20 @@ namespace Redbrick_Addin {
       }
 
       return rowsAffected;
+    }
+
+    public void InsertError(int errNo, string errmsg, string targetSite) {
+      string SQL = "INSERT INTO GEN_ERRORS ERRDATE, ERRUSER, ERRNUM, ERRMSG, ERROBJ, ERRCHK, ERRAPP VALUES " +
+        "(GETDATE(), ?, ?, ?, ?, ?, ?)";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@ErrUser", GetCurrentAuthor());
+        comm.Parameters.AddWithValue("@ErrNum", errNo);
+        comm.Parameters.AddWithValue("@ErrMsg", errmsg);
+        comm.Parameters.AddWithValue("@ErrObj", targetSite);
+        comm.Parameters.AddWithValue("@ErrChk", -1);
+        comm.Parameters.AddWithValue("@ErrApp", @"Property Editor");
+        comm.ExecuteNonQuery();
+      }
     }
 
     private void parse(string s, out double d) {
@@ -997,13 +1042,13 @@ namespace Redbrick_Addin {
           int Op1 = 0;
           parse(p.GetProperty("OP1ID").ID, out Op1);
           int Op2 = 0;
-          parse(p.GetProperty("OP2ID").ID, out Op1);
+          parse(p.GetProperty("OP2ID").ID, out Op2);
           int Op3 = 0;
-          parse(p.GetProperty("OP3ID").ID, out Op1);
+          parse(p.GetProperty("OP3ID").ID, out Op3);
           int Op4 = 0;
-          parse(p.GetProperty("OP4ID").ID, out Op1);
+          parse(p.GetProperty("OP4ID").ID, out Op4);
           int Op5 = 0;
-          parse(p.GetProperty("OP5ID").ID, out Op1);
+          parse(p.GetProperty("OP5ID").ID, out Op5);
           comm.Parameters.AddWithValue("@descr", dscr);
           comm.Parameters.AddWithValue("@finl", finL);
           comm.Parameters.AddWithValue("@finw", finW);

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace RedbrickErr {
   public partial class ErrMsg : Form {
+    private Redbrick_Addin.CutlistData cd;
     public ErrMsg() {
       InitializeComponent();
     }
@@ -18,12 +19,23 @@ namespace RedbrickErr {
       tbxMsg.Text = ComposeMessage(e);
     }
 
+    public ErrMsg(Exception e, Redbrick_Addin.CutlistData d) {
+      InitializeComponent();
+      System.Media.SystemSounds.Exclamation.Play();
+      cd = d;
+      tbxMsg.Text = ComposeMessage(e);
+    }
+
     private string ComposeMessage(Exception e) {
       Text = String.Format("Error in {0}", e.TargetSite);
       StringBuilder msg = new StringBuilder();
       msg.AppendFormat("{0} caused an error: {1}\r\n\r\n in {2}", e.Source, e.Message, e.TargetSite);
       msg.Append("\r\n\r\n");
       msg.AppendFormat("Stack trace:\r\n{0}\r\n", e.StackTrace);
+
+      if (cd != null) {
+        cd.InsertError(e.HResult, e.Message, e.TargetSite.ToString());
+      }
 
       if (e.Data.Count > 0) {
         msg.AppendFormat("\r\n\r\nData:\r\n");

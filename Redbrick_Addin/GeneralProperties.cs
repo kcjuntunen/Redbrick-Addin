@@ -47,7 +47,7 @@ namespace Redbrick_Addin {
     }
 
     private void UpdateRes(SwProperty p, Control c) {
-      c.Text = string.Format("{0:#.###}", p.ResValue);
+      c.Text = string.Format("{0:C3}", p.ResValue);
     }
 
     private void LinkControlToProperty(string property, Control c) {
@@ -110,48 +110,48 @@ namespace Redbrick_Addin {
     }
 
     public void UpdateLengthRes(SwProperty p) {
-      labResLength.Text = string.Format("{0:#.###}", p.ResValue);
+      labResLength.Text = string.Format("{0:C3}", double.Parse(p.ResValue));
     }
 
     public void UpdateWidthRes(SwProperty p) {
-      labResWidth.Text = string.Format("{0:#.###}", p.ResValue);
+      labResWidth.Text = string.Format("{0:C3}", double.Parse(p.ResValue));
     }
 
     public void UpdateThickRes(SwProperty p) {
-      labResThickness.Text = string.Format("{0:#.###}", p.ResValue);
+      labResThickness.Text = string.Format("{0:C3}", double.Parse(p.ResValue));
     }
 
     public void UpdateWallThickRes(SwProperty p) {
       if (p != null)
-        labResWallThickness.Text = string.Format("{0:#.###}", p.ResValue);
+        labResWallThickness.Text = string.Format("{0:C3}", double.Parse(p.ResValue));
     }
 
     private void tbLength_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("LENGTH").Value = tbLength.Text;
       propertySet.GetProperty("LENGTH").Write();
       propertySet.GetProperty("LENGTH").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResLength.Text = string.Format("{0:#.###}", propertySet.GetProperty("LENGTH").ResValue);
+      labResLength.Text = string.Format("{0:C3}", double.Parse(propertySet.GetProperty("LENGTH").ResValue));
     }
 
     private void tbWidth_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("WIDTH").Value = tbWidth.Text;
       propertySet.GetProperty("WIDTH").Write();
       propertySet.GetProperty("WIDTH").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResWidth.Text = string.Format("{0:#.###}", propertySet.GetProperty("WIDTH").ResValue);
+      labResWidth.Text = string.Format("{0:C3}", double.Parse(propertySet.GetProperty("WIDTH").ResValue));
     }
 
     private void tbThick_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("THICKNESS").Value = tbThick.Text;
       propertySet.GetProperty("THICKNESS").Write();
       propertySet.GetProperty("THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResThickness.Text = string.Format("{0:#.###}", propertySet.GetProperty("THICKNESS").ResValue);
+      labResThickness.Text = string.Format("{0:C3}", double.Parse(propertySet.GetProperty("THICKNESS").ResValue));
     }
 
     private void tbWallThick_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("WALL THICKNESS").Value = tbWallThick.Text;
       propertySet.GetProperty("WALL THICKNESS").Write();
       propertySet.GetProperty("WALL THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResWallThickness.Text = string.Format("{0:#.###}", propertySet.GetProperty("WALL THICKNESS").ResValue);
+      labResWallThickness.Text = string.Format("{0:C3}", double.Parse(propertySet.GetProperty("WALL THICKNESS").ResValue));
     }
 
     private double _length;

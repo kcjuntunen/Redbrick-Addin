@@ -37,7 +37,7 @@ namespace Redbrick_Addin {
     {                                                       // to do this.
       DockStyle d = DockStyle.Fill;
 
-      ds = new DepartmentSelector(ref this.props);        // Since I'm doing this, I can feed arguments to the controls. Might as well.
+      ds = new DepartmentSelector(ref this.props);
       ds.Dock = d;
       cs = new ConfigurationSpecific(ref this.props);
       cs.Dock = d;
@@ -115,7 +115,7 @@ namespace Redbrick_Addin {
       // OK, so the controls were linked on update. This reads whatever was
       // entered into the controls, then writes to SW.
       ReadControls();
-      props.Write(doc);
+      props.Write();
       //ch.Write();
       // Show changes.
       doc.ForceRebuild3(false);

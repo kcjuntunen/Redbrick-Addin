@@ -98,6 +98,7 @@ namespace Redbrick_Addin {
 
     [ComRegisterFunction()]
     private static void ComRegister(Type t) {
+      Properties.Settings.Default.Upgrade();
       string keyPath = String.Format(@"SOFTWARE\SolidWorks\AddIns\{0:b}", t.GUID);
 
       using (Microsoft.Win32.RegistryKey rk = Microsoft.Win32.Registry.LocalMachine.CreateSubKey(keyPath)) {

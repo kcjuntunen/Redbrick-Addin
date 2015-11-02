@@ -29,22 +29,40 @@ namespace Redbrick_Addin {
     /// Empty metadata can create a problem.
     /// </summary>
     public void CreateDefaultDrawingSet() {
-      _innerArray.Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoNumber, "$PRP:\"SW-File Name\"", true));
-      _innerArray.Add(new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
-      _innerArray.Add(new SwProperty("REVISION LEVEL", swCustomInfoType_e.swCustomInfoNumber, "100", true));
-      _innerArray.Add(new SwProperty("DrawnBy", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
-      _innerArray.Add(new SwProperty("DATE", swCustomInfoType_e.swCustomInfoNumber, DateTime.Now.ToShortDateString(), true));
+      Add(new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoNumber, "$PRP:\"SW-File Name\"", true));
+      Add(new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
+      Add(new SwProperty("REVISION LEVEL", swCustomInfoType_e.swCustomInfoNumber, "100", true));
+      Add(new SwProperty("DrawnBy", swCustomInfoType_e.swCustomInfoNumber, string.Empty, true));
+      Add(new SwProperty("DATE", swCustomInfoType_e.swCustomInfoNumber, DateTime.Now.ToShortDateString(), true));
 
-      _innerArray.Add(new SwProperty("M1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("FINISH 1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("M2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("FINISH 2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("M3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("FINISH 3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("M4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("FINISH 4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("M5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
-      _innerArray.Add(new SwProperty("FINISH 5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("M1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("FINISH 1", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("M2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("FINISH 2", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("M3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("FINISH 3", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("M4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("FINISH 4", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("M5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+      Add(new SwProperty("FINISH 5", swCustomInfoType_e.swCustomInfoText, string.Empty, true));
+    }
+
+    public void GetMaterialMetaData() {
+      string atHere = PartFileInfo.Name;
+      Add(new SwProperty("MATERIAL",
+        swCustomInfoType_e.swCustomInfoText,
+        string.Format("\"SW-Material@{0}\"", atHere),
+        true));
+
+      Add(new SwProperty("WEIGHT",
+        swCustomInfoType_e.swCustomInfoText,
+        string.Format("\"SW-Mass@{0}\"", atHere),
+        true));
+
+      Add(new SwProperty("VOLUME",
+        swCustomInfoType_e.swCustomInfoText,
+        string.Format("\"SW-Volume@{0}\"", atHere),
+        true));
     }
 
     /// <summary>
@@ -67,14 +85,8 @@ namespace Redbrick_Addin {
 
           cutlistData.OpType = ParseDept(md);
           configName = c.Name;
-
-          if (!Properties.Settings.Default.Testing) {
-            ParsePropertyData(g, docType);
-            ParsePropertyData(s, docType);
-          } else {
-            ParsePropertyData2(g, docType);
-            ParsePropertyData2(s, docType);
-          }
+          ParsePropertyData2(g, docType);
+          ParsePropertyData2(s, docType);
         }
       }
     }
@@ -98,14 +110,8 @@ namespace Redbrick_Addin {
             CustomPropertyManager s = modeldoc.Extension.get_CustomPropertyManager(configName);
 
             cutlistData.OpType = ParseDept(modeldoc);
-
-            if (!Properties.Settings.Default.Testing) {
-              ParsePropertyData(g, docType);
-              ParsePropertyData(s, docType);
-            } else {
-              ParsePropertyData2(g, docType);
-              ParsePropertyData2(s, docType);
-            }
+            ParsePropertyData2(g, docType);
+            ParsePropertyData2(s, docType);
           }
         }
       }
@@ -118,7 +124,7 @@ namespace Redbrick_Addin {
     /// <returns>Returns the ID of an OpType.</returns>
     public int ParseDept(ModelDoc2 md) {
       const string propName = "DEPARTMENT";
-      const string newPropName = "DEPT";
+      const string newPropName = "DEPTID";
 
       int opt = 1;
       bool useCached = false;
@@ -172,13 +178,13 @@ namespace Redbrick_Addin {
             pOld.ResValue = resVal;
 
             pNew.ID = pOld.ID;
-            pNew.Value = pNew.ID;
+            pNew.Value = val;
             pNew.ResValue = resVal;
             break;
           case newPropName:
             // new dept field
-            if (g.Get5(propName, useCached, out val, out resVal, out wRes) == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent)
-              s.Get5(propName, useCached, out val, out resVal, out wRes);
+            if (g.Get5(newPropName, useCached, out val, out resVal, out wRes) == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent)
+              s.Get5(newPropName, useCached, out val, out resVal, out wRes);
             pOld.Rename(propName);
             pNew.Rename(newPropName);
             tp = 0;
@@ -199,10 +205,11 @@ namespace Redbrick_Addin {
             break;
         }
       }
-      if (!Contains(pOld))
+
+      if (Properties.Settings.Default.Testing && !Contains(propName))
         Add(pOld);
 
-      if (!Contains(pNew))
+      if (!Contains(newPropName))
         Add(pNew);
 
       return opt;
@@ -339,8 +346,9 @@ namespace Redbrick_Addin {
       string resValOut = string.Empty;
       bool wasResolved = false;
       int res = 0;
+      GetMaterialMetaData();
       string[] ss = g.GetNames();
-
+      
       if (ss != null) {
         foreach (string s in ss) {
           res = g.Get5(s, false, out valOut, out resValOut, out wasResolved);
@@ -367,10 +375,10 @@ namespace Redbrick_Addin {
                 //pNew.Value = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
-                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "MATID":
               if (!Contains("CUTLIST MATERIAL")) {
@@ -379,10 +387,11 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pNew.Descr = cutlistData.GetMaterialByID(pNew.ID);
                 pOld.Descr = pNew.Descr;
-                pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pOld.Type = swCustomInfoType_e.swCustomInfoText;
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "EDGE FRONT (L)":
               if (!Contains("EFID")) {
@@ -392,10 +401,10 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
-                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "EDGE BACK (L)":
               if (!Contains("EBID")) {
@@ -405,10 +414,10 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
-                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "EDGE LEFT (W)":
               if (!Contains("ELID")) {
@@ -418,10 +427,10 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
-                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "EDGE RIGHT (W)":
               if (!Contains("ERID")) {
@@ -431,10 +440,10 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
-                pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "EFID":
               if (!Contains("EDGE FRONT (L)")) {
@@ -443,10 +452,11 @@ namespace Redbrick_Addin {
                 pNew.ID = pNew.Value;
                 pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                 pNew.Descr = pOld.Value;
-                pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pOld.Type = swCustomInfoType_e.swCustomInfoText;
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "EBID":
               if (!Contains("EDGE BACK (L)")) {
@@ -455,10 +465,11 @@ namespace Redbrick_Addin {
                 pNew.ID = pNew.Value;
                 pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                 pNew.Descr = pOld.Value;
-                pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pOld.Type = swCustomInfoType_e.swCustomInfoText;
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "ELID":
               if (!Contains("EDGE LEFT (W)")) {
@@ -467,10 +478,11 @@ namespace Redbrick_Addin {
                 pNew.ID = pNew.Value;
                 pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                 pNew.Descr = pOld.Value;
-                pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pOld.Type = swCustomInfoType_e.swCustomInfoText;
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "ERID":
               if (!Contains("EDGE RIGHT (W)")) {
@@ -479,10 +491,11 @@ namespace Redbrick_Addin {
                 pNew.ID = pNew.Value;
                 pOld.Descr = cutlistData.GetEdgeByID(pNew.ID);
                 pNew.Descr = pOld.Value;
-                pOld.Type = swCustomInfoType_e.swCustomInfoText;
-                pOld.Global = false;
-                pNew.Global = false;
               }
+              pOld.Type = swCustomInfoType_e.swCustomInfoText;
+              pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+              pOld.Global = false;
+              pNew.Global = false;
               break;
             case "UPDATE CNC":
               pOld.Global = true;
@@ -512,48 +525,47 @@ namespace Redbrick_Addin {
                   pOld.Type = swCustomInfoType_e.swCustomInfoText;
                   pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
 
-                  if (s == string.Format("OP{0}", i)) {
-                    if (pOld.ResValue.Length < 4 && pOld.ResValue != string.Empty) {
-                      List<string> dr = cutlistData.GetOpDataByName(pOld.ResValue.ToString());
-                      pOld.ID = dr[0];
-                      pNew.ID = pOld.ID;
-                      pOld.Value = dr[1];
-                      pOld.ResValue = dr[1];
-                      pNew.Descr = dr[2];
-                    } else {
-                      pOld.ID = "0";
-                      pNew.ID = pOld.ID;
-                      pNew.Descr = string.Empty;
-                      pOld.Value = string.Empty;
-                      pNew.Value = "0";
-                      pOld.ResValue = string.Empty;
-                      pNew.ResValue = "0";
-                    }
-                  } else {
+                  if (s == string.Format("OP{0}ID", i)) {
                     if (int.TryParse(pNew.Value, out tp) || int.TryParse(pOld.Value, out tp)) {
                       if (tp > 0) {
-                        pOld.ID = tp.ToString();
-                        pNew.ID = tp.ToString();
-                        pOld.Value = cutlistData.GetOpAbbreviationByID(tp.ToString());
-                        pOld.ResValue = pOld.Value;
-                        pNew.Descr = cutlistData.GetOpByID(tp.ToString());
+                        List<string> dr = cutlistData.GetOpDataByID(pNew.Value);
+                        pOld.ID = dr[(int)CutlistData.OpFields.OPID];
+                        pOld.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
+                        pNew.ID = dr[(int)CutlistData.OpFields.OPID];
+                        pNew.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
                       } else {
                         pOld.ID = tp.ToString();
-                        pNew.ID = tp.ToString();
                         pOld.Value = string.Empty;
-                        pNew.Value = tp.ToString();
                         pOld.ResValue = string.Empty;
-                        pNew.ResValue = tp.ToString();
                         pOld.Descr = string.Empty;
                         pNew.Descr = string.Empty;
+                        pNew.ID = tp.ToString();
+                        pNew.Value = tp.ToString();
+                        pNew.ResValue = tp.ToString();
                       }
                     } else {
                       pOld.ID = "0";
-                      pNew.ID = "0";
                       pOld.Value = string.Empty;
-                      pNew.Value = "0";
                       pOld.ResValue = string.Empty;
+                      pNew.ID = "0";
+                      pNew.Value = "0";
                       pNew.ResValue = "0";
+                    }
+                  } else {
+                    if (!int.TryParse(pNew.Value, out tp) && pNew.Value != string.Empty) {
+                      List<string> dr = cutlistData.GetOpDataByName(pOld.ResValue);
+                      pOld.ID = dr[(int)CutlistData.OpFields.OPID];
+                      pNew.ID = dr[(int)CutlistData.OpFields.OPID];
+                      pOld.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
+                      pNew.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
+                    } else {
+                      List<string> dr = cutlistData.GetOpDataByID(pNew.Value);
+                      pOld.ID = dr[(int)CutlistData.OpFields.OPID];
+                      pOld.Value = dr[(int)CutlistData.OpFields.OPNAME];
+                      pOld.ResValue = dr[(int)CutlistData.OpFields.OPNAME];
+                      pOld.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
+                      pNew.ID = dr[(int)CutlistData.OpFields.OPID];
+                      pNew.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
                     }
                   }
                 }
@@ -633,6 +645,14 @@ namespace Redbrick_Addin {
       }
     }
 
+    public void DelGlobal(ModelDoc2 md) {
+      CustomPropertyManager cpm = md.Extension.get_CustomPropertyManager(string.Empty);
+      string[] ss = (string[])cpm.GetNames();
+      foreach (string s in ss) {
+        cpm.Delete2(s);
+      }
+    }
+
     public virtual IEnumerator<SwProperty> GetEnumerator() {
       return (new List<SwProperty>(this).GetEnumerator());
     }
@@ -696,8 +716,10 @@ namespace Redbrick_Addin {
     }
 
     public void Write() {
+      DelSpecific(modeldoc);
+      DelGlobal(modeldoc);
       foreach (SwProperty p in _innerArray) {
-        p.Write();
+        p.Write2(modeldoc);
       }
     }
 
@@ -708,11 +730,13 @@ namespace Redbrick_Addin {
     }
 
     public void Write(ModelDoc2 md) {
-      this.DelSpecific(md);
+      DelSpecific(md);
+      DelGlobal(md);
       foreach (SwProperty p in _innerArray) {
         p.Del(md);
         p.Write2(md);
       }
+      
       cutlistData.UpdateParts(this);
     }
 
@@ -738,8 +762,8 @@ namespace Redbrick_Addin {
     #region ICollection<SwProperty> Members
 
     public void Add(SwProperty item) {
-      if (!this.Contains(item.Name)) {
-        this._innerArray.Add(item);
+      if (!Contains(item.Name)) {
+        _innerArray.Add(item);
       }
     }
 

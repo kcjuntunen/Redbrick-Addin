@@ -9,6 +9,7 @@ using System.Windows.Forms;
 namespace Redbrick_Addin {
   public partial class RedbrickConfiguration : Form {
     private CutlistData cd = new CutlistData();
+    private bool initialated = false;
     public RedbrickConfiguration() {
       InitializeComponent();
       init();
@@ -26,7 +27,8 @@ namespace Redbrick_Addin {
       chbDBEnabled.Checked = Properties.Settings.Default.EnableDBWrite;
       chbTestingMode.Checked = Properties.Settings.Default.Testing;
       cbDept.SelectedValue = Properties.Settings.Default.UserDept;
-      cbRevLimit.SelectedIndex = Properties.Settings.Default.RevLimit;
+      cbRevLimit.SelectedIndex = Properties.Settings.Default.RevLimit - 1;
+      initialated = true;
     }
 
     private void RedbrickConfiguration_Load(object sender, EventArgs e) {
@@ -35,15 +37,14 @@ namespace Redbrick_Addin {
     }
 
     private void RedbrickConfiguration_FormClosing(object sender, FormClosingEventArgs e) {
-      Properties.Settings.Default.RBConfigLocation = Location;
-      Properties.Settings.Default.RBConfigSize = Size;
-      Properties.Settings.Default.Save();
     }
 
     private void cbDept_SelectedIndexChanged(object sender, EventArgs e) {
-      int tp = 0;
-      if (int.TryParse(cbDept.SelectedValue.ToString(), out tp)) {
-        Properties.Settings.Default.UserDept = tp;
+      if (initialated) {
+        int tp = 0;
+        if (int.TryParse(cbDept.SelectedValue.ToString(), out tp)) {
+          Properties.Settings.Default.UserDept = tp;
+        }
       }
     }
 
@@ -57,6 +58,17 @@ namespace Redbrick_Addin {
 
     private void chbTestingMode_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.Testing = chbTestingMode.Checked;
+    }
+
+    private void btnOK_Click(object sender, EventArgs e) {
+      Properties.Settings.Default.RBConfigLocation = Location;
+      Properties.Settings.Default.RBConfigSize = Size;
+      Properties.Settings.Default.Save();
+      Close();
+    }
+
+    private void btnCancel_Click(object sender, EventArgs e) {
+      Close();
     }
   }
 }

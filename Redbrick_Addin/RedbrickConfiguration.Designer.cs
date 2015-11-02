@@ -30,7 +30,13 @@ namespace Redbrick_Addin {
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.cbRevLimit = new System.Windows.Forms.ComboBox();
+      this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+      this.btnCancel = new System.Windows.Forms.Button();
+      this.btnOK = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
+      this.tableLayoutPanel2.SuspendLayout();
+      this.tableLayoutPanel3.SuspendLayout();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
@@ -45,7 +51,7 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
       this.tableLayoutPanel1.Controls.Add(this.cbRevLimit, 0, 3);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 4;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -115,13 +121,65 @@ namespace Redbrick_Addin {
       this.cbRevLimit.TabIndex = 7;
       this.cbRevLimit.SelectedIndexChanged += new System.EventHandler(this.cbRevLimit_SelectedIndexChanged);
       // 
+      // tableLayoutPanel2
+      // 
+      this.tableLayoutPanel2.ColumnCount = 1;
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
+      this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
+      this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+      this.tableLayoutPanel2.RowCount = 2;
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 131);
+      this.tableLayoutPanel2.TabIndex = 1;
+      // 
+      // tableLayoutPanel3
+      // 
+      this.tableLayoutPanel3.ColumnCount = 2;
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel3.Controls.Add(this.btnCancel, 0, 0);
+      this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
+      this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 97);
+      this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+      this.tableLayoutPanel3.RowCount = 1;
+      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(296, 31);
+      this.tableLayoutPanel3.TabIndex = 1;
+      // 
+      // btnCancel
+      // 
+      this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnCancel.Location = new System.Drawing.Point(3, 3);
+      this.btnCancel.Name = "btnCancel";
+      this.btnCancel.Size = new System.Drawing.Size(75, 25);
+      this.btnCancel.TabIndex = 0;
+      this.btnCancel.Text = "Cancel";
+      this.btnCancel.UseVisualStyleBackColor = true;
+      this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+      // 
+      // btnOK
+      // 
+      this.btnOK.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnOK.Location = new System.Drawing.Point(84, 3);
+      this.btnOK.Name = "btnOK";
+      this.btnOK.Size = new System.Drawing.Size(209, 25);
+      this.btnOK.TabIndex = 1;
+      this.btnOK.Text = "OK";
+      this.btnOK.UseVisualStyleBackColor = true;
+      this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+      // 
       // RedbrickConfiguration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(296, 88);
-      this.Controls.Add(this.tableLayoutPanel1);
-      this.MinimumSize = new System.Drawing.Size(304, 118);
+      this.ClientSize = new System.Drawing.Size(296, 131);
+      this.Controls.Add(this.tableLayoutPanel2);
+      this.MinimumSize = new System.Drawing.Size(304, 161);
       this.Name = "RedbrickConfiguration";
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "RedbrickConfiguration";
@@ -129,6 +187,8 @@ namespace Redbrick_Addin {
       this.Load += new System.EventHandler(this.RedbrickConfiguration_Load);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
+      this.tableLayoutPanel2.ResumeLayout(false);
+      this.tableLayoutPanel3.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -142,5 +202,9 @@ namespace Redbrick_Addin {
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox cbRevLimit;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+    private System.Windows.Forms.Button btnCancel;
+    private System.Windows.Forms.Button btnOK;
   }
 }

@@ -96,7 +96,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 319);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 274);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // cbEr
@@ -216,7 +216,7 @@ namespace Redbrick_Addin
       this.leLColor.Location = new System.Drawing.Point(234, 120);
       this.leLColor.Name = "leLColor";
       this.tableLayoutPanel1.SetRowSpan(this.leLColor, 2);
-      this.leLColor.Size = new System.Drawing.Size(94, 40);
+      this.leLColor.Size = new System.Drawing.Size(93, 40);
       this.leLColor.TabIndex = 0;
       this.leLColor.Text = "Edge Left Color";
       this.leLColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -228,7 +228,7 @@ namespace Redbrick_Addin
       this.leBColor.Location = new System.Drawing.Point(234, 80);
       this.leBColor.Name = "leBColor";
       this.tableLayoutPanel1.SetRowSpan(this.leBColor, 2);
-      this.leBColor.Size = new System.Drawing.Size(94, 40);
+      this.leBColor.Size = new System.Drawing.Size(93, 40);
       this.leBColor.TabIndex = 0;
       this.leBColor.Text = "Edge Back Color";
       this.leBColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -240,7 +240,7 @@ namespace Redbrick_Addin
       this.leRColor.Location = new System.Drawing.Point(234, 160);
       this.leRColor.Name = "leRColor";
       this.tableLayoutPanel1.SetRowSpan(this.leRColor, 2);
-      this.leRColor.Size = new System.Drawing.Size(94, 40);
+      this.leRColor.Size = new System.Drawing.Size(93, 40);
       this.leRColor.TabIndex = 0;
       this.leRColor.Text = "Edge Right Color";
       this.leRColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -252,7 +252,7 @@ namespace Redbrick_Addin
       this.lMatColor.Location = new System.Drawing.Point(234, 0);
       this.lMatColor.Name = "lMatColor";
       this.tableLayoutPanel1.SetRowSpan(this.lMatColor, 2);
-      this.lMatColor.Size = new System.Drawing.Size(94, 40);
+      this.lMatColor.Size = new System.Drawing.Size(93, 40);
       this.lMatColor.TabIndex = 0;
       this.lMatColor.Text = "Material Color";
       this.lMatColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -264,7 +264,7 @@ namespace Redbrick_Addin
       this.leFColor.Location = new System.Drawing.Point(234, 40);
       this.leFColor.Name = "leFColor";
       this.tableLayoutPanel1.SetRowSpan(this.leFColor, 2);
-      this.leFColor.Size = new System.Drawing.Size(94, 40);
+      this.leFColor.Size = new System.Drawing.Size(93, 40);
       this.leFColor.TabIndex = 0;
       this.leFColor.Text = "Edge Front Color";
       this.leFColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -304,7 +304,7 @@ namespace Redbrick_Addin
       this.cbStatus.FormattingEnabled = true;
       this.cbStatus.Location = new System.Drawing.Point(234, 216);
       this.cbStatus.Name = "cbStatus";
-      this.cbStatus.Size = new System.Drawing.Size(94, 21);
+      this.cbStatus.Size = new System.Drawing.Size(93, 21);
       this.cbStatus.TabIndex = 9;
       // 
       // btnMakeOriginal
@@ -312,7 +312,7 @@ namespace Redbrick_Addin
       this.btnMakeOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnMakeOriginal.Location = new System.Drawing.Point(3, 243);
       this.btnMakeOriginal.Name = "btnMakeOriginal";
-      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 73);
+      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 28);
       this.btnMakeOriginal.TabIndex = 10;
       this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
       this.btnMakeOriginal.UseVisualStyleBackColor = true;
@@ -326,7 +326,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ConfigurationSpecific";
-      this.Size = new System.Drawing.Size(331, 319);
+      this.Size = new System.Drawing.Size(330, 274);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);

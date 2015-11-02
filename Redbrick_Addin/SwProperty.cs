@@ -144,7 +144,7 @@ namespace Redbrick_Addin {
 
         // This is for checking if the writing actually happened. It usually does. Don't know what I'd do if it didn't.
         int res;
-        switch (this.Type) {
+        switch (Type) {
           case swCustomInfoType_e.swCustomInfoDate:
             res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
             break;
@@ -161,11 +161,11 @@ namespace Redbrick_Addin {
               scpm.Add3(Name, (int)Type, ID, (int)ao);
             break;
           case swCustomInfoType_e.swCustomInfoText:
-            if (this.Global)
-              if (Name.ToUpper().StartsWith("OP") && !Name.ToUpper().EndsWith("ID"))
-                res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
-              else if (Name.ToUpper().EndsWith("ID"))
+            if (Global)
+              if (Name.ToUpper().EndsWith("ID"))
                 res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoNumber, ID, (int)ao);
+              else if (Name.ToUpper().StartsWith("OP"))// && !Name.ToUpper().EndsWith("ID"))
+                res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
               else if (Name.ToUpper().Contains("UPDATE"))
                 res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, (ID == "-1" ? "Yes" : "N"), (int)ao);
               else

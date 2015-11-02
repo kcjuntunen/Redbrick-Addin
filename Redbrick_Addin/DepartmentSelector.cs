@@ -59,6 +59,9 @@ namespace Redbrick_Addin {
 
     private void LinkControlToProperty() {
       string pn = "DEPARTMENT";
+      if (!Properties.Settings.Default.Testing)
+        pn = "DEPTID";
+
       string dept;
       if (PropertySet.Contains(pn)) {
         PropertySet.GetProperty(pn).Ctl = cbDepartment;
