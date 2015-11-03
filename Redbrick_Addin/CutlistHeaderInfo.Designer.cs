@@ -494,6 +494,7 @@ namespace Redbrick_Addin {
       this.Controls.Add(this.tlpMain);
       this.MinimumSize = new System.Drawing.Size(387, 379);
       this.Name = "CutlistHeaderInfo";
+      this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "CutlistHeaderInfo";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CutlistHeaderInfo_FormClosing);

@@ -276,8 +276,15 @@ namespace Redbrick_Addin {
     }
 
     private void btnMakeOriginal_Click(object sender, EventArgs e) {
-      propertySet.cutlistData.MakeOriginal(propertySet);
-      btnMakeOriginal.Enabled = false;
+      int ar = propertySet.cutlistData.MakeOriginal(propertySet);
+      if (ar < 1) {
+        CutlistHeaderInfo chi = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
+        chi.ShowDialog();
+      } else if (ar > 1) {
+        throw new Exception(propertySet.PartName + " has duplicates.");
+      } else {
+        btnMakeOriginal.Enabled = false;
+      }
     }
   }
 }

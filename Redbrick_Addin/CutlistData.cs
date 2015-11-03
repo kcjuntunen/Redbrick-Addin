@@ -958,7 +958,7 @@ namespace Redbrick_Addin {
     }
 
     public int MakeOriginal(SwProperties p) {
-      int rowsAffected = -1;
+      int rowsAffected = 0;
 
       if (ENABLE_DB_WRITE) {
         string SQL = @"UPDATE CUT_PARTS SET CUT_PARTS.HASH = ? WHERE (((CUT_PARTS.PARTNUM)=?));";

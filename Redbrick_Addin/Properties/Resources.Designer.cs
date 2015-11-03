@@ -80,7 +80,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Make Primary.
+        ///   Looks up a localized string similar to Insert Into Cutlist.
         /// </summary>
         internal static string MakeOriginalButtonText {
             get {
@@ -103,6 +103,26 @@ namespace Redbrick_Addin.Properties {
         internal static string MustOpenDocument {
             get {
                 return ResourceManager.GetString("MustOpenDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon redlego {
+            get {
+                object obj = ResourceManager.GetObject("redlego", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap setup {
+            get {
+                object obj = ResourceManager.GetObject("setup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

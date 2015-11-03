@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>redlego.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="SolidWorks.Interop.sldworks">
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks (3)\api\redist\SolidWorks.Interop.sldworks.dll</HintPath>
@@ -56,7 +59,7 @@
     <Reference Include="solidworkstools">
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks (3)\DriveWorksXpress\solidworkstools.dll</HintPath>
     </Reference>
-    <Reference Include="swTableType, Version=1.0.5778.21548, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="swTableType, Version=1.0.5778.21674, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\swTableType\x64\Debug\swTableType.dll</HintPath>
     </Reference>
@@ -251,6 +254,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="redlego.ico" />
+    <None Include="Resources\setup.bmp" />
+    <None Include="Resources\redlego.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

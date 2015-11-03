@@ -34,6 +34,7 @@ namespace Redbrick_Addin {
 
     private void UISetup() {
       try {
+
         taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath +
             Properties.Settings.Default.Icon, 
             Properties.Resources.Title);

@@ -81,6 +81,7 @@ namespace Redbrick_Addin {
     }
 
     private void InitControlsWithPart(Part p, CutlistData cd) {
+      Text = "Add to cutlist...";
       for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
       cbRev.SelectedIndex = 0;

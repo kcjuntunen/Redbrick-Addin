@@ -44,6 +44,7 @@ namespace Redbrick_Addin {
       this.ClientSize = new System.Drawing.Size(550, 347);
       this.Controls.Add(this.dataGridView1);
       this.Name = "DataDisplay";
+      this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "Data Display";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataDisplay_FormClosing);

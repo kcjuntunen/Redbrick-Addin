@@ -233,6 +233,7 @@ namespace Redbrick_Addin
       this.Location = global::Redbrick_Addin.Properties.Settings.Default.EditRevLocation;
       this.MinimumSize = new System.Drawing.Size(638, 120);
       this.Name = "EditRev";
+      this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
       this.Text = "EditRev";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditRev_FormClosing);

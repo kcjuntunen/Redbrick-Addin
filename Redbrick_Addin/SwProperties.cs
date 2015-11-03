@@ -723,9 +723,12 @@ namespace Redbrick_Addin {
       }
       Part prt = CutlistData.MakePartFromPropertySet(this);
       KeyValuePair<string, Part> pair = new KeyValuePair<string, Part>(prt.PartNumber, prt);
-      int prtNo = cutlistData.UpdatePart(pair);
-      if (CutlistID != 0) {
-        cutlistData.UpdateCutlistPart(CutlistID, prtNo, pair);
+      int prtNo = cutlistData.GetPartID(pair.Key);
+      if (prtNo > 0) {
+        cutlistData.UpdatePart(pair);
+        if (CutlistID != 0) {
+          cutlistData.UpdateCutlistPart(CutlistID, prtNo, pair);
+        }
       }
     }
 
