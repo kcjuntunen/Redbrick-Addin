@@ -61,6 +61,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to add {0} to an existing cutlist?.
+        /// </summary>
+        internal static string AddToExistingCutlist {
+            get {
+                return ResourceManager.GetString("AddToExistingCutlist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap clipboard {
