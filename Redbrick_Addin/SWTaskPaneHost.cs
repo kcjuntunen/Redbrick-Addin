@@ -159,13 +159,7 @@ namespace Redbrick_Addin {
         // what sort of doc is open?
         swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
 
-        bool anySelected = false;
-        try {
-          anySelected = (swSelMgr.GetSelectedObjectCount2(-1) > 0);
-        } catch (Exception) {
-        }
-
-        if (docT != swDocumentTypes_e.swDocDRAWING && swSelMgr != null && anySelected) {
+        if ((docT != swDocumentTypes_e.swDocDRAWING && swSelMgr != null) && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
           Component2 comp = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
           if (comp != null) {
             ModelDoc2 cmd = (ModelDoc2)comp.GetModelDoc2();
@@ -175,6 +169,7 @@ namespace Redbrick_Addin {
             prop.GetPropertyData(Document);
           }
         } else {
+          swSelMgr = null;
           prop.GetPropertyData(Document);
         }
 
