@@ -49,9 +49,9 @@ namespace Redbrick_Addin {
 
     private void OnSelected(object sender, EventArgs e) {
       OpType = this.cbDepartment.SelectedIndex + 1;
-      PropertySet.cutlistData.OpType = this.OpType;
-      PropertySet.GetProperty("DEPARTMENT").Value = this.OpType.ToString();
-      PropertySet.GetProperty("DEPARTMENT").ResValue = this.cbDepartment.Text;
+      PropertySet.cutlistData.OpType = OpType;
+      PropertySet.GetProperty("DEPARTMENT").Value = OpType.ToString();
+      PropertySet.GetProperty("DEPARTMENT").ResValue = cbDepartment.Text;
       int idx = this.OpType - 1; // Don't sort the table, and this works well.
       cbDepartment.SelectedIndex = idx;
       cbDepartment.DisplayMember = "TYPEDESC";

@@ -108,6 +108,9 @@ namespace Redbrick_Addin {
     }
 
     void ds_Selected(object d, EventArgs e) {
+      cs.Update(ref props);
+      gp.Update(ref props);
+      mp.Update(ref props);
       op.Update(ref props);
     }
 
