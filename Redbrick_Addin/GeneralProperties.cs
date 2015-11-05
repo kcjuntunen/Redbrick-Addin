@@ -116,28 +116,36 @@ namespace Redbrick_Addin {
       propertySet.GetProperty("LENGTH").Value = tbLength.Text;
       propertySet.GetProperty("LENGTH").Write();
       propertySet.GetProperty("LENGTH").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResLength.Text = string.Format("{0:0.000}", double.Parse(propertySet.GetProperty("LENGTH").ResValue));
+      double tp = 0.0;
+      string resVal = propertySet.GetProperty("LENGTH").ResValue;
+      labResLength.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}",  tp) : resVal;
     }
 
     private void tbWidth_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("WIDTH").Value = tbWidth.Text;
       propertySet.GetProperty("WIDTH").Write();
       propertySet.GetProperty("WIDTH").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResWidth.Text = string.Format("{0:0.000}", double.Parse(propertySet.GetProperty("WIDTH").ResValue));
+      double tp = 0.0;
+      string resVal = propertySet.GetProperty("WIDTH").ResValue;
+      labResWidth.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
     }
 
     private void tbThick_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("THICKNESS").Value = tbThick.Text;
       propertySet.GetProperty("THICKNESS").Write();
       propertySet.GetProperty("THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResThickness.Text = string.Format("{0:0.000}", double.Parse(propertySet.GetProperty("THICKNESS").ResValue));
+      double tp = 0.0;
+      string resVal = propertySet.GetProperty("THICKNESS").ResValue;
+      labResThickness.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
     }
 
     private void tbWallThick_Leave(object sender, EventArgs e) {
       propertySet.GetProperty("WALL THICKNESS").Value = tbWallThick.Text;
       propertySet.GetProperty("WALL THICKNESS").Write();
       propertySet.GetProperty("WALL THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
-      labResWallThickness.Text = string.Format("{0:0.000}", double.Parse(propertySet.GetProperty("WALL THICKNESS").ResValue));
+      double tp = 0.0;
+      string resVal = propertySet.GetProperty("WALL THICKNESS").ResValue;
+      labResThickness.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
     }
 
     private double _length;
