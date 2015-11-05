@@ -302,10 +302,16 @@ namespace Redbrick_Addin {
             string[] clData = (cbCutlist.SelectedItem as DataRowView)
               .Row[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
               .Split(new string[] { "REV" }, StringSplitOptions.None);
-            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData, 
-              clData[0].Trim(), clData[1].Trim());
-            chiy.Text = "Adding to cutlist...";
-            chiy.ShowDialog();
+            if (clData.Length > 1) {
+              CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData,
+                clData[0].Trim(), clData[1].Trim());
+              chiy.Text = "Adding to cutlist...";
+              chiy.ShowDialog();
+            } else {
+              CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
+              chiy.Text = "Adding to cutlist...";
+              chiy.ShowDialog();
+            }
             break;
           default:
             break;

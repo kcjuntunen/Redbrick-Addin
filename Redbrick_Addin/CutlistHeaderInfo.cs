@@ -9,14 +9,21 @@ using SolidWorks.Interop.sldworks;
 
 namespace Redbrick_Addin {
   public partial class CutlistHeaderInfo : Form {
+    public enum CutlistFunction {
+      AddToExistingAlreadySelected,
+      AddToExistingNotSelected,
+      CreateNew
+    }
+
     public CutlistHeaderInfo(Part p, CutlistData cd, string itemNo, string rev) {
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
+
       InitControlsWithPart(p, cd, itemNo, rev);
     }
 
-    public CutlistHeaderInfo(Part p, CutlistData cd) {
+    public CutlistHeaderInfo(Part p, CutlistData cd) { // New Cutlist
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
@@ -57,6 +64,7 @@ namespace Redbrick_Addin {
       for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
       cbRev.SelectedIndex = 0;
+      btnCreate.Text = "Add";
       part = p;
       CutlistData = cd;
 
@@ -85,6 +93,7 @@ namespace Redbrick_Addin {
       for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
       cbRev.SelectedIndex = 0;
+      btnCreate.Text = "Add";
       part = p;
       CutlistData = cd;
       cbRev.Enabled = false;
@@ -123,7 +132,19 @@ namespace Redbrick_Addin {
     }
 
     private void btnCreate_Click(object sender, EventArgs e) {
+      string[] clData = cbItemNo.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
+      if (clData.Length > 1) {
+        if (CutlistData.GetCutlistID(clData[0].Trim(), clData[1].Trim()) > 0) {
+          UpdateCutlist(clData[0].Trim(), clData[1].Trim());
+        }
+      } else {
+        UpdateCutlist(clData[0].Trim(), clData[1].Trim());
+      }
 
+      Close();
+    }
+
+    private void UpdateCutlist(string itemNo, string rev) {
       ushort itpRev = 0;
       ushort itpState = 0;
       ushort itpCust = 0;
@@ -132,7 +153,7 @@ namespace Redbrick_Addin {
       double dtpHeight = 0.0f;
 
       try {
-        itpRev = ushort.Parse(cbRev.Text);
+        itpRev = ushort.Parse(rev);
         itpCust = ushort.Parse(cbCustomer.SelectedValue.ToString());
         itpState = ushort.Parse(Properties.Settings.Default.DefaultState.ToString());
       } catch (Exception) {
@@ -144,7 +165,7 @@ namespace Redbrick_Addin {
       dtpHeight = ParseFloat(tbH.Text);
 
       if (table != null) {
-        CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, itpRev, cbDescription.Text,
+        CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, itpRev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, table.GetParts());
       } else {
         Dictionary<string, Part> d = new Dictionary<string, Part>();
@@ -152,7 +173,6 @@ namespace Redbrick_Addin {
         CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, itpRev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, d);
       }
-      Close();
     }
 
     private double ParseFloat(string number) {
