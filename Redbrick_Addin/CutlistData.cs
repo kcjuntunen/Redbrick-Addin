@@ -719,7 +719,7 @@ namespace Redbrick_Addin {
       }
     }
 
-    public int UpdateCutlist(string itemNo, string drawing, ushort rev, string descr, ushort custid, double l, double w, double h, ushort state,
+    public int UpdateCutlist(string itemNo, string drawing, string rev, string descr, ushort custid, double l, double w, double h, ushort state,
       Dictionary<string, Part> prts) {
       int currentAuthor = GetCurrentAuthor();
       int affected = 0;
@@ -739,7 +739,7 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
           comm.Parameters.AddWithValue("@stateid", Convert.ToInt32(state));
           comm.Parameters.AddWithValue("@partnum", itemNo);
-          comm.Parameters.AddWithValue("@rev", Convert.ToInt32(rev));
+          comm.Parameters.AddWithValue("@rev", rev);
           affected = comm.ExecuteNonQuery();
         }
         if (affected < 1) {
@@ -747,7 +747,7 @@ namespace Redbrick_Addin {
             @"(?, ?, ?, ?, GETDATE(), ?, ?, ?, ?, ?, ?, ?);";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
             comm.Parameters.AddWithValue("@partnum", itemNo);
-            comm.Parameters.AddWithValue("@rev", Convert.ToInt32(rev));
+            comm.Parameters.AddWithValue("@rev", rev);
             comm.Parameters.AddWithValue("@drawing", drawing);
             comm.Parameters.AddWithValue("@custid", Convert.ToInt32(custid));
             comm.Parameters.AddWithValue("@descr", descr);

@@ -138,14 +138,13 @@ namespace Redbrick_Addin {
           UpdateCutlist(clData[0].Trim(), clData[1].Trim());
         }
       } else {
-        UpdateCutlist(clData[0].Trim(), clData[1].Trim());
+        UpdateCutlist(cbItemNo.Text, cbRev.Text);
       }
 
       Close();
     }
 
     private void UpdateCutlist(string itemNo, string rev) {
-      ushort itpRev = 0;
       ushort itpState = 0;
       ushort itpCust = 0;
       double dtpLength = 0.0f;
@@ -153,7 +152,6 @@ namespace Redbrick_Addin {
       double dtpHeight = 0.0f;
 
       try {
-        itpRev = ushort.Parse(rev);
         itpCust = ushort.Parse(cbCustomer.SelectedValue.ToString());
         itpState = ushort.Parse(Properties.Settings.Default.DefaultState.ToString());
       } catch (Exception) {
@@ -165,12 +163,12 @@ namespace Redbrick_Addin {
       dtpHeight = ParseFloat(tbH.Text);
 
       if (table != null) {
-        CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, itpRev, cbDescription.Text,
+        CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, table.GetParts());
       } else {
         Dictionary<string, Part> d = new Dictionary<string, Part>();
         d.Add(part.PartNumber, part);
-        CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, itpRev, cbDescription.Text,
+        CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, rev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, d);
       }
     }
