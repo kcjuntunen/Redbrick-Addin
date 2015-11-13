@@ -42,13 +42,13 @@ namespace RedbrickTest {
       Debug.Assert(res == 1311);
 
       res = cd.GetMaterialID("TBD MATERIAL");
-      Debug.Assert(res == 2929);
+      Debug.Assert(res == 3004);
 
       res = cd.GetMaterialID("ksladhfgakldfhasd");
-      Debug.Assert(res == 2929);
+      Debug.Assert(res == 3004);
 
       res = cd.GetMaterialID(string.Empty);
-      Debug.Assert(res == 2929);
+      Debug.Assert(res == 3004);
     }
 
     [TestMethod]

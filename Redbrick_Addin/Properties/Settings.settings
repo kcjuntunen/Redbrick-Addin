@@ -145,5 +145,8 @@
     <Setting Name="RBConfigSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
+    <Setting Name="DefaultMaterial" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3004</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

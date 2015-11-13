@@ -387,5 +387,17 @@ namespace Redbrick_Addin.Properties {
                 this["RBConfigSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3004")]
+        public int DefaultMaterial {
+            get {
+                return ((int)(this["DefaultMaterial"]));
+            }
+            set {
+                this["DefaultMaterial"] = value;
+            }
+        }
     }
 }

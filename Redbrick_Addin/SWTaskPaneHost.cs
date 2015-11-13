@@ -124,6 +124,9 @@ namespace Redbrick_Addin {
       if (SwApp == null)
         SwApp = RequestSW();
 
+      if (AssySetup)
+        DisconnectAssemblyEvents();
+
       Document = SwApp.ActiveDoc;
       ConnectSelection();
       return 0;
@@ -158,13 +161,15 @@ namespace Redbrick_Addin {
 
         // what sort of doc is open?
         swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
-
+        ModelDoc2 overDoc = (ModelDoc2)_swApp.ActiveDoc;
+        swDocumentTypes_e overDocT = (swDocumentTypes_e)overDoc.GetType();
         if ((docT != swDocumentTypes_e.swDocDRAWING && swSelMgr != null) && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
           Component2 comp = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
           if (comp != null) {
             ModelDoc2 cmd = (ModelDoc2)comp.GetModelDoc2();
             docT = (swDocumentTypes_e)cmd.GetType();
             prop.GetPropertyData(comp);
+            comp = null;
           } else {
             prop.GetPropertyData(Document);
           }
@@ -175,6 +180,7 @@ namespace Redbrick_Addin {
 
         switch (docT) {
           case swDocumentTypes_e.swDocASSEMBLY:
+            DisconnectAssemblyEvents();
             if (!PartSetup) {
               ClearControls(this);
               //prop.GetPropertyData(Document);
@@ -199,6 +205,12 @@ namespace Redbrick_Addin {
             SetupOther();
             break;
           case swDocumentTypes_e.swDocPART:
+            if (AssySetup && overDocT == swDocumentTypes_e.swDocPART) {
+              DisconnectAssemblyEvents();
+            }
+            if (!AssySetup && overDocT == swDocumentTypes_e.swDocASSEMBLY) {
+              SetupAssy();
+            }
             if (!PartSetup) {
               ClearControls(this);
               // setup
@@ -350,7 +362,7 @@ namespace Redbrick_Addin {
 
         // Not sure, and not implemented yet.
         ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;
-
+        
         // switching docs
         ad.ActiveViewChangeNotify += ad_ActiveViewChangeNotify;
         AssmEventsAssigned = true;
@@ -415,7 +427,9 @@ namespace Redbrick_Addin {
         ad.DestroyNotify2 -= ad_DestroyNotify2;
         ad.ActiveDisplayStateChangePostNotify -= ad_ActiveDisplayStateChangePostNotify;
         ad.ActiveViewChangeNotify -= ad_ActiveViewChangeNotify;
+        swSelMgr = null;
         AssmEventsAssigned = false;
+        AssySetup = false;
       }
     }
 
@@ -426,6 +440,7 @@ namespace Redbrick_Addin {
         pd.DestroyNotify2 -= pd_DestroyNotify2;
         //pd.ChangeCustomPropertyNotify -= pd_ChangeCustomPropertyNotify;
         PartEventsAssigned = false;
+        PartSetup = false;
       }
     }
 
@@ -436,6 +451,7 @@ namespace Redbrick_Addin {
         dd.DestroyNotify2 -= dd_DestroyNotify2;
         //dd.DestroyNotify -= dd_DestroyNotify;
         DrawEventsAssigned = false;
+        DrawSetup = false;
       }
     }
 

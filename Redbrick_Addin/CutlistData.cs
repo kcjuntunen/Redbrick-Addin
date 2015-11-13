@@ -315,7 +315,7 @@ namespace Redbrick_Addin {
 
     public int GetMaterialID(string description) {
       if (description == null)
-        return 2929;
+        return Properties.Settings.Default.DefaultMaterial;
 
       string SQL = @"SELECT MATID FROM CUT_MATERIALS WHERE DESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -324,7 +324,7 @@ namespace Redbrick_Addin {
           if (dr.HasRows)
             return dr.GetInt32(0);
           else
-            return 2929;
+            return Properties.Settings.Default.DefaultMaterial;
         }
       }
     }
