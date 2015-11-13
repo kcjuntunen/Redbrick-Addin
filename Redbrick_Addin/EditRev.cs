@@ -29,6 +29,10 @@ namespace Redbrick_Addin {
         cbBy.SelectedValue = Environment.UserName;
         string theRev = "REVISION " + (char)(nodeCount + 65);
         Text = "Creating new " + theRev + "...";
+        if (nodeCount < 1) {
+          tbDesc.Text = "RELEASED";
+          tbECO.Text = "NA";
+        }
       } else {
         string theRev = "REVISION " + (char)(nodeCount + 65);
         DrawingRev r = Revs.GetRev(theRev);
