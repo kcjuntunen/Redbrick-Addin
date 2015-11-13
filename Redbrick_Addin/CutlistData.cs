@@ -349,6 +349,22 @@ namespace Redbrick_Addin {
       if (description == string.Empty)
         return 0;
 
+      string SQL = @"SELECT EDGEID FROM CUT_EDGES_XREF WHERE DESCR = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@descr", description);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows)
+            return dr.GetInt32(0);
+          else
+            return 0;
+        }
+      }
+    }
+
+    public int GetEdgeID2(string description) {
+      if (description == string.Empty)
+        return 0;
+
       string SQL = @"SELECT EDGEID FROM CUT_EDGES WHERE DESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@descr", description);
