@@ -243,7 +243,7 @@ namespace Redbrick_Addin {
           if (p.Name.ToUpper().StartsWith("CUTLIST"))                                 // Cutlist material.
                     {
             p.Global = false;
-            p.Value = "2929";                                                        // "TBD MATERIAL"
+            p.Value = Properties.Settings.Default.DefaultMaterial.ToString();
             p.Type = swCustomInfoType_e.swCustomInfoNumber;
             p.Table = "CLPARTID";
             p.Field = "MATID";
