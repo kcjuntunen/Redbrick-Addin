@@ -16,6 +16,11 @@ namespace Redbrick_Addin {
     }
 
     private void init() {
+      cbDefaultMaterial.DisplayMember = "DESCR";
+      cbDefaultMaterial.ValueMember = "MATID";
+      cbDefaultMaterial.DataSource = cd.Materials.Tables[0];
+      cbDefaultMaterial.SelectedValue = Properties.Settings.Default.DefaultMaterial;
+
       cbDept.DisplayMember = "DEPT_NAME";
       cbDept.ValueMember = "DEPT_ID";
       cbDept.DataSource = cd.GetDepartments().Tables[0];
@@ -69,6 +74,13 @@ namespace Redbrick_Addin {
 
     private void btnCancel_Click(object sender, EventArgs e) {
       Close();
+    }
+
+    private void cbDefaultMaterial_SelectedIndexChanged(object sender, EventArgs e) {
+      int tp = Properties.Settings.Default.DefaultMaterial;
+      if (initialated && int.TryParse(cbDefaultMaterial.SelectedValue.ToString(), out tp)) {
+        Properties.Settings.Default.DefaultMaterial = tp;
+      }
     }
   }
 }

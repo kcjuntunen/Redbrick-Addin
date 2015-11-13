@@ -31,12 +31,12 @@ namespace Redbrick_Addin {
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.cbRevLimit = new System.Windows.Forms.ComboBox();
+      this.label3 = new System.Windows.Forms.Label();
+      this.cbDefaultMaterial = new System.Windows.Forms.ComboBox();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.btnCancel = new System.Windows.Forms.Button();
       this.btnOK = new System.Windows.Forms.Button();
-      this.label3 = new System.Windows.Forms.Label();
-      this.cbDefaultMaterial = new System.Windows.Forms.ComboBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
@@ -63,9 +63,9 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(296, 88);
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(296, 140);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // chbDBEnabled
@@ -94,7 +94,7 @@ namespace Redbrick_Addin {
       // 
       this.cbDept.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbDept.FormattingEnabled = true;
-      this.cbDept.Location = new System.Drawing.Point(153, 66);
+      this.cbDept.Location = new System.Drawing.Point(153, 62);
       this.cbDept.Name = "cbDept";
       this.cbDept.Size = new System.Drawing.Size(140, 21);
       this.cbDept.TabIndex = 3;
@@ -103,7 +103,7 @@ namespace Redbrick_Addin {
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(153, 50);
+      this.label1.Location = new System.Drawing.Point(153, 46);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(87, 13);
       this.label1.TabIndex = 4;
@@ -112,7 +112,7 @@ namespace Redbrick_Addin {
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(3, 50);
+      this.label2.Location = new System.Drawing.Point(3, 46);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(53, 13);
       this.label2.TabIndex = 6;
@@ -122,11 +122,30 @@ namespace Redbrick_Addin {
       // 
       this.cbRevLimit.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbRevLimit.FormattingEnabled = true;
-      this.cbRevLimit.Location = new System.Drawing.Point(3, 66);
+      this.cbRevLimit.Location = new System.Drawing.Point(3, 62);
       this.cbRevLimit.Name = "cbRevLimit";
       this.cbRevLimit.Size = new System.Drawing.Size(144, 21);
       this.cbRevLimit.TabIndex = 7;
       this.cbRevLimit.SelectedIndexChanged += new System.EventHandler(this.cbRevLimit_SelectedIndexChanged);
+      // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Location = new System.Drawing.Point(3, 86);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(81, 13);
+      this.label3.TabIndex = 8;
+      this.label3.Text = "Default Material";
+      // 
+      // cbDefaultMaterial
+      // 
+      this.cbDefaultMaterial.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbDefaultMaterial.FormattingEnabled = true;
+      this.cbDefaultMaterial.Location = new System.Drawing.Point(3, 102);
+      this.cbDefaultMaterial.Name = "cbDefaultMaterial";
+      this.cbDefaultMaterial.Size = new System.Drawing.Size(144, 21);
+      this.cbDefaultMaterial.TabIndex = 9;
+      this.cbDefaultMaterial.SelectedIndexChanged += new System.EventHandler(this.cbDefaultMaterial_SelectedIndexChanged);
       // 
       // tableLayoutPanel2
       // 
@@ -139,8 +158,8 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
       this.tableLayoutPanel2.RowCount = 2;
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 219);
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(296, 180);
       this.tableLayoutPanel2.TabIndex = 1;
       // 
       // tableLayoutPanel3
@@ -151,11 +170,11 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel3.Controls.Add(this.btnCancel, 0, 0);
       this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
       this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 97);
+      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 149);
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(296, 119);
+      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(296, 29);
       this.tableLayoutPanel3.TabIndex = 1;
       // 
       // btnCancel
@@ -163,7 +182,7 @@ namespace Redbrick_Addin {
       this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCancel.Location = new System.Drawing.Point(3, 3);
       this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(75, 113);
+      this.btnCancel.Size = new System.Drawing.Size(75, 23);
       this.btnCancel.TabIndex = 0;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
@@ -174,35 +193,17 @@ namespace Redbrick_Addin {
       this.btnOK.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnOK.Location = new System.Drawing.Point(84, 3);
       this.btnOK.Name = "btnOK";
-      this.btnOK.Size = new System.Drawing.Size(209, 113);
+      this.btnOK.Size = new System.Drawing.Size(209, 23);
       this.btnOK.TabIndex = 1;
       this.btnOK.Text = "OK";
       this.btnOK.UseVisualStyleBackColor = true;
       this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
       // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(153, 0);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(81, 13);
-      this.label3.TabIndex = 8;
-      this.label3.Text = "Default Material";
-      // 
-      // cbDefaultMaterial
-      // 
-      this.cbDefaultMaterial.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.cbDefaultMaterial.FormattingEnabled = true;
-      this.cbDefaultMaterial.Location = new System.Drawing.Point(153, 26);
-      this.cbDefaultMaterial.Name = "cbDefaultMaterial";
-      this.cbDefaultMaterial.Size = new System.Drawing.Size(140, 21);
-      this.cbDefaultMaterial.TabIndex = 9;
-      // 
       // RedbrickConfiguration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(296, 219);
+      this.ClientSize = new System.Drawing.Size(296, 180);
       this.Controls.Add(this.tableLayoutPanel2);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MinimumSize = new System.Drawing.Size(304, 161);
