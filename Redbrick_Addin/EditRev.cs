@@ -39,6 +39,10 @@ namespace Redbrick_Addin {
         tbECO.Text = r.Eco.Value;
         tbDesc.Text = r.Description.Value;
         cbBy.SelectedValue = cd.GetAuthorUserName(r.List.Value);
+        System.DateTime dt = new System.DateTime();
+        if (DateTime.TryParse(r.Date.Value, out dt)) {
+          dtpDate.Value = dt;
+        }
         Text = "Editing " + theRev + "...";
       }
 
