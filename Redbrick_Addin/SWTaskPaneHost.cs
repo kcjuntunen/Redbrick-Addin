@@ -559,6 +559,7 @@ namespace Redbrick_Addin {
       if (DrawSetup) {
         // update doc metadata & rebuild & save
         drb.Write(Document);
+        drb.chooseLayer();
       }
     }
 

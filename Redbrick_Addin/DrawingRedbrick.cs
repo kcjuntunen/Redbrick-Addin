@@ -155,6 +155,34 @@ namespace Redbrick_Addin {
       }
     }
 
+    public void chooseLayer() {
+      if (RevSet.Count < 5) {
+        LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
+        Layer l1 = lm.GetLayer("AMS.1-5");
+        Layer l2 = lm.GetLayer("AMS.6-10");
+        Layer l3 = lm.GetLayer("AMS.11-15");
+        l1.Visible = true;
+        l2.Visible = false;
+        l3.Visible = false;
+      } else if (RevSet.Count > 5 && RevSet.Count < 10) {
+        LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
+        Layer l1 = lm.GetLayer("AMS.1-5");
+        Layer l2 = lm.GetLayer("AMS.6-10");
+        Layer l3 = lm.GetLayer("AMS.11-15");
+        l1.Visible = false;
+        l2.Visible = true;
+        l3.Visible = false;
+      } else if (RevSet.Count < 10) {
+        LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
+        Layer l1 = lm.GetLayer("AMS.1-5");
+        Layer l2 = lm.GetLayer("AMS.6-10");
+        Layer l3 = lm.GetLayer("AMS.11-15");
+        l1.Visible = false;
+        l2.Visible = false;
+        l3.Visible = true;
+      }
+    }
+
     public bool IsDirty {
       get {
         if (this.dirtTracker != null)                       // TODO: Why is this null sometimes?
