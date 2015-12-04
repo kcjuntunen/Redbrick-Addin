@@ -172,7 +172,7 @@ namespace Redbrick_Addin {
         l1.Visible = false;
         l2.Visible = true;
         l3.Visible = false;
-      } else if (RevSet.Count < 10) {
+      } else if (RevSet.Count > 10) {
         LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
         Layer l1 = lm.GetLayer("AMS.1-5");
         Layer l2 = lm.GetLayer("AMS.6-10");
