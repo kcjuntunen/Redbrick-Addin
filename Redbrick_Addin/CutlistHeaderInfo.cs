@@ -27,7 +27,7 @@ namespace Redbrick_Addin {
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
-      InitControlsWithPart(p, cd);
+      InitControlsWithNewPart(p, cd);
     }
 
     public CutlistHeaderInfo(DrawingProperties dp) {
@@ -58,6 +58,29 @@ namespace Redbrick_Addin {
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
 
       InitTableData();
+    }
+
+    private void InitControlsWithNewPart(Part p, CutlistData cd) {
+      Text = "Add to cutlist...";
+      for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
+        cbRev.Items.Add(i.ToString());
+      cbRev.SelectedIndex = 0;
+      btnCreate.Text = "Add";
+      part = p;
+      CutlistData = cd;
+      cbRev.Enabled = true;
+      cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
+      cbItemNo.DisplayMember = "PARTNUM";
+      cbItemNo.ValueMember = "CLID";
+
+      cbCustomer.DataSource = CutlistData.Customers.Tables[0];
+      cbCustomer.DisplayMember = "CUSTOMER";
+      cbCustomer.ValueMember = "CUSTID";
+
+      cbSetupBy.DataSource = CutlistData.GetAuthors().Tables[0];
+      cbSetupBy.DisplayMember = "NAME";
+      cbSetupBy.ValueMember = "UID";
+      cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
     }
 
     private void InitControlsWithPart(Part p, CutlistData cd, string itemNo, string Rev) {
@@ -153,7 +176,7 @@ namespace Redbrick_Addin {
 
       try {
         itpCust = ushort.Parse(cbCustomer.SelectedValue.ToString());
-        itpState = ushort.Parse(Properties.Settings.Default.DefaultState.ToString());
+        itpState = ushort.Parse(Status.ToString());
       } catch (Exception) {
 
       }
@@ -168,7 +191,7 @@ namespace Redbrick_Addin {
       } else {
         Dictionary<string, Part> d = new Dictionary<string, Part>();
         d.Add(part.PartNumber, part);
-        CutlistData.UpdateCutlist(cbItemNo.Text, cbDrawingReference.Text, rev, cbDescription.Text,
+        CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, d);
       }
     }
@@ -188,13 +211,29 @@ namespace Redbrick_Addin {
 
     private void cbItemNo_SelectedIndexChanged(object sender, EventArgs e) {
       cbCustomer.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CUSTID].ToString());
-
+      dpDate.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CDATE].ToString();
       cbDescription.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DESCR].ToString();
       tbL.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.LENGTH].ToString();
       tbW.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.WIDTH].ToString();
       tbH.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.HEIGHT].ToString();
+
+      int status = 1;
+
+      if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.STATEID].ToString(), out status))
+        Status = status;
+
+      string[] itnre = { string.Empty };
+      if (cbItemNo.SelectedItem != null) {
+        itnre = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
+          .Split(new string[] { "REV" }, StringSplitOptions.None);
+
+        if (itnre.Length > 1)
+          cbRev.Text = itnre[1];
+      }
       cbDrawingReference.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DRAWING].ToString();
       cbSetupBy.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.SETUP_BY].ToString());
     }
+
+    public int Status { get; set; }
   }
 }

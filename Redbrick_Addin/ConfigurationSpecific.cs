@@ -47,13 +47,48 @@ namespace Redbrick_Addin {
       cbCutlist.DisplayMember = "PARTNUM";
       cbCutlist.ValueMember = "CLID";
 
-      int recentCutlist = Properties.Settings.Default.CurrentCutlist;
+      cbCutlist.Text = string.Empty;
 
-      cbCutlist.SelectedValue = recentCutlist;
+      cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
 
       if (cbCutlist.SelectedItem != null) {
-        propertySet.CutlistID = recentCutlist;
-        cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+        cbCutlist.SelectedText = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.PARTNUM].ToString();
+        cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
+        int s = 0;
+
+        if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s))
+          cbStatus.SelectedValue = s;
+      } else {
+        cbStatus.SelectedValue = 0;
+      }
+
+      _edgeDiffL = 0.0;
+      _edgeDiffW = 0.0;
+      LinkControls();
+      ToggleFields(cd.OpType);
+      UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
+      UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
+    }
+
+    public void Updte() {
+      DataSet ds = cd.GetWherePartUsed(propertySet.PartName);
+      cbCutlist.DataSource = ds.Tables[(int)CutlistData.WhereUsedRes.CLID];
+      cbCutlist.DisplayMember = "PARTNUM";
+      cbCutlist.ValueMember = "CLID";
+
+      cbCutlist.Text = string.Empty;
+
+      cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
+
+      if (cbCutlist.SelectedItem != null) {
+        cbCutlist.SelectedText = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.PARTNUM].ToString();
+        cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
+        int s = 0;
+
+        if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s))
+          cbStatus.SelectedValue = s;
+      } else {
+        cbStatus.SelectedValue = 0;
       }
 
       _edgeDiffL = 0.0;
@@ -81,10 +116,8 @@ namespace Redbrick_Addin {
 
       if (propertySet.cutlistData.ReturnHash(propertySet) == propertySet.Hash) {
         propertySet.Primary = true;
-        btnMakeOriginal.Enabled = false;
       } else {
         propertySet.Primary = false;
-        btnMakeOriginal.Enabled = true;
       }
     }
 
@@ -299,9 +332,12 @@ namespace Redbrick_Addin {
           case swMessageBoxResult_e.swMbHitRetry:
             break;
           case swMessageBoxResult_e.swMbHitYes:
-            string[] clData = (cbCutlist.SelectedItem as DataRowView)
-              .Row[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
-              .Split(new string[] { "REV" }, StringSplitOptions.None);
+            string[] clData = { string.Empty };
+            if (cbCutlist.SelectedItem != null) { 
+              clData = (cbCutlist.SelectedItem as DataRowView)
+                .Row[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
+                .Split(new string[] { "REV" }, StringSplitOptions.None); 
+            }
             if (clData.Length > 1) {
               CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData,
                 clData[0].Trim(), clData[1].Trim());
@@ -319,8 +355,9 @@ namespace Redbrick_Addin {
       } else if (ar > 1) {
         throw new Exception(propertySet.PartName + " has duplicates.");
       } else {
-        btnMakeOriginal.Enabled = false;
+        //btnMakeOriginal.Enabled = false;
       }
+      Updte();
     }
 
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
