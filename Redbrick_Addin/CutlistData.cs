@@ -735,6 +735,21 @@ namespace Redbrick_Addin {
       }
     }
 
+    public int SetState(int cutlistid, int stateid) {
+      int currentAuthor = GetCurrentAuthor();
+      int affected = 0;
+      if (ENABLE_DB_WRITE) {
+        string SQL = @"UPDATE CUT_CUTLISTS SET STATEID = ?, STATE_BY = ? WHERE CLID = ?;";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@stateid", stateid);
+          comm.Parameters.AddWithValue("@stateby", currentAuthor);
+          comm.Parameters.AddWithValue("@clid", cutlistid);
+          affected = comm.ExecuteNonQuery();
+        }
+      }
+      return affected;
+    }
+
     public int UpdateCutlist(string itemNo, string drawing, string rev, string descr, ushort custid, double l, double w, double h, ushort state,
       Dictionary<string, Part> prts) {
       int currentAuthor = GetCurrentAuthor();

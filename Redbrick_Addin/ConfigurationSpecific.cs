@@ -322,5 +322,9 @@ namespace Redbrick_Addin {
         btnMakeOriginal.Enabled = false;
       }
     }
+
+    private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
+      propertySet.cutlistData.SetState((int)cbCutlist.SelectedValue, (int)cbStatus.SelectedValue);
+    }
   }
 }

@@ -306,6 +306,7 @@ namespace Redbrick_Addin
       this.cbStatus.Name = "cbStatus";
       this.cbStatus.Size = new System.Drawing.Size(93, 21);
       this.cbStatus.TabIndex = 9;
+      this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
       // 
       // btnMakeOriginal
       // 
