@@ -145,7 +145,7 @@ namespace Redbrick_Addin {
       propertySet.GetProperty("WALL THICKNESS").Get(propertySet.modeldoc, propertySet.cutlistData);
       double tp = 0.0;
       string resVal = propertySet.GetProperty("WALL THICKNESS").ResValue;
-      labResThickness.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
+      labResWallThickness.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
     }
 
     private double _length;
