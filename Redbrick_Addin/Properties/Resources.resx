@@ -131,7 +131,7 @@
     <value>Amstore™ Property Editor©</value>
   </data>
   <data name="InsertIntoCutlistButtonText" xml:space="preserve">
-    <value>Insert Into Cutlist</value>
+    <value>Update Cutlist</value>
   </data>
   <data name="MakeOriginalButtonText" xml:space="preserve">
     <value>Insert Into Cutlist</value>
@@ -144,5 +144,8 @@
   </data>
   <data name="AddToExistingCutlist" xml:space="preserve">
     <value>Do you want to add {0} to an existing cutlist?</value>
+  </data>
+  <data name="AlreadyInOtherLocation" xml:space="preserve">
+    <value>This part ({0}) already exists in another location. Override?</value>
   </data>
 </root>

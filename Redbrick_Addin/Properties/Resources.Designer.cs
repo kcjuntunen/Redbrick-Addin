@@ -70,6 +70,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This part ({0}) already exists in another location. Override?.
+        /// </summary>
+        internal static string AlreadyInOtherLocation {
+            get {
+                return ResourceManager.GetString("AlreadyInOtherLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap clipboard {

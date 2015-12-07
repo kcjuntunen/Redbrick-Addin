@@ -290,12 +290,18 @@ namespace Redbrick_Addin {
     }
 
     private void btnMakeOriginal_Click(object sender, EventArgs e) {
-      int ar = propertySet.cutlistData.MakeOriginal(propertySet);
-      if (ar < 1) {
-        string question = string.Format(Properties.Resources.AddToExistingCutlist, propertySet.PartName);
+      int hash = propertySet.cutlistData.GetHash(propertySet.PartName);
+      if (hash == 0) {
+        int ar = propertySet.cutlistData.MakeOriginal(propertySet);
+        if (ar == 1) {
+          AddToCutlist(); 
+        }
+      } else if (hash != propertySet.Hash) {
+        string question = string.Format(Properties.Resources.AlreadyInOtherLocation, propertySet.PartName);
+
         swMessageBoxResult_e res = (swMessageBoxResult_e)propertySet.SwApp.SendMsgToUser2(question,
-          (int)swMessageBoxIcon_e.swMbQuestion, 
-          (int)swMessageBoxBtn_e.swMbYesNoCancel);
+          (int)swMessageBoxIcon_e.swMbQuestion,
+          (int)swMessageBoxBtn_e.swMbYesNo);
         switch (res) {
           case swMessageBoxResult_e.swMbHitAbort:
             break;
@@ -304,41 +310,64 @@ namespace Redbrick_Addin {
           case swMessageBoxResult_e.swMbHitIgnore:
             break;
           case swMessageBoxResult_e.swMbHitNo:
-            CutlistHeaderInfo chin = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
-            chin.Text = "Creating new cutlist...";
-            chin.ShowDialog();
             break;
           case swMessageBoxResult_e.swMbHitOk:
             break;
           case swMessageBoxResult_e.swMbHitRetry:
             break;
           case swMessageBoxResult_e.swMbHitYes:
-            string[] clData = { string.Empty };
-            if (cbCutlist.SelectedItem != null) { 
-              clData = (cbCutlist.SelectedItem as DataRowView)
-                .Row[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
-                .Split(new string[] { "REV" }, StringSplitOptions.None); 
-            }
-            if (clData.Length > 1) {
-              CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData,
-                clData[0].Trim(), clData[1].Trim());
-              chiy.Text = "Adding to cutlist...";
-              chiy.ShowDialog();
-            } else {
-              CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
-              chiy.Text = "Adding to cutlist...";
-              chiy.ShowDialog();
-            }
+            propertySet.cutlistData.MakeOriginal(propertySet);
+            AddToCutlist();
             break;
           default:
             break;
         }
-      } else if (ar > 1) {
-        throw new Exception(propertySet.PartName + " has duplicates.");
-      } else {
-        //btnMakeOriginal.Enabled = false;
       }
       Updte();
+    }
+
+    private void AddToCutlist() {
+      string question = string.Format(Properties.Resources.AddToExistingCutlist, propertySet.PartName);
+      swMessageBoxResult_e res = (swMessageBoxResult_e)propertySet.SwApp.SendMsgToUser2(question,
+        (int)swMessageBoxIcon_e.swMbQuestion,
+        (int)swMessageBoxBtn_e.swMbYesNoCancel);
+      switch (res) {
+        case swMessageBoxResult_e.swMbHitAbort:
+          break;
+        case swMessageBoxResult_e.swMbHitCancel:
+          break;
+        case swMessageBoxResult_e.swMbHitIgnore:
+          break;
+        case swMessageBoxResult_e.swMbHitNo:
+          CutlistHeaderInfo chin = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
+          chin.Text = "Creating new cutlist...";
+          chin.ShowDialog();
+          break;
+        case swMessageBoxResult_e.swMbHitOk:
+          break;
+        case swMessageBoxResult_e.swMbHitRetry:
+          break;
+        case swMessageBoxResult_e.swMbHitYes:
+          string[] clData = { string.Empty };
+          if (cbCutlist.SelectedItem != null) {
+            clData = (cbCutlist.SelectedItem as DataRowView)
+              .Row[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
+              .Split(new string[] { "REV" }, StringSplitOptions.None);
+          }
+          if (clData.Length > 1) {
+            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData,
+              clData[0].Trim(), clData[1].Trim());
+            chiy.Text = "Adding to cutlist...";
+            chiy.ShowDialog();
+          } else {
+            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
+            chiy.Text = "Adding to cutlist...";
+            chiy.ShowDialog();
+          }
+          break;
+        default:
+          break;
+      }
     }
 
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
