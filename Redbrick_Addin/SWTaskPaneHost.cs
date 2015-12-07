@@ -79,30 +79,30 @@ namespace Redbrick_Addin {
     }
 
     int SwApp_FileCloseNotify(string FileName, int reason) {
-      if (PartSetup)
-        if (mrb.IsDirty)
-          if (MaybeSave())
-            Write();
+      //if (PartSetup)
+      //  if (mrb.IsDirty)
+      //    if (MaybeSave())
+      //      Write();
 
-      if (DrawSetup)
-        if (drb.IsDirty)
-          if (MaybeSave())
-            Write();
+      //if (DrawSetup)
+      //  if (drb.IsDirty)
+      //    if (MaybeSave())
+      //      Write();
       ClearControls(this);
 
       return 0;
     }
 
     int SwApp_DestroyNotify() {
-      if (PartSetup)
-        if (mrb.IsDirty)
-          if (MaybeSave())
-            Write();
+      //if (PartSetup)
+      //  if (mrb.IsDirty)
+      //    if (MaybeSave())
+      //      Write();
 
-      if (DrawSetup)
-        if (drb.IsDirty)
-          if (MaybeSave())
-            Write();
+      //if (DrawSetup)
+      //  if (drb.IsDirty)
+      //    if (MaybeSave())
+      //      Write();
 
       ClearControls(this);
       // Solidworks closed
@@ -110,19 +110,16 @@ namespace Redbrick_Addin {
     }
 
     int SwApp_ActiveDocChangeNotify() {
+      if (AssySetup)
+        DisconnectAssemblyEvents();
+
       if (PartSetup && mrb.IsDirty && MaybeSave()) {
         Write();
-        DisconnectPartEvents();
       }
 
       if (DrawSetup && drb.IsDirty && MaybeSave()) {
         Write();
-        DisconnectDrawingEvents();
       }
-
-      if (AssySetup)
-        DisconnectAssemblyEvents();
-
 
       if (SwApp == null)
         SwApp = RequestSW();

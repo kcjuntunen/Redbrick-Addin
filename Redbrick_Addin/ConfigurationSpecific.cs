@@ -76,7 +76,7 @@ namespace Redbrick_Addin {
         if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s))
           cbStatus.SelectedValue = s;
       } else {
-        cbStatus.SelectedIndex = 0;
+        cbStatus.Text = string.Empty;
       }
     }
 
