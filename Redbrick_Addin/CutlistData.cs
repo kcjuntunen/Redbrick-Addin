@@ -1109,7 +1109,7 @@ namespace Redbrick_Addin {
       }
       return rowsAffected;
     }
-
+    
     static public Part MakePartFromPropertySet(SwProperties swp) {
       Part p = new Part();
       p.FileInformation = swp.PartFileInfo;
