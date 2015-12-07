@@ -110,22 +110,22 @@ namespace Redbrick_Addin {
     }
 
     int SwApp_ActiveDocChangeNotify() {
-      if (PartSetup) {
-        if (mrb.IsDirty)
-          if (MaybeSave())
-            Write();
+      if (PartSetup && mrb.IsDirty && MaybeSave()) {
+        Write();
+        DisconnectPartEvents();
       }
 
-      if (DrawSetup)
-        if (drb.IsDirty)
-          if (MaybeSave())
-            Write();
-
-      if (SwApp == null)
-        SwApp = RequestSW();
+      if (DrawSetup && drb.IsDirty && MaybeSave()) {
+        Write();
+        DisconnectDrawingEvents();
+      }
 
       if (AssySetup)
         DisconnectAssemblyEvents();
+
+
+      if (SwApp == null)
+        SwApp = RequestSW();
 
       Document = SwApp.ActiveDoc;
       ConnectSelection();
@@ -376,9 +376,15 @@ namespace Redbrick_Addin {
         dd = (DrawingDoc)Document;
         //dd.ChangeCustomPropertyNotify += dd_ChangeCustomPropertyNotify;
         dd.DestroyNotify2 += dd_DestroyNotify2;
+        dd.ViewNewNotify2 += dd_ViewNewNotify2;
         //dd.DestroyNotify += dd_DestroyNotify;
         DrawEventsAssigned = true;
       }
+    }
+
+    int dd_ViewNewNotify2(object viewBeingAdded) {
+      ClearControls(this);
+      return 0;
     }
 
     int dd_DestroyNotify() {
@@ -402,7 +408,7 @@ namespace Redbrick_Addin {
         pd = (PartDoc)this.Document;
         // When the config changes, the app knows.
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
-        // pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
+        //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
         PartEventsAssigned = true;
       }
@@ -438,7 +444,7 @@ namespace Redbrick_Addin {
       if (PartEventsAssigned) {
         pd.ActiveConfigChangePostNotify -= pd_ActiveConfigChangePostNotify;
         pd.DestroyNotify2 -= pd_DestroyNotify2;
-        //pd.ChangeCustomPropertyNotify -= pd_ChangeCustomPropertyNotify;
+        pd.ChangeCustomPropertyNotify -= pd_ChangeCustomPropertyNotify;
         PartEventsAssigned = false;
         PartSetup = false;
       }
@@ -449,6 +455,7 @@ namespace Redbrick_Addin {
       if (DrawEventsAssigned) {
         //dd.ChangeCustomPropertyNotify -= dd_ChangeCustomPropertyNotify;
         dd.DestroyNotify2 -= dd_DestroyNotify2;
+        dd.ViewNewNotify2 -= dd_ViewNewNotify2;
         //dd.DestroyNotify -= dd_DestroyNotify;
         DrawEventsAssigned = false;
         DrawSetup = false;

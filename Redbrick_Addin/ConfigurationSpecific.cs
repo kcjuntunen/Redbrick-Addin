@@ -42,35 +42,23 @@ namespace Redbrick_Addin {
       propertySet = prop;
       configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
       cd = prop.cutlistData;
-      DataSet ds = cd.GetWherePartUsed(propertySet.PartName);
-      cbCutlist.DataSource = ds.Tables[(int)CutlistData.WhereUsedRes.CLID];
-      cbCutlist.DisplayMember = "PARTNUM";
-      cbCutlist.ValueMember = "CLID";
 
-      cbCutlist.Text = string.Empty;
-
-      cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
-
-      if (cbCutlist.SelectedItem != null) {
-        cbCutlist.SelectedText = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.PARTNUM].ToString();
-        cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
-        int s = 0;
-
-        if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s))
-          cbStatus.SelectedValue = s;
-      } else {
-        cbStatus.SelectedValue = 0;
-      }
-
-      _edgeDiffL = 0.0;
-      _edgeDiffW = 0.0;
-      LinkControls();
-      ToggleFields(cd.OpType);
-      UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
-      UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
+      Updte();
     }
 
     public void Updte() {
+
+      _edgeDiffL = 0.0;
+      _edgeDiffW = 0.0;
+      LinkControls();
+      ToggleFields(cd.OpType);
+      UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
+      UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
+
+      UpdateCutlistBox();
+    }
+
+    private void UpdateCutlistBox() {
       DataSet ds = cd.GetWherePartUsed(propertySet.PartName);
       cbCutlist.DataSource = ds.Tables[(int)CutlistData.WhereUsedRes.CLID];
       cbCutlist.DisplayMember = "PARTNUM";
@@ -88,15 +76,8 @@ namespace Redbrick_Addin {
         if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s))
           cbStatus.SelectedValue = s;
       } else {
-        cbStatus.SelectedValue = 0;
+        cbStatus.SelectedIndex = 0;
       }
-
-      _edgeDiffL = 0.0;
-      _edgeDiffW = 0.0;
-      LinkControls();
-      ToggleFields(cd.OpType);
-      UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
-      UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
     }
 
     private void LinkControls() {
