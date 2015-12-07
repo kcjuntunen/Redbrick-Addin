@@ -26,6 +26,12 @@ namespace Redbrick_Addin {
       propertySet = p;
       LinkControls();
       ToggleFields(this.propertySet.cutlistData.OpType);
+
+      if (tbCNC1.Text.Trim() == "NA" || tbCNC1.Text.Trim() == string.Empty)
+        btnWhere.Enabled = false;
+      else
+        btnWhere.Enabled = true;
+
       CalculateBlankSize(l, w);
     }
 
