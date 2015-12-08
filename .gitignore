@@ -7,7 +7,7 @@
 *.sln.docstates
 
 # Build results
-
+*.exe
 [Dd]ebug/
 [Rr]elease/
 x64/
@@ -116,6 +116,7 @@ ClientBin/
 *.dbmdl
 *.[Pp]ublish.xml
 *.pfx
+*.snk
 *.publishsettings
 
 # RIA/Silverlight projects

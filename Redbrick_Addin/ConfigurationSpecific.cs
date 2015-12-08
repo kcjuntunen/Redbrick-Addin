@@ -322,6 +322,8 @@ namespace Redbrick_Addin {
           default:
             break;
         }
+      } else {
+        AddToCutlist();
       }
       Updte();
     }
