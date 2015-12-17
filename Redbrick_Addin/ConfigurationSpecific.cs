@@ -1,4 +1,3 @@
-#undef DEBUG
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -291,37 +290,37 @@ namespace Redbrick_Addin {
 
     private void btnMakeOriginal_Click(object sender, EventArgs e) {
       int hash = propertySet.cutlistData.GetHash(propertySet.PartName);
-      if (hash == 0) {
-        int ar = propertySet.cutlistData.MakeOriginal(propertySet);
-        if (ar == 1) {
-          AddToCutlist(); 
-        }
-      } else if (hash != propertySet.Hash) {
-        string question = string.Format(Properties.Resources.AlreadyInOtherLocation, propertySet.PartName);
+      if (hash != propertySet.Hash) {
+        if (hash != 0) {
+          string question = string.Format(Properties.Resources.AlreadyInOtherLocation, propertySet.PartName);
 
-        swMessageBoxResult_e res = (swMessageBoxResult_e)propertySet.SwApp.SendMsgToUser2(question,
-          (int)swMessageBoxIcon_e.swMbQuestion,
-          (int)swMessageBoxBtn_e.swMbYesNo);
-        switch (res) {
-          case swMessageBoxResult_e.swMbHitAbort:
-            break;
-          case swMessageBoxResult_e.swMbHitCancel:
-            break;
-          case swMessageBoxResult_e.swMbHitIgnore:
-            break;
-          case swMessageBoxResult_e.swMbHitNo:
-            break;
-          case swMessageBoxResult_e.swMbHitOk:
-            break;
-          case swMessageBoxResult_e.swMbHitRetry:
-            break;
-          case swMessageBoxResult_e.swMbHitYes:
-            propertySet.cutlistData.MakeOriginal(propertySet);
-            AddToCutlist();
-            break;
-          default:
-            break;
+          swMessageBoxResult_e res = (swMessageBoxResult_e)propertySet.SwApp.SendMsgToUser2(question,
+            (int)swMessageBoxIcon_e.swMbQuestion,
+            (int)swMessageBoxBtn_e.swMbYesNo);
+          switch (res) {
+            case swMessageBoxResult_e.swMbHitAbort:
+              break;
+            case swMessageBoxResult_e.swMbHitCancel:
+              break;
+            case swMessageBoxResult_e.swMbHitIgnore:
+              break;
+            case swMessageBoxResult_e.swMbHitNo:
+              break;
+            case swMessageBoxResult_e.swMbHitOk:
+              break;
+            case swMessageBoxResult_e.swMbHitRetry:
+              break;
+            case swMessageBoxResult_e.swMbHitYes:
+              propertySet.cutlistData.MakeOriginal(propertySet);
+              AddToCutlist();
+              break;
+            default:
+              break;
+          }
+        } else {
+          AddToCutlist();
         }
+
       } else {
         AddToCutlist();
       }

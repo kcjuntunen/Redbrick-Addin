@@ -44,7 +44,8 @@ Section "Uninstall"
   Delete "$INSTDIR"
 SectionEnd
 
-Function .onInit 
+Function .onInit
+  SetRegView 64
   ReadRegStr $R0 HKLM \
       "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
       "UninstallString"

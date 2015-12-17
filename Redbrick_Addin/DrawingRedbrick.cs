@@ -157,23 +157,28 @@ namespace Redbrick_Addin {
 
     public void chooseLayer() {
       LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
-      Layer l1 = lm.GetLayer("AMS.1-5");
-      Layer l2 = lm.GetLayer("AMS.6-10");
-      Layer l3 = lm.GetLayer("AMS.11-15");
+      string head = getLayerNameHeader(lm);
 
-      if (RevSet.Count < 5) {
-        l1.Visible = true;
-        l2.Visible = false;
-        l3.Visible = false;
-      } else if (RevSet.Count > 5 && RevSet.Count < 10) {
-        l1.Visible = false;
-        l2.Visible = true;
-        l3.Visible = false;
-      } else if (RevSet.Count > 10) {
-        l1.Visible = false;
-        l2.Visible = false;
-        l3.Visible = true;
+      for (int i = 0; i < Properties.Settings.Default.LayerTails.Count; i++) {
+        string currentTail = Properties.Settings.Default.LayerTails[i];
+        Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", head, currentTail));
+        if (Math.Floor((double)(RevSet.Count / 5)) == i) {
+          l.Visible = true;
+        }
+        l.Visible = false;
       }
+    }
+
+    private string getLayerNameHeader(LayerMgr lm) {
+      foreach (string h in Properties.Settings.Default.LayerHeads) {
+        foreach (string t in Properties.Settings.Default.LayerTails) {
+          Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", h, t));
+          if (l != null && l.Visible) {
+            return h;
+          }
+        }
+      }
+      return "AMS";
     }
 
     public bool IsDirty {
