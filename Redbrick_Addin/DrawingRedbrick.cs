@@ -162,10 +162,10 @@ namespace Redbrick_Addin {
       for (int i = 0; i < Properties.Settings.Default.LayerTails.Count; i++) {
         string currentTail = Properties.Settings.Default.LayerTails[i];
         Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", head, currentTail));
+        l.Visible = false;
         if (Math.Floor((double)(RevSet.Count / 5)) == i) {
           l.Visible = true;
         }
-        l.Visible = false;
       }
     }
 
