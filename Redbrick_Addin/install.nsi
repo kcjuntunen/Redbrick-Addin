@@ -17,7 +17,7 @@ Section
   Push "$INSTDIR\Redbrick_Addin.dll"
   Call RegisterDotNet
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
-      "DisplayIcon" "C:\Users\juntunenkc\Documents\Visual Studio 2013\Projects\Redbrick_Addin\Redbrick_Addin\Resources\redlego.ico"
+      "DisplayIcon" "$PROGRAMFILES64\Redbrick\redlego.ico"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
       "EstimatedSize" 183
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
