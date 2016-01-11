@@ -15,7 +15,7 @@ namespace Redbrick_Addin {
       CreateNew
     }
 
-    public CutlistHeaderInfo(Part p, CutlistData cd, string itemNo, string rev) {
+    public CutlistHeaderInfo(Part p, CutlistData cd, string itemNo, string rev) { //Existing cutlist
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
@@ -30,7 +30,7 @@ namespace Redbrick_Addin {
       InitControlsWithNewPart(p, cd);
     }
 
-    public CutlistHeaderInfo(DrawingProperties dp) {
+    public CutlistHeaderInfo(DrawingProperties dp) { 
       InitializeComponent();
       DrawingPropertySet = dp;
       CutlistData = dp.CutlistData;

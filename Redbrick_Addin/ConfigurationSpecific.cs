@@ -54,17 +54,17 @@ namespace Redbrick_Addin {
       UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
       UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
 
-      nudQ.Value = 1;
-
       UpdateCutlistBox();
     }
 
     private void UpdateCutlistBox() {
       DataSet ds = cd.GetWherePartUsed(propertySet.PartName);
+      int s = 1;
+
       cbCutlist.DataSource = ds.Tables[(int)CutlistData.WhereUsedRes.CLID];
       cbCutlist.DisplayMember = "PARTNUM";
       cbCutlist.ValueMember = "CLID";
-
+      
       cbCutlist.Text = string.Empty;
 
       cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
@@ -72,14 +72,17 @@ namespace Redbrick_Addin {
       if (cbCutlist.SelectedItem != null) {
         cbCutlist.SelectedText = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.PARTNUM].ToString();
         cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
-        int s = 0;
 
         if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s)) {
-          cbStatus.SelectedText = cd.GetStateByID(s);
-          cbStatus.Update();
+          cbStatus.SelectedValue = s;
+          cbStatus.Text = cd.GetStateByID(s);
         }
       } else {
         cbStatus.Text = string.Empty;
+      }
+
+      if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.QTY].ToString(), out s)) {
+        nudQ.Value = s;
       }
     }
 
@@ -89,6 +92,7 @@ namespace Redbrick_Addin {
       propertySet.LinkControlToProperty("EBID", false, this.cbEb);
       propertySet.LinkControlToProperty("ELID", false, this.cbEl);
       propertySet.LinkControlToProperty("ERID", false, this.cbEr);
+      propertySet.CutlistQuantity = nudQ.Value.ToString();
 
       if (Properties.Settings.Default.Testing) {
         propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
@@ -284,6 +288,12 @@ namespace Redbrick_Addin {
         propertySet.CutlistID = Properties.Settings.Default.CurrentCutlist;
         Properties.Settings.Default.Save();
         cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+
+        int s = 1;
+        if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.QTY].ToString(), out s)) {
+          nudQ.Value = s;
+        }
+
         changingwithmouse = false;
       }
     }
@@ -344,7 +354,7 @@ namespace Redbrick_Addin {
         case swMessageBoxResult_e.swMbHitIgnore:
           break;
         case swMessageBoxResult_e.swMbHitNo:
-          CutlistHeaderInfo chin = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
+          CutlistHeaderInfo chin = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), propertySet.cutlistData);
           chin.Text = "Creating new cutlist...";
           chin.ShowDialog();
           break;
@@ -360,12 +370,13 @@ namespace Redbrick_Addin {
               .Split(new string[] { "REV" }, StringSplitOptions.None);
           }
           if (clData.Length > 1) {
-            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData,
+
+            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), propertySet.cutlistData,
               clData[0].Trim(), clData[1].Trim());
             chiy.Text = "Adding to cutlist...";
             chiy.ShowDialog();
           } else {
-            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet), propertySet.cutlistData);
+            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), propertySet.cutlistData);
             chiy.Text = "Adding to cutlist...";
             chiy.ShowDialog();
           }
@@ -376,7 +387,13 @@ namespace Redbrick_Addin {
     }
 
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
-      propertySet.cutlistData.SetState((int)cbCutlist.SelectedValue, (int)cbStatus.SelectedValue);
+      if (cbStatus.SelectedValue != null && cbCutlist.SelectedValue != null) {
+        propertySet.cutlistData.SetState((int)cbCutlist.SelectedValue, (int)cbStatus.SelectedValue);
+      }
+    }
+
+    private void nudQ_ValueChanged(object sender, EventArgs e) {
+      propertySet.CutlistQuantity = nudQ.Value.ToString();
     }
   }
 }

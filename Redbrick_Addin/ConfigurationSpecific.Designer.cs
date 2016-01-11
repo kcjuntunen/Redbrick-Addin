@@ -341,6 +341,7 @@ namespace Redbrick_Addin
       this.nudQ.Name = "nudQ";
       this.nudQ.Size = new System.Drawing.Size(93, 22);
       this.nudQ.TabIndex = 12;
+      this.nudQ.ValueChanged += new System.EventHandler(this.nudQ_ValueChanged);
       // 
       // ConfigurationSpecific
       // 

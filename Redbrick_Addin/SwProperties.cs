@@ -1,4 +1,3 @@
-#undef DEBUG
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -721,7 +720,11 @@ namespace Redbrick_Addin {
       foreach (SwProperty p in _innerArray) {
         p.Write2(modeldoc);
       }
+
+
       Part prt = CutlistData.MakePartFromPropertySet(this);
+      prt.SetQuantity(CutlistQuantity);
+
       KeyValuePair<string, Part> pair = new KeyValuePair<string, Part>(prt.PartNumber, prt);
       int prtNo = cutlistData.GetPartID(pair.Key);
       if (prtNo > 0) {

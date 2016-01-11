@@ -390,10 +390,11 @@ namespace Redbrick_Addin {
       }
     }
 
-    public int GetQty(int clpartid) {
-      string SQL = @"SELECT QTY FROM CUT_CUTLIST_PARTS WHERE ID = ?";
+    public int GetQtyByClIDAndPartID(int clid, int partid) {
+      string SQL = @"SELECT QTY FROM CUT_CUTLIST_PARTS WHERE CLID = ? AND PARTID = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        comm.Parameters.AddWithValue("@cutlistPartID", clpartid);
+        comm.Parameters.AddWithValue("@cutlistID", clid);
+        comm.Parameters.AddWithValue("@partID", partid);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetInt32(0);
@@ -1161,6 +1162,47 @@ namespace Redbrick_Addin {
       p.SetBlankQty(swp.GetProperty("BLANK QTY").Value);
       p.SetDeptID(swp.GetProperty("DEPTID").ID);
 
+      p.SetOpID(swp.GetProperty("OP1ID").ID, 0);
+      p.SetOpID(swp.GetProperty("OP2ID").ID, 1);
+      p.SetOpID(swp.GetProperty("OP3ID").ID, 2);
+      p.SetOpID(swp.GetProperty("OP4ID").ID, 3);
+      p.SetOpID(swp.GetProperty("OP5ID").ID, 4);
+
+      int tp = 0;
+      int.TryParse(swp.GetProperty("CRC32").Value, out tp);
+      string hash = string.Format("{0:X}", tp);
+      p.Hash = uint.Parse(hash, System.Globalization.NumberStyles.HexNumber);
+
+      return p;
+    }
+
+    static public Part MakePartFromPropertySet(SwProperties swp, ushort q) {
+      Part p = new Part();
+      p.SetQuantity(q.ToString());
+
+      p.FileInformation = swp.PartFileInfo;
+      p.PartNumber = swp.PartName;
+      p.SetMaterialID(swp.GetProperty("MATID").ID);
+      p.SetEdgeFrontID(swp.GetProperty("EFID").ID);
+      p.SetEdgeBackID(swp.GetProperty("EBID").ID);
+      p.SetEdgeLeftID(swp.GetProperty("ELID").ID);
+      p.SetEdgeRightID(swp.GetProperty("ERID").ID);
+
+      p.Description = swp.GetProperty("Description").Value;
+      p.SetLength(swp.GetProperty("LENGTH").ResValue);
+      p.SetWidth(swp.GetProperty("WIDTH").ResValue);
+      p.SetThickness(swp.GetProperty("THICKNESS").ResValue);
+
+      p.Comment = swp.GetProperty("COMMENT").Value;
+      p.CNC1 = swp.GetProperty("CNC1").Value;
+      p.CNC2 = swp.GetProperty("CNC2").Value;
+      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").ID);
+
+      p.SetOverL(swp.GetProperty("OVERL").Value);
+      p.SetOverW(swp.GetProperty("OVERW").Value);
+      p.SetBlankQty(swp.GetProperty("BLANK QTY").Value);
+      p.SetDeptID(swp.GetProperty("DEPTID").ID);
+      
       p.SetOpID(swp.GetProperty("OP1ID").ID, 0);
       p.SetOpID(swp.GetProperty("OP2ID").ID, 1);
       p.SetOpID(swp.GetProperty("OP3ID").ID, 2);
