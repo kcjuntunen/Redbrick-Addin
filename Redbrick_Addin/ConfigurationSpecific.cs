@@ -287,7 +287,14 @@ namespace Redbrick_Addin {
         Properties.Settings.Default.CurrentCutlist = int.Parse(cbCutlist.SelectedValue.ToString());
         propertySet.CutlistID = Properties.Settings.Default.CurrentCutlist;
         Properties.Settings.Default.Save();
-        cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+
+        if (cbCutlist.SelectedItem != null) {
+          cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
+          int t = 0;
+          if (int.TryParse(cbCutlist.SelectedValue.ToString(), out t)) {
+            cbStatus.Text = cd.GetStateByID(t); 
+          }
+        }
 
         int s = 1;
         if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.QTY].ToString(), out s)) {
@@ -394,6 +401,15 @@ namespace Redbrick_Addin {
 
     private void nudQ_ValueChanged(object sender, EventArgs e) {
       propertySet.CutlistQuantity = nudQ.Value.ToString();
+    }
+
+    private void bRemove_Click(object sender, EventArgs e) {
+      string[] cl = cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
+      if (cl.Length > 1) {
+        int clid = cd.GetCutlistID(cl[0].Trim(), cl[1].Trim());
+        if (cd.RemovePartFromCutlist(clid, propertySet) > 0)
+          UpdateCutlistBox();
+      }
     }
   }
 }

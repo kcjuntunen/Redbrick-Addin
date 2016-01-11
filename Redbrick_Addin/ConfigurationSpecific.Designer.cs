@@ -51,6 +51,7 @@ namespace Redbrick_Addin
       this.btnMakeOriginal = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
       this.nudQ = new System.Windows.Forms.NumericUpDown();
+      this.bRemove = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.nudQ)).BeginInit();
       this.SuspendLayout();
@@ -81,9 +82,10 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.label2, 1, 10);
       this.tableLayoutPanel1.Controls.Add(this.cbCutlist, 0, 11);
       this.tableLayoutPanel1.Controls.Add(this.cbStatus, 1, 11);
-      this.tableLayoutPanel1.Controls.Add(this.btnMakeOriginal, 0, 13);
       this.tableLayoutPanel1.Controls.Add(this.label3, 1, 12);
       this.tableLayoutPanel1.Controls.Add(this.nudQ, 1, 13);
+      this.tableLayoutPanel1.Controls.Add(this.btnMakeOriginal, 0, 12);
+      this.tableLayoutPanel1.Controls.Add(this.bRemove, 0, 13);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -102,7 +104,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 289);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 303);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // cbEr
@@ -317,9 +319,9 @@ namespace Redbrick_Addin
       // btnMakeOriginal
       // 
       this.btnMakeOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.btnMakeOriginal.Location = new System.Drawing.Point(3, 256);
+      this.btnMakeOriginal.Location = new System.Drawing.Point(3, 243);
       this.btnMakeOriginal.Name = "btnMakeOriginal";
-      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 30);
+      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 26);
       this.btnMakeOriginal.TabIndex = 10;
       this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
       this.btnMakeOriginal.UseVisualStyleBackColor = true;
@@ -328,20 +330,32 @@ namespace Redbrick_Addin
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(234, 240);
+      this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.label3.Location = new System.Drawing.Point(234, 259);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(52, 13);
+      this.label3.Size = new System.Drawing.Size(93, 13);
       this.label3.TabIndex = 11;
       this.label3.Text = "Quantity";
       // 
       // nudQ
       // 
       this.nudQ.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.nudQ.Location = new System.Drawing.Point(234, 256);
+      this.nudQ.Location = new System.Drawing.Point(234, 275);
       this.nudQ.Name = "nudQ";
       this.nudQ.Size = new System.Drawing.Size(93, 22);
       this.nudQ.TabIndex = 12;
       this.nudQ.ValueChanged += new System.EventHandler(this.nudQ_ValueChanged);
+      // 
+      // bRemove
+      // 
+      this.bRemove.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.bRemove.Location = new System.Drawing.Point(3, 275);
+      this.bRemove.Name = "bRemove";
+      this.bRemove.Size = new System.Drawing.Size(225, 25);
+      this.bRemove.TabIndex = 13;
+      this.bRemove.Text = "Remove From Cutlist";
+      this.bRemove.UseVisualStyleBackColor = true;
+      this.bRemove.Click += new System.EventHandler(this.bRemove_Click);
       // 
       // ConfigurationSpecific
       // 
@@ -351,7 +365,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ConfigurationSpecific";
-      this.Size = new System.Drawing.Size(330, 289);
+      this.Size = new System.Drawing.Size(330, 303);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.nudQ)).EndInit();
@@ -385,5 +399,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.Button btnMakeOriginal;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudQ;
+        private System.Windows.Forms.Button bRemove;
     }
 }

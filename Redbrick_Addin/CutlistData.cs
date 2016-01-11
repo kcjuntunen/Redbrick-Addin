@@ -823,7 +823,7 @@ namespace Redbrick_Addin {
             int partID = UpdatePart(item);
             string itemHash = string.Format("{0:X}", item.Value.Hash);
             string recordHash = string.Format("{0:X}", GetHash(item.Key));
-            if (itemHash == recordHash) {
+            if ((itemHash == recordHash) || (recordHash == "0")) {
               UpdateCutlistPart(GetCutlistID(itemNo, rev.ToString()), partID, item);
             }
           }
@@ -873,6 +873,26 @@ namespace Redbrick_Addin {
     }
 
     /// <summary>
+    /// Remove a part from a cutlist.
+    /// </summary>
+    /// <param name="clid">Cutlist ID integer.</param>
+    /// <param name="p">Property set.</param>
+    /// <returns></returns>
+    public int RemovePartFromCutlist(int clid, SwProperties p) {
+      int affected = 0;
+      int partid = GetPartID(p.PartName);
+      if (ENABLE_DB_WRITE && (GetHash(p.PartName) == p.Hash)) {
+        string SQL = "DELETE FROM CUT_CUTLIST_PARTS WHERE CLID = ? AND PARTID = ?";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@clid", clid);
+          comm.Parameters.AddWithValue("@partid", partid);
+          affected = comm.ExecuteNonQuery();
+        }
+      }
+      return affected;
+    }
+
+    /// <summary>
     /// Gets and/or creates a part.
     /// </summary>
     /// <returns>PartID</returns>
@@ -883,7 +903,7 @@ namespace Redbrick_Addin {
         string SQL;
         string hash = string.Format("{0:X}", p.Hash);
         SQL = @"UPDATE CUT_PARTS SET DESCR = ?, FIN_L = ?, FIN_W = ?, THICKNESS = ?, CNC1 = ?, CNC2 = ?, BLANKQTY = ?, OVER_L = ?, OVER_W = ?, OP1ID = ?, " +
-          @"OP2ID = ?, OP3ID = ?, OP4ID = ?, OP5ID = ?, COMMENT = ?, UPDATE_CNC = ?, TYPE = ? WHERE PARTNUM=? AND HASH=?;";
+          @"OP2ID = ?, OP3ID = ?, OP4ID = ?, OP5ID = ?, COMMENT = ?, UPDATE_CNC = ?, TYPE = ? WHERE PARTNUM=? AND (HASH=? OR HASH IS NULL);";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@descr", p.Description);
@@ -904,6 +924,16 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
 
           affected = comm.ExecuteNonQuery();
+        }
+
+        if (GetHash(p.PartNumber) == 0) {
+          SQL = @"UPDATE CUT_PARTS SET HASH = ? WHERE PARTNUM = ?";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@hash", Convert.ToInt32(p.Hash));
+            comm.Parameters.AddWithValue("@partnum", p.PartNumber);
+
+            affected = comm.ExecuteNonQuery();
+          }
         }
 
         if (affected < 1 && (GetPartID(kp.Key) < 1)) {
