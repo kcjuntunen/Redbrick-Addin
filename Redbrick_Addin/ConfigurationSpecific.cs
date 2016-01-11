@@ -54,6 +54,8 @@ namespace Redbrick_Addin {
       UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
       UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
 
+      nudQ.Value = 1;
+
       UpdateCutlistBox();
     }
 
@@ -72,8 +74,10 @@ namespace Redbrick_Addin {
         cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
         int s = 0;
 
-        if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s))
-          cbStatus.SelectedValue = s;
+        if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s)) {
+          cbStatus.SelectedText = cd.GetStateByID(s);
+          cbStatus.Update();
+        }
       } else {
         cbStatus.Text = string.Empty;
       }

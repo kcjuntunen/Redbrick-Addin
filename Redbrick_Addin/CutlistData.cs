@@ -300,6 +300,19 @@ namespace Redbrick_Addin {
       }
     }
 
+    public string GetStateByID(int ID) {
+      string SQL = @"SELECT STATE FROM CUT_STATES WHERE ID = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@StateID", ID);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows)
+            return dr.GetString(0);
+          else
+            return string.Empty;
+        }
+      }
+    }
+
     public double GetEdgeThickness(int ID) {
       string SQL = @"SELECT THICKNESS FROM CUT_EDGES WHERE EDGEID = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -373,6 +386,19 @@ namespace Redbrick_Addin {
             return dr.GetInt32(0);
           else
             return 0;
+        }
+      }
+    }
+
+    public int GetQty(int clpartid) {
+      string SQL = @"SELECT QTY FROM CUT_CUTLIST_PARTS WHERE ID = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@cutlistPartID", clpartid);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows)
+            return dr.GetInt32(0);
+          else
+            return 1;
         }
       }
     }
