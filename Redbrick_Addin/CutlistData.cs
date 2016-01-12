@@ -308,7 +308,7 @@ namespace Redbrick_Addin {
           if (dr.HasRows)
             return dr.GetString(0);
           else
-            return string.Empty;
+            return "UNSET";
         }
       }
     }
@@ -795,7 +795,7 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@w", w);
           comm.Parameters.AddWithValue("@h", h);
           comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
-          comm.Parameters.AddWithValue("@stateid", Convert.ToInt32(state));
+          comm.Parameters.AddWithValue("@stateid",  (state < 1 ? 1 : Convert.ToInt32(state)));
           comm.Parameters.AddWithValue("@partnum", itemNo);
           comm.Parameters.AddWithValue("@rev", rev);
           affected = comm.ExecuteNonQuery();
@@ -929,7 +929,7 @@ namespace Redbrick_Addin {
         if (GetHash(p.PartNumber) == 0) {
           SQL = @"UPDATE CUT_PARTS SET HASH = ? WHERE PARTNUM = ?";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-            comm.Parameters.AddWithValue("@hash", Convert.ToInt32(p.Hash));
+            comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
             comm.Parameters.AddWithValue("@partnum", p.PartNumber);
 
             affected = comm.ExecuteNonQuery();
