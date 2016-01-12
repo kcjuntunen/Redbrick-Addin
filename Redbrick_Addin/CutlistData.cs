@@ -788,15 +788,15 @@ namespace Redbrick_Addin {
          @"WHERE PARTNUM=? AND REV=?;";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-          comm.Parameters.AddWithValue("@drawing", drawing);
+          comm.Parameters.AddWithValue("@drawing", FilterString(drawing));
           comm.Parameters.AddWithValue("@custid", Convert.ToInt32(custid));
-          comm.Parameters.AddWithValue("@descr", descr);
+          comm.Parameters.AddWithValue("@descr", FilterString(descr));
           comm.Parameters.AddWithValue("@l", l);
           comm.Parameters.AddWithValue("@w", w);
           comm.Parameters.AddWithValue("@h", h);
           comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
           comm.Parameters.AddWithValue("@stateid",  (state < 1 ? 1 : Convert.ToInt32(state)));
-          comm.Parameters.AddWithValue("@partnum", itemNo);
+          comm.Parameters.AddWithValue("@partnum", FilterString(itemNo));
           comm.Parameters.AddWithValue("@rev", rev);
           affected = comm.ExecuteNonQuery();
         }
@@ -804,11 +804,11 @@ namespace Redbrick_Addin {
           SQL = @"INSERT INTO CUT_CUTLISTS (PARTNUM, REV, DRAWING, CUSTID, CDATE, DESCR, LENGTH, WIDTH, HEIGHT, SETUP_BY, STATE_BY, STATEID) VALUES " +
             @"(?, ?, ?, ?, GETDATE(), ?, ?, ?, ?, ?, ?, ?);";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-            comm.Parameters.AddWithValue("@partnum", itemNo);
+            comm.Parameters.AddWithValue("@partnum", FilterString(itemNo));
             comm.Parameters.AddWithValue("@rev", rev);
-            comm.Parameters.AddWithValue("@drawing", drawing);
+            comm.Parameters.AddWithValue("@drawing", FilterString(drawing));
             comm.Parameters.AddWithValue("@custid", Convert.ToInt32(custid));
-            comm.Parameters.AddWithValue("@descr", descr);
+            comm.Parameters.AddWithValue("@descr", FilterString(descr));
             comm.Parameters.AddWithValue("@l", l);
             comm.Parameters.AddWithValue("@w", w);
             comm.Parameters.AddWithValue("@h", h);
@@ -906,21 +906,21 @@ namespace Redbrick_Addin {
           @"OP2ID = ?, OP3ID = ?, OP4ID = ?, OP5ID = ?, COMMENT = ?, UPDATE_CNC = ?, TYPE = ? WHERE PARTNUM=? AND (HASH=? OR HASH IS NULL);";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-          comm.Parameters.AddWithValue("@descr", p.Description);
+          comm.Parameters.AddWithValue("@descr", FilterString(p.Description));
           comm.Parameters.AddWithValue("@finl", Convert.ToDouble(p.Length));
           comm.Parameters.AddWithValue("@finw", Convert.ToDouble(p.Width));
           comm.Parameters.AddWithValue("@thk", Convert.ToDouble(p.Thickness));
-          comm.Parameters.AddWithValue("@cnc1", p.CNC1);
-          comm.Parameters.AddWithValue("@cnc2", p.CNC2);
+          comm.Parameters.AddWithValue("@cnc1", FilterString(p.CNC1));
+          comm.Parameters.AddWithValue("@cnc2", FilterString(p.CNC2));
           comm.Parameters.AddWithValue("@blnkqty", Convert.ToInt32(p.BlankQty));
           comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
           comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
           for (ushort i = 0; i < 5; i++)
             comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
-          comm.Parameters.AddWithValue("@comment", p.Comment);
+          comm.Parameters.AddWithValue("@comment", FilterString(p.Comment));
           comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
           comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
-          comm.Parameters.AddWithValue("@prtNo", p.PartNumber);
+          comm.Parameters.AddWithValue("@prtNo", FilterString(p.PartNumber));
           comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
 
           affected = comm.ExecuteNonQuery();
@@ -941,19 +941,19 @@ namespace Redbrick_Addin {
             @"OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
             @"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-            comm.Parameters.AddWithValue("@prtNo", p.PartNumber);
-            comm.Parameters.AddWithValue("@descr", p.Description);
+            comm.Parameters.AddWithValue("@prtNo", FilterString(p.PartNumber));
+            comm.Parameters.AddWithValue("@descr", FilterString(p.Description));
             comm.Parameters.AddWithValue("@finl", Convert.ToDouble(p.Length));
             comm.Parameters.AddWithValue("@finw", Convert.ToDouble(p.Width));
             comm.Parameters.AddWithValue("@thk", Convert.ToDouble(p.Thickness));
-            comm.Parameters.AddWithValue("@cnc1", p.CNC1);
-            comm.Parameters.AddWithValue("@cnc2", p.CNC2);
+            comm.Parameters.AddWithValue("@cnc1", FilterString(p.CNC1));
+            comm.Parameters.AddWithValue("@cnc2", FilterString(p.CNC2));
             comm.Parameters.AddWithValue("@blnkqty", Convert.ToInt32(p.BlankQty));
             comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
             comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
             for (ushort i = 0; i < 5; i++)
               comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
-            comm.Parameters.AddWithValue("@comment", p.Comment);
+            comm.Parameters.AddWithValue("@comment", FilterString(p.Comment));
             comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
             comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
             comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
@@ -1245,6 +1245,21 @@ namespace Redbrick_Addin {
       p.Hash = uint.Parse(hash, System.Globalization.NumberStyles.HexNumber);
 
       return p;
+    }
+
+    public static string FilterString(string raw) {
+      string filtered = string.Empty;
+      char[,] chars = new char [2,2] {
+                     {'\'', '\u2019'},
+                     {'\"', '\u201D'}
+                   };
+        for (int j = 0; j < chars.Length; j++) {
+          if (j < chars.Length) {
+            filtered += raw.Replace(chars[j, 0], chars[j, 1]);
+          }
+      }
+
+      return filtered;
     }
 
     public int UpdateMachinePrograms() {
