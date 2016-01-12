@@ -163,5 +163,8 @@
   &lt;string&gt;.11-15&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="RefreshIcon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Refresh-icon.bmp</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

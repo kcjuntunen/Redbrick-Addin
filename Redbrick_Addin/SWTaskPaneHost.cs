@@ -460,30 +460,30 @@ namespace Redbrick_Addin {
     }
 
     private bool MaybeSave() {
-      swMessageBoxResult_e dr = (swMessageBoxResult_e)SwApp.SendMsgToUser2(Properties.Resources.MaybeSave,
-          (int)swMessageBoxIcon_e.swMbQuestion,
-          (int)swMessageBoxBtn_e.swMbYesNo);
+      //swMessageBoxResult_e dr = (swMessageBoxResult_e)SwApp.SendMsgToUser2(Properties.Resources.MaybeSave,
+      //    (int)swMessageBoxIcon_e.swMbQuestion,
+      //    (int)swMessageBoxBtn_e.swMbYesNo);
 
-      switch (dr) {
-        case swMessageBoxResult_e.swMbHitAbort:
-          break;
-        case swMessageBoxResult_e.swMbHitCancel:
-          break;
-        case swMessageBoxResult_e.swMbHitIgnore:
-          break;
-        case swMessageBoxResult_e.swMbHitNo:
-          return false;
-        case swMessageBoxResult_e.swMbHitOk:
-          break;
-        case swMessageBoxResult_e.swMbHitRetry:
-          break;
-        case swMessageBoxResult_e.swMbHitYes:
-          return true;
-        default:
-          return false;
-      }
+      //switch (dr) {
+      //  case swMessageBoxResult_e.swMbHitAbort:
+      //    break;
+      //  case swMessageBoxResult_e.swMbHitCancel:
+      //    break;
+      //  case swMessageBoxResult_e.swMbHitIgnore:
+      //    break;
+      //  case swMessageBoxResult_e.swMbHitNo:
+      //    return false;
+      //  case swMessageBoxResult_e.swMbHitOk:
+      //    break;
+      //  case swMessageBoxResult_e.swMbHitRetry:
+      //    break;
+      //  case swMessageBoxResult_e.swMbHitYes:
+      //    return true;
+      //  default:
+      //    return false;
+      //}
 
-      return false;
+      return true;
     }
 
     int ad_ActiveViewChangeNotify() {

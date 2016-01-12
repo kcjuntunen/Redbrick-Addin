@@ -44,6 +44,7 @@ namespace Redbrick_Addin {
         bool result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Ok, "OK");
         result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Options, "Configuration");
         //result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Close, "Close");
+        result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.RefreshIcon, "Refresh");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
 
@@ -62,6 +63,9 @@ namespace Redbrick_Addin {
         case 1:
           RedbrickConfiguration rbc = new RedbrickConfiguration();
           rbc.ShowDialog();
+          taskpaneHost.ConnectSelection();
+          break;
+        case 2:
           taskpaneHost.ConnectSelection();
           break;
         default:

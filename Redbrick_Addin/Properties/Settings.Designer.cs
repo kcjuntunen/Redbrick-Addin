@@ -428,5 +428,17 @@ namespace Redbrick_Addin.Properties {
                 this["LayerTails"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\Refresh-icon.bmp")]
+        public string RefreshIcon {
+            get {
+                return ((string)(this["RefreshIcon"]));
+            }
+            set {
+                this["RefreshIcon"] = value;
+            }
+        }
     }
 }
