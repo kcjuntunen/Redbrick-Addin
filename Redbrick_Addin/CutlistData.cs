@@ -1248,15 +1248,13 @@ namespace Redbrick_Addin {
     }
 
     public static string FilterString(string raw) {
-      string filtered = string.Empty;
+      string filtered = raw;
       char[,] chars = new char [2,2] {
-                     {'\'', '\u2019'},
-                     {'\"', '\u201D'}
-                   };
-        for (int j = 0; j < chars.Length; j++) {
-          if (j < chars.Length) {
-            filtered += raw.Replace(chars[j, 0], chars[j, 1]);
-          }
+                     {'\u0027', '\u2019'},
+                     {'\u0022', '\u201D'} };
+
+        for (int j = 0; j < chars.Rank; j++) {
+            filtered.Replace(chars[j, 0], chars[j, 1]);
       }
 
       return filtered;
