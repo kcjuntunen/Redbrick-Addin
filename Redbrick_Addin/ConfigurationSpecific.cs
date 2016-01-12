@@ -291,7 +291,7 @@ namespace Redbrick_Addin {
         if (cbCutlist.SelectedItem != null) {
           cbStatus.SelectedValue = (cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID];
           int t = 0;
-          if (int.TryParse(cbCutlist.SelectedValue.ToString(), out t)) {
+          if (int.TryParse(cbStatus.SelectedValue.ToString(), out t)) {
             cbStatus.Text = cd.GetStateByID(t); 
           }
         }

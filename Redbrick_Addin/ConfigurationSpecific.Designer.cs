@@ -48,9 +48,9 @@ namespace Redbrick_Addin
       this.label2 = new System.Windows.Forms.Label();
       this.cbCutlist = new System.Windows.Forms.ComboBox();
       this.cbStatus = new System.Windows.Forms.ComboBox();
-      this.btnMakeOriginal = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
       this.nudQ = new System.Windows.Forms.NumericUpDown();
+      this.btnMakeOriginal = new System.Windows.Forms.Button();
       this.bRemove = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.nudQ)).BeginInit();
@@ -316,17 +316,6 @@ namespace Redbrick_Addin
       this.cbStatus.TabIndex = 9;
       this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
       // 
-      // btnMakeOriginal
-      // 
-      this.btnMakeOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.btnMakeOriginal.Location = new System.Drawing.Point(3, 243);
-      this.btnMakeOriginal.Name = "btnMakeOriginal";
-      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 26);
-      this.btnMakeOriginal.TabIndex = 10;
-      this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
-      this.btnMakeOriginal.UseVisualStyleBackColor = true;
-      this.btnMakeOriginal.Click += new System.EventHandler(this.btnMakeOriginal_Click);
-      // 
       // label3
       // 
       this.label3.AutoSize = true;
@@ -345,6 +334,17 @@ namespace Redbrick_Addin
       this.nudQ.Size = new System.Drawing.Size(93, 22);
       this.nudQ.TabIndex = 12;
       this.nudQ.ValueChanged += new System.EventHandler(this.nudQ_ValueChanged);
+      // 
+      // btnMakeOriginal
+      // 
+      this.btnMakeOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnMakeOriginal.Location = new System.Drawing.Point(3, 243);
+      this.btnMakeOriginal.Name = "btnMakeOriginal";
+      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 26);
+      this.btnMakeOriginal.TabIndex = 10;
+      this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
+      this.btnMakeOriginal.UseVisualStyleBackColor = true;
+      this.btnMakeOriginal.Click += new System.EventHandler(this.btnMakeOriginal_Click);
       // 
       // bRemove
       // 
