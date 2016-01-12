@@ -200,7 +200,20 @@ namespace Redbrick_Addin {
             pOld.ResValue = pNew.ResValue = resName;
             break;
           default:
-            // ignore
+            pOld.Rename(propName);
+            pNew.Rename(newPropName);
+            tp = 0;
+            resName = "WOOD";
+            if (int.TryParse(val, out tp))
+              resName = cutlistData.GetOpTypeNameByID(tp);
+            opt = tp;
+
+            pNew.Value = val;
+            pNew.ResValue = resVal;
+
+            pOld.ID = pNew.ID = val;
+            pOld.Descr = pNew.Descr = resName;
+            pOld.ResValue = pNew.ResValue = resName;
             break;
         }
       }
@@ -638,8 +651,10 @@ namespace Redbrick_Addin {
         CustomPropertyManager sp = md.Extension.get_CustomPropertyManager(conf.Name);
         string[] ss = (string[])sp.GetNames();
 
-        foreach (string s in ss) {
-          sp.Delete2(s);
+        if (ss != null) {
+          foreach (string s in ss) {
+            sp.Delete2(s); 
+          }
         }
       }
     }
@@ -647,8 +662,10 @@ namespace Redbrick_Addin {
     public void DelGlobal(ModelDoc2 md) {
       CustomPropertyManager cpm = md.Extension.get_CustomPropertyManager(string.Empty);
       string[] ss = (string[])cpm.GetNames();
-      foreach (string s in ss) {
-        cpm.Delete2(s);
+      if (ss != null) {
+        foreach (string s in ss) {
+          cpm.Delete2(s);
+        }
       }
     }
 

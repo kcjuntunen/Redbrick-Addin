@@ -48,12 +48,12 @@ namespace Redbrick_Addin
       this.labDescr = new System.Windows.Forms.Label();
       this.tbDescription = new System.Windows.Forms.TextBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-      this.btnOriginal = new System.Windows.Forms.Button();
-      this.btnInsert = new System.Windows.Forms.Button();
       this.label4 = new System.Windows.Forms.Label();
       this.tbRef = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.tbQty = new System.Windows.Forms.TextBox();
+      this.btnOriginal = new System.Windows.Forms.Button();
+      this.btnInsert = new System.Windows.Forms.Button();
       this.label6 = new System.Windows.Forms.Label();
       this.cbStatus = new System.Windows.Forms.ComboBox();
       this.tlpCutlist.SuspendLayout();
@@ -297,28 +297,6 @@ namespace Redbrick_Addin
       this.tableLayoutPanel3.Size = new System.Drawing.Size(252, 172);
       this.tableLayoutPanel3.TabIndex = 12;
       // 
-      // btnOriginal
-      // 
-      this.btnOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.btnOriginal.Location = new System.Drawing.Point(129, 113);
-      this.btnOriginal.Name = "btnOriginal";
-      this.btnOriginal.Size = new System.Drawing.Size(120, 56);
-      this.btnOriginal.TabIndex = 0;
-      this.btnOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
-      this.btnOriginal.UseVisualStyleBackColor = true;
-      this.btnOriginal.Click += new System.EventHandler(this.btnOriginal_Click);
-      // 
-      // btnInsert
-      // 
-      this.btnInsert.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.btnInsert.Location = new System.Drawing.Point(3, 113);
-      this.btnInsert.Name = "btnInsert";
-      this.btnInsert.Size = new System.Drawing.Size(120, 56);
-      this.btnInsert.TabIndex = 1;
-      this.btnInsert.Text = global::Redbrick_Addin.Properties.Resources.InsertIntoCutlistButtonText;
-      this.btnInsert.UseVisualStyleBackColor = true;
-      this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
-      // 
       // label4
       // 
       this.label4.AutoSize = true;
@@ -352,6 +330,28 @@ namespace Redbrick_Addin
       this.tbQty.Name = "tbQty";
       this.tbQty.Size = new System.Drawing.Size(120, 20);
       this.tbQty.TabIndex = 13;
+      // 
+      // btnOriginal
+      // 
+      this.btnOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnOriginal.Location = new System.Drawing.Point(129, 113);
+      this.btnOriginal.Name = "btnOriginal";
+      this.btnOriginal.Size = new System.Drawing.Size(120, 56);
+      this.btnOriginal.TabIndex = 0;
+      this.btnOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
+      this.btnOriginal.UseVisualStyleBackColor = true;
+      this.btnOriginal.Click += new System.EventHandler(this.btnOriginal_Click);
+      // 
+      // btnInsert
+      // 
+      this.btnInsert.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnInsert.Location = new System.Drawing.Point(3, 113);
+      this.btnInsert.Name = "btnInsert";
+      this.btnInsert.Size = new System.Drawing.Size(120, 56);
+      this.btnInsert.TabIndex = 1;
+      this.btnInsert.Text = global::Redbrick_Addin.Properties.Resources.InsertIntoCutlistButtonText;
+      this.btnInsert.UseVisualStyleBackColor = true;
+      this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
       // 
       // label6
       // 

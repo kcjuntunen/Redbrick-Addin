@@ -55,54 +55,38 @@ namespace Redbrick_Addin {
       SwApp.ActiveDocChangeNotify += SwApp_ActiveDocChangeNotify;
       SwApp.DestroyNotify += SwApp_DestroyNotify;
       SwApp.FileCloseNotify += SwApp_FileCloseNotify;
-      //this.SwApp.CommandCloseNotify += SwApp_CommandCloseNotify;
+      SwApp.CommandCloseNotify += SwApp_CommandCloseNotify;
+      Document = SwApp.ActiveDoc;
+      ConnectSelection();
+    }
+
+    public void ReStart() {
+      ClearControls(this);
       Document = SwApp.ActiveDoc;
       ConnectSelection();
     }
 
     int SwApp_CommandCloseNotify(int Command, int reason) {
-      if (PartSetup)
-        if (mrb.IsDirty)
-          if (MaybeSave())
-            Write();
-
-      if (DrawSetup)
-        if (drb.IsDirty)
-          if (MaybeSave())
-            Write();
-
       if ((swCommands_e)Command == swCommands_e.swCommands_Close || (swCommands_e)Command == swCommands_e.swCommands_Close_) {
         ClearControls(this);
+      }
+
+      if ((swCommands_e)Command == swCommands_e.swCommands_Make_Lightweight ||
+        (swCommands_e)Command == swCommands_e.swCommands_Lightweight_Toggle ||
+        (swCommands_e)Command == swCommands_e.swCommands_Lightweight_All) {
+          ReStart();
       }
 
       return 0;
     }
 
     int SwApp_FileCloseNotify(string FileName, int reason) {
-      //if (PartSetup)
-      //  if (mrb.IsDirty)
-      //    if (MaybeSave())
-      //      Write();
-
-      //if (DrawSetup)
-      //  if (drb.IsDirty)
-      //    if (MaybeSave())
-      //      Write();
       ClearControls(this);
 
       return 0;
     }
 
     int SwApp_DestroyNotify() {
-      //if (PartSetup)
-      //  if (mrb.IsDirty)
-      //    if (MaybeSave())
-      //      Write();
-
-      //if (DrawSetup)
-      //  if (drb.IsDirty)
-      //    if (MaybeSave())
-      //      Write();
 
       ClearControls(this);
       // Solidworks closed
@@ -112,14 +96,6 @@ namespace Redbrick_Addin {
     int SwApp_ActiveDocChangeNotify() {
       if (AssySetup)
         DisconnectAssemblyEvents();
-
-      if (PartSetup && mrb.IsDirty && MaybeSave()) {
-        Write();
-      }
-
-      if (DrawSetup && drb.IsDirty && MaybeSave()) {
-        Write();
-      }
 
       if (SwApp == null)
         SwApp = RequestSW();
@@ -134,6 +110,7 @@ namespace Redbrick_Addin {
       prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
 
       if (Document != null) {
+        Enabled = true;
         System.IO.FileInfo fi;
         try {
           if (!string.IsNullOrWhiteSpace(Document.GetPathName())) {
@@ -229,7 +206,7 @@ namespace Redbrick_Addin {
             break;
         }
       } else {
-        ClearControls(this);
+        Enabled = false;
       }
     }
 
@@ -327,7 +304,9 @@ namespace Redbrick_Addin {
         item.Dispose();
       }
 
-      DisconnectAssemblyEvents();
+      //if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
+      //  DisconnectAssemblyEvents();
+
       DisconnectPartEvents();
       DisconnectDrawingEvents();
       // everything's undone.

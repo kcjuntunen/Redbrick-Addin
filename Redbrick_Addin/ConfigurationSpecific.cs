@@ -361,7 +361,8 @@ namespace Redbrick_Addin {
         case swMessageBoxResult_e.swMbHitIgnore:
           break;
         case swMessageBoxResult_e.swMbHitNo:
-          CutlistHeaderInfo chin = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), propertySet.cutlistData);
+          CutlistHeaderInfo chin = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), 
+            propertySet.cutlistData, CutlistHeaderInfo.CutlistFunction.CreateNew);
           chin.Text = "Creating new cutlist...";
           chin.ShowDialog();
           break;
@@ -370,23 +371,10 @@ namespace Redbrick_Addin {
         case swMessageBoxResult_e.swMbHitRetry:
           break;
         case swMessageBoxResult_e.swMbHitYes:
-          string[] clData = { string.Empty };
-          if (cbCutlist.SelectedItem != null) {
-            clData = (cbCutlist.SelectedItem as DataRowView)
-              .Row[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
-              .Split(new string[] { "REV" }, StringSplitOptions.None);
-          }
-          if (clData.Length > 1) {
-
-            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), propertySet.cutlistData,
-              clData[0].Trim(), clData[1].Trim());
+            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), 
+              propertySet.cutlistData, CutlistHeaderInfo.CutlistFunction.AddToExistingNotSelected);
             chiy.Text = "Adding to cutlist...";
             chiy.ShowDialog();
-          } else {
-            CutlistHeaderInfo chiy = new CutlistHeaderInfo(CutlistData.MakePartFromPropertySet(propertySet, Convert.ToUInt16(nudQ.Value)), propertySet.cutlistData);
-            chiy.Text = "Adding to cutlist...";
-            chiy.ShowDialog();
-          }
           break;
         default:
           break;

@@ -169,7 +169,8 @@ namespace Redbrick_Addin {
     private void btnInsert_Click(object sender, EventArgs e) {
       string[] s = cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
       if (s.Length > 1) {
-        CutlistHeaderInfo chi = new CutlistHeaderInfo(MakePartFromPropertySet(PropertySet), PropertySet.cutlistData, s[0].Trim(), s[1].Trim());
+        CutlistHeaderInfo chi = new CutlistHeaderInfo(MakePartFromPropertySet(PropertySet), PropertySet.cutlistData, CutlistHeaderInfo.CutlistFunction.CreateNew);
+        //s[0].Trim(), s[1].Trim(),);
         chi.ShowDialog();
       } else {
         CutlistHeaderInfo chi = new CutlistHeaderInfo(MakePartFromPropertySet(PropertySet), PropertySet.cutlistData);

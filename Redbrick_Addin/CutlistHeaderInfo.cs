@@ -15,19 +15,31 @@ namespace Redbrick_Addin {
       CreateNew
     }
 
-    public CutlistHeaderInfo(Part p, CutlistData cd, string itemNo, string rev) { //Existing cutlist
+    public CutlistHeaderInfo(Part p, CutlistData cd, CutlistFunction c) { //Existing cutlist
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
 
-      InitControlsWithPart(p, cd, itemNo, rev);
+      switch (c) {
+        case CutlistFunction.AddToExistingAlreadySelected:
+          InitControlsWithPart(p, cd);
+          break;
+        case CutlistFunction.AddToExistingNotSelected:
+          InitControlsWithPart(p, cd);
+          break;
+        case CutlistFunction.CreateNew:
+          InitControlsWithNewPart(p, cd);
+          break;
+        default:
+          break;
+      }
     }
-
+    
     public CutlistHeaderInfo(Part p, CutlistData cd) { // New Cutlist
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
-      InitControlsWithNewPart(p, cd);
+      InitControlsWithPart(p, cd);
     }
 
     public CutlistHeaderInfo(DrawingProperties dp) { 
@@ -61,14 +73,35 @@ namespace Redbrick_Addin {
     }
 
     private void InitControlsWithNewPart(Part p, CutlistData cd) {
-      Text = "Add to cutlist...";
+      for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
+        cbRev.Items.Add(i.ToString());
+      cbRev.SelectedIndex = 0;
+      btnCreate.Text = "Create Cutlist";
+      part = p;
+      CutlistData = cd;
+      cbRev.Enabled = true;
+      //cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
+      //cbItemNo.DisplayMember = "PARTNUM";
+      //cbItemNo.ValueMember = "CLID";
+
+      cbCustomer.DataSource = CutlistData.Customers.Tables[0];
+      cbCustomer.DisplayMember = "CUSTOMER";
+      cbCustomer.ValueMember = "CUSTID";
+
+      cbSetupBy.DataSource = CutlistData.GetAuthors().Tables[0];
+      cbSetupBy.DisplayMember = "NAME";
+      cbSetupBy.ValueMember = "UID";
+      cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
+    }
+
+    private void InitControlsWithPart(Part p, CutlistData cd, string itemNo, string Rev) {
       for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
       cbRev.SelectedIndex = 0;
       btnCreate.Text = "Add";
       part = p;
       CutlistData = cd;
-      cbRev.Enabled = true;
+
       cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
       cbItemNo.DisplayMember = "PARTNUM";
       cbItemNo.ValueMember = "CLID";
@@ -83,7 +116,7 @@ namespace Redbrick_Addin {
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
     }
 
-    private void InitControlsWithPart(Part p, CutlistData cd, string itemNo, string Rev) {
+    private void xInitControlsWithPart(Part p, CutlistData cd, string itemNo, string Rev) {
       for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
       cbRev.SelectedIndex = 0;
@@ -165,6 +198,10 @@ namespace Redbrick_Addin {
       }
 
       Close();
+    }
+
+    private void UpdateExistingCutlist(string itemNo, string rev) {
+
     }
 
     private void UpdateCutlist(string itemNo, string rev) {

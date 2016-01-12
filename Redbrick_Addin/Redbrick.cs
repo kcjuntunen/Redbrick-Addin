@@ -66,7 +66,7 @@ namespace Redbrick_Addin {
           taskpaneHost.ConnectSelection();
           break;
         case 2:
-          taskpaneHost.ConnectSelection();
+          taskpaneHost.ReStart();
           break;
         default:
           break;

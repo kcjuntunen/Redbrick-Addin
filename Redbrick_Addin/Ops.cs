@@ -78,6 +78,8 @@ namespace Redbrick_Addin {
       c.ValueMember = "OPID";
       propertySet.cutlistData.OpType = OpType;
       c.DataSource = propertySet.cutlistData.Ops.Tables[0];
+      c.SelectedText = string.Empty;
+      c.SelectedValue = 0;
     }
 
     public void RefreshOps(int opType) {
