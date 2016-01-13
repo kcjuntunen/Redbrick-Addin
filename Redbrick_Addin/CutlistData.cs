@@ -250,7 +250,7 @@ namespace Redbrick_Addin {
           @"CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
           @"(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
           @"CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
-          @"(((CUT_PARTS.PARTID)=?))";
+          @"(((CUT_PARTS.PARTID)=?)) ORDER BY CUT_CUTLISTS.PARTNUM";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@PartID", partID);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
@@ -268,7 +268,7 @@ namespace Redbrick_Addin {
           @"CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
           @"(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
           @"CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID WHERE " +
-          @"(((CUT_PARTS.PARTNUM) Like ?))";
+          @"(((CUT_PARTS.PARTNUM) Like ?))  ORDER BY CUT_CUTLISTS.PARTNUM";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@PartName", partDescr);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
@@ -286,7 +286,7 @@ namespace Redbrick_Addin {
         @"CUT_PARTS.COMMENT, CUT_PARTS.UPDATE_CNC FROM CUT_OPS AS CUT_OPS_4 " +
         @"RIGHT JOIN (CUT_OPS AS CUT_OPS_3 RIGHT JOIN (CUT_OPS AS CUT_OPS_2 RIGHT JOIN (CUT_OPS AS CUT_OPS_1 RIGHT JOIN " +
         @"(CUT_PARTS LEFT JOIN CUT_OPS ON CUT_PARTS.OP1ID = CUT_OPS.OPID) ON CUT_OPS_1.OPID = CUT_PARTS.OP2ID) ON CUT_OPS_2.OPID = CUT_PARTS.OP3ID) " +
-        @"ON CUT_OPS_3.OPID = CUT_PARTS.OP4ID) ON CUT_OPS_4.OPID = CUT_PARTS.OP5ID WHERE (((CUT_PARTS.CNC1)=?)) OR (((CUT_PARTS.CNC2)=?))";
+        @"ON CUT_OPS_3.OPID = CUT_PARTS.OP4ID) ON CUT_OPS_4.OPID = CUT_PARTS.OP5ID WHERE (((CUT_PARTS.CNC1)=?)) OR (((CUT_PARTS.CNC2)=?)) ORDER BY CUT_PARTS.PARTNUM";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@proga", prog);
         comm.Parameters.AddWithValue("@progb", prog);
@@ -1034,7 +1034,7 @@ namespace Redbrick_Addin {
     public DataSet GetCutlists() {
       string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DRAWING, " +
         @"CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, " +
-        @"CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, CUT_CUTLISTS.STATEID FROM CUT_CUTLISTS";
+        @"CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, CUT_CUTLISTS.STATEID FROM CUT_CUTLISTS ORDER BY CUT_CUTLISTS.PARTNUM";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
