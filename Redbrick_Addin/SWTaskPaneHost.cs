@@ -62,6 +62,10 @@ namespace Redbrick_Addin {
 
     public void ReStart() {
       ClearControls(this);
+
+      if (SwApp == null)
+        SwApp = RequestSW();
+
       Document = SwApp.ActiveDoc;
       ConnectSelection();
     }
@@ -82,12 +86,10 @@ namespace Redbrick_Addin {
 
     int SwApp_FileCloseNotify(string FileName, int reason) {
       ClearControls(this);
-
       return 0;
     }
 
     int SwApp_DestroyNotify() {
-
       ClearControls(this);
       // Solidworks closed
       return 0;
@@ -154,7 +156,9 @@ namespace Redbrick_Addin {
 
         switch (docT) {
           case swDocumentTypes_e.swDocASSEMBLY:
-            DisconnectAssemblyEvents();
+            if (overDocT != swDocumentTypes_e.swDocASSEMBLY) {
+              DisconnectAssemblyEvents(); 
+            }
             if (!PartSetup) {
               ClearControls(this);
               //prop.GetPropertyData(Document);
