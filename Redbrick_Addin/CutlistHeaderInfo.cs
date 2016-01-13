@@ -15,7 +15,7 @@ namespace Redbrick_Addin {
       CreateNew
     }
 
-    public CutlistHeaderInfo(Part p, CutlistData cd, CutlistFunction c) { //Existing cutlist
+    public CutlistHeaderInfo(Part p, CutlistData cd, CutlistFunction c) {
       InitializeComponent();
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
@@ -57,8 +57,13 @@ namespace Redbrick_Addin {
       cbRev.SelectedIndex = 0;
 
       string[] title = (DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ');
+      Text = "Add/Update Cutlist for " + title[0] + "...";
       cbDrawingReference.Text = title[0];
-      cbItemNo.Text = title[0];
+      cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
+      cbItemNo.DisplayMember = "PARTNUM";
+      cbItemNo.ValueMember = "CLID";
+      cbItemNo.SelectedIndex = cbItemNo.FindString(title[0]);
+
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
       cbCustomer.ValueMember = "CUSTID";
@@ -80,9 +85,6 @@ namespace Redbrick_Addin {
       part = p;
       CutlistData = cd;
       cbRev.Enabled = true;
-      //cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
-      //cbItemNo.DisplayMember = "PARTNUM";
-      //cbItemNo.ValueMember = "CLID";
 
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
