@@ -408,9 +408,10 @@ namespace Redbrick_Addin {
       if (name == string.Empty)
         return 0;
 
-      string SQL = @"SELECT OPID FROM CUT_OPS WHERE OPNAME Like ?";
+      string SQL = @"SELECT OPID FROM CUT_OPS WHERE OPNAME Like ? AND OPTYPE = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@name", name);
+        comm.Parameters.AddWithValue("@optype", OpType);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows)
             return dr.GetInt32(0);

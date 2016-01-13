@@ -200,20 +200,6 @@ namespace Redbrick_Addin {
             pOld.ResValue = pNew.ResValue = resName;
             break;
           default:
-            pOld.Rename(propName);
-            pNew.Rename(newPropName);
-            tp = 0;
-            resName = "WOOD";
-            if (int.TryParse(val, out tp))
-              resName = cutlistData.GetOpTypeNameByID(tp);
-            opt = tp;
-
-            pNew.Value = val;
-            pNew.ResValue = resVal;
-
-            pOld.ID = pNew.ID = val;
-            pOld.Descr = pNew.Descr = resName;
-            pOld.ResValue = pNew.ResValue = resName;
             break;
         }
       }
@@ -521,8 +507,10 @@ namespace Redbrick_Addin {
             default:
               pOld.Global = true;
               pNew.Global = true;
-              pOld.Value = pNew.Value = valOut;
-              pOld.ResValue = pNew.ResValue = resValOut;
+              pOld.Value = valOut;
+              pNew.Value = valOut;
+              pOld.ResValue = resValOut;
+              pNew.ResValue = resValOut;
 
               if (s.Contains("OVER")) {
                 pOld.Type = swCustomInfoType_e.swCustomInfoDouble;
@@ -536,11 +524,13 @@ namespace Redbrick_Addin {
                   pNew.Rename(string.Format("OP{0}ID", i));
                   pOld.Type = swCustomInfoType_e.swCustomInfoText;
                   pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
+                  pOld.Value = cutlistData.GetOpIDByName(pOld.ResValue).ToString();
+                  pNew.Value = pOld.Value;
 
                   if (s == string.Format("OP{0}ID", i)) {
-                    if (int.TryParse(pNew.Value, out tp) || int.TryParse(pOld.Value, out tp)) {
+                    if (int.TryParse(pNew.ResValue, out tp) || int.TryParse(pOld.ResValue, out tp)) {
                       if (tp > 0) {
-                        List<string> dr = cutlistData.GetOpDataByID(pNew.Value);
+                        List<string> dr = cutlistData.GetOpDataByID(pNew.ResValue);
                         pOld.ID = dr[(int)CutlistData.OpFields.OPID];
                         pOld.Descr = dr[(int)CutlistData.OpFields.OPDESCR];
                         pNew.ID = dr[(int)CutlistData.OpFields.OPID];
@@ -606,8 +596,9 @@ namespace Redbrick_Addin {
           if (c is System.Windows.Forms.ComboBox) {
             //if (p.ID == null || p.ID == string.Empty) p.ID = "0";
             int tp = -1;
-            if (int.TryParse(p.ID, out tp))
+            if (int.TryParse(p.ID, out tp)) {
               (c as System.Windows.Forms.ComboBox).SelectedValue = tp;
+            }
           } else if (c is System.Windows.Forms.CheckBox) {
             (c as System.Windows.Forms.CheckBox).Checked = (p.ID == "-1" ? true : false);
           } else {
