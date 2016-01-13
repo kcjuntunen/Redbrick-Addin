@@ -49,7 +49,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
         public int RevLimit {
             get {
                 return ((int)(this["RevLimit"]));
@@ -416,10 +416,14 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>.1-5</string>\r\n  <string>.6-10</string>\r\n  <string>.11-15</string>\r\n</Arra" +
-            "yOfString>")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>.1-5</string>
+  <string>.6-10</string>
+  <string>.11-15</string>
+  <string>.16-20</string>
+  <string>.21-25</string>
+</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection LayerTails {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["LayerTails"]));

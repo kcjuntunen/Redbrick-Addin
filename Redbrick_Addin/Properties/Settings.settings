@@ -9,7 +9,7 @@
       <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="RevLimit" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="Authors" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -161,6 +161,8 @@
   &lt;string&gt;.1-5&lt;/string&gt;
   &lt;string&gt;.6-10&lt;/string&gt;
   &lt;string&gt;.11-15&lt;/string&gt;
+  &lt;string&gt;.16-20&lt;/string&gt;
+  &lt;string&gt;.21-25&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="RefreshIcon" Type="System.String" Scope="User">
