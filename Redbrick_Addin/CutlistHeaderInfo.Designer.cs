@@ -268,6 +268,7 @@ namespace Redbrick_Addin {
       this.cbDescription.Name = "cbDescription";
       this.cbDescription.Size = new System.Drawing.Size(265, 21);
       this.cbDescription.TabIndex = 1;
+      this.cbDescription.TextChanged += new System.EventHandler(this.cbDescription_TextChanged);
       // 
       // tableLayoutPanel2
       // 

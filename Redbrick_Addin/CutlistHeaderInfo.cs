@@ -272,5 +272,9 @@ namespace Redbrick_Addin {
     }
 
     public int Status { get; set; }
+
+    private void cbDescription_TextChanged(object sender, EventArgs e) {
+      CutlistData.FilterTextForControl(cbDescription);
+    }
   }
 }

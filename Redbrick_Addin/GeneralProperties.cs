@@ -173,5 +173,13 @@ namespace Redbrick_Addin {
     private void bCopy_Click(object sender, EventArgs e) {
       System.Windows.Forms.Clipboard.SetText(tbDescription.Text);
     }
+
+    private void tbComment_TextChanged(object sender, EventArgs e) {
+      CutlistData.FilterTextForControl(tbComment);
+    }
+
+    private void tbDescription_TextChanged(object sender, EventArgs e) {
+      CutlistData.FilterTextForControl(tbDescription);
+    }
   }
 }
