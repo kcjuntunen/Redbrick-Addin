@@ -23,7 +23,8 @@ namespace Redbrick_Addin {
       cookie = Cookie;
 
       bool res = swApp.SetAddinCallbackInfo(0, this, cookie);
-      this.UISetup();
+
+      UISetup();
       return true;
     }
 
@@ -47,7 +48,6 @@ namespace Redbrick_Addin {
         result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.RefreshIcon, "Refresh");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
-
         taskpaneHost.Start();
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
@@ -79,6 +79,71 @@ namespace Redbrick_Addin {
       taskpaneView.DeleteView();
       Marshal.ReleaseComObject(taskpaneView);
       taskpaneView = null;
+    }
+
+    public void CopyInstaller() {
+      System.IO.FileInfo nfi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
+      nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe");
+    }
+
+    public bool Old() {
+      System.IO.FileInfo nfi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
+      System.IO.FileInfo lfi = new System.IO.FileInfo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe");
+
+      if (!lfi.Exists && (nfi.CreationTimeUtc > lfi.CreationTimeUtc)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    public void Update() {
+      swMessageBoxResult_e res = (swMessageBoxResult_e)swApp.SendMsgToUser2(
+        string.Format("{0}\n\n{1}", Properties.Resources.Update, Properties.Resources.UpdateTitle),
+        (int)swMessageBoxIcon_e.swMbQuestion,
+        (int)swMessageBoxBtn_e.swMbYesNo);
+
+      switch (res) {
+        case swMessageBoxResult_e.swMbHitAbort:
+          break;
+        case swMessageBoxResult_e.swMbHitCancel:
+          break;
+        case swMessageBoxResult_e.swMbHitIgnore:
+          break;
+        case swMessageBoxResult_e.swMbHitNo:
+          break;
+        case swMessageBoxResult_e.swMbHitOk:
+          break;
+        case swMessageBoxResult_e.swMbHitRetry:
+          break;
+        case swMessageBoxResult_e.swMbHitYes:
+          CopyInstaller();
+          swApp.DestroyNotify +=swApp_DestroyNotify;
+          swApp.SendMsgToUser2(Properties.Resources.Restart, 
+            (int)swMessageBoxIcon_e.swMbWarning, 
+            (int)swMessageBoxBtn_e.swMbOk);
+          break;
+        default:
+          break;
+      }
+    }
+
+    private int swApp_DestroyNotify() {
+      DoUpdate();
+      return 0;
+    }
+
+    public void CheckUpdate() {
+      if (Old()) {
+        Update();
+      }
+    }
+
+    private void DoUpdate() {
+      System.Diagnostics.Process p = new System.Diagnostics.Process();
+      p.StartInfo.FileName = Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe";
+      p.Start();
+      p.WaitForExit();
     }
 
     static public int GetHash(string fullPath) {

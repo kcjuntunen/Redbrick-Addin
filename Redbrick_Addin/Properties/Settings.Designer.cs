@@ -444,5 +444,41 @@ namespace Redbrick_Addin.Properties {
                 this["RefreshIcon"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-02\\shared\\shared\\general\\RedBrick\\InstallRedBrick.exe")]
+        public string InstallerNetworkPath {
+            get {
+                return ((string)(this["InstallerNetworkPath"]));
+            }
+            set {
+                this["InstallerNetworkPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files\\RedBrick\\RemoveRedbrick.exe")]
+        public string UninstallerPath {
+            get {
+                return ((string)(this["UninstallerPath"]));
+            }
+            set {
+                this["UninstallerPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Engineering")]
+        public string EngineeringDir {
+            get {
+                return ((string)(this["EngineeringDir"]));
+            }
+            set {
+                this["EngineeringDir"] = value;
+            }
+        }
     }
 }

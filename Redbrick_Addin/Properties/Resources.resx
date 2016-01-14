@@ -148,4 +148,13 @@
   <data name="AlreadyInOtherLocation" xml:space="preserve">
     <value>This part ({0}) already exists in another location. Override?</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>You'll have to restart SolidWorks to see any effect.</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Your version of the Amstore™ Property Editor© is out of date.   Do you want to update?</value>
+  </data>
+  <data name="UpdateTitle" xml:space="preserve">
+    <value>I'm just gonna keep asking.</value>
+  </data>
 </root>

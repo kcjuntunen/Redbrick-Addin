@@ -168,5 +168,14 @@
     <Setting Name="RefreshIcon" Type="System.String" Scope="User">
       <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Refresh-icon.bmp</Value>
     </Setting>
+    <Setting Name="InstallerNetworkPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\RedBrick\InstallRedBrick.exe</Value>
+    </Setting>
+    <Setting Name="UninstallerPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Program Files\RedBrick\RemoveRedbrick.exe</Value>
+    </Setting>
+    <Setting Name="EngineeringDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Engineering</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

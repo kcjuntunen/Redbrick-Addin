@@ -1,5 +1,4 @@
-!define DOTNET_VERSION "v4.0.30319"
-!define VERSION "0.8"
+!include version.nsh
 
 Name "RedBrick Installer"
 OutFile "InstallRedBrick.exe"

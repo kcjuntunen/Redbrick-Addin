@@ -135,6 +135,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;ll have to restart SolidWorks to see any effect..
+        /// </summary>
+        internal static string Restart {
+            get {
+                return ResourceManager.GetString("Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap setup {
@@ -154,7 +163,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your version of the Amstore™ Property Editor© is out of date.\nDo you want to update?.
+        ///   Looks up a localized string similar to Your version of the Amstore™ Property Editor© is out of date.   Do you want to update?.
         /// </summary>
         internal static string Update {
             get {
