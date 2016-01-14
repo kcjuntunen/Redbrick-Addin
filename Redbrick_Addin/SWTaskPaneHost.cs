@@ -109,7 +109,8 @@ namespace Redbrick_Addin {
 
     public void ConnectSelection() {
       System.GC.Collect(2, GCCollectionMode.Forced);
-      prop.Clear();                                                      // Blow out the propertyset so we can get new ones.
+      // Blow out the propertyset so we can get new ones.
+      prop.Clear();
 
       if (Document != null) {
         Enabled = true;
@@ -160,10 +161,10 @@ namespace Redbrick_Addin {
               DisconnectAssemblyEvents(); 
             }
             if (!PartSetup) {
-              ClearControls(this);
+              // ClearControls(this); // <-- redundant
               //prop.GetPropertyData(Document);
               // Part/assembly props are about the same
-              SetupPart();
+              SetupPart(prop.modeldoc);
               // link whatever's in the prop to the controls
               mrb.Update(ref prop);
             } else {
@@ -190,12 +191,15 @@ namespace Redbrick_Addin {
               SetupAssy();
             }
             if (!PartSetup) {
-              ClearControls(this);
+              // ClearControls(this); // <-- redundant
               // setup
-              SetupPart();
+              SetupPart(prop.modeldoc);
               // link
               mrb.Update(ref prop);
             } else {
+              DisconnectPartEvents();
+              ConnectPartEvents(prop.modeldoc);
+              PartSetup = true; // OK, this isn't how I meant to use this.
               // or just link
               mrb.Update(ref prop);
             }
@@ -297,6 +301,40 @@ namespace Redbrick_Addin {
       PartSetup = true;
     }
 
+    private void SetupPart(ModelDoc2 md) {
+      // Blow out any existing controls, and dump events.
+      ClearControls(this);
+      // Fill everything so it stretches.
+      DockStyle d = DockStyle.Fill;
+
+      // New model handler with current property (aquired in this.Connect...())
+      mrb = new ModelRedbrick(ref prop);
+      // If it's not docked, dock it.
+      mrb.Dock = d;
+      // put the redbrick in this control
+      Controls.Add(mrb);
+      // Dock this control in the taskpane.
+      Dock = d;
+
+      foreach (Control item in mrb.Controls) {
+        item.Dock = d;
+        //item.ResumeLayout(true);
+      }
+
+      // Gonna use access to all these controls.
+      ds = mrb.aDepartmentSelector;
+      cs = mrb.aConfigurationSpecific;
+      gp = mrb.aGeneralProperties;
+      mp = mrb.aMachineProperties;
+      op = mrb.aOps;
+
+      // Part-related events.
+      ConnectPartEvents(md);
+      //ResumeLayout(true);
+      // Boom, we're set up.
+      PartSetup = true;
+    }
+
     private void ClearControls(Control c) {
       // any controls, no matter how deep, g'bye.
       foreach (Control item in c.Controls) {
@@ -385,7 +423,18 @@ namespace Redbrick_Addin {
 
     private void ConnectPartEvents() {
       if (Document.GetType() == (int)swDocumentTypes_e.swDocPART && !PartEventsAssigned) {
-        pd = (PartDoc)this.Document;
+        pd = (PartDoc)Document;
+        // When the config changes, the app knows.
+        pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
+        //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
+        pd.DestroyNotify2 += pd_DestroyNotify2;
+        PartEventsAssigned = true;
+      }
+    }
+
+    private void ConnectPartEvents(ModelDoc2 md) {
+      if (md.GetType() == (int)swDocumentTypes_e.swDocPART && !PartEventsAssigned) {
+        pd = (PartDoc)md;
         // When the config changes, the app knows.
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
@@ -502,9 +551,9 @@ namespace Redbrick_Addin {
     }
 
     int ad_UserSelectionPostNotify() {
-      if (mrb.IsDirty)
-        if (MaybeSave())
-          Write();
+      //if (mrb.IsDirty)
+      //  if (MaybeSave())
+      //    Write();
 
       // What do we got?
       swSelComp = swSelMgr.GetSelectedObjectsComponent2(1);
@@ -525,9 +574,9 @@ namespace Redbrick_Addin {
 
 
     int pd_ActiveConfigChangePostNotify() {
-      if (mrb.IsDirty)
-        if (MaybeSave())
-          Write();
+      //if (mrb.IsDirty)
+      //  if (MaybeSave())
+      //    Write();
 
       // Different config! Look again!
       ConnectSelection();
