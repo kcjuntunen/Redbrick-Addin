@@ -620,6 +620,24 @@ namespace Redbrick_Addin {
       }
     }
 
+    public void ResetOps() {
+      foreach (SwProperty p in _innerArray) {
+        if (p.Name.StartsWith("OP")) {
+          if (p.Name.EndsWith("ID")) {
+            p.Global = true;
+            p.ID = "0";
+            p.Value = "0";
+            p.ResValue = "0";
+          } else {
+            p.Global = true;
+            p.ID = "0";
+            p.Value = string.Empty;
+            p.ResValue = string.Empty;
+          }
+        }
+	    }
+    }
+
     private int GetIndex(System.Data.DataTable dt, string val) {
       int count = -1;
       if (dt != null) {

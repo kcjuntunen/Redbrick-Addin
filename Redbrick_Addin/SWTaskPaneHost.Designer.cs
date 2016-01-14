@@ -28,17 +28,17 @@ namespace Redbrick_Addin
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // SWTaskPaneHost
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.Name = "SWTaskPaneHost";
-            this.Size = new System.Drawing.Size(0, 0);
-            this.ResumeLayout(false);
+      this.SuspendLayout();
+      // 
+      // SWTaskPaneHost
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoSize = true;
+      this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.Name = "SWTaskPaneHost";
+      this.Size = new System.Drawing.Size(0, 0);
+      this.ResumeLayout(false);
 
         }
 

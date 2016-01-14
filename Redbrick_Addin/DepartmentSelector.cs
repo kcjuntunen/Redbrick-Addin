@@ -10,6 +10,8 @@ namespace Redbrick_Addin {
   public partial class DepartmentSelector : UserControl {
     public delegate void DepartmentSelected(object d, EventArgs e);
     public event DepartmentSelected Selected;
+    public bool used_mouse = false;
+    public int starting_index = 0;
 
     public DepartmentSelector(ref SwProperties p) {
       PropertySet = p;
@@ -32,6 +34,7 @@ namespace Redbrick_Addin {
       LinkControlToProperty();
       PropertySet.cutlistData.OpType = OpType;
       cbDepartment.SelectedValue = OpType;
+      starting_index = cbDepartment.SelectedIndex;
     }
 
     public void LinkControls() {
@@ -48,13 +51,19 @@ namespace Redbrick_Addin {
     }
 
     private void OnSelected(object sender, EventArgs e) {
-      OpType = this.cbDepartment.SelectedIndex + 1;
-      PropertySet.cutlistData.OpType = OpType;
-      PropertySet.GetProperty("DEPARTMENT").Value = OpType.ToString();
-      PropertySet.GetProperty("DEPARTMENT").ResValue = cbDepartment.Text;
-      int idx = this.OpType - 1; // Don't sort the table, and this works well.
-      cbDepartment.SelectedIndex = idx;
-      cbDepartment.DisplayMember = "TYPEDESC";
+      if (used_mouse) {
+        OpType = this.cbDepartment.SelectedIndex + 1;
+        PropertySet.cutlistData.OpType = OpType;
+        PropertySet.GetProperty("DEPARTMENT").Value = OpType.ToString();
+        PropertySet.GetProperty("DEPARTMENT").ResValue = cbDepartment.Text;
+        int idx = this.OpType - 1; // Don't sort the table, and this works well.
+        cbDepartment.SelectedIndex = idx;
+        cbDepartment.DisplayMember = "TYPEDESC";
+        if (idx != starting_index)
+          PropertySet.ResetOps();
+
+        used_mouse = false;
+      }
     }
 
     private void LinkControlToProperty() {
@@ -87,5 +96,9 @@ namespace Redbrick_Addin {
     public SwProperties PropertySet { get; set; }
     public int OpType { get; set; }
     public SolidWorks.Interop.sldworks.SldWorks SwApp { get; set; }
+
+    private void cbDepartment_DropDown(object sender, EventArgs e) {
+      used_mouse = true;
+    }
   }
 }
