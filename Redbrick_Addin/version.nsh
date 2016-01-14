@@ -1,2 +1,3 @@
-!define DOTNET_VERSION "v4.0.30319"
-!define VERSION "0.8"
+!define VERSION "0.8.1.0"
+!define DESCRIPTION "Redbrick_Addin"
+!define COPYRIGHT "Copyright © Amstore 2015"

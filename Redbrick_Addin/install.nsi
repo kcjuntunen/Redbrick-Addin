@@ -1,7 +1,15 @@
+!define DOTNET_VERSION "v4.0.30319"
 !include version.nsh
 
 Name "RedBrick Installer"
 OutFile "InstallRedBrick.exe"
+
+VIProductVersion ${VERSION}
+VIAddVersionKey ProductVersion ${VERSION}
+VIAddVersionKey ProductName "Amstore RedBrick"
+VIAddversionkey FileVersion ${VERSION}
+VIAddVersionKey FileDescription "Edit SolidWorks properties"
+VIAddVersionKey LegalCopyright  "©2016 Amstore Corp"
 InstallDir "$PROGRAMFILES64\RedBrick\"
 RequestExecutionLevel admin
 

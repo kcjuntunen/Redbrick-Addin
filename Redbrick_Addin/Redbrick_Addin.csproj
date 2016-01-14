@@ -292,6 +292,9 @@
     <None Include="Resources\redlego.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>C:\Users\juntunenkc\Documents\"Visual Studio 2013"\Projects\Redbrick_Addin\GetAssemblyInfoForNSIS\bin\Release\GetAssemblyInfoForNSIS.exe "C:\Users\juntunenkc\Documents\Visual Studio 2013\Projects\Redbrick_Addin\Redbrick_Addin\bin\x64\Release\Redbrick_Addin.dll" "C:\Users\juntunenkc\Documents\Visual Studio 2013\Projects\Redbrick_Addin\Redbrick_Addin\version.nsh"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
