@@ -48,6 +48,7 @@ namespace Redbrick_Addin {
         result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.RefreshIcon, "Refresh");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
+        CheckUpdate();
         taskpaneHost.Start();
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
@@ -83,18 +84,20 @@ namespace Redbrick_Addin {
 
     public void CopyInstaller() {
       System.IO.FileInfo nfi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
-      nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe");
+      nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe", true);
     }
 
     public bool Old() {
       System.IO.FileInfo nfi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
       System.IO.FileInfo lfi = new System.IO.FileInfo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe");
+      System.Diagnostics.FileVersionInfo nfvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(nfi.FullName);
+      System.Diagnostics.FileVersionInfo lfvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(lfi.FullName);
 
-      if (!lfi.Exists && (nfi.CreationTimeUtc > lfi.CreationTimeUtc)) {
+      if (lfi.Exists && (nfvi.FileVersion != lfvi.FileVersion)) {
         return true;
+      } else {
+        return false;
       }
-
-      return false;
     }
 
     public void Update() {
@@ -143,7 +146,6 @@ namespace Redbrick_Addin {
       System.Diagnostics.Process p = new System.Diagnostics.Process();
       p.StartInfo.FileName = Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe";
       p.Start();
-      p.WaitForExit();
     }
 
     static public int GetHash(string fullPath) {
