@@ -167,6 +167,9 @@ namespace Redbrick_Addin {
       cbSetupBy.DisplayMember = "NAME";
       cbSetupBy.ValueMember = "UID";
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
+
+      cbItemNo.SelectedIndex = cbItemNo.FindString(
+        cd.GetCutlistData(Properties.Settings.Default.CurrentCutlist).Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.PARTNUM].ToString());
     }
 
     private void InitTableData() {
@@ -247,33 +250,39 @@ namespace Redbrick_Addin {
     public Part part { get; set; }
     public CutlistData CutlistData { get; set; }
     public swTableType.swTableType table { get; set; }
+    public int Status { get; set; }
 
     private void cbItemNo_SelectedIndexChanged(object sender, EventArgs e) {
-      cbCustomer.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CUSTID].ToString());
-      dpDate.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CDATE].ToString();
-      cbDescription.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DESCR].ToString();
-      tbL.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.LENGTH].ToString();
-      tbW.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.WIDTH].ToString();
-      tbH.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.HEIGHT].ToString();
+      if (cbItemNo.SelectedValue != null) {
+        
 
-      int status = 1;
+        dpDate.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CDATE].ToString();
+        cbDescription.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DESCR].ToString();
+        tbL.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.LENGTH].ToString();
+        tbW.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.WIDTH].ToString();
+        tbH.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.HEIGHT].ToString();
 
-      if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.STATEID].ToString(), out status))
-        Status = status;
+        int status = 1;
+        int custid = 1;
 
-      string[] itnre = { string.Empty };
-      if (cbItemNo.SelectedItem != null) {
+        if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CUSTID].ToString(), out custid))
+          cbCustomer.SelectedValue = custid;
+
+        if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.STATEID].ToString(), out status))
+          Status = status;
+
+        string[] itnre = { string.Empty };
+
         itnre = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
           .Split(new string[] { "REV" }, StringSplitOptions.None);
 
         if (itnre.Length > 1)
           cbRev.Text = itnre[1];
-      }
-      cbDrawingReference.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DRAWING].ToString();
-      cbSetupBy.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.SETUP_BY].ToString());
-    }
 
-    public int Status { get; set; }
+        cbDrawingReference.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DRAWING].ToString();
+        cbSetupBy.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.SETUP_BY].ToString());
+      }
+    }
 
     private void cbDescription_TextChanged(object sender, EventArgs e) {
       CutlistData.FilterTextForControl(cbDescription);

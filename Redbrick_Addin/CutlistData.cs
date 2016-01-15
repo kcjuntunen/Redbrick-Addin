@@ -262,6 +262,49 @@ namespace Redbrick_Addin {
       }
     }
 
+    public bool PartUsed(int partID) {
+      string SQL = @"SELECT CUT_CUTLIST_PARTS.*, CUT_CUTLIST_PARTS.PARTID FROM CUT_CUTLIST_PARTS WHERE (((CUT_CUTLIST_PARTS.PARTID)=?))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@PartID", partID);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0].Rows.Count > 0;
+          }
+        }
+      }
+    }
+
+    public bool PartUsed(string part) {
+      string SQL = @"SELECT CUT_CUTLIST_PARTS.*, CUT_PARTS.PARTID, CUT_PARTS.PARTNUM " +
+        @"FROM CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
+        @"WHERE (((CUT_PARTS.PARTNUM)= ?))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@Part", part);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0].Rows.Count > 0;
+          }
+        }
+      }
+    }
+
+    public bool PartUsed(SwProperties part) {
+      string SQL = @"SELECT CUT_CUTLIST_PARTS.*, CUT_PARTS.PARTID, CUT_PARTS.PARTNUM " +
+        @"FROM CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
+        @"WHERE (((CUT_PARTS.PARTNUM)= ?))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@Part", part.PartName);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0].Rows.Count > 0;
+          }
+        }
+      }
+    }
+
     public DataSet GetWherePartUsed(string partDescr) {
       string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
           @"CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
@@ -888,6 +931,23 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@clid", clid);
           comm.Parameters.AddWithValue("@partid", partid);
           affected = comm.ExecuteNonQuery();
+
+          if (affected > 0 && !PartUsed(p.PartName)) {
+            RemovePart(p);
+          }
+        }
+      }
+      return affected;
+    }
+
+    public int RemovePart(SwProperties part) {
+      int affected = 0;
+      int partid = GetPartID(part.PartName);
+      if (ENABLE_DB_WRITE && (GetHash(part.PartName) == part.Hash)) {
+        string SQL = "DELETE FROM CUT_PARTS WHERE PARTNUM = ?";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@part", part.PartName);
+          affected = comm.ExecuteNonQuery();
         }
       }
       return affected;
@@ -1023,6 +1083,19 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@item", item);
         comm.Parameters.AddWithValue("@rev", rev);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds;
+          }
+        }
+      }
+    }
+
+    public DataSet GetCutlistData(int clid) {
+      string SQL = @"SELECT * FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.CLID)=?));";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@clid", clid);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);

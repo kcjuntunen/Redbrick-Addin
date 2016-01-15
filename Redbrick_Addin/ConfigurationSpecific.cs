@@ -79,6 +79,7 @@ namespace Redbrick_Addin {
         }
       } else {
         cbStatus.Text = string.Empty;
+        nudQ.Value = 1;
       }
 
       if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.QTY].ToString(), out s)) {
