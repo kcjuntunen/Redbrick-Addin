@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
+using System.IO;
 
 namespace GetAssemblyInfoForNSIS {
   class Program {
@@ -13,20 +15,43 @@ namespace GetAssemblyInfoForNSIS {
     /// </summary>
     static void Main(string[] args) {
       try {
-            String inputFile = args[0];
-            String outputFile = args[1];
+            string inputFile = args[0];
+            string outputFile = args[1];
             System.Diagnostics.FileVersionInfo fileInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(inputFile);
-            using (System.IO.TextWriter writer = new System.IO.StreamWriter(outputFile, false, Encoding.Default)) {
+            using (TextWriter writer = new StreamWriter(outputFile, false, Encoding.Default)) {
                 writer.WriteLine("!define VERSION \"" + fileInfo.FileVersion + "\"");
                 writer.WriteLine("!define DESCRIPTION \"" + fileInfo.FileDescription + "\"");
                 writer.WriteLine("!define COPYRIGHT \"" + fileInfo.LegalCopyright + "\"");
                 writer.Close();
+            }
+
+            string xmlFile = "version.xml";
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.CloseOutput = true;
+            xws.ConformanceLevel = ConformanceLevel.Document;
+            xws.Indent = true;
+            xws.WriteEndDocumentOnClose = true;
+            using (XmlWriter writer = XmlWriter.Create(xmlFile)) {
+              writer.WriteStartDocument();
+              writer.WriteStartElement("RedBrick");
+
+              writer.WriteStartElement("version");
+              writer.WriteString(fileInfo.FileVersion);
+              writer.WriteEndElement();
+
+              writer.WriteStartElement("url");
+              writer.WriteString(@"file://\\AMSTORE-SVR-02\shared\shared\general\RedBrick\InstallRedBrick.exe");
+              writer.WriteEndElement();
+
+              writer.WriteEndElement();
+              writer.WriteEndDocument();
+              writer.Close();
             }
         } catch (Exception e) {
             Console.WriteLine(e.Message + "\n\n");
             Console.WriteLine("Usage: GetAssemblyInfoForNSIS.exe MyApp.exe MyAppVersionInfo.nsh\n");
         }
       }
-    }
   }
+}
 

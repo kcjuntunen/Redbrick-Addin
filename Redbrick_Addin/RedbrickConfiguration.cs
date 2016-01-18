@@ -12,6 +12,8 @@ namespace Redbrick_Addin {
     private bool initialated = false;
     public RedbrickConfiguration() {
       InitializeComponent();
+      Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+      Text = "Redbrick Configuration v" + cv.ToString();
       init();
     }
 

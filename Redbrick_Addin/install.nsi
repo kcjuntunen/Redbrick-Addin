@@ -9,7 +9,7 @@ VIAddVersionKey ProductVersion ${VERSION}
 VIAddVersionKey ProductName "Amstore RedBrick"
 VIAddversionkey FileVersion ${VERSION}
 VIAddVersionKey FileDescription "Edit SolidWorks properties"
-VIAddVersionKey LegalCopyright  "©2016 Amstore Corp"
+VIAddVersionKey LegalCopyright  "2016 Amstore Corp"
 InstallDir "$PROGRAMFILES64\RedBrick\"
 RequestExecutionLevel admin
 

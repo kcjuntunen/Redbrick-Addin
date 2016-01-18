@@ -17,6 +17,7 @@ namespace Redbrick_Addin {
     private int cookie;
     private TaskpaneView taskpaneView;
     private SWTaskPaneHost taskpaneHost;
+    private KeyValuePair<Version, Uri> publicVersion;
 
     public bool ConnectToSW(object ThisSW, int Cookie) {
       swApp = (SldWorks)ThisSW;
@@ -87,17 +88,43 @@ namespace Redbrick_Addin {
       nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe", true);
     }
 
-    public bool Old() {
-      System.IO.FileInfo nfi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
-      System.IO.FileInfo lfi = new System.IO.FileInfo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe");
-      System.Diagnostics.FileVersionInfo nfvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(nfi.FullName);
-      System.Diagnostics.FileVersionInfo lfvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(lfi.FullName);
+    private void GetPublicData() {
+      System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
+      Version v = new Version();
+      Uri u = new Uri(pi.FullName);
+      string elementName = string.Empty;
 
-      if (lfi.Exists && (nfvi.FileVersion != lfvi.FileVersion)) {
-        return true;
-      } else {
-        return false;
+      using (System.Xml.XmlReader r = System.Xml.XmlReader.Create(pi.DirectoryName + @"\version.xml")) {
+        while (r.Read()) {
+          if (r.NodeType == System.Xml.XmlNodeType.Element) {
+            elementName = r.Name;
+          } else {
+            if (r.NodeType == System.Xml.XmlNodeType.Text && r.HasValue) {
+              switch (elementName) {
+                case "version":
+                  v = new Version(r.Value);
+                  break;
+                case "url":
+                  u = new Uri(r.Value);
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        }
       }
+      publicVersion = new KeyValuePair<Version, Uri>(v, u);
+    }
+
+    public bool Old() {
+      GetPublicData();
+      Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+
+      if (cv.CompareTo(publicVersion.Key) < 0)
+        return true;
+
+      return false;
     }
 
     public void Update() {
@@ -120,7 +147,6 @@ namespace Redbrick_Addin {
         case swMessageBoxResult_e.swMbHitRetry:
           break;
         case swMessageBoxResult_e.swMbHitYes:
-          CopyInstaller();
           swApp.DestroyNotify +=swApp_DestroyNotify;
           swApp.SendMsgToUser2(Properties.Resources.Restart, 
             (int)swMessageBoxIcon_e.swMbWarning, 
@@ -132,7 +158,7 @@ namespace Redbrick_Addin {
     }
 
     private int swApp_DestroyNotify() {
-      DoUpdate();
+      System.Diagnostics.Process.Start(publicVersion.Value.ToString());
       return 0;
     }
 
