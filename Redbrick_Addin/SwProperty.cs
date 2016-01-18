@@ -17,7 +17,9 @@ namespace Redbrick_Addin {
     public SwProperty(string PropertyName, swCustomInfoType_e swType, string testValue, bool global) {
       Name = PropertyName;
       Type = swType;
+      ID = "0";
       Value = testValue;
+      ResValue = testValue;
       Global = global;
     }
 

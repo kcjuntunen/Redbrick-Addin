@@ -368,12 +368,13 @@ namespace Redbrick_Addin {
             case "CUTLIST MATERIAL":
               if (!Contains("MATID")) {
                 pNew.Rename("MATID");
-                pNew.ID = cutlistData.GetMaterialID(pNew.Value).ToString();
+                pNew.ID = cutlistData.GetMaterialID(pOld.Value).ToString();
                 pOld.ID = pNew.ID;
-                //pNew.Value = pNew.ID;
+                pNew.Value = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
               }
+              pOld.Type = swCustomInfoType_e.swCustomInfoText;
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
               pOld.Global = false;
               pNew.Global = false;
@@ -381,10 +382,17 @@ namespace Redbrick_Addin {
             case "MATID":
               if (!Contains("CUTLIST MATERIAL")) {
                 pOld.Rename("CUTLIST MATERIAL");
-                pNew.ID = pNew.Value;
-                pOld.ID = pNew.ID;
-                pNew.Descr = cutlistData.GetMaterialByID(pNew.ID);
-                pOld.Descr = pNew.Descr;
+                int o = 0;
+                if (int.TryParse(pNew.Value, out o)) {
+                  pNew.ID = pNew.Value;
+                  pOld.ID = pNew.ID;
+                  pNew.Descr = cutlistData.GetMaterialByID(pNew.ID);
+                  pOld.Descr = pNew.Descr;
+                } else {
+                  pNew.ID = cutlistData.GetMaterialID(pNew.Descr).ToString();
+                  pNew.Value = pNew.ID;
+                  pOld.ID = pNew.ID;
+                }
               }
               pOld.Type = swCustomInfoType_e.swCustomInfoText;
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
@@ -744,7 +752,9 @@ namespace Redbrick_Addin {
       DelSpecific(modeldoc);
       DelGlobal(modeldoc);
       foreach (SwProperty p in _innerArray) {
-        p.Write2(modeldoc);
+        if (!p.Name.StartsWith("STUB")) {
+          p.Write2(modeldoc);
+        }
       }
 
 

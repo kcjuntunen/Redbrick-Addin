@@ -151,6 +151,7 @@ namespace Redbrick_Addin
       this.tbPPB.Name = "tbPPB";
       this.tbPPB.Size = new System.Drawing.Size(100, 20);
       this.tbPPB.TabIndex = 6;
+      this.tbPPB.Text = "1";
       // 
       // label4
       // 
