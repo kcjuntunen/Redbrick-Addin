@@ -973,7 +973,7 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@thk", Convert.ToDouble(p.Thickness));
           comm.Parameters.AddWithValue("@cnc1", FilterString(p.CNC1));
           comm.Parameters.AddWithValue("@cnc2", FilterString(p.CNC2));
-          comm.Parameters.AddWithValue("@blnkqty", Convert.ToInt32(p.BlankQty));
+          comm.Parameters.AddWithValue("@blnkqty", p.BlankQty < 1 ? 1 : Convert.ToInt32(p.BlankQty));
           comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
           comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
           for (ushort i = 0; i < 5; i++)
