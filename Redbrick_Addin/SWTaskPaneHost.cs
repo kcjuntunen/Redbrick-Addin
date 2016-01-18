@@ -347,14 +347,10 @@ namespace Redbrick_Addin {
       }
 
       //if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
-      //  DisconnectAssemblyEvents();
-
+      DisconnectAssemblyEvents();
       DisconnectPartEvents();
       DisconnectDrawingEvents();
       // everything's undone.
-      PartSetup = false;
-      DrawSetup = false;
-      AssySetup = false;
     }
 
     // if this ever comes up, I suppose it's because the wrong kind of doc is open.
@@ -519,10 +515,6 @@ namespace Redbrick_Addin {
     }
 
     int ad_ActiveViewChangeNotify() {
-      if (this.mrb.IsDirty)
-        if (MaybeSave())
-          Write();
-
       // a different doc is active, let's reconnect.
       Document = SwApp.ActiveDoc;
       ConnectSelection();
@@ -535,14 +527,10 @@ namespace Redbrick_Addin {
     }
 
     int ad_DestroyNotify2(int DestroyType) {
-      if (mrb.IsDirty)
-        if (MaybeSave())
-          Write();
-
       ClearControls(this);
       // In VBA, it would delete files from the network if the references still pointed to their objects.
       Document = null;
-      SwApp = null;
+      //SwApp = null;
       return 0;
     }
 
@@ -551,10 +539,6 @@ namespace Redbrick_Addin {
     }
 
     int ad_UserSelectionPostNotify() {
-      //if (mrb.IsDirty)
-      //  if (MaybeSave())
-      //    Write();
-
       // What do we got?
       swSelComp = swSelMgr.GetSelectedObjectsComponent2(1);
       if (swSelComp != null) {
