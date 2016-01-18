@@ -37,7 +37,7 @@ namespace Redbrick_Addin {
     private void UISetup() {
       try {
         taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath +
-            Properties.Settings.Default.Icon, 
+            Properties.Settings.Default.Icon,
             Properties.Resources.Title);
 
         taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
@@ -88,27 +88,29 @@ namespace Redbrick_Addin {
       nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe", true);
     }
 
-    private void GetPublicData() {
-      System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
+    private void GetPublicData(string t) {
+      System.IO.FileInfo pi = new System.IO.FileInfo(t);
       Version v = new Version();
       Uri u = new Uri(pi.FullName);
       string elementName = string.Empty;
 
-      using (System.Xml.XmlReader r = System.Xml.XmlReader.Create(pi.DirectoryName + @"\version.xml")) {
-        while (r.Read()) {
-          if (r.NodeType == System.Xml.XmlNodeType.Element) {
-            elementName = r.Name;
-          } else {
-            if (r.NodeType == System.Xml.XmlNodeType.Text && r.HasValue) {
-              switch (elementName) {
-                case "version":
-                  v = new Version(r.Value);
-                  break;
-                case "url":
-                  u = new Uri(r.Value);
-                  break;
-                default:
-                  break;
+      if (pi.Exists) {
+        using (System.Xml.XmlReader r = System.Xml.XmlReader.Create(pi.FullName)) {
+          while (r.Read()) {
+            if (r.NodeType == System.Xml.XmlNodeType.Element) {
+              elementName = r.Name;
+            } else {
+              if (r.NodeType == System.Xml.XmlNodeType.Text && r.HasValue) {
+                switch (elementName) {
+                  case "version":
+                    v = new Version(r.Value);
+                    break;
+                  case "url":
+                    u = new Uri(r.Value);
+                    break;
+                  default:
+                    break;
+                }
               }
             }
           }
@@ -118,11 +120,14 @@ namespace Redbrick_Addin {
     }
 
     public bool Old() {
-      GetPublicData();
-      Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+      System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
+      if (true) {
+        GetPublicData(pi.DirectoryName + @"\version.xml");
+        Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
-      if (cv.CompareTo(publicVersion.Key) < 0)
-        return true;
+        if (cv.CompareTo(publicVersion.Key) < 0)
+          return true;
+      }
 
       return false;
     }
@@ -147,9 +152,9 @@ namespace Redbrick_Addin {
         case swMessageBoxResult_e.swMbHitRetry:
           break;
         case swMessageBoxResult_e.swMbHitYes:
-          swApp.DestroyNotify +=swApp_DestroyNotify;
-          swApp.SendMsgToUser2(Properties.Resources.Restart, 
-            (int)swMessageBoxIcon_e.swMbWarning, 
+          swApp.DestroyNotify += swApp_DestroyNotify;
+          swApp.SendMsgToUser2(Properties.Resources.Restart,
+            (int)swMessageBoxIcon_e.swMbWarning,
             (int)swMessageBoxBtn_e.swMbOk);
           break;
         default:
