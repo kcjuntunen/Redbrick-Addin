@@ -725,9 +725,9 @@ namespace Redbrick_Addin {
         }
       }
       SwProperty q = new SwProperty(name, swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-      this._innerArray.Add(q);
+      _innerArray.Add(q);
       // Recurse!
-      return this.GetProperty(name);
+      return GetProperty(name);
     }
 
     public void ReadProperties() {
@@ -867,7 +867,7 @@ namespace Redbrick_Addin {
       for (int i = 0; i < _innerArray.Count; i++) {
         SwProperty obj = (SwProperty)_innerArray[i];
         if (obj.Name == item.Name) {
-          this._innerArray.RemoveAt(i);
+          _innerArray.RemoveAt(i);
           res = true;
           break;
         }
