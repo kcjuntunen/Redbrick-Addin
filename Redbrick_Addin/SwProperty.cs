@@ -53,7 +53,7 @@ namespace Redbrick_Addin {
     public void Write() {
       if (this.SwApp != null) {
         ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
-        Write(md);
+        Write2(md);
       }
     }
 
@@ -93,8 +93,11 @@ namespace Redbrick_Addin {
         int res;
         if (Global) {
           // This is a global prop that gets a db ID #, so instead of an actual description, we get the # from the datarow in the combobox.
-          if ((((Name.ToUpper().StartsWith("OP") && !Name.ToUpper().EndsWith("ID"))) || Name.ToUpper().Contains("DEPARTMENT"))
-              && Ctl != null) {
+          if ((
+            ((Name.ToUpper().StartsWith("OP") && !Name.ToUpper().EndsWith("ID")))
+            || Name.ToUpper().Contains("DEPARTMENT"))
+            && Ctl != null
+            && Properties.Settings.Default.Testing) {
             System.Data.DataRowView drv = ((Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView);
             string v = Descr;
             res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
@@ -116,12 +119,12 @@ namespace Redbrick_Addin {
           }
         } else {
           // Configuration specific props.
-          if (this.Name.Contains("CUTLIST MATERIAL")) {
+          if (Name.Contains("CUTLIST MATERIAL") && Properties.Settings.Default.Testing) {
             string v = Descr;
             res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
           }
 
-          if (this.Name.Contains("EDGE")) {
+          if (Name.Contains("EDGE") && Properties.Settings.Default.Testing) {
             string v = Descr;
             res = scpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoText, v, (int)ao);
           }
@@ -131,7 +134,8 @@ namespace Redbrick_Addin {
     }
 
     public void Write2(ModelDoc2 md) {
-      if (md != null) {
+      if (md != null
+        && (!Old ^ (Properties.Settings.Default.Testing && Old))) {
         Configuration cf = md.ConfigurationManager.ActiveConfiguration;
 
         CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);

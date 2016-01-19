@@ -372,6 +372,8 @@ namespace Redbrick_Addin {
 
           switch (s.ToUpper()) {
             case "CUTLIST MATERIAL":
+              pOld.Old = true;
+              pNew.Old = true;
               if (!Contains("MATID")) {
                 pNew.Rename("MATID");
                 pNew.ID = cutlistData.GetMaterialID(pOld.Value).ToString();
@@ -379,6 +381,7 @@ namespace Redbrick_Addin {
                 pNew.Value = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
+                pNew.Old = false;
               }
               pOld.Type = swCustomInfoType_e.swCustomInfoText;
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
@@ -386,6 +389,8 @@ namespace Redbrick_Addin {
               pNew.Global = false;
               break;
             case "MATID":
+              pOld.Old = true;
+              pNew.Old = false;
               if (!Contains("CUTLIST MATERIAL")) {
                 pOld.Rename("CUTLIST MATERIAL");
                 int o = 0;
@@ -406,6 +411,8 @@ namespace Redbrick_Addin {
               pNew.Global = false;
               break;
             case "EDGE FRONT (L)":
+              pOld.Old = true;
+              pNew.Old = true;
               if (!Contains("EFID")) {
                 pNew.Rename("EFID");
                 pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
@@ -413,12 +420,15 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
+                pNew.Old = false;
               }
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
               pOld.Global = false;
               pNew.Global = false;
               break;
             case "EDGE BACK (L)":
+              pOld.Old = true;
+              pNew.Old = true;
               if (!Contains("EBID")) {
                 pNew.Rename("EBID");
                 pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
@@ -426,12 +436,15 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
+                pNew.Old = false;
               }
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
               pOld.Global = false;
               pNew.Global = false;
               break;
             case "EDGE LEFT (W)":
+              pOld.Old = true;
+              pNew.Old = true;
               if (!Contains("ELID")) {
                 pNew.Rename("ELID");
                 pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
@@ -439,12 +452,15 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
+                pNew.Old = false;
               }
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
               pOld.Global = false;
               pNew.Global = false;
               break;
             case "EDGE RIGHT (W)":
+              pOld.Old = true;
+              pNew.Old = true;
               if (!Contains("ERID")) {
                 pNew.Rename("ERID");
                 pNew.ID = cutlistData.GetEdgeID(pNew.Value).ToString();
@@ -452,12 +468,15 @@ namespace Redbrick_Addin {
                 pOld.ID = pNew.ID;
                 pOld.Descr = pOld.ResValue;
                 pNew.Descr = pNew.ResValue;
+                pNew.Old = false;
               }
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
               pOld.Global = false;
               pNew.Global = false;
               break;
             case "EFID":
+              pOld.Old = true;
+              pNew.Old = false;
               if (!Contains("EDGE FRONT (L)")) {
                 pOld.Rename("EDGE FRONT (L)");
                 pOld.ID = pOld.Value;
@@ -471,6 +490,8 @@ namespace Redbrick_Addin {
               pNew.Global = false;
               break;
             case "EBID":
+              pOld.Old = true;
+              pNew.Old = false;
               if (!Contains("EDGE BACK (L)")) {
                 pOld.Rename("EDGE BACK (L)");
                 pOld.ID = pOld.Value;
@@ -484,6 +505,8 @@ namespace Redbrick_Addin {
               pNew.Global = false;
               break;
             case "ELID":
+              pOld.Old = true;
+              pNew.Old = false;
               if (!Contains("EDGE LEFT (W)")) {
                 pOld.Rename("EDGE LEFT (W)");
                 pOld.ID = pOld.Value;
@@ -497,6 +520,8 @@ namespace Redbrick_Addin {
               pNew.Global = false;
               break;
             case "ERID":
+              pOld.Old = true;
+              pNew.Old = false;
               if (!Contains("EDGE RIGHT (W)")) {
                 pOld.Rename("EDGE RIGHT (W)");
                 pOld.ID = pOld.Value;
@@ -510,6 +535,8 @@ namespace Redbrick_Addin {
               pNew.Global = false;
               break;
             case "UPDATE CNC":
+              pOld.Old = true;
+              pNew.Old = false;
               pOld.Global = true;
               pNew.Global = true;
               pOld.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
@@ -519,8 +546,12 @@ namespace Redbrick_Addin {
               pOld.ResValue = pNew.ResValue = resValOut;
               break;
             case "DEPARTMENT": // let's ignore these as already parsed.
+              pOld.Old = true;
+              pNew.Old = true;
               break;
             case "DEPTID":
+              pOld.Old = true;
+              pNew.Old = false;
               break;
             default:
               pOld.Global = true;
@@ -529,6 +560,8 @@ namespace Redbrick_Addin {
               pNew.Value = valOut;
               pOld.ResValue = resValOut;
               pNew.ResValue = resValOut;
+              pOld.Old = true;
+              pNew.Old = false;
 
               if (s.Contains("OVER")) {
                 pOld.Type = swCustomInfoType_e.swCustomInfoDouble;
@@ -593,10 +626,9 @@ namespace Redbrick_Addin {
               break;
           }
 
-          if (!Contains(pNew))
-            Add(pNew);
+          Add(pNew);
 
-          if (Properties.Settings.Default.Testing && !Contains(pOld))
+          if (Properties.Settings.Default.Testing)
             Add(pOld);
         }
       }

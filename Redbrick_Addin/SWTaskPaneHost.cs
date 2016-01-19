@@ -123,6 +123,7 @@ namespace Redbrick_Addin {
             if (!prop.Contains("CRC32")) {
               prop.Hash = GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
               SwProperty p = new SwProperty("CRC32", swCustomInfoType_e.swCustomInfoNumber, prop.Hash.ToString(), true);
+              p.Old = false;
               prop.Add(p);
             } else {
               
