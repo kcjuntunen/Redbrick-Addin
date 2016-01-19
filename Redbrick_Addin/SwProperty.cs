@@ -163,17 +163,20 @@ namespace Redbrick_Addin {
               scpm.Add3(Name, (int)Type, ID, (int)ao);
             break;
           case swCustomInfoType_e.swCustomInfoText:
-            if (Global)
-              if (Name.ToUpper().EndsWith("ID"))
-                res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoNumber, ID, (int)ao);
-              else if (Name.ToUpper().StartsWith("OP"))// && !Name.ToUpper().EndsWith("ID"))
-                res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
-              else if (Name.ToUpper().Contains("UPDATE"))
-                res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, (ID == "-1" ? "Yes" : "N"), (int)ao);
-              else
-                res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
-            else
-              res = scpm.Add3(Name, (int)Type, Value, (int)ao);
+            if (!Name.ToUpper().StartsWith("STUB")) {
+              if (Global)
+                if (Name.ToUpper().EndsWith("ID")) {
+                  res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoNumber, ID, (int)ao);
+                } else if (Name.ToUpper().StartsWith("OP")) {// && !Name.ToUpper().EndsWith("ID"))
+                  res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
+                } else if (Name.ToUpper().Contains("UPDATE")) {
+                  res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, (ID == "-1" ? "Yes" : "N"), (int)ao);
+                } else {
+                  res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
+                } else {
+                res = scpm.Add3(Name, (int)Type, Value, (int)ao);
+              }
+            }
             break;
           case swCustomInfoType_e.swCustomInfoUnknown:
             break;
@@ -187,13 +190,7 @@ namespace Redbrick_Addin {
               res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
             }
             break;
-          default:
-            if (!Name.StartsWith("STUB")) {
-              if (Global)
-                res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
-              else
-                res = scpm.Add3(Name, (int)Type, Value, (int)ao);
-            }
+          default: // we never get here, of course.
             break;
         }
       }
