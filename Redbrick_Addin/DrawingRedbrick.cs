@@ -155,16 +155,34 @@ namespace Redbrick_Addin {
       }
     }
 
+    public delegate void selectLayer();
+
+    public void CorrectLayers(selectLayer f) {
+      DrawingDoc d = (DrawingDoc)PropertySet.SwApp.ActiveDoc;
+      Sheet curSht = (Sheet)d.GetCurrentSheet();
+      string[] shts = (string[])d.GetSheetNames();
+      foreach (string s in shts) {
+        f();
+      }
+      d.ActivateSheet(curSht.GetName());
+    }
+
     public void chooseLayer() {
       LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
       string head = getLayerNameHeader(lm);
+      int revcount = RevSet.Count - 1;
 
       for (int i = 0; i < Properties.Settings.Default.LayerTails.Count; i++) {
         string currentTail = Properties.Settings.Default.LayerTails[i];
-        Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", head, currentTail));
-        l.Visible = false;
-        if (Math.Floor((double)(RevSet.Count / 5)) == i) {
-          l.Visible = true;
+        try {
+          Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", head, currentTail));
+
+          l.Visible = false;
+          if (Math.Floor((double)(revcount / 5)) == i) {
+            l.Visible = true;
+          }
+        } catch (Exception) {
+          // Sometimes the layer doesn't exist.
         }
       }
     }
