@@ -335,13 +335,31 @@ namespace Redbrick_Addin {
       PartSetup = true;
     }
 
-    private void ClearControls(Control c) {
+    private void ClearControls2(Control c) {
       // any controls, no matter how deep, g'bye.
       foreach (Control item in c.Controls) {
         if (item.HasChildren) {
           /* Recurse */
           ClearControls(item);
         }
+        c.Controls.Remove(item);
+        item.Dispose();
+      }
+
+      //if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
+      DisconnectAssemblyEvents();
+      DisconnectPartEvents();
+      DisconnectDrawingEvents();
+      // everything's undone.
+    }
+
+    private void ClearControls(Control c) {
+      // any controls, no matter how deep, g'bye.
+      foreach (Control item in c.Controls) {
+        //if (item.HasChildren) {
+        //  /* Recurse */
+        //  ClearControls(item);
+        //}
         c.Controls.Remove(item);
         item.Dispose();
       }
@@ -397,7 +415,8 @@ namespace Redbrick_Addin {
     }
 
     int dd_ViewNewNotify2(object viewBeingAdded) {
-      ClearControls(this);
+      Document = (ModelDoc2)viewBeingAdded;
+      ConnectSelection();
       return 0;
     }
 
@@ -412,8 +431,10 @@ namespace Redbrick_Addin {
     }
 
     int dd_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType) {
-      // let's reconnect.
-      ConnectSelection();
+      SwProperty p = prop.GetProperty(propName);
+      p.Value = NewValue;
+      p.Type = (swCustomInfoType_e)valueType;
+      drb.Update();
       return 0;
     }
 
@@ -579,7 +600,7 @@ namespace Redbrick_Addin {
       if (DrawSetup) {
         // update doc metadata & rebuild & save
         drb.Write(Document);
-        drb.chooseLayer();
+        drb.CorrectLayers(drb.chooseLayer);
       }
     }
 
