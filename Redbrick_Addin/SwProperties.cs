@@ -160,6 +160,8 @@ namespace Redbrick_Addin {
         switch (n) {
           case propName:
             // old dept field
+            pOld.Old = true;
+            pNew.Old = false;
             if (g.Get5(propName, useCached, out val, out resVal, out wRes) == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent)
               s.Get5(propName, useCached, out val, out resVal, out wRes);
             pOld.Rename(propName);
@@ -182,6 +184,8 @@ namespace Redbrick_Addin {
             break;
           case newPropName:
             // new dept field
+            pOld.Old = true;
+            pNew.Old = false;
             if (g.Get5(newPropName, useCached, out val, out resVal, out wRes) == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent)
               s.Get5(newPropName, useCached, out val, out resVal, out wRes);
             pOld.Rename(propName);
@@ -206,6 +210,8 @@ namespace Redbrick_Addin {
 
       if (Properties.Settings.Default.Testing && !Contains(propName))
         Add(pOld);
+      else
+        Remove(pOld);
 
       if (!Contains(newPropName))
         Add(pNew);
@@ -512,6 +518,10 @@ namespace Redbrick_Addin {
               pOld.Value = pNew.Value = valOut;
               pOld.ResValue = pNew.ResValue = resValOut;
               break;
+            case "DEPARTMENT": // let's ignore these as already parsed.
+              break;
+            case "DEPTID":
+              break;
             default:
               pOld.Global = true;
               pNew.Global = true;
@@ -753,7 +763,8 @@ namespace Redbrick_Addin {
       DelGlobal(modeldoc);
       foreach (SwProperty p in _innerArray) {
         if (!p.Name.StartsWith("STUB")) {
-          p.Write2(modeldoc);
+          if (!p.Old || (p.Old && Properties.Settings.Default.Testing))
+            p.Write2(modeldoc);
         }
       }
 
