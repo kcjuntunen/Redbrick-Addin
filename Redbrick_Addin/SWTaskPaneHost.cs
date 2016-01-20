@@ -509,9 +509,9 @@ namespace Redbrick_Addin {
         ad.ActiveDisplayStateChangePostNotify -= ad_ActiveDisplayStateChangePostNotify;
         ad.ActiveViewChangeNotify -= ad_ActiveViewChangeNotify;
         swSelMgr = null;
-        AssmEventsAssigned = false;
-        AssySetup = false;
       }
+      AssmEventsAssigned = false;
+      AssySetup = false;
     }
 
     private void DisconnectPartEvents() {
@@ -520,9 +520,9 @@ namespace Redbrick_Addin {
         pd.ActiveConfigChangePostNotify -= pd_ActiveConfigChangePostNotify;
         pd.DestroyNotify2 -= pd_DestroyNotify2;
         pd.ChangeCustomPropertyNotify -= pd_ChangeCustomPropertyNotify;
-        PartEventsAssigned = false;
-        PartSetup = false;
       }
+      PartEventsAssigned = false;
+      PartSetup = false;
     }
 
     private void DisconnectDrawingEvents() {
@@ -532,9 +532,9 @@ namespace Redbrick_Addin {
         dd.DestroyNotify2 -= dd_DestroyNotify2;
         dd.ViewNewNotify2 -= dd_ViewNewNotify2;
         //dd.DestroyNotify -= dd_DestroyNotify;
-        DrawEventsAssigned = false;
-        DrawSetup = false;
       }
+      DrawEventsAssigned = false;
+      DrawSetup = false;
     }
 
     private bool MaybeSave() {
