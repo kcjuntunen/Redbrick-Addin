@@ -36,7 +36,7 @@ namespace Redbrick_Addin {
     private void Init()                                     // If this didn't start out as a VSTA plugin, I probably wouldn't have
     {                                                       // to do this.
       DockStyle d = DockStyle.Fill;
-
+      gbSpecProp.Click += gbSpecProp_Click;
       ds = new DepartmentSelector(ref this.props);
       ds.Dock = d;
       cs = new ConfigurationSpecific(ref this.props);
@@ -67,6 +67,11 @@ namespace Redbrick_Addin {
       ResumeLayout(false);
       PerformLayout();
     }
+
+    void gbSpecProp_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(gbSpecProp.Text.Split(new char[] {' '})[0]);
+    }
+
 
     public void Update(ref SwProperties p) {
       //if (ch.CutlistComboBox.SelectedItem != null && ch.RevComboBox.Text != string.Empty) {
