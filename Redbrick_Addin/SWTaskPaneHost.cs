@@ -78,7 +78,7 @@ namespace Redbrick_Addin {
       if ((swCommands_e)Command == swCommands_e.swCommands_Make_Lightweight ||
         (swCommands_e)Command == swCommands_e.swCommands_Lightweight_Toggle ||
         (swCommands_e)Command == swCommands_e.swCommands_Lightweight_All) {
-          ReStart();
+        ReStart();
       }
 
       return 0;
@@ -96,15 +96,69 @@ namespace Redbrick_Addin {
     }
 
     int SwApp_ActiveDocChangeNotify() {
-      if (AssySetup)
-        DisconnectAssemblyEvents();
-
       if (SwApp == null)
         SwApp = RequestSW();
 
       Document = SwApp.ActiveDoc;
+
+      if (!(Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && AssySetup)
+        DisconnectAssemblyEvents();
+
+      if (!(Document.GetType() == (int)swDocumentTypes_e.swDocPART) &&  PartSetup)
+        DisconnectPartEvents();
+
+      if (!(Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING) && DrawSetup)
+        DisconnectDrawingEvents();
+
       ConnectSelection();
       return 0;
+    }
+
+    private void AddHash() {
+      System.IO.FileInfo fi;
+      try {
+        if (!string.IsNullOrWhiteSpace(Document.GetPathName())) {
+          fi = new System.IO.FileInfo(Document.GetPathName());
+          prop.PartFileInfo = fi;
+
+          if (!prop.Contains("CRC32")) {
+            prop.Hash = GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
+            SwProperty p = new SwProperty("CRC32", swCustomInfoType_e.swCustomInfoNumber, prop.Hash.ToString(), true);
+            p.Old = false;
+            prop.Add(p);
+          } else {
+
+          }
+        } else {
+          //this.prop.PartName = "New Document"; // <-- stack overflow? weird
+        }
+      } catch (ArgumentException ae) {
+        prop.PartName = ae.HResult.ToString();
+      } catch (Exception e) {
+        prop.PartName = e.HResult.ToString();
+      }
+    }
+
+    private void GetTypes(ref swDocumentTypes_e d, ref swDocumentTypes_e od) {
+      swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
+      ModelDoc2 overDoc = (ModelDoc2)_swApp.ActiveDoc;
+      swDocumentTypes_e overDocT = (swDocumentTypes_e)overDoc.GetType();
+      if ((docT != swDocumentTypes_e.swDocDRAWING && swSelMgr != null) && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
+        Component2 comp = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
+        if (comp != null) {
+          ModelDoc2 cmd = (ModelDoc2)comp.GetModelDoc2();
+          docT = (swDocumentTypes_e)cmd.GetType();
+          prop.GetPropertyData(comp);
+          comp = null;
+        } else {
+          prop.GetPropertyData(Document);
+        }
+      } else {
+        swSelMgr = null;
+        prop.GetPropertyData(Document);
+      }
+      d = docT;
+      od = overDocT;
     }
 
     public void ConnectSelection() {
@@ -114,52 +168,17 @@ namespace Redbrick_Addin {
 
       if (Document != null) {
         Enabled = true;
-        System.IO.FileInfo fi;
-        try {
-          if (!string.IsNullOrWhiteSpace(Document.GetPathName())) {
-            fi = new System.IO.FileInfo(Document.GetPathName());
-            prop.PartFileInfo = fi;
-
-            if (!prop.Contains("CRC32")) {
-              prop.Hash = GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
-              SwProperty p = new SwProperty("CRC32", swCustomInfoType_e.swCustomInfoNumber, prop.Hash.ToString(), true);
-              p.Old = false;
-              prop.Add(p);
-            } else {
-              
-            }
-          } else {
-            //this.prop.PartName = "New Document"; // <-- stack overflow? weird
-          }
-        } catch (ArgumentException ae) {
-          prop.PartName = ae.HResult.ToString();
-        } catch (Exception e) {
-          prop.PartName = e.HResult.ToString();
-        }
+        AddHash();
 
         // what sort of doc is open?
-        swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
-        ModelDoc2 overDoc = (ModelDoc2)_swApp.ActiveDoc;
-        swDocumentTypes_e overDocT = (swDocumentTypes_e)overDoc.GetType();
-        if ((docT != swDocumentTypes_e.swDocDRAWING && swSelMgr != null) && swSelMgr.GetSelectedObjectCount2(-1) > 0) {
-          Component2 comp = (Component2)swSelMgr.GetSelectedObjectsComponent4(1, -1);
-          if (comp != null) {
-            ModelDoc2 cmd = (ModelDoc2)comp.GetModelDoc2();
-            docT = (swDocumentTypes_e)cmd.GetType();
-            prop.GetPropertyData(comp);
-            comp = null;
-          } else {
-            prop.GetPropertyData(Document);
-          }
-        } else {
-          swSelMgr = null;
-          prop.GetPropertyData(Document);
-        }
+        swDocumentTypes_e docT = swDocumentTypes_e.swDocNONE;
+        swDocumentTypes_e overDocT = swDocumentTypes_e.swDocNONE;
+        GetTypes(ref docT, ref overDocT);
 
         switch (docT) {
           case swDocumentTypes_e.swDocASSEMBLY:
             if (overDocT != swDocumentTypes_e.swDocASSEMBLY) {
-              DisconnectAssemblyEvents(); 
+              DisconnectAssemblyEvents();
             }
             if (!PartSetup) {
               // ClearControls(this); // <-- redundant
@@ -188,6 +207,7 @@ namespace Redbrick_Addin {
             if (AssySetup && overDocT == swDocumentTypes_e.swDocPART) {
               DisconnectAssemblyEvents();
             }
+
             if (!AssySetup && overDocT == swDocumentTypes_e.swDocASSEMBLY) {
               SetupAssy();
             }
@@ -266,6 +286,8 @@ namespace Redbrick_Addin {
 
       // Pow-bang! We're set up.
       DrawSetup = true;
+      AssySetup = false;
+      PartSetup = false;
     }
 
     private void SetupPart() {
@@ -365,8 +387,9 @@ namespace Redbrick_Addin {
         item.Dispose();
       }
 
-      //if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
-      DisconnectAssemblyEvents();
+      if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
+        DisconnectAssemblyEvents();
+
       DisconnectPartEvents();
       DisconnectDrawingEvents();
       // everything's undone.
@@ -395,9 +418,10 @@ namespace Redbrick_Addin {
 
         // Not sure, and not implemented yet.
         ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;
-        
+
         // switching docs
         ad.ActiveViewChangeNotify += ad_ActiveViewChangeNotify;
+        DisconnectDrawingEvents();
         AssmEventsAssigned = true;
       } else {
         // We're already set up, I guess.
@@ -411,6 +435,8 @@ namespace Redbrick_Addin {
         dd.DestroyNotify2 += dd_DestroyNotify2;
         dd.ViewNewNotify2 += dd_ViewNewNotify2;
         //dd.DestroyNotify += dd_DestroyNotify;
+        DisconnectPartEvents();
+        DisconnectAssemblyEvents();
         DrawEventsAssigned = true;
       }
     }
@@ -446,6 +472,7 @@ namespace Redbrick_Addin {
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
+        DisconnectDrawingEvents();
         PartEventsAssigned = true;
       }
     }
@@ -457,6 +484,7 @@ namespace Redbrick_Addin {
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
+        DisconnectDrawingEvents();
         PartEventsAssigned = true;
       }
     }
