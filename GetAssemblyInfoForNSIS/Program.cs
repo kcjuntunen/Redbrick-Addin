@@ -43,6 +43,14 @@ namespace GetAssemblyInfoForNSIS {
               writer.WriteString(@"file://\\AMSTORE-SVR-02\shared\shared\general\RedBrick\InstallRedBrick.exe");
               writer.WriteEndElement();
 
+              string update_message = string.Empty;
+              using (TextReader tr = new StreamReader(Properties.Settings.Default.MessagePath)) {
+                update_message = tr.ReadToEnd();
+              }
+              writer.WriteStartElement("message");
+              writer.WriteString(update_message);
+              writer.WriteEndElement();
+
               writer.WriteEndElement();
               writer.WriteEndDocument();
               writer.Close();
