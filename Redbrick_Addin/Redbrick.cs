@@ -19,6 +19,7 @@ namespace Redbrick_Addin {
     private SWTaskPaneHost taskpaneHost;
     private KeyValuePair<Version, Uri> publicVersion;
     private Version currentVersion;
+    private string UpdateMessage = string.Empty;
 
     public bool ConnectToSW(object ThisSW, int Cookie) {
       swApp = (SldWorks)ThisSW;
@@ -93,6 +94,7 @@ namespace Redbrick_Addin {
       System.IO.FileInfo pi = new System.IO.FileInfo(t);
       Version v = new Version();
       Uri u = new Uri(pi.FullName);
+      string m = string.Empty;
       string elementName = string.Empty;
 
       if (pi.Exists) {
@@ -109,6 +111,9 @@ namespace Redbrick_Addin {
                   case "url":
                     u = new Uri(r.Value);
                     break;
+                  case "message":
+                    m = r.Value;
+                    break;
                   default:
                     break;
                 }
@@ -118,6 +123,7 @@ namespace Redbrick_Addin {
         }
       }
       publicVersion = new KeyValuePair<Version, Uri>(v, u);
+      UpdateMessage = m;
     }
 
     public bool Old() {
@@ -136,7 +142,7 @@ namespace Redbrick_Addin {
     public void Update() {
       string chge = string.Format(Properties.Resources.Update, currentVersion.ToString(), publicVersion.Key.ToString());
       swMessageBoxResult_e res = (swMessageBoxResult_e)swApp.SendMsgToUser2(
-        string.Format("{0}\n\n{1}", chge, Properties.Resources.UpdateTitle),
+        string.Format("{0}\n\nCHANGE: {1}", chge, UpdateMessage),
         (int)swMessageBoxIcon_e.swMbQuestion,
         (int)swMessageBoxBtn_e.swMbYesNo);
 
