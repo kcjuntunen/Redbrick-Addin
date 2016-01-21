@@ -794,6 +794,32 @@ namespace Redbrick_Addin {
       }
     }
 
+    public string GetCurrentAuthorInitial() {
+      string SQL = @"SELECT INITIAL FROM GEN_USERS WHERE USERNAME = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@uname", Environment.UserName);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows && !dr.IsDBNull(0))
+            return dr.GetString(0);
+          else
+            return string.Empty;
+        }
+      }
+    }
+
+    public string GetAuthorByID(int id) {
+      string SQL = @"SELECT INITIAL FROM GEN_USERS WHERE UID = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@uid", id);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows && !dr.IsDBNull(0))
+            return dr.GetString(0);
+          else
+            return string.Empty;
+        }
+      }
+    }
+
     public DataSet GetDepartments() {
       string SQL = @"SELECT DEPT_ID, DEPT_NAME, DEPT_PRIOR FROM GEN_DEPTS";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {

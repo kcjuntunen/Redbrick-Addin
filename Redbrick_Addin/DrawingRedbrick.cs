@@ -58,6 +58,12 @@ namespace Redbrick_Addin {
       SwProperty by = this.PropertySet.GetProperty("DrawnBy");
       SwProperty d = this.PropertySet.GetProperty("DATE");
 
+      if (by.Value == string.Empty) {
+        by.ID = PropertySet.CutlistData.GetCurrentAuthor().ToString();
+        by.Value = PropertySet.CutlistData.GetCurrentAuthorInitial();
+        by.ResValue = by.Value;
+      }
+
       if (partNo != null) {
         partNo.Ctl = this.tbItemNo;
       } else {
