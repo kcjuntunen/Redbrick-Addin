@@ -18,6 +18,7 @@ namespace Redbrick_Addin {
     private TaskpaneView taskpaneView;
     private SWTaskPaneHost taskpaneHost;
     private KeyValuePair<Version, Uri> publicVersion;
+    private Version currentVersion;
 
     public bool ConnectToSW(object ThisSW, int Cookie) {
       swApp = (SldWorks)ThisSW;
@@ -123,9 +124,9 @@ namespace Redbrick_Addin {
       System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
       if (true) {
         GetPublicData(pi.DirectoryName + @"\version.xml");
-        Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        currentVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
-        if (cv.CompareTo(publicVersion.Key) < 0)
+        if (currentVersion.CompareTo(publicVersion.Key) < 0)
           return true;
       }
 
@@ -133,8 +134,9 @@ namespace Redbrick_Addin {
     }
 
     public void Update() {
+      string chge = string.Format(Properties.Resources.Update, currentVersion.ToString(), publicVersion.Key.ToString());
       swMessageBoxResult_e res = (swMessageBoxResult_e)swApp.SendMsgToUser2(
-        string.Format("{0}\n\n{1}", Properties.Resources.Update, Properties.Resources.UpdateTitle),
+        string.Format("{0}\n\n{1}", chge, Properties.Resources.UpdateTitle),
         (int)swMessageBoxIcon_e.swMbQuestion,
         (int)swMessageBoxBtn_e.swMbYesNo);
 

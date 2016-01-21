@@ -152,9 +152,12 @@
     <value>You'll have to restart SolidWorks to see any effect.</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Your version of the Amstore™ Property Editor© is out of date.   Do you want to update?</value>
+    <value>Your version of the Amstore™ Property Editor© is out of date.   Do you want to update from {0} to {1}?</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>I'm just gonna keep asking.</value>
+    <value>CHANGE: Fixed update checkbox.</value>
+  </data>
+  <data name="UpdateFrom" xml:space="preserve">
+    <value>Update from {0} to {1}?</value>
   </data>
 </root>
