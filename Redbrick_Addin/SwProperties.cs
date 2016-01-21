@@ -630,6 +630,13 @@ namespace Redbrick_Addin {
 
           if (Properties.Settings.Default.Testing)
             Add(pOld);
+
+            }
+        // I do want to ignore this in the future.
+        if (Properties.Settings.Default.Testing) {
+          // Add() only fires if the .Name doesn't already exist.
+          Add(new SwProperty("INCLUDE IN CUTLIST",
+          swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true));
         }
       }
     }
