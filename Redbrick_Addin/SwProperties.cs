@@ -541,7 +541,7 @@ namespace Redbrick_Addin {
               pNew.Global = true;
               pOld.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
               pNew.Type = swCustomInfoType_e.swCustomInfoYesOrNo;
-              pNew.ID = pOld.ID = valOut.ToUpper().Contains("YES") ? "-1" : "0";
+              pNew.ID = pOld.ID = valOut.ToUpper().Contains("YES") ? "True" : "False";
               pOld.Value = pNew.Value = valOut;
               pOld.ResValue = pNew.ResValue = resValOut;
               break;
@@ -791,7 +791,7 @@ namespace Redbrick_Addin {
           }
 
           if (p.Ctl is System.Windows.Forms.CheckBox) {
-            p.ID = (p.Ctl as System.Windows.Forms.CheckBox).Checked ? "-1" : "0";
+            p.ID = (p.Ctl as System.Windows.Forms.CheckBox).Checked ? "True" : "False";
           }
         }
       }

@@ -174,7 +174,7 @@ namespace Redbrick_Addin {
                 } else if (Name.ToUpper().StartsWith("OP")) {// && !Name.ToUpper().EndsWith("ID"))
                   res = gcpm.Add3(Name, (int)Type, Descr, (int)ao);
                 } else if (Name.ToUpper().Contains("UPDATE")) {
-                  res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, (ID == "-1" ? "Yes" : "N"), (int)ao);
+                  res = gcpm.Add3(Name, (int)swCustomInfoType_e.swCustomInfoYesOrNo, (ID == "True" ? "Yes" : "N"), (int)ao);
                 } else {
                   res = gcpm.Add3(Name, (int)Type, Value, (int)ao);
                 } else {
