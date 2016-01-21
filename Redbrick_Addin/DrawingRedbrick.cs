@@ -58,12 +58,6 @@ namespace Redbrick_Addin {
       SwProperty by = this.PropertySet.GetProperty("DrawnBy");
       SwProperty d = this.PropertySet.GetProperty("DATE");
 
-      if (by.Value == string.Empty) {
-        by.ID = PropertySet.CutlistData.GetCurrentAuthor().ToString();
-        by.Value = PropertySet.CutlistData.GetCurrentAuthorInitial();
-        by.ResValue = by.Value;
-      }
-
       if (partNo != null) {
         partNo.Ctl = this.tbItemNo;
       } else {
@@ -83,6 +77,11 @@ namespace Redbrick_Addin {
       }
 
       if (by != null) {
+        if (by.Value == string.Empty) {
+          by.ID = PropertySet.CutlistData.GetCurrentAuthor().ToString();
+          by.Value = PropertySet.CutlistData.GetCurrentAuthorInitial();
+          by.ResValue = by.Value;
+        }
         by.Ctl = this.cbAuthor;
       } else {
         by = new SwProperty("DrawnBy", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
