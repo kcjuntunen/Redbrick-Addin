@@ -333,7 +333,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("19-F5-B5-62-63-79-B5-00-9A-8E-00-37-1C-41-B2-F5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F")]
         public string MasterTableHash {
             get {
                 return ((string)(this["MasterTableHash"]));
