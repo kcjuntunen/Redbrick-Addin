@@ -85,6 +85,12 @@ namespace Redbrick_Addin {
       if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.QTY].ToString(), out s)) {
         nudQ.Value = s;
       }
+
+      if (cbCutlist.Text == string.Empty) {
+        bRemove.Enabled = false;
+      } else {
+        bRemove.Enabled = true;
+      }
     }
 
     private void LinkControls() {
@@ -300,6 +306,12 @@ namespace Redbrick_Addin {
         int s = 1;
         if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.QTY].ToString(), out s)) {
           nudQ.Value = s;
+        }
+
+        if (cbCutlist.Text == string.Empty) {
+          bRemove.Enabled = false;
+        } else {
+          bRemove.Enabled = true;
         }
 
         changingwithmouse = false;
