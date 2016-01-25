@@ -9,6 +9,8 @@ using SolidWorks.Interop.sldworks;
 
 namespace Redbrick_Addin {
   public partial class CutlistHeaderInfo : Form {
+    private bool clicked = false;
+
     public enum CutlistFunction {
       AddToExistingAlreadySelected,
       AddToExistingNotSelected,
@@ -59,10 +61,11 @@ namespace Redbrick_Addin {
       string[] title = (DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ');
       Text = "Add/Update Cutlist for " + title[0] + "...";
       cbDrawingReference.Text = title[0];
-      cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
+      //cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
       cbItemNo.DisplayMember = "PARTNUM";
       cbItemNo.ValueMember = "CLID";
-      cbItemNo.SelectedIndex = cbItemNo.FindString(title[0]);
+      cbDrawingReference.Text = DrawingPropertySet.GetProperty("PartNo").ResValue;
+      cbItemNo.Text = cbDrawingReference.Text;
 
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
@@ -168,6 +171,8 @@ namespace Redbrick_Addin {
       cbSetupBy.ValueMember = "UID";
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
 
+      // Not classy, but it makes the boxes update the first time around.
+      clicked = true;
       cbItemNo.SelectedIndex = cbItemNo.FindString(
         cd.GetCutlistData(Properties.Settings.Default.CurrentCutlist).Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.PARTNUM].ToString());
     }
@@ -230,11 +235,15 @@ namespace Redbrick_Addin {
       if (table != null) {
         CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, table.GetParts());
-      } else {
+      } else if (part != null) {
         Dictionary<string, Part> d = new Dictionary<string, Part>();
         d.Add(part.PartNumber, part);
         CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, d);
+      } else {
+        DrawingPropertySet.SwApp.SendMsgToUser2("Failed to read table or part.",
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
       }
     }
 
@@ -253,39 +262,44 @@ namespace Redbrick_Addin {
     public int Status { get; set; }
 
     private void cbItemNo_SelectedIndexChanged(object sender, EventArgs e) {
-      if (cbItemNo.SelectedValue != null) {
-        
+      if (clicked) {
+        if (cbItemNo.SelectedValue != null) {
+          dpDate.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CDATE].ToString();
+          cbDescription.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DESCR].ToString();
+          tbL.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.LENGTH].ToString();
+          tbW.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.WIDTH].ToString();
+          tbH.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.HEIGHT].ToString();
 
-        dpDate.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CDATE].ToString();
-        cbDescription.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DESCR].ToString();
-        tbL.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.LENGTH].ToString();
-        tbW.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.WIDTH].ToString();
-        tbH.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.HEIGHT].ToString();
+          int status = 1;
+          int custid = 1;
 
-        int status = 1;
-        int custid = 1;
+          if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CUSTID].ToString(), out custid))
+            cbCustomer.SelectedValue = custid;
 
-        if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.CUSTID].ToString(), out custid))
-          cbCustomer.SelectedValue = custid;
+          if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.STATEID].ToString(), out status))
+            Status = status;
 
-        if (int.TryParse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.STATEID].ToString(), out status))
-          Status = status;
+          string[] itnre = { string.Empty };
 
-        string[] itnre = { string.Empty };
+          itnre = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
+            .Split(new string[] { "REV" }, StringSplitOptions.None);
 
-        itnre = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.PARTNUM].ToString()
-          .Split(new string[] { "REV" }, StringSplitOptions.None);
+          if (itnre.Length > 1)
+            cbRev.Text = itnre[1];
 
-        if (itnre.Length > 1)
-          cbRev.Text = itnre[1];
-
-        cbDrawingReference.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DRAWING].ToString();
-        cbSetupBy.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.SETUP_BY].ToString());
+          cbDrawingReference.Text = (cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.DRAWING].ToString();
+          cbSetupBy.SelectedValue = int.Parse((cbItemNo.SelectedItem as DataRowView).Row.ItemArray[(int)CutlistData.CutlistDataFieldsJoined.SETUP_BY].ToString());
+        }
+        clicked = false;
       }
     }
 
     private void cbDescription_TextChanged(object sender, EventArgs e) {
       CutlistData.FilterTextForControl(cbDescription);
+    }
+
+    private void cbItemNo_MouseClick(object sender, MouseEventArgs e) {
+      clicked = true;
     }
   }
 }

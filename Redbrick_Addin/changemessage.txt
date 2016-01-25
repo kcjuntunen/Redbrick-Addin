@@ -1,1 +1,4 @@
-﻿We have a classier update message process.
+﻿ various:
+* Streamlined cutlist creation/insertion process
+* Remove button disabled when pointless
+* Classier update messages

@@ -227,6 +227,7 @@ namespace Redbrick_Addin {
       this.cbItemNo.Size = new System.Drawing.Size(228, 21);
       this.cbItemNo.TabIndex = 1;
       this.cbItemNo.SelectedIndexChanged += new System.EventHandler(this.cbItemNo_SelectedIndexChanged);
+      this.cbItemNo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbItemNo_MouseClick);
       // 
       // cbRev
       // 
