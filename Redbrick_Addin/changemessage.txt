@@ -1,4 +1,1 @@
-﻿ various:
-* Streamlined cutlist creation/insertion process
-* Remove button disabled when pointless
-* Classier update messages
+﻿Updated BOM reader library.

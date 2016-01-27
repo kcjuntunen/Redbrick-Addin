@@ -90,7 +90,7 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\SolidWorks Corp\SolidWorks (3)\DriveWorksXpress\solidworkstools.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="swTableType, Version=1.0.5855.14992, Culture=neutral, PublicKeyToken=f27064fec382dbeb, processorArchitecture=AMD64">
+    <Reference Include="swTableType, Version=1.0.5856.16395, Culture=neutral, PublicKeyToken=f27064fec382dbeb, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\swTableType\x64\Release\swTableType.dll</HintPath>
     </Reference>
