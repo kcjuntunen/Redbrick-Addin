@@ -1348,25 +1348,27 @@ namespace Redbrick_Addin {
     }
 
     static public void FilterTextForControl(System.Windows.Forms.Control c) {
-      if (c is System.Windows.Forms.TextBox) {
-        System.Windows.Forms.TextBox d = (c as System.Windows.Forms.TextBox);
-        int pos = d.SelectionStart;
-        d.Text = FilterString(d.Text);
-        d.SelectionStart = pos;
-      } else if (c is System.Windows.Forms.ComboBox) {
-        System.Windows.Forms.ComboBox d = (c as System.Windows.Forms.ComboBox);
-        int pos = d.SelectionStart;
-        d.Text = FilterString(d.Text);
-        d.SelectionStart = pos;
-      }
+      //if (c is System.Windows.Forms.TextBox) {
+      //  System.Windows.Forms.TextBox d = (c as System.Windows.Forms.TextBox);
+      //  int pos = d.SelectionStart;
+      //  d.Text = FilterString(d.Text);
+      //  d.SelectionStart = pos;
+      //} else if (c is System.Windows.Forms.ComboBox) {
+      //  System.Windows.Forms.ComboBox d = (c as System.Windows.Forms.ComboBox);
+      //  int pos = d.SelectionStart;
+      //  d.Text = FilterString(d.Text);
+      //  d.SelectionStart = pos;
+      //}
     }
 
     public static string FilterString(string raw) {
-      string filtered = raw;
+      string filtered = raw.ToUpper();
       char[,] chars = new char [,] {
-                     {'\u0027', '\u2019'},
-                     {'\u0022', '\u201D'},
-                     {';', '_'} };
+                     {'\u0027', '\u2032'},
+                     {'\u0022', '\u2033'},
+                     {';', '\u037E'},
+                     {'%', '\u066A'},
+                     {'*', '\u2217'}};
 
         for (int j = 0; j < chars.GetLength(0); j++) {
             filtered = filtered.Replace(chars[j, 0], chars[j, 1]);
