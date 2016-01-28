@@ -104,7 +104,7 @@ namespace Redbrick_Addin {
       if (!(Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && AssySetup)
         DisconnectAssemblyEvents();
 
-      if (!(Document.GetType() == (int)swDocumentTypes_e.swDocPART) &&  PartSetup)
+      if (!(Document.GetType() == (int)swDocumentTypes_e.swDocPART) && PartSetup)
         DisconnectPartEvents();
 
       if (!(Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING) && DrawSetup)
@@ -174,6 +174,93 @@ namespace Redbrick_Addin {
         swDocumentTypes_e docT = swDocumentTypes_e.swDocNONE;
         swDocumentTypes_e overDocT = swDocumentTypes_e.swDocNONE;
         GetTypes(ref docT, ref overDocT);
+        switch (overDocT) {
+          case swDocumentTypes_e.swDocASSEMBLY:
+            DisconnectAssemblyEvents();
+            SetupAssy((ModelDoc2)_swApp.ActiveDoc);
+
+            switch (docT) {
+              case swDocumentTypes_e.swDocASSEMBLY:
+                if (!PartSetup) {
+                  SetupPart();
+                }
+                if (!PartEventsAssigned) {
+                  ConnectPartEvents(prop.modeldoc);
+                  PartSetup = true;
+                }
+                break;
+              case swDocumentTypes_e.swDocDRAWING:
+                break;
+              case swDocumentTypes_e.swDocNONE:
+                break;
+              case swDocumentTypes_e.swDocPART:
+
+                if (!PartSetup) {
+                  // ClearControls(this); // <-- redundant
+                  // setup
+                  SetupPart(prop.modeldoc);
+                  // link
+                  mrb.Update(ref prop);
+                } else {
+                  DisconnectPartEvents();
+                  ConnectPartEvents(prop.modeldoc);
+                  PartSetup = true; // OK, this isn't how I meant to use this.
+                  // or just link
+                  mrb.Update(ref prop);
+                }
+                break;
+              case swDocumentTypes_e.swDocSDM:
+                break;
+              default:
+                break;
+            }
+            break;
+          case swDocumentTypes_e.swDocDRAWING:
+            ClearControls(this);
+            SetupDrawing();
+            break;
+          case swDocumentTypes_e.swDocNONE:
+            SetupOther();
+            break;
+          case swDocumentTypes_e.swDocPART:
+
+            if (!PartSetup) {
+              // ClearControls(this); // <-- redundant
+              // setup
+              SetupPart(prop.modeldoc);
+              // link
+              mrb.Update(ref prop);
+            } else {
+              DisconnectPartEvents();
+              ConnectPartEvents(prop.modeldoc);
+              PartSetup = true; // OK, this isn't how I meant to use this.
+              // or just link
+              mrb.Update(ref prop);
+            }
+
+            break;
+          case swDocumentTypes_e.swDocSDM:
+            break;
+          default:
+            SetupOther();
+            break;
+        }
+      }
+    }
+
+    public void ConnectSelection2() {
+      System.GC.Collect(2, GCCollectionMode.Forced);
+      // Blow out the propertyset so we can get new ones.
+      prop.Clear();
+
+      if (Document != null) {
+        Enabled = true;
+        AddHash();
+
+        // what sort of doc is open?
+        swDocumentTypes_e docT = swDocumentTypes_e.swDocNONE;
+        swDocumentTypes_e overDocT = swDocumentTypes_e.swDocNONE;
+        GetTypes(ref docT, ref overDocT);
 
         switch (docT) {
           case swDocumentTypes_e.swDocASSEMBLY:
@@ -211,6 +298,7 @@ namespace Redbrick_Addin {
             if (!AssySetup && overDocT == swDocumentTypes_e.swDocASSEMBLY) {
               SetupAssy();
             }
+
             if (!PartSetup) {
               // ClearControls(this); // <-- redundant
               // setup
@@ -265,6 +353,17 @@ namespace Redbrick_Addin {
 
       // connect events
       ConnectAssemblyEvents();
+
+      // Zap!
+      AssySetup = true;
+    }
+
+    private void SetupAssy(ModelDoc2 md) {
+      // Get a selection manager.
+      swSelMgr = md.SelectionManager;
+
+      // connect events
+      ConnectAssemblyEvents(md);
 
       // Zap!
       AssySetup = true;
@@ -408,6 +507,29 @@ namespace Redbrick_Addin {
     private void ConnectAssemblyEvents() {
       if ((Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !AssmEventsAssigned) {
         ad = (AssemblyDoc)Document;
+        ad.UserSelectionPreNotify += ad_UserSelectionPreNotify;
+
+        // user clicks part/subassembly
+        ad.UserSelectionPostNotify += ad_UserSelectionPostNotify;
+
+        // doc closing, I think.
+        ad.DestroyNotify2 += ad_DestroyNotify2;
+
+        // Not sure, and not implemented yet.
+        ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;
+
+        // switching docs
+        ad.ActiveViewChangeNotify += ad_ActiveViewChangeNotify;
+        DisconnectDrawingEvents();
+        AssmEventsAssigned = true;
+      } else {
+        // We're already set up, I guess.
+      }
+    }
+
+    private void ConnectAssemblyEvents(ModelDoc2 md) {
+      if ((md.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !AssmEventsAssigned) {
+        ad = (AssemblyDoc)md;
         ad.UserSelectionPreNotify += ad_UserSelectionPreNotify;
 
         // user clicks part/subassembly
