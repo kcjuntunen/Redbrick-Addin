@@ -22,6 +22,7 @@ namespace Redbrick_Addin {
       _edgeDiffW = 0.0;
 
       InitializeComponent();
+      init();
       fillMat();
       fillStatus();
       ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
@@ -29,6 +30,39 @@ namespace Redbrick_Addin {
         fillEdg((object)c);
 
       LinkControls();
+    }
+
+    private void init() {
+      lMat.Click += lMat_Click;
+      lEf.Click += lEf_Click;
+      lEb.Click += lEb_Click;
+      lEl.Click += lEl_Click;
+      lEr.Click += lEr_Click;
+      label1.Click += label1_Click;
+    }
+
+    void label1_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(cbCutlist.Text.Split(new string[] {"REV"},StringSplitOptions.None)[0].Trim());
+    }
+
+    void lEr_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(cbEr.Text);
+    }
+
+    void lEl_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(cbEl.Text);
+    }
+
+    void lEb_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(cbEb.Text);
+    }
+
+    void lEf_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(cbEf.Text);
+    }
+
+    void lMat_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(cbMat.Text);
     }
 
     private void fillStatus() {
