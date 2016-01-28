@@ -36,6 +36,7 @@ namespace Redbrick_Addin
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoSize = true;
       this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "SWTaskPaneHost";
       this.Size = new System.Drawing.Size(0, 0);
       this.ResumeLayout(false);

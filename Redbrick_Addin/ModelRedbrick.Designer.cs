@@ -114,12 +114,12 @@ namespace Redbrick_Addin
       this.tlp1.ColumnCount = 1;
       this.tlp1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tlp1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tlp1.Location = new System.Drawing.Point(3, 16);
+      this.tlp1.Location = new System.Drawing.Point(3, 18);
       this.tlp1.Name = "tlp1";
       this.tlp1.RowCount = 2;
       this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
       this.tlp1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
-      this.tlp1.Size = new System.Drawing.Size(182, 770);
+      this.tlp1.Size = new System.Drawing.Size(182, 768);
       this.tlp1.TabIndex = 0;
       // 
       // xtraTable
@@ -140,6 +140,7 @@ namespace Redbrick_Addin
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.xtraTable);
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ModelRedbrick";
       this.Size = new System.Drawing.Size(220, 1721);
       this.Load += new System.EventHandler(this.ModelRedbrick_Load);

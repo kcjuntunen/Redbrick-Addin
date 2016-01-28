@@ -52,7 +52,7 @@ namespace Redbrick_Addin
       this.label1.AutoSize = true;
       this.label1.Location = new System.Drawing.Point(3, 0);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(27, 13);
+      this.label1.Size = new System.Drawing.Size(25, 13);
       this.label1.TabIndex = 0;
       this.label1.Text = "Rev";
       // 
@@ -68,16 +68,16 @@ namespace Redbrick_Addin
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(3, 79);
+      this.label3.Location = new System.Drawing.Point(3, 81);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(60, 13);
+      this.label3.Size = new System.Drawing.Size(66, 13);
       this.label3.TabIndex = 0;
       this.label3.Text = "Description";
       // 
       // label4
       // 
       this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(3, 118);
+      this.label4.Location = new System.Drawing.Point(3, 122);
       this.label4.Name = "label4";
       this.label4.Size = new System.Drawing.Size(19, 13);
       this.label4.TabIndex = 0;
@@ -86,9 +86,9 @@ namespace Redbrick_Addin
       // label5
       // 
       this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(3, 158);
+      this.label5.Location = new System.Drawing.Point(3, 162);
       this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(30, 13);
+      this.label5.Size = new System.Drawing.Size(31, 13);
       this.label5.TabIndex = 0;
       this.label5.Text = "Date";
       // 
@@ -105,7 +105,7 @@ namespace Redbrick_Addin
       // 
       this.cbBy.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbBy.FormattingEnabled = true;
-      this.cbBy.Location = new System.Drawing.Point(3, 134);
+      this.cbBy.Location = new System.Drawing.Point(3, 138);
       this.cbBy.Name = "cbBy";
       this.cbBy.Size = new System.Drawing.Size(196, 21);
       this.cbBy.TabIndex = 4;
@@ -113,9 +113,9 @@ namespace Redbrick_Addin
       // dtpDate
       // 
       this.dtpDate.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dtpDate.Location = new System.Drawing.Point(3, 174);
+      this.dtpDate.Location = new System.Drawing.Point(3, 178);
       this.dtpDate.Name = "dtpDate";
-      this.dtpDate.Size = new System.Drawing.Size(196, 20);
+      this.dtpDate.Size = new System.Drawing.Size(196, 22);
       this.dtpDate.TabIndex = 5;
       // 
       // tbECO
@@ -123,15 +123,15 @@ namespace Redbrick_Addin
       this.tbECO.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbECO.Location = new System.Drawing.Point(3, 56);
       this.tbECO.Name = "tbECO";
-      this.tbECO.Size = new System.Drawing.Size(196, 20);
+      this.tbECO.Size = new System.Drawing.Size(196, 22);
       this.tbECO.TabIndex = 2;
       // 
       // tbDesc
       // 
       this.tbDesc.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbDesc.Location = new System.Drawing.Point(3, 95);
+      this.tbDesc.Location = new System.Drawing.Point(3, 97);
       this.tbDesc.Name = "tbDesc";
-      this.tbDesc.Size = new System.Drawing.Size(196, 20);
+      this.tbDesc.Size = new System.Drawing.Size(196, 22);
       this.tbDesc.TabIndex = 3;
       // 
       // tableLayoutPanel3
@@ -143,7 +143,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel3.Controls.Add(this.btnOK, 0, 0);
       this.tableLayoutPanel3.Controls.Add(this.btnCancel, 1, 0);
       this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 200);
+      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 206);
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -211,6 +211,7 @@ namespace Redbrick_Addin
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(202, 270);
       this.Controls.Add(this.tableLayoutPanel4);
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Location = global::Redbrick_Addin.Properties.Settings.Default.EditRevLocation;
       this.MaximumSize = new System.Drawing.Size(500, 300);

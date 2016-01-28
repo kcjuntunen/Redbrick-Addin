@@ -47,6 +47,7 @@ namespace Redbrick_Addin
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.Controls.Add(this.cbDepartment);
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "DepartmentSelector";
       this.Size = new System.Drawing.Size(153, 24);
       this.ResumeLayout(false);
