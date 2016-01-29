@@ -1017,14 +1017,11 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@blnkqty", p.BlankQty < 1 ? 1 : Convert.ToInt32(p.BlankQty));
           comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
           comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
+
           for (ushort i = 0; i < 5; i++)
             comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
 
-          if (Properties.Settings.Default.FlameWar)
-            comm.Parameters.AddWithValue("@comment", FilterString(p.Comment));
-          else
-            comm.Parameters.AddWithValue("@comment", p.Comment);
-
+          comm.Parameters.AddWithValue("@comment", FilterString(p.Comment, Properties.Settings.Default.FlameWar));
           comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
           comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
           comm.Parameters.AddWithValue("@prtNo", FilterString(p.PartNumber));
@@ -1058,9 +1055,11 @@ namespace Redbrick_Addin {
             comm.Parameters.AddWithValue("@blnkqty", Convert.ToInt32(p.BlankQty));
             comm.Parameters.AddWithValue("@ovrl", Convert.ToDouble(p.OverL));
             comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
+
             for (ushort i = 0; i < 5; i++)
               comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
-            comm.Parameters.AddWithValue("@comment", FilterString(p.Comment));
+
+            comm.Parameters.AddWithValue("@comment", FilterString(p.Comment, Properties.Settings.Default.FlameWar));
             comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
             comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
             comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
@@ -1383,6 +1382,28 @@ namespace Redbrick_Addin {
 
     public static string FilterString(string raw) {
       string filtered = raw.ToUpper();
+      char[,] chars = new char[,] {
+                     {'\u0027', '\u2032'},
+                     {'\u0022', '\u2033'},
+                     {';', '\u037E'},
+                     {'%', '\u066A'},
+                     {'*', '\u2217'}};
+
+      for (int j = 0; j < chars.GetLength(0); j++) {
+        filtered = filtered.Replace(chars[j, 0], chars[j, 1]);
+      }
+
+      return filtered;
+    }
+
+    public static string FilterString(string raw, bool flame) {
+      string filtered = string.Empty;
+
+      if (flame) {
+        filtered = raw.ToUpper();
+      } else {
+        filtered = raw;
+      }
       char[,] chars = new char[,] {
                      {'\u0027', '\u2032'},
                      {'\u0022', '\u2033'},
