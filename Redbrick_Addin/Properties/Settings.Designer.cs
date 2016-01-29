@@ -480,5 +480,17 @@ namespace Redbrick_Addin.Properties {
                 this["EngineeringDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FlameWar {
+            get {
+                return ((bool)(this["FlameWar"]));
+            }
+            set {
+                this["FlameWar"] = value;
+            }
+        }
     }
 }

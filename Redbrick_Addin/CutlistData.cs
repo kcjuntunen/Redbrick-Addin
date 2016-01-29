@@ -1004,7 +1004,12 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@ovrw", Convert.ToDouble(p.OverW));
           for (ushort i = 0; i < 5; i++)
             comm.Parameters.AddWithValue(string.Format("@op{0}ip", i + 1), Convert.ToInt32(p.get_OpID(i)));
-          comm.Parameters.AddWithValue("@comment", FilterString(p.Comment));
+
+          if (Properties.Settings.Default.FlameWar)
+            comm.Parameters.AddWithValue("@comment", FilterString(p.Comment));
+          else
+            comm.Parameters.AddWithValue("@comment", p.Comment);
+
           comm.Parameters.AddWithValue("@updCnc", (p.UpdateCNC ? 1 : 0));
           comm.Parameters.AddWithValue("@type", Convert.ToInt32(p.DepartmentID));
           comm.Parameters.AddWithValue("@prtNo", FilterString(p.PartNumber));

@@ -32,6 +32,7 @@ namespace Redbrick_Addin {
       }
 
       chbDBEnabled.Checked = Properties.Settings.Default.EnableDBWrite;
+      chbFlameWar.Checked = Properties.Settings.Default.FlameWar;
       chbTestingMode.Checked = Properties.Settings.Default.Testing;
       cbDept.SelectedValue = Properties.Settings.Default.UserDept;
       cbRevLimit.SelectedIndex = Properties.Settings.Default.RevLimit - 1;
@@ -83,6 +84,10 @@ namespace Redbrick_Addin {
       if (initialated && int.TryParse(cbDefaultMaterial.SelectedValue.ToString(), out tp)) {
         Properties.Settings.Default.DefaultMaterial = tp;
       }
+    }
+
+    private void chbFlameWar_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.FlameWar = chbFlameWar.Checked;
     }
   }
 }

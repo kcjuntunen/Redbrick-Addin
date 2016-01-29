@@ -177,5 +177,8 @@
     <Setting Name="EngineeringDir" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Engineering</Value>
     </Setting>
+    <Setting Name="FlameWar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
