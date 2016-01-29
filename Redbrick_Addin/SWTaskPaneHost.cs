@@ -45,6 +45,8 @@ namespace Redbrick_Addin {
     private bool DrawSetup = false;
     private bool AssySetup = false;
 
+    private ModelDoc2 md_last;
+
     public SWTaskPaneHost() {
       InitializeComponent();
     }
@@ -66,7 +68,6 @@ namespace Redbrick_Addin {
       if (SwApp == null)
         SwApp = RequestSW();
 
-      Document = SwApp.ActiveDoc;
       ConnectSelection();
     }
 
@@ -163,89 +164,94 @@ namespace Redbrick_Addin {
 
     public void ConnectSelection() {
       System.GC.Collect(2, GCCollectionMode.Forced);
-      // Blow out the propertyset so we can get new ones.
-      prop.Clear();
 
       if (Document != null) {
-        Enabled = true;
-        AddHash();
+        if (Document != md_last) {
 
-        // what sort of doc is open?
-        swDocumentTypes_e docT = swDocumentTypes_e.swDocNONE;
-        swDocumentTypes_e overDocT = swDocumentTypes_e.swDocNONE;
-        GetTypes(ref docT, ref overDocT);
-        switch (overDocT) {
-          case swDocumentTypes_e.swDocASSEMBLY:
-            DisconnectAssemblyEvents();
-            SetupAssy((ModelDoc2)_swApp.ActiveDoc);
+          // Blow out the propertyset so we can get new ones.
+          prop.Clear();
 
-            switch (docT) {
-              case swDocumentTypes_e.swDocASSEMBLY:
-                if (!PartSetup) {
-                  SetupPart();
-                }
-                if (!PartEventsAssigned) {
-                  ConnectPartEvents(prop.modeldoc);
-                  PartSetup = true;
-                }
+          Enabled = true;
+          AddHash();
+
+          // what sort of doc is open?
+          swDocumentTypes_e docT = swDocumentTypes_e.swDocNONE;
+          swDocumentTypes_e overDocT = swDocumentTypes_e.swDocNONE;
+          GetTypes(ref docT, ref overDocT);
+          switch (overDocT) {
+            case swDocumentTypes_e.swDocASSEMBLY:
+              DisconnectAssemblyEvents();
+              SetupAssy((ModelDoc2)_swApp.ActiveDoc);
+
+              switch (docT) {
+                case swDocumentTypes_e.swDocASSEMBLY:
+                  if (!PartSetup) {
+                    SetupPart();
+                  }
+                  if (!PartEventsAssigned) {
+                    ConnectPartEvents(prop.modeldoc);
+                    PartSetup = true;
+                  }
+                  mrb.Update(ref prop);
+                  break;
+                case swDocumentTypes_e.swDocDRAWING:
+                  break;
+                case swDocumentTypes_e.swDocNONE:
+                  break;
+                case swDocumentTypes_e.swDocPART:
+
+                  if (!PartSetup) {
+                    // ClearControls(this); // <-- redundant
+                    // setup
+                    SetupPart(prop.modeldoc);
+                    // link
+                    mrb.Update(ref prop);
+                  } else {
+                    DisconnectPartEvents();
+                    ConnectPartEvents(prop.modeldoc);
+                    PartSetup = true; // OK, this isn't how I meant to use this.
+                    // or just link
+                    mrb.Update(ref prop);
+                  }
+                  break;
+                case swDocumentTypes_e.swDocSDM:
+                  break;
+                default:
+                  break;
+              }
+              break;
+            case swDocumentTypes_e.swDocDRAWING:
+              ClearControls(this);
+              SetupDrawing();
+              break;
+            case swDocumentTypes_e.swDocNONE:
+              SetupOther();
+              break;
+            case swDocumentTypes_e.swDocPART:
+
+              if (!PartSetup) {
+                // ClearControls(this); // <-- redundant
+                // setup
+                SetupPart(prop.modeldoc);
+                // link
                 mrb.Update(ref prop);
-                break;
-              case swDocumentTypes_e.swDocDRAWING:
-                break;
-              case swDocumentTypes_e.swDocNONE:
-                break;
-              case swDocumentTypes_e.swDocPART:
+              } else {
+                DisconnectPartEvents();
+                ConnectPartEvents(prop.modeldoc);
+                PartSetup = true; // OK, this isn't how I meant to use this.
+                // or just link
+                mrb.Update(ref prop);
+              }
 
-                if (!PartSetup) {
-                  // ClearControls(this); // <-- redundant
-                  // setup
-                  SetupPart(prop.modeldoc);
-                  // link
-                  mrb.Update(ref prop);
-                } else {
-                  DisconnectPartEvents();
-                  ConnectPartEvents(prop.modeldoc);
-                  PartSetup = true; // OK, this isn't how I meant to use this.
-                  // or just link
-                  mrb.Update(ref prop);
-                }
-                break;
-              case swDocumentTypes_e.swDocSDM:
-                break;
-              default:
-                break;
-            }
-            break;
-          case swDocumentTypes_e.swDocDRAWING:
-            ClearControls(this);
-            SetupDrawing();
-            break;
-          case swDocumentTypes_e.swDocNONE:
-            SetupOther();
-            break;
-          case swDocumentTypes_e.swDocPART:
-
-            if (!PartSetup) {
-              // ClearControls(this); // <-- redundant
-              // setup
-              SetupPart(prop.modeldoc);
-              // link
-              mrb.Update(ref prop);
-            } else {
-              DisconnectPartEvents();
-              ConnectPartEvents(prop.modeldoc);
-              PartSetup = true; // OK, this isn't how I meant to use this.
-              // or just link
-              mrb.Update(ref prop);
-            }
-
-            break;
-          case swDocumentTypes_e.swDocSDM:
-            break;
-          default:
-            SetupOther();
-            break;
+              break;
+            case swDocumentTypes_e.swDocSDM:
+              break;
+            default:
+              SetupOther();
+              break;
+          }
         }
+        md_last = Document;
       } else {
         Enabled = false;
       }
@@ -479,15 +485,11 @@ namespace Redbrick_Addin {
     }
 
     private void ClearControls(Control c) {
-      // any controls, no matter how deep, g'bye.
       foreach (Control item in c.Controls) {
-        //if (item.HasChildren) {
-        //  /* Recurse */
-        //  ClearControls(item);
-        //}
         c.Controls.Remove(item);
         item.Dispose();
       }
+      Document = (ModelDoc2)_swApp.ActiveDoc;
 
       if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
         DisconnectAssemblyEvents();
