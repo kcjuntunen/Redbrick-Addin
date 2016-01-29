@@ -1,1 +1,5 @@
-﻿Updated BOM reader library.
+﻿
+* Click labels to copy stuff!
+* Properly linked customers.
+* Simplified population routine.
+* Standardized string replacement.
