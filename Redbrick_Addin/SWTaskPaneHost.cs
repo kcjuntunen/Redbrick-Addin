@@ -188,6 +188,7 @@ namespace Redbrick_Addin {
                   ConnectPartEvents(prop.modeldoc);
                   PartSetup = true;
                 }
+                mrb.Update(ref prop);
                 break;
               case swDocumentTypes_e.swDocDRAWING:
                 break;
@@ -245,10 +246,12 @@ namespace Redbrick_Addin {
             SetupOther();
             break;
         }
+      } else {
+        Enabled = false;
       }
     }
 
-    public void ConnectSelection2() {
+    public void ConnectSelection2() { // Pretty sure I can deprecate this.
       System.GC.Collect(2, GCCollectionMode.Forced);
       // Blow out the propertyset so we can get new ones.
       prop.Clear();
