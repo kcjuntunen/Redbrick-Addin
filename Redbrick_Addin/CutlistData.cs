@@ -207,6 +207,21 @@ namespace Redbrick_Addin {
       }
     }
 
+    public List<string> GetCustomersForDrawing() {
+      List<string> output = new List<string>();
+      string SQL = @"SELECT CUSTOMER, CUSTNUM FROM GEN_CUSTOMERS WHERE GEN_CUSTOMERS.CUSTACTIVE = 1 ORDER BY CUSTOMER";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          string tmpstr = string.Empty;
+          while (dr.Read()) {
+            tmpstr = string.Format("{0} - {1}", dr.GetString(0), dr.GetString(1));
+            output.Add(tmpstr);
+          }
+          return output;
+        }
+      }
+    }
+
     private DataSet GetCustomers() {
       string SQL = @"SELECT * FROM GEN_CUSTOMERS ORDER BY CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -495,9 +510,9 @@ namespace Redbrick_Addin {
 
       if ((ID != string.Empty) && (int.TryParse(ID, out tp))) {
         string SQL = @"SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_OPS WHERE OPID = ?";
-        using(OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@OpId", tp);
-          using(OdbcDataReader dr = comm.ExecuteReader()) {
+          using (OdbcDataReader dr = comm.ExecuteReader()) {
             if (dr.HasRows) {
               List<string> x = new List<string>();
               x.Add(dr.GetString(0));
@@ -505,7 +520,7 @@ namespace Redbrick_Addin {
               x.Add(dr.GetString(2));
               x.Add(dr.GetString(3));
               return x;
-	          } else {
+            } else {
             }
           }
         }
@@ -865,7 +880,7 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@w", w);
           comm.Parameters.AddWithValue("@h", h);
           comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
-          comm.Parameters.AddWithValue("@stateid",  (state < 1 ? 1 : Convert.ToInt32(state)));
+          comm.Parameters.AddWithValue("@stateid", (state < 1 ? 1 : Convert.ToInt32(state)));
           comm.Parameters.AddWithValue("@partnum", FilterString(itemNo));
           comm.Parameters.AddWithValue("@rev", rev);
           affected = comm.ExecuteNonQuery();
@@ -1271,7 +1286,7 @@ namespace Redbrick_Addin {
       }
       return rowsAffected;
     }
-    
+
     static public Part MakePartFromPropertySet(SwProperties swp) {
       Part p = new Part();
       p.FileInformation = swp.PartFileInfo;
@@ -1337,7 +1352,7 @@ namespace Redbrick_Addin {
       p.SetOverW(swp.GetProperty("OVERW").Value);
       p.SetBlankQty(swp.GetProperty("BLANK QTY").Value);
       p.SetDeptID(swp.GetProperty("DEPTID").ID);
-      
+
       p.SetOpID(swp.GetProperty("OP1ID").ID, 0);
       p.SetOpID(swp.GetProperty("OP2ID").ID, 1);
       p.SetOpID(swp.GetProperty("OP3ID").ID, 2);
@@ -1368,15 +1383,15 @@ namespace Redbrick_Addin {
 
     public static string FilterString(string raw) {
       string filtered = raw.ToUpper();
-      char[,] chars = new char [,] {
+      char[,] chars = new char[,] {
                      {'\u0027', '\u2032'},
                      {'\u0022', '\u2033'},
                      {';', '\u037E'},
                      {'%', '\u066A'},
                      {'*', '\u2217'}};
 
-        for (int j = 0; j < chars.GetLength(0); j++) {
-            filtered = filtered.Replace(chars[j, 0], chars[j, 1]);
+      for (int j = 0; j < chars.GetLength(0); j++) {
+        filtered = filtered.Replace(chars[j, 0], chars[j, 1]);
       }
 
       return filtered;

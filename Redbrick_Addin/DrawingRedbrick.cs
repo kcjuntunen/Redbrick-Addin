@@ -17,12 +17,13 @@ namespace Redbrick_Addin {
     public DrawingRedbrick(SldWorks sw) {
       this._swApp = sw;
       InitializeComponent();
-      this.fillMat();
-      this.fillAuthor();
-      this.fillCustomer();
 
       this.PropertySet = new DrawingProperties(this._swApp);
       this.RevSet = new DrawingRevs(this._swApp);
+
+      this.fillMat();
+      this.fillAuthor();
+      this.fillCustomer();
 
       this.GetData();
       t();
@@ -154,7 +155,7 @@ namespace Redbrick_Addin {
     }
 
     private void fillCustomer() {
-      System.Collections.Specialized.StringCollection sc = Properties.Settings.Default.Customers;
+      List<string> sc = PropertySet.CutlistData.GetCustomersForDrawing();
       foreach (string s in sc) {
         this.cbCustomer.Items.Add(s);
       }
