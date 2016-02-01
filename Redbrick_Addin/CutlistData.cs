@@ -780,6 +780,25 @@ namespace Redbrick_Addin {
       }
     }
 
+    public string GetAuthorFullName(string initial) {
+      if (initial == string.Empty)
+        return string.Empty;
+
+      string SQL = @"SELECT (FIRST + ' ' + LAST) AS NAME FROM GEN_USERS WHERE INITIAL LIKE ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@initial", initial);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.HasRows) {
+            string x = dr.GetString(0);
+            dr.Close();
+            return x;
+          } else {
+            return initial;
+          }
+        }
+      }
+    }
+
     public int ReturnHash(SwProperties p) {
       if (p.PartName == string.Empty)
         return 0;

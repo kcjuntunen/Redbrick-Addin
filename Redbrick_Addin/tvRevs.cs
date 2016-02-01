@@ -26,7 +26,7 @@ namespace Redbrick_Addin {
     private void Init() {
       this.tvRevisions.Nodes.Clear();
       foreach (DrawingRev r in revSet) {
-        TreeNode tnList = new TreeNode(r.List.Value);
+        TreeNode tnList = new TreeNode(propertySet.CutlistData.GetAuthorFullName(r.List.Value));
         TreeNode tnDate = new TreeNode(r.Date.Value);
         TreeNode tnECO = new TreeNode(r.Eco.Value);
         TreeNode tnC = new TreeNode(r.Revision.Value);

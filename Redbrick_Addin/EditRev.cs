@@ -22,7 +22,7 @@ namespace Redbrick_Addin {
       CutlistData cd = new CutlistData();
 
       cbBy.DataSource = cd.GetAuthors().Tables[0];
-      cbBy.DisplayMember = "INITIAL";
+      cbBy.DisplayMember = "NAME";
       cbBy.ValueMember = "USERNAME";
 
       if (!Revs.Contains("REVISION " + (char)(nodeCount + 65))) {
@@ -88,7 +88,7 @@ namespace Redbrick_Addin {
       SwProperty eco = new SwProperty("ECO " + (nodeCount + 1).ToString(), tType, tbECO.Text, true);
       SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, tbDesc.Text, true);
       cbBy.ValueMember = "INITIAL";
-      SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, cbBy.Text.Substring(0, 2), true);
+      SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, (cbBy.SelectedValue as string).Substring(0, 2), true);
       //cbBy.ValueMember = "LAST";
       SwProperty date = new SwProperty("DATE " + (nodeCount + 1).ToString(), tType, dtpDate.Value.ToShortDateString(), true);
 
