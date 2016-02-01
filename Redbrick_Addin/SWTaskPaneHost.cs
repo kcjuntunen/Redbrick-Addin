@@ -65,6 +65,7 @@ namespace Redbrick_Addin {
     public void ReStart() {
       ClearControls(this);
 
+      md_last = null;
       if (SwApp == null)
         SwApp = RequestSW();
 
