@@ -147,7 +147,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(196, 67);
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(196, 71);
       this.tableLayoutPanel3.TabIndex = 0;
       // 
       // btnOK
@@ -202,20 +202,20 @@ namespace Redbrick_Addin
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel4.Size = new System.Drawing.Size(202, 270);
+      this.tableLayoutPanel4.Size = new System.Drawing.Size(202, 280);
       this.tableLayoutPanel4.TabIndex = 1;
       // 
       // EditRev
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(202, 270);
+      this.ClientSize = new System.Drawing.Size(202, 280);
       this.Controls.Add(this.tableLayoutPanel4);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Location = global::Redbrick_Addin.Properties.Settings.Default.EditRevLocation;
-      this.MaximumSize = new System.Drawing.Size(500, 300);
-      this.MinimumSize = new System.Drawing.Size(210, 300);
+      this.MaximumSize = new System.Drawing.Size(500, 310);
+      this.MinimumSize = new System.Drawing.Size(210, 310);
       this.Name = "EditRev";
       this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
