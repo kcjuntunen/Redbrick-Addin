@@ -148,10 +148,9 @@ namespace Redbrick_Addin {
     }
 
     private void fillAuthor() {
-      System.Collections.Specialized.StringCollection sc = Properties.Settings.Default.Authors;
-      foreach (string s in sc) {
-        this.cbAuthor.Items.Add(s);
-      }
+      cbAuthor.ValueMember = "INITIAL";
+      cbAuthor.DisplayMember = "NAME";
+      cbAuthor.DataSource = PropertySet.CutlistData.GetAuthors().Tables[0];
     }
 
     private void fillCustomer() {

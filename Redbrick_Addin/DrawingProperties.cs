@@ -228,7 +228,18 @@ namespace Redbrick_Addin {
     public void UpdateFields() {
       foreach (SwProperty s in this._innerArray) {
         if (s.Ctl != null) {
-          s.Ctl.Text = s.Value;
+          if (s.Ctl is System.Windows.Forms.ComboBox) {
+            int si = 0;
+            string ss = s.Value.Split(' ', '-')[0];
+            si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(ss);
+            if (si < 0) {
+              (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue = ss;
+            } else {
+              (s.Ctl as System.Windows.Forms.ComboBox).SelectedIndex = si;
+            }
+          } else {
+            s.Ctl.Text = s.Value;
+          }
         }
       }
     }
@@ -236,10 +247,26 @@ namespace Redbrick_Addin {
     public void ReadControls() {
       foreach (SwProperty s in this._innerArray) {
         if (s.Ctl != null) {
-          if (s.Ctl is System.Windows.Forms.DateTimePicker)
+          if (s.Ctl is System.Windows.Forms.ComboBox) {
+            if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {
+            s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString();
+            } else {
+              string si = (s.Ctl as System.Windows.Forms.ComboBox).SelectedItem.ToString();
+              // This will have to do, unless Chris wants to add a short customer name field.
+              if (si.Length < 4) {                                                                    // Shorter than 4? Must be initials.
+                (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
+              } else if (si.Length > 12) {                                                            // Longer than 12? Must be customer codes.
+                string[] cc = si.Split('-', ' ');
+                s.Value = cc[0] + " - " + cc[cc.Length - 1];
+              } else {                                                                                // These are, no doubt, materials.
+                s.Value = si;
+              }
+            }
+          } else if (s.Ctl is System.Windows.Forms.DateTimePicker) {
             s.Value = (s.Ctl as System.Windows.Forms.DateTimePicker).Value.ToShortDateString();
-          else
+          } else {
             s.Value = s.Ctl.Text;
+          }
         }
       }
     }
