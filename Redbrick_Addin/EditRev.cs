@@ -86,7 +86,9 @@ namespace Redbrick_Addin {
       SolidWorks.Interop.swconst.swCustomInfoType_e tType = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText;
       SwProperty rev = new SwProperty("REVISION " + (char)(nodeCount + 65), tType, cbRev.Text, true);
       SwProperty eco = new SwProperty("ECO " + (nodeCount + 1).ToString(), tType, tbECO.Text, true);
-      SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, tbDesc.Text, true);
+      // I usually only apply this filter on insertion, but this field is only ever 
+      // displayed on drawings. We only want all caps for that as well.
+      SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, CutlistData.FilterString(tbDesc.Text, Properties.Settings.Default.FlameWar), true);
       cbBy.ValueMember = "INITIAL";
       SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, (cbBy.SelectedValue as string).Substring(0, 2), true);
       //cbBy.ValueMember = "LAST";
