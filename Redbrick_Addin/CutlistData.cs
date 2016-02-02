@@ -784,9 +784,10 @@ namespace Redbrick_Addin {
       if (initial == string.Empty)
         return string.Empty;
 
-      string SQL = @"SELECT (FIRST + ' ' + LAST) AS NAME FROM GEN_USERS WHERE INITIAL LIKE ?";
+      string SQL = @"SELECT (FIRST + ' ' + LAST) AS NAME FROM GEN_USERS WHERE INITIAL LIKE ? AND DEPT = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        comm.Parameters.AddWithValue("@initial", initial);
+        comm.Parameters.AddWithValue("@initial", initial + "%");
+        comm.Parameters.AddWithValue("@dept", Properties.Settings.Default.UserDept);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.HasRows) {
             string x = dr.GetString(0);
