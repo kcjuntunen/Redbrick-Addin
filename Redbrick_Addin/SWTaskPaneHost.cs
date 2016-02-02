@@ -747,6 +747,7 @@ namespace Redbrick_Addin {
 
     public void Write() {
       if (PartSetup) {
+        md_last = null;
         // update doc metadata & rebuild & save
         mrb.Write(Document);
         // rescoop new metadata
