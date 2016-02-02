@@ -1,6 +1,11 @@
-﻿* Bugfix for previous update. :-/
+﻿	8^D
+Hacking for testing phase. (It /almost/ works correctly.)
+Drawing panel more strictly tied to db.
+Filter description standardly.
+Fix ReStart() failure.
 
 PREVIOUS:
+* Bugfix for previous update.
 * Click labels to copy stuff!
 * Properly linked customers.
 * Simplified population routine.
