@@ -231,7 +231,11 @@ namespace Redbrick_Addin {
           if (s.Ctl is System.Windows.Forms.ComboBox) {
             int si = 0;
             string ss = s.Value.Split(' ', '-')[0];
-            si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(ss);
+            if (s.Ctl.Name.ToUpper().Contains("AUTHOR")) {
+              si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(CutlistData.GetAuthorFullName(ss));
+            } else {
+              si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(ss);
+            }
             if (si < 0) {
               (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue = ss;
             } else {
@@ -248,8 +252,8 @@ namespace Redbrick_Addin {
       foreach (SwProperty s in this._innerArray) {
         if (s.Ctl != null) {
           if (s.Ctl is System.Windows.Forms.ComboBox) {
-            if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {
-              s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString();
+            if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {                      // Shorter than 4? Must be initials.
+              s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
             } else {
               string si;
 
