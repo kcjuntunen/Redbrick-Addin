@@ -764,6 +764,7 @@ namespace Redbrick_Addin {
 
     public void Write(SldWorks s) {
       if (PartSetup) {
+        md_last = null;
         // update doc metadata & rebuild & save
         mrb.Write((ModelDoc2)s.ActiveDoc);
         // rescoop new metadata
