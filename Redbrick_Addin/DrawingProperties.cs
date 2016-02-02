@@ -249,17 +249,23 @@ namespace Redbrick_Addin {
         if (s.Ctl != null) {
           if (s.Ctl is System.Windows.Forms.ComboBox) {
             if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {
-            s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString();
+              s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString();
             } else {
-              string si = (s.Ctl as System.Windows.Forms.ComboBox).SelectedItem.ToString();
+              string si;
+
+              if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null)
+                si = (s.Ctl as System.Windows.Forms.ComboBox).SelectedItem.ToString();
+              else
+                si = string.Empty;
+
               // This will have to do, unless Chris wants to add a short customer name field.
-              if (si.Length < 4) {                                                                    // Shorter than 4? Must be initials.
+              if (si.Length < 4 && !s.Ctl.Name.Contains("cbM")) {                                     // Shorter than 4? Must be initials.
                 (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
               } else if (si.Length > 12) {                                                            // Longer than 12? Must be customer codes.
                 string[] cc = si.Split('-', ' ');
                 s.Value = cc[0] + " - " + cc[cc.Length - 1];
-              } else {                                                                                // These are, no doubt, materials.
-                s.Value = si;
+              } else {                                                                                // Materials
+                s.Value = (s.Ctl as System.Windows.Forms.ComboBox).Text;
               }
             }
           } else if (s.Ctl is System.Windows.Forms.DateTimePicker) {
