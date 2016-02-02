@@ -1,16 +1,17 @@
 ﻿
-0.8.10.2:
-* Restricted name finding to department.
+0.8.10.3:
+	* Restricted name finding to department.
+	* Better author resolution.
 
 0.8.10.1:
-* Hacking for testing phase. (It /almost/ works correctly.)
-* Drawing panel more strictly tied to db.
-* Filter description standardly.
-* Fix ReStart() failure.
+	* Hacking for testing phase. (It /almost/ works correctly.)
+	* Drawing panel more strictly tied to db.
+	* Filter description standardly.
+	* Fix ReStart() failure.
 
 0.8.9.6:
-* Bugfix for previous update.
-* Click labels to copy stuff!
-* Properly linked customers.
-* Simplified population routine.
-* Standardized string replacement.
+	* Bugfix for previous update.
+	* Click labels to copy stuff!
+	* Properly linked customers.
+	* Simplified population routine.
+	* Standardized string replacement.
