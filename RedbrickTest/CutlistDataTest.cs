@@ -28,7 +28,7 @@ namespace RedbrickTest {
     [TestMethod]
     public void GetLegacyECODataTest() {
       CutlistData cd = new CutlistData();
-      eco eco = cd.GetLegacyECOData("8042");
+      eco eco = cd.GetLegacyECOData("8807");
       Debug.Assert(eco.RequestedBy == "S.PALMER");
 
       eco = cd.GetLegacyECOData("xxxx");

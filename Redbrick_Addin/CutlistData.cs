@@ -645,6 +645,29 @@ namespace Redbrick_Addin {
       return string.Empty;
     }
 
+    public int ECRIsBogus(string econumber) {
+      int en = 0;
+      if (int.TryParse(econumber, out en)) {
+        if (en > GetLastLegacyECR()) {
+          string SQL = @""; 
+        }
+      }
+    }
+
+    public int GetLastLegacyECR() {
+      int max = 0;
+      string SQL = @"SELECT MAX(ECRNum) FROM ECR_LEGACY;";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (int.TryParse(dr.GetString(0), out max)) {
+            return max;
+          } else {
+            return Properties.Settings.Default.LastLegacyECR;
+          }
+        }
+      }
+    }
+
     public eco GetECOData(string ecoNumber) {
       eco e = new eco();
       int en;
@@ -652,7 +675,7 @@ namespace Redbrick_Addin {
       if (int.TryParse(ecoNumber, out en)) {
         string SQL = string.Empty;
 
-        if (en > Properties.Settings.Default.LastLegacyECR) {
+        if (en > GetLastLegacyECR()) {
           SQL = @"SELECT GEN_USERS.FIRST, GEN_USERS.LAST, ECR_MAIN.CHANGES, " +
               @"ECR_STATUS.STATUS, ECR_MAIN.ERR_DESC, ECR_MAIN.REVISION FROM " +
               @"(ECR_MAIN LEFT JOIN GEN_USERS ON ECR_MAIN.REQ_BY = GEN_USERS.UID) " +

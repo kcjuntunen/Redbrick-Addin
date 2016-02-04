@@ -493,5 +493,15 @@ namespace Redbrick_Addin.Properties {
                 this["FlameWar"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True")]
+        public string M2MConnection {
+            get {
+                return ((string)(this["M2MConnection"]));
+            }
+        }
     }
 }

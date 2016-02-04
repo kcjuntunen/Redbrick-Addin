@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="RedbrickTest.UnitTest1.M2MGetPartCount" /><Add Test="RedbrickTest.UnitTest1.M2MGetPurchased" /><Add Test="RedbrickTest.UnitTest1.M2MGetPartType" /></Playlist>

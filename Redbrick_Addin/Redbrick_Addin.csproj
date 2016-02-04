@@ -108,6 +108,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="M2MData.cs" />
     <Compile Include="ConfigurationSpecific.cs">
       <SubType>UserControl</SubType>
     </Compile>
