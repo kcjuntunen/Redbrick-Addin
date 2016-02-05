@@ -21,29 +21,62 @@ namespace Redbrick_Addin {
     public void Dispose() {
       conn.Close();
     }
-    
+
+    public bool Connected() {
+      if (conn.State == ConnectionState.Open)
+        return true;
+      else
+        return false;
+    }
+
     public int GetPartCount(string prtnum, string rev) {
       int count = 0;
       string SQL = @"SELECT COUNT(fpartno) FROM inmast WHERE fpartno = @prtno AND frev = @prtrv;";
-      SqlCommand comm = ConstructCommand(SQL, prtnum, rev);
-      count = GetInt(comm);
+      if (Connected()) {
+        using (SqlCommand comm = new SqlCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@prtno", prtnum);
+          comm.Parameters.AddWithValue("@prtrv", rev);
+          using (SqlDataReader dr = comm.ExecuteReader()) {
+            if (dr.Read()) {
+              count = dr.GetInt32(0);
+            }
+          }
+        }
+      }
       return count;
     }
 
     public string GetProductClass(string prtnum, string rev) {
       string prodcl = string.Empty;
-      bool purch = GetPurchased(prtnum, rev);
       string SQL = @"SELECT fprodcl FROM inmast WHERE fpartno = @prtno AND frev = @prtrv;";
-      SqlCommand comm = ConstructCommand(SQL, prtnum, rev);
-      prodcl = GetString(comm);
+      if (Connected()) {
+        using (SqlCommand comm = new SqlCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@prtno", prtnum);
+          comm.Parameters.AddWithValue("@prtrv", rev);
+          using (SqlDataReader dr = comm.ExecuteReader()) {
+            if (dr.Read()) {
+              prodcl = dr.GetString(0);
+            }
+          }
+        }
+      }
       return prodcl;
     }
 
     public bool GetPurchased(string prtnum, string rev) {
       bool purchased = false;
-      string SQL = @"SELECT fcpurchase FROM inmast where fpartno = @prtno AND frev = @prtrv;";
-      SqlCommand comm = ConstructCommand(SQL, prtnum, rev);
-      purchased = GetBoolFromStringMatch(comm, "Y");
+      string SQL = @"SELECT fcpurchase FROM inmast WHERE fpartno = @prtno AND frev = @prtrv;";
+      if (Connected()) {
+        using (SqlCommand comm = new SqlCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@prtno", prtnum);
+          comm.Parameters.AddWithValue("@prtrv", rev);
+          using (SqlDataReader d = comm.ExecuteReader()) {
+            if (d.Read()) {
+              purchased = d.GetString(0) == "Y" ? true : false;
+            }
+          }
+        }
+      }
       return purchased;
     }
 
