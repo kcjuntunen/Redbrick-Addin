@@ -391,7 +391,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3004")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3030")]
         public int DefaultMaterial {
             get {
                 return ((int)(this["DefaultMaterial"]));
