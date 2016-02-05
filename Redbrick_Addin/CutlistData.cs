@@ -363,7 +363,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@StateID", ID);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetString(0);
           else
             return "UNSET";
@@ -376,7 +376,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@EdgeID", ID);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetDouble(0);
           else
             return 0.0;
@@ -385,14 +385,14 @@ namespace Redbrick_Addin {
     }
 
     public int GetMaterialID(string description) {
-      if (description == null)
+      if (description == string.Empty)
         return Properties.Settings.Default.DefaultMaterial;
 
       string SQL = @"SELECT MATID FROM CUT_MATERIALS WHERE DESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@description", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetInt32(0);
           else
             return Properties.Settings.Default.DefaultMaterial;
@@ -408,7 +408,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@descr", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetInt32(0);
           else
             return 0;
@@ -424,7 +424,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@descr", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetInt32(0);
           else
             return 0;
@@ -440,7 +440,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@descr", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetInt32(0);
           else
             return 0;
@@ -454,7 +454,7 @@ namespace Redbrick_Addin {
         comm.Parameters.AddWithValue("@cutlistID", clid);
         comm.Parameters.AddWithValue("@partID", partid);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetInt32(0);
           else
             return 1;
@@ -471,7 +471,7 @@ namespace Redbrick_Addin {
         comm.Parameters.AddWithValue("@name", name);
         comm.Parameters.AddWithValue("@optype", OpType);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows)
+          if (dr.Read())
             return dr.GetInt32(0);
           else
             return 0;
@@ -490,7 +490,7 @@ namespace Redbrick_Addin {
         comm.Parameters.AddWithValue("@OpName", name);
         comm.Parameters.AddWithValue("@OpType", OpType);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows) {
+          if (dr.Read()) {
             List<string> x = new List<string>();
             x.Add(dr.GetString(0));
             x.Add(dr.GetString(1));
@@ -513,7 +513,7 @@ namespace Redbrick_Addin {
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@OpId", tp);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
-            if (dr.HasRows) {
+            if (dr.Read()) {
               List<string> x = new List<string>();
               x.Add(dr.GetString(0));
               x.Add(dr.GetString(1));
@@ -536,7 +536,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@Name", name);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows) {
+          if (dr.Read()) {
             int res = dr.GetInt32(0);
             return res;
           } else {
@@ -554,7 +554,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@ID", ID);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows) {
+          if (dr.Read()) {
             string res = dr.GetString(0);
             return res;
           } else {
@@ -575,7 +575,7 @@ namespace Redbrick_Addin {
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@id", id);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
-            if (dr.HasRows)
+            if (dr.Read())
               return dr.GetString(0);
             else
               return @"TBD MATERIAL";
@@ -595,7 +595,7 @@ namespace Redbrick_Addin {
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@id", id);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
-            if (dr.HasRows)
+            if (dr.Read())
               return dr.GetString(0);
             else
               return string.Empty;
@@ -615,7 +615,7 @@ namespace Redbrick_Addin {
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@OpID", id);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
-            if (dr.HasRows)
+            if (dr.Read())
               return dr.GetString(0);
             else
               return string.Empty;
@@ -635,7 +635,7 @@ namespace Redbrick_Addin {
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@id", tp);
           using (OdbcDataReader dr = comm.ExecuteReader()) {
-            if (dr.HasRows)
+            if (dr.Read())
               return dr.GetString(0);
             else
               return string.Empty;
@@ -645,21 +645,21 @@ namespace Redbrick_Addin {
       return string.Empty;
     }
 
-    public int ECRIsBogus(string econumber) {
-      int en = 0;
-      if (int.TryParse(econumber, out en)) {
-        if (en > GetLastLegacyECR()) {
-          string SQL = @""; 
-        }
-      }
-    }
+    //public int ECRIsBogus(string econumber) {
+    //  int en = 0;
+    //  if (int.TryParse(econumber, out en)) {
+    //    if (en > GetLastLegacyECR()) {
+    //      string SQL = @""; 
+    //    }
+    //  }
+    //}
 
     public int GetLastLegacyECR() {
       int max = 0;
       string SQL = @"SELECT MAX(ECRNum) FROM ECR_LEGACY;";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
-          if (int.TryParse(dr.GetString(0), out max)) {
+          if (dr.Read() && int.TryParse(dr.GetString(0), out max)) {
             return max;
           } else {
             return Properties.Settings.Default.LastLegacyECR;
@@ -685,7 +685,7 @@ namespace Redbrick_Addin {
             comm.Parameters.AddWithValue("@ecrNo", en);
             using (OdbcDataReader dr = comm.ExecuteReader()) {
               e.EcrNumber = int.Parse(ecoNumber);
-              if (dr.HasRows) {
+              if (dr.Read()) {
                 if (!dr.IsDBNull((int)ECODataColumns.CHANGES))
                   e.Changes = dr.GetString((int)ECODataColumns.CHANGES);
                 if (!dr.IsDBNull((int)ECODataColumns.DESC))
@@ -707,7 +707,7 @@ namespace Redbrick_Addin {
             comm.Parameters.AddWithValue("@ecrNo", ecoNumber);
             using (OdbcDataReader dr = comm.ExecuteReader()) {
               e.EcrNumber = int.Parse(ecoNumber);
-              if (dr.HasRows) {
+              if (dr.Read()) {
                 if (!dr.IsDBNull(6))
                   e.Changes = dr.GetString(6);
                 if (!dr.IsDBNull(4))
@@ -735,7 +735,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@ecoNumber", ecoNumber);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows) {
+          if (dr.Read()) {
             e.EcrNumber = int.Parse(ecoNumber);
             e.Revision = dr.GetString(5); // AffectedParts
             e.Changes = dr.GetString(6); // Change
@@ -792,7 +792,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@initial", initial);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows) {
+          if (dr.Read()) {
             string x = dr.GetString(0);
             dr.Close();
             return x;
@@ -812,7 +812,7 @@ namespace Redbrick_Addin {
         comm.Parameters.AddWithValue("@initial", initial + "%");
         comm.Parameters.AddWithValue("@dept", Properties.Settings.Default.UserDept);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows) {
+          if (dr.Read()) {
             string x = dr.GetString(0);
             dr.Close();
             return x;
@@ -831,7 +831,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@partnum", p.PartName);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetInt32(0);
           else
             return 0;
@@ -844,7 +844,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@uname", Environment.UserName);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetInt32(0);
           else
             return 0;
@@ -857,7 +857,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@uname", Environment.UserName);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetString(0);
           else
             return string.Empty;
@@ -870,7 +870,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@uid", id);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetString(0);
           else
             return string.Empty;
@@ -1119,7 +1119,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@partnum", prt);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetInt32(0);
           else
             return 0;
@@ -1132,7 +1132,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@itemno", item);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetInt32(0);
           else
             return 0;
@@ -1146,7 +1146,7 @@ namespace Redbrick_Addin {
         comm.Parameters.AddWithValue("@itemNo", item);
         comm.Parameters.AddWithValue("@rev", rev);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetInt32(0);
           else
             return 0;
@@ -1158,7 +1158,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(@"SELECT HASH FROM CUT_PARTS WHERE PARTNUM = ?", conn)) {
         comm.Parameters.AddWithValue("@prtNo", partNum);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
-          if (dr.HasRows && !dr.IsDBNull(0))
+          if (dr.Read() && !dr.IsDBNull(0))
             return dr.GetInt32(0);
           else
             return 0;
@@ -1466,7 +1466,7 @@ namespace Redbrick_Addin {
     }
 
     private string ReturnString(OdbcDataReader dr, int i) {
-      if (dr.HasRows) {
+      if (dr.Read()) {
         if (dr.IsDBNull(i)) {
           return string.Empty;
         } else {
