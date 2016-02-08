@@ -24,6 +24,7 @@ namespace Redbrick_Addin {
       this.fillMat();
       this.fillAuthor();
       this.fillCustomer();
+      fillRev();
 
       this.GetData();
       t();
@@ -58,6 +59,7 @@ namespace Redbrick_Addin {
       SwProperty custo = this.PropertySet.GetProperty("CUSTOMER");
       SwProperty by = this.PropertySet.GetProperty("DrawnBy");
       SwProperty d = this.PropertySet.GetProperty("DATE");
+      SwProperty rl = PropertySet.GetProperty("REVISION LEVEL");
 
       if (partNo != null) {
         partNo.Ctl = this.tbItemNo;
@@ -98,6 +100,15 @@ namespace Redbrick_Addin {
         d.SwApp = this.SwApp;
         d.Ctl = this.dpDate;
         this.PropertySet.Add(d);
+      }
+
+      if (rl != null) {
+        rl.Ctl = cbRevision;
+      } else {
+        rl = new SwProperty("REVISION LEVEL", swCustomInfoType_e.swCustomInfoText, "100", true);
+        rl.SwApp = SwApp;
+        rl.Ctl = cbRevision;
+        PropertySet.Add(rl);
       }
 
       for (int i = 1; i < 6; i++) {
@@ -157,6 +168,12 @@ namespace Redbrick_Addin {
       List<string> sc = PropertySet.CutlistData.GetCustomersForDrawing();
       foreach (string s in sc) {
         this.cbCustomer.Items.Add(s);
+      }
+    }
+
+    private void fillRev() {
+      for (int i = 100; i < 110; i++) {
+        cbRevision.Items.Add(i);
       }
     }
 
@@ -307,6 +324,10 @@ namespace Redbrick_Addin {
     private void button1_Click(object sender, EventArgs e) {
       CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet);
       chi.ShowDialog();
+    }
+
+    private void dpDate_ValueChanged(object sender, EventArgs e) {
+
     }
   }
 }

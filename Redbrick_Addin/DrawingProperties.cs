@@ -236,10 +236,22 @@ namespace Redbrick_Addin {
             } else {
               si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(ss);
             }
+
             if (si < 0) {
               (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue = ss;
             } else {
               (s.Ctl as System.Windows.Forms.ComboBox).SelectedIndex = si;
+            }
+
+            if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedItem == null) {
+              (s.Ctl as System.Windows.Forms.ComboBox).Text = ss;
+            }
+          } else if (s.Ctl is System.Windows.Forms.NumericUpDown) {
+            decimal x = 0;
+            if (decimal.TryParse(s.Value, out x)) {
+              (s.Ctl as System.Windows.Forms.NumericUpDown).Value = x;
+            } else {
+              (s.Ctl as System.Windows.Forms.NumericUpDown).Value = 100;
             }
           } else {
             s.Ctl.Text = s.Value;
@@ -263,7 +275,7 @@ namespace Redbrick_Addin {
                 si = string.Empty;
 
               // This will have to do, unless Chris wants to add a short customer name field.
-              if (si.Length < 4 && !s.Ctl.Name.Contains("cbM")) {                                     // Shorter than 4? Must be initials.
+              if (si.Length < 4 && !s.Ctl.Name.Contains("cbM") && !s.Ctl.Name.Contains("cbR")) {
                 (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
               } else if (si.Length > 12) {                                                            // Longer than 12? Must be customer codes.
                 string[] cc = si.Split('-', ' ');
@@ -274,6 +286,8 @@ namespace Redbrick_Addin {
             }
           } else if (s.Ctl is System.Windows.Forms.DateTimePicker) {
             s.Value = (s.Ctl as System.Windows.Forms.DateTimePicker).Value.ToShortDateString();
+          } else if (s.Ctl is System.Windows.Forms.NumericUpDown) {
+            s.Value = (s.Ctl as System.Windows.Forms.NumericUpDown).Value.ToString();
           } else {
             s.Value = s.Ctl.Text;
           }
