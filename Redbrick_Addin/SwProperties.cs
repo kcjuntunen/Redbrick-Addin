@@ -379,6 +379,9 @@ namespace Redbrick_Addin {
 
               if (Contains("MATID")) {
                 pNew = GetProperty("MATID");
+                if (Properties.Settings.Default.Testing) {
+                  pNew.Old = false;
+                }
               } else {
                 pNew.Rename("MATID");
               }
@@ -387,7 +390,6 @@ namespace Redbrick_Addin {
               pOld.ID = pNew.ID;
               pOld.Descr = pOld.ResValue;
               pNew.Descr = pOld.ResValue;
-              pNew.Old = false;
 
               pOld.Type = swCustomInfoType_e.swCustomInfoText;
               pNew.Type = swCustomInfoType_e.swCustomInfoNumber;
@@ -423,6 +425,9 @@ namespace Redbrick_Addin {
 
               if (Contains("EFID")) {
                 pNew = GetProperty("EFID");
+                if (Properties.Settings.Default.Testing) {
+                  pNew.Old = false;
+                }
               } else {
                 pNew.Rename("EFID");
               }
@@ -442,6 +447,9 @@ namespace Redbrick_Addin {
 
               if (Contains("EBID")) {
                 pNew = GetProperty("EBID");
+                if (Properties.Settings.Default.Testing) {
+                  pNew.Old = false;
+                }
               } else {
                 pNew.Rename("EBID");
               }
@@ -461,6 +469,9 @@ namespace Redbrick_Addin {
 
               if (Contains("ELID")) {
                 pNew = GetProperty("ELID");
+                if (Properties.Settings.Default.Testing) {
+                  pNew.Old = false;
+                }
               } else {
                 pNew.Rename("ELID");
               }
@@ -480,6 +491,9 @@ namespace Redbrick_Addin {
 
               if (Contains("ERID")) {
                 pNew = GetProperty("ERID");
+                if (Properties.Settings.Default.Testing) {
+                  pNew.Old = false;
+                }
               } else {
                 pNew.Rename("ERID");
               }
@@ -657,7 +671,9 @@ namespace Redbrick_Addin {
               break;
           }
 
-          Add(pNew);
+          if (!pNew.Old) {
+            Add(pNew);
+          }
 
           if (Properties.Settings.Default.Testing)
             Add(pOld);
