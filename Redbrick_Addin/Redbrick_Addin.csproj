@@ -282,7 +282,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="rb.kf.snk" />
-    <None Include="README.md" />
     <None Include="redbrick.kf.pfx" />
     <None Include="Resources\clipboard.png" />
   </ItemGroup>

@@ -962,6 +962,7 @@ namespace Redbrick_Addin {
 
     public int UpdateCutlistPart(int clid, int prtid, KeyValuePair<string, Part> kpprt) {
       int affected = 0;
+      Properties.Settings.Default.CurrentCutlist = clid;
       if (ENABLE_DB_WRITE) {
         string prt = kpprt.Key;
         Part p = kpprt.Value;
