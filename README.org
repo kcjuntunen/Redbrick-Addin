@@ -1,4 +1,5 @@
-﻿#+TITLE: Amstore Property Editing Utility
+﻿
+
 * Usage
 
 1. Click on stuff, edit fields, make selections.
