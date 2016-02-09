@@ -1,4 +1,6 @@
-﻿* Usage
+﻿#+TITLE: Amstore Property Editing Utility
+* Usage
+
 1. Click on stuff, edit fields, make selections.
 2. Click the green check. There is no property writing, cutlist updating, &c. until the you click the green check.
 * Inserting into the cutlist DB
@@ -7,7 +9,7 @@ For reasons in the footnotes, don't create cutlists from models in the developme
 1. Select the part to be inserted.
 2. Set the =Quantity= spinner appropriately.
 3. Click =Insert Into Cutlist=.
-   If this part exists in the database, but is now in a new location, Mr Redbrick will ask if you want to make this new part a primary part[[https://github.com/kcjuntunen/Redbrick-Addin/wiki#footnotes][¹]].
+   If this part exists in the database, but is now in a new location, Mr Redbrick will ask if you want to make this new part a primary part[[https://github.com/kcjuntunen/Redbrick-Addin/blob/master/README.org#footnotes][¹]].
 4. When Mr Redbrick asks whether you want to add the part to an existing cutlist, say "Yes".
 5. Mr Redbrick will guess (based on the last cutlist you were fooling around with) just which existing cutlist you want to insert into. All the fields on the window will be populated from existing cutlist data. If you like what's in there, leave it. If not, pick a different cutlist. I don't care. You can even change the automatically populated fields if you want them changed.
 6. Click =Add=.
@@ -16,7 +18,7 @@ For reasons in the footnotes, don't create cutlists from models in the developme
 1. Select the part to be inserted.
 2. Set the =Quantity= spinner appropriately.
 3. Click =Insert Into Cutlist=.
-   If this part exists in the database, but is now in a new location, Mr Redbrick will ask if you want to make this new part a primary part[[https://github.com/kcjuntunen/Redbrick-Addin/wiki#footnotes][¹]].
+   If this part exists in the database, but is now in a new location, Mr Redbrick will ask if you want to make this new part a primary part[[https://github.com/kcjuntunen/Redbrick-Addin/blob/master/README.org#footnotes][¹]].
 4. When Mr Redbrick asks whether you want to add the part to an existing cutlist, say "No".
 5. The cutlist creation box will pop up with only the date, and your name filled in. You'll have to do the rest; Mr Redbrick can't read your mind!
 6. Click =Create Cutlist=.
