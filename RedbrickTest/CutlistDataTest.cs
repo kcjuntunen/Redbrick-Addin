@@ -74,5 +74,21 @@ namespace RedbrickTest {
       int x = cd.GetLastLegacyECR();
       Debug.Assert(x >= 8845);
     }
+
+    [TestMethod]
+    public void TestGetDrawingID() {
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOFO\KOFO1536-02.PDF")) == 51560);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505FWTI-INSTALL.PDF")) == 16344);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505sdflkjgsdf.PDF")) == 0);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOCO\KOCO1211-03.pdf")) == 6834);
+
+
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"KOFO1536-02.PDF")) == 51560);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"AX7505FWTI-INSTALL.PDF")) == 16344);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"AX7505sdflkjgsdf.PDF")) == 0);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"KOCO1211-03.pdf")) == 6834);
+    }
+
+
   }
 }

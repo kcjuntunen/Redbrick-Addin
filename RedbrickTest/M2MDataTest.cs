@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RedbrickTest {
   [TestClass]
-  public class UnitTest1 {
+  public class M2MDataTest {
     M2MData m2m = new M2MData();
     [TestMethod]
     public void M2MGetPartCount() {

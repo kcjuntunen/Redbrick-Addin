@@ -76,7 +76,7 @@
   <ItemGroup>
     <Compile Include="CutlistDataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="M2MDataTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Redbrick_Addin\Redbrick_Addin.csproj">

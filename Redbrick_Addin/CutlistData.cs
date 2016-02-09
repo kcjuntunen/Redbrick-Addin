@@ -645,6 +645,34 @@ namespace Redbrick_Addin {
       return string.Empty;
     }
 
+    public int GetDrawingID(FileInfo drawingPath) {
+      int drId = 0;
+      string SQL = @"SELECT FileID FROM GEN_DRAWINGS WHERE FName LIKE ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@drawingPath", drawingPath.Name);
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (dr.Read()) {
+            drId = dr.GetInt32(0);
+          }
+        }
+      }
+      return drId;
+    }
+
+    public int GetDrawingID(string filename) {
+      int drId = 0;
+      string SQL = @"SELECT FileID FROM GEN_DRAWINGS WHERE FName LIKE ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@filename", filename);
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (dr.Read()) {
+            drId = dr.GetInt32(0);
+          }
+        }
+      }
+      return drId;
+    }
+
     //public int ECRIsBogus(string econumber) {
     //  int en = 0;
     //  if (int.TryParse(econumber, out en)) {
