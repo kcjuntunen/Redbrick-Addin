@@ -647,7 +647,7 @@ namespace Redbrick_Addin {
 
     public int GetDrawingID(FileInfo drawingPath) {
       int drId = 0;
-      string SQL = @"SELECT FileID FROM GEN_DRAWINGS WHERE FName LIKE ?";
+      string SQL = @"SELECT FileID FROM GEN_DRAWINGS WHERE FName LIKE ?;";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@drawingPath", drawingPath.Name);
         using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
@@ -673,18 +673,31 @@ namespace Redbrick_Addin {
       return drId;
     }
 
-    //public int ECRIsBogus(string econumber) {
-    //  int en = 0;
-    //  if (int.TryParse(econumber, out en)) {
-    //    if (en > GetLastLegacyECR()) {
-    //      string SQL = @""; 
-    //    }
-    //  }
-    //}
+    public bool ECRIsBogus(string econumber) {
+      bool bogus = true;
+      int en = 0;
+      if (int.TryParse(econumber, out en)) {
+        string SQL = string.Empty;
+        if (en > GetLastLegacyECR()) {
+          SQL = @"SELECT * FROM ECR_MAIN WHERE ECR_NUM = ?";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@eco", en);
+            using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+              if (dr.Read()) {
+                bogus = false;
+              }
+            }
+          }
+        } else {
+          bogus = true;
+        }
+      }
+      return bogus;
+    }
 
     public int GetLastLegacyECR() {
       int max = 0;
-      string SQL = @"SELECT MAX(ECRNum) FROM ECR_LEGACY;";
+      string SQL = @"SELECT MAX(ECRNum) FROM ECR_LEGACY";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
           if (dr.Read() && int.TryParse(dr.GetString(0), out max)) {
@@ -916,6 +929,22 @@ namespace Redbrick_Addin {
           }
         }
       }
+    }
+
+    public int InsertECRITem(int ecrId, string partnum, string rev, int type) {
+      int newID = 0;
+      if (ENABLE_DB_WRITE) {
+        string SQL = @"INSERT INTO ECR_ITEMS (ECR_NUM, ITEMNUMBER, ITEMREV, TYPE) VALUES (?, ?, ?, ?); SELECT SCOPE_IDENTITY()";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@ecrId", ecrId);
+          comm.Parameters.AddWithValue("@partnum", partnum);
+          comm.Parameters.AddWithValue("@rev", rev);
+          comm.Parameters.AddWithValue("@type", type);
+          newID = (int)comm.ExecuteScalar();
+        }
+      }
+
+      return newID;
     }
 
     public int SetState(int cutlistid, int stateid) {
