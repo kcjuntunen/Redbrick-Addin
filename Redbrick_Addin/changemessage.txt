@@ -1,7 +1,7 @@
 ﻿
 * 0.8.10.5
+** Experimental overhaul of parsing algorithms.
 ** LastCutlist updated on drawing mode generation
-** Parsing tweaks
 ** ECR items can be inserted on drawing updates.
 
 * 0.8.10.4

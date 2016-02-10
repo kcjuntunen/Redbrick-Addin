@@ -82,10 +82,12 @@ namespace Redbrick_Addin {
           Configuration c = (Configuration)md.ConfigurationManager.ActiveConfiguration;
           CustomPropertyManager s = md.Extension.get_CustomPropertyManager(c.Name);
 
-          cutlistData.OpType = ParseDept(md);
+          cutlistData.OpType = ParseDept2(md);
           configName = c.Name;
-          ParsePropertyData2(g, docType);
-          ParsePropertyData2(s, docType);
+          //ParsePropertyData2(g, docType);
+          //ParsePropertyData2(s, docType);
+          ParseGlobalPropertyData(g);
+          ParseSpecificPropertyData(s);
         }
       }
     }
@@ -108,9 +110,11 @@ namespace Redbrick_Addin {
             configName = comp.ReferencedConfiguration;
             CustomPropertyManager s = modeldoc.Extension.get_CustomPropertyManager(configName);
 
-            cutlistData.OpType = ParseDept(modeldoc);
-            ParsePropertyData2(g, docType);
-            ParsePropertyData2(s, docType);
+            cutlistData.OpType = ParseDept2(modeldoc);
+            //ParsePropertyData2(g, docType);
+            //ParsePropertyData2(s, docType);
+            ParseSpecificPropertyData(s);
+            ParseGlobalPropertyData(g);
           }
         }
       }
@@ -217,6 +221,39 @@ namespace Redbrick_Addin {
         Add(pNew);
 
       return opt;
+    }
+
+    public int ParseDept2(ModelDoc2 md) {
+      int dept = 1;
+      SwProperty oldDept = new SwProperty("DEPARTMENT", swCustomInfoType_e.swCustomInfoText, "WOOD", true);
+      SwProperty newDept = new SwProperty("DEPTID", swCustomInfoType_e.swCustomInfoNumber, "1", true);
+      oldDept.Old = true;
+
+      if (IsAmongTheProperties(oldDept.Name, modeldoc)) {
+        oldDept.Get(modeldoc, cutlistData);
+        oldDept.ID = cutlistData.GetOpTypeIDByName(oldDept.Value).ToString();
+        newDept.ID = oldDept.ID;
+        newDept.Value = oldDept.ID;
+        newDept.ResValue = oldDept.ResValue;
+        int.TryParse(oldDept.ID, out dept);
+      } else {
+        newDept.Get(modeldoc, cutlistData);
+        newDept.ID = newDept.Value;
+        if (int.TryParse(newDept.ID, out dept)) {
+          newDept.Descr = cutlistData.GetOpTypeNameByID(dept);
+        }
+        oldDept.ID = newDept.ID;
+        oldDept.Value = newDept.Descr;
+        oldDept.ResValue = newDept.Descr;
+      }
+
+      if (Properties.Settings.Default.Testing) {
+        Add(oldDept);
+      }
+
+      Add(newDept);
+
+      return dept;
     }
 
     /// <summary>
@@ -686,6 +723,277 @@ namespace Redbrick_Addin {
           swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true));
         }
       }
+    }
+
+    public void ParseSpecificPropertyData(CustomPropertyManager g) {
+      SwProperty oldMat = new SwProperty("CUTLIST MATERIAL", swCustomInfoType_e.swCustomInfoText, "TBD MATERIAL", false);
+      SwProperty mat = new SwProperty("MATID", swCustomInfoType_e.swCustomInfoNumber, Properties.Settings.Default.DefaultMaterial.ToString(), false);
+      oldMat.Old = true;
+
+      SwProperty oldef = new SwProperty("EDGE FRONT (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty oldeb = new SwProperty("EDGE BACK (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty oldel = new SwProperty("EDGE LEFT (W)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty older = new SwProperty("EDGE RIGHT (W)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty ef = new SwProperty("EFID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty eb = new SwProperty("EBID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty el = new SwProperty("ELID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty er = new SwProperty("ERID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      oldef.Old = true;
+      oldeb.Old = true;
+      oldel.Old = true;
+      older.Old = true;
+
+
+      if (IsAmongTheProperties(oldMat.Name, modeldoc)) {
+        oldMat.Get(modeldoc, cutlistData);
+        mat.ID = oldMat.ID;
+        mat.Value = oldMat.Value;
+        mat.ResValue = oldMat.ResValue;
+      } else {
+        mat.Get(modeldoc, cutlistData);
+        mat.ID = mat.Value;
+        mat.Descr = cutlistData.GetMaterialByID(mat.ID);
+
+        oldMat.ID = mat.ID;
+        oldMat.Descr = mat.Descr;
+        oldMat.Value = mat.ResValue;
+        oldMat.ResValue = mat.ResValue;
+      }
+
+      if (IsAmongTheProperties(oldef.Name, modeldoc)) {
+        oldef.Get(modeldoc, cutlistData);
+        ef.ID = oldef.ID;
+        ef.Value = oldef.Value;
+        ef.ResValue = oldef.ResValue;
+      } else {
+        ef.Get(modeldoc, cutlistData);
+        ef.ID = ef.Value;
+        ef.Descr = cutlistData.GetEdgeByID(ef.ID);
+        oldef.ID = ef.ID;
+        oldef.Descr = ef.Descr;
+        oldef.Value = ef.ResValue;
+        oldef.ResValue = ef.ResValue;
+      }
+
+      if (IsAmongTheProperties(oldeb.Name, modeldoc)) {
+        oldeb.Get(modeldoc, cutlistData);
+        eb.ID = oldeb.ID;
+        eb.Value = oldeb.Value;
+        eb.ResValue = oldeb.ResValue;
+      } else {
+        eb.Get(modeldoc, cutlistData);
+        eb.ID = eb.Value;
+        eb.Descr = cutlistData.GetEdgeByID(eb.ID);
+        oldeb.ID = eb.ID;
+        oldeb.Descr = eb.Descr;
+        oldeb.Value = eb.ResValue;
+        oldeb.ResValue = eb.ResValue;
+      }
+      if (IsAmongTheProperties(oldel.Name, modeldoc)) {
+        oldel.Get(modeldoc, cutlistData);
+        el.ID = oldel.ID;
+        el.Value = oldel.Value;
+        el.ResValue = oldel.ResValue;
+      } else {
+        el.Get(modeldoc, cutlistData);
+        el.ID = el.Value;
+        el.Descr = cutlistData.GetEdgeByID(el.ID);
+        oldel.ID = el.ID;
+        oldel.Descr = el.Descr;
+        oldel.Value = el.ResValue;
+        oldel.ResValue = el.ResValue;
+      }
+      if (IsAmongTheProperties(older.Name, modeldoc)) {
+        older.Get(modeldoc, cutlistData);
+        er.ID = older.ID;
+        er.Value = older.Value;
+        er.ResValue = older.ResValue;
+      } else {
+        er.Get(modeldoc, cutlistData);
+        er.ID = er.Value;
+        er.Descr = cutlistData.GetEdgeByID(er.ID);
+        older.ID = er.ID;
+        older.Descr = er.Descr;
+        older.Value = er.ResValue;
+        older.ResValue = er.ResValue;
+      }
+
+      if (Properties.Settings.Default.Testing) {
+        Add(oldMat);
+        Add(oldef);
+        Add(oldeb);
+        Add(oldel);
+        Add(older);
+      }
+      Add(mat);
+      Add(ef);
+      Add(eb);
+      Add(el);
+      Add(er);
+    }
+
+    public void ParseGlobalPropertyData(CustomPropertyManager g) {
+      GetMaterialMetaData();
+      SwProperty d = new SwProperty("Description", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty iic = new SwProperty("INCLUDE IN CUTLIST", swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true);
+      SwProperty l = new SwProperty("LENGTH", swCustomInfoType_e.swCustomInfoText, "D1@Sketch1", true);
+      SwProperty w = new SwProperty("WIDTH", swCustomInfoType_e.swCustomInfoText, "D2@Sketch1", true);
+      SwProperty t = new SwProperty("THICKNESS", swCustomInfoType_e.swCustomInfoText, "D1@Boss-Extrude1", true);
+      SwProperty wt = new SwProperty("WALL THICKNESS", swCustomInfoType_e.swCustomInfoText, "Thickness@Sheet-Metal1", true);
+      SwProperty ol = new SwProperty("OVERL", swCustomInfoType_e.swCustomInfoDouble, "0.0", true);
+      SwProperty ow = new SwProperty("OVERW", swCustomInfoType_e.swCustomInfoDouble, "0.0", true);
+      SwProperty cnc1 = new SwProperty("CNC1", swCustomInfoType_e.swCustomInfoDouble, "NA", true);
+      SwProperty cnc2 = new SwProperty("CNC2", swCustomInfoType_e.swCustomInfoDouble, "NA", true);
+      SwProperty bq = new SwProperty("BLANK QTY", swCustomInfoType_e.swCustomInfoNumber, "1", true);
+      SwProperty c = new SwProperty("COMMENT", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty uc = new SwProperty("UPDATE CNC", swCustomInfoType_e.swCustomInfoText, "N", true);
+      SwProperty op1 = new SwProperty("OP1", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty op2 = new SwProperty("OP2", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty op3 = new SwProperty("OP3", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty op4 = new SwProperty("OP4", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty op5 = new SwProperty("OP5", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
+      SwProperty op1id = new SwProperty("OP1ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
+      SwProperty op2id = new SwProperty("OP2ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
+      SwProperty op3id = new SwProperty("OP3ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
+      SwProperty op4id = new SwProperty("OP4ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
+      SwProperty op5id = new SwProperty("OP5ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
+      op1.Old = true;
+      op2.Old = true;
+      op3.Old = true;
+      op4.Old = true;
+      op5.Old = true;
+
+      d.Get(modeldoc, cutlistData);
+      iic.Get(modeldoc, cutlistData);
+      l.Get(modeldoc, cutlistData);
+      w.Get(modeldoc, cutlistData);
+      t.Get(modeldoc, cutlistData);
+      wt.Get(modeldoc, cutlistData);
+      ol.Get(modeldoc, cutlistData);
+      ow.Get(modeldoc, cutlistData);
+      cnc1.Get(modeldoc, cutlistData);
+      cnc2.Get(modeldoc, cutlistData);
+      bq.Get(modeldoc, cutlistData);
+      c.Get(modeldoc, cutlistData);
+      uc.Get(modeldoc, cutlistData);
+      
+      if (IsAmongTheProperties(op1.Name, modeldoc)) {
+        op1.Get(modeldoc, cutlistData);
+        op1id.ID = cutlistData.GetOpIDByName(op1.ResValue).ToString();
+        op1id.Value = op1.ID;
+        op1id.ResValue = op1.ResValue;
+      } else {
+        op1id.Get(modeldoc, cutlistData);
+        op1id.ID = op1id.Value;
+        op1id.Descr = cutlistData.GetOpAbbreviationByID(op1id.ID);
+        op1.ID = op1id.ID;
+        op1.Value = op1id.Descr;
+        op1.ResValue = op1id.Descr;
+      }
+
+      if (IsAmongTheProperties(op2.Name, modeldoc)) {
+        op2.Get(modeldoc, cutlistData);
+        op2id.ID = cutlistData.GetOpIDByName(op2.ResValue).ToString();
+        op2id.Value = op2.ID;
+        op2id.ResValue = op2.ResValue;
+      } else {
+        op2id.Get(modeldoc, cutlistData);
+        op2id.ID = op2id.Value;
+        op2id.Descr = cutlistData.GetOpAbbreviationByID(op2id.ID);
+        op2.ID = op2id.ID;
+        op2.Value = op2id.Descr;
+        op2.ResValue = op2id.Descr;
+      }
+
+      if (IsAmongTheProperties(op3.Name, modeldoc)) {
+        op3.Get(modeldoc, cutlistData);
+        op3id.ID = cutlistData.GetOpIDByName(op3.ResValue).ToString();
+        op3id.Value = op3.ID;
+        op3id.ResValue = op3.ResValue;
+      } else {
+        op3id.Get(modeldoc, cutlistData);
+        op3id.ID = op3id.Value;
+        op3id.Descr = cutlistData.GetOpAbbreviationByID(op3id.ID);
+        op3.ID = op3id.ID;
+        op3.Value = op3id.Descr;
+        op3.ResValue = op3id.Descr;
+      }
+
+      if (IsAmongTheProperties(op4.Name, modeldoc)) {
+        op4.Get(modeldoc, cutlistData);
+        op4id.ID = cutlistData.GetOpIDByName(op4.ResValue).ToString();
+        op4id.Value = op4.ID;
+        op4id.ResValue = op4.ResValue;
+      } else {
+        op4id.Get(modeldoc, cutlistData);
+        op4id.ID = op4id.Value;
+        op4id.Descr = cutlistData.GetOpAbbreviationByID(op4id.ID);
+        op4.ID = op4id.ID;
+        op4.Value = op4id.Descr;
+        op4.ResValue = op4id.Descr;
+      }
+
+      if (IsAmongTheProperties(op5.Name, modeldoc)) {
+        op5.Get(modeldoc, cutlistData);
+        op5id.ID = cutlistData.GetOpIDByName(op5.ResValue).ToString();
+        op5id.Value = op5.ID;
+        op5id.ResValue = op5.ResValue;
+      } else {
+        op5id.Get(modeldoc, cutlistData);
+        op5id.ID = op5id.Value;
+        op5id.Descr = cutlistData.GetOpAbbreviationByID(op5id.ID);
+        op5.ID = op5id.ID;
+        op5.Value = op5id.Descr;
+        op5.ResValue = op5id.Descr;
+      }
+
+      Add(d);
+      Add(iic);
+      Add(l);
+      Add(w);
+      Add(t);
+      Add(wt);
+      Add(ol);
+      Add(ow);
+      Add(cnc1);
+      Add(cnc2);
+      Add(bq);
+      Add(c);
+      Add(uc);
+      Add(op1id);
+      Add(op2id);
+      Add(op3id);
+      Add(op4id);
+      Add(op5id);
+
+      if (Properties.Settings.Default.Testing) {
+        Add(op1);
+        Add(op2);
+        Add(op3);
+        Add(op4);
+        Add(op5);
+      }
+    }
+
+    private static bool IsAmongTheProperties(string propName, ModelDoc2 m) {
+      Configuration cf = m.ConfigurationManager.ActiveConfiguration;
+      CustomPropertyManager glpm = m.Extension.get_CustomPropertyManager(string.Empty);
+      CustomPropertyManager sppm;
+
+      if (cf != null) {
+        sppm = m.Extension.get_CustomPropertyManager(cf.Name);
+      } else {
+        sppm = m.Extension.get_CustomPropertyManager(string.Empty);
+      }
+
+      bool res = false;
+      List<string> gl = new List<string>((string[])glpm.GetNames());
+      List<string> sp = new List<string>((string[])sppm.GetNames());
+      if (gl.Contains(propName) || sp.Contains(propName)) {
+        res = true;
+      }
+
+      return res;
     }
 
     private void FavorOldEdge(ref SwProperty pFirst, ref SwProperty pSecond) {

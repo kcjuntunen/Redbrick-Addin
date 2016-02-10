@@ -18,6 +18,7 @@ namespace Redbrick_Addin {
       Name = PropertyName;
       Type = swType;
       ID = "0";
+      Old = false;
       Value = testValue;
       ResValue = testValue;
       Global = global;
@@ -35,6 +36,7 @@ namespace Redbrick_Addin {
       Global = false;
       Descr = "NULL";
       ID = "0";
+      Old = false;
       Field = "[Nope]";
       Table = "[No]";
     }
@@ -253,6 +255,8 @@ namespace Redbrick_Addin {
 
         bool wasResolved;
         bool useCached = false;
+        string tempval = string.Empty;
+        string tempresval = string.Empty;
 
         if (cf != null) {
           scpm = md.Extension.get_CustomPropertyManager(cf.Name);
@@ -262,15 +266,22 @@ namespace Redbrick_Addin {
         int res;
 
         if (this.Global) {
-          res = gcpm.Get5(this.Name, useCached, out _value, out _resValue, out wasResolved);
-          Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
-
+          res = gcpm.Get5(this.Name, useCached, out tempval, out tempresval, out wasResolved);
+          if (wasResolved) {
+            Value = tempval;
+            ResValue = tempresval;
+            Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+          }
 
           if (Type == swCustomInfoType_e.swCustomInfoNumber && Name.ToUpper().Contains("OVER"))
             Type = swCustomInfoType_e.swCustomInfoDouble;
         } else {
-          res = scpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
-          this.Type = (swCustomInfoType_e)gcpm.GetType2(Name);
+          res = scpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+          if (wasResolved) {
+            Value = tempval;
+            ResValue = tempresval;
+            Type = (swCustomInfoType_e)scpm.GetType2(this.Name);
+          }
         }
       } else {
         throw new NullReferenceException("sw is null");
@@ -290,6 +301,8 @@ namespace Redbrick_Addin {
 
       bool wasResolved;
       bool useCached = false;
+      string tempval = string.Empty;
+      string tempresval = string.Empty;
 
       if (cf != null) {
         scpm = md.Extension.get_CustomPropertyManager(cf.Name);
@@ -299,9 +312,19 @@ namespace Redbrick_Addin {
       int res;
 
       if (this.Global) {
-        res = gcpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
-        Type = (swCustomInfoType_e)gcpm.GetType2(Name);
-
+        res = gcpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+        if (wasResolved) {
+          Value = tempval;
+          ResValue = tempresval;
+          Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+        } else { // check in wrong place; sometimes it's there.
+          scpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+          if (wasResolved) {
+            Value = tempval;
+            ResValue = tempresval;
+            Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
+          }
+        }
 
         if (Type == swCustomInfoType_e.swCustomInfoNumber && Name.ToUpper().Contains("OVER"))
           Type = swCustomInfoType_e.swCustomInfoDouble;
@@ -318,8 +341,12 @@ namespace Redbrick_Addin {
           }
         }
       } else {
-        res = scpm.Get5(Name, useCached, out _value, out _resValue, out wasResolved);
-        Type = (swCustomInfoType_e)gcpm.GetType2(Name);
+        res = scpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+        if (wasResolved) {
+          Value = tempval;
+          ResValue = tempresval;
+          Type = (swCustomInfoType_e)scpm.GetType2(this.Name);
+        }
         if (Name.ToUpper().Contains("CUTLIST MATERIAL")) {
           int tp = 0;
           if (int.TryParse(_value, out tp)) {
@@ -336,7 +363,7 @@ namespace Redbrick_Addin {
             ID = _resValue;
             _value = cd.GetEdgeByID(_resValue);
           } else {
-            ID = cd.GetMaterialID(_value).ToString();
+            ID = cd.GetEdgeID(_value).ToString();
           }
         }
       }
