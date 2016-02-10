@@ -58,7 +58,7 @@ Section "Uninstall"
   Delete "$INSTDIR\SolidWorks.Interop.sldworks.dll"
   Delete "$INSTDIR\Redbrick_Addin.dll"
   Delete "$INSTDIR\redlego.ico"
-  Delete "$INSTDIR"
+  RMDir  "$INSTDIR"
 SectionEnd
 
 Function .onInit
