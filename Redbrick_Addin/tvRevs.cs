@@ -34,7 +34,7 @@ namespace Redbrick_Addin {
         eco e = new eco();
         e = cd.GetECOData(r.Eco.Value);
 
-        if (int.TryParse(r.Eco.Value, out test) && test > Properties.Settings.Default.LastLegacyECR) {
+        if (int.TryParse(r.Eco.Value, out test) && test > cd.GetLastLegacyECR()) {
           TreeNode tnD = new TreeNode("Error Description: " + e.ErrDescription, 0, 0);
           TreeNode tnRB = new TreeNode("Requested by: " + e.RequestedBy, 0, 0);
           TreeNode tnR = new TreeNode("Revision Description:" + e.Revision, 0, 0);
@@ -89,7 +89,8 @@ namespace Redbrick_Addin {
     }
 
     private void btnNewRev_Click(object sender, EventArgs e) {
-      EditRev er = new EditRev(ref this.revSet, this.tvRevisions.Nodes.Count);
+      EditRev er = new EditRev(ref this.revSet, this.tvRevisions.Nodes.Count, cd, propertySet.GetProperty("REVISION LEVEL"));
+      er.new_rev = true;
       er.ShowDialog();
       this.Init();
     }

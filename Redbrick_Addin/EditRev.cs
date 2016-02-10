@@ -6,13 +6,29 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
+
 namespace Redbrick_Addin {
   public partial class EditRev : Form {
     private int nodeCount;
+    private CutlistData cutlist_data;
+    private SwProperty revision;
+    public bool new_rev = false;
 
     public EditRev(ref DrawingRevs revs, int NodeCount) {
       System.Diagnostics.Debug.Print(NodeCount.ToString());
       nodeCount = NodeCount;
+      _revs = revs;
+      InitializeComponent();
+      Init();
+    }
+
+    public EditRev(ref DrawingRevs revs, int NodeCount, CutlistData cd, SwProperty rev) {
+      System.Diagnostics.Debug.Print(NodeCount.ToString());
+      nodeCount = NodeCount;
+      cutlist_data = cd;
+      revision = rev;
       _revs = revs;
       InitializeComponent();
       Init();
@@ -26,7 +42,7 @@ namespace Redbrick_Addin {
       cbBy.ValueMember = "USERNAME";
 
       if (!Revs.Contains("REVISION " + (char)(nodeCount + 65))) {
-        cbBy.SelectedValue = Environment.UserName;
+        cbBy.SelectedValue = System.Environment.UserName;
         string theRev = "REVISION " + (char)(nodeCount + 65);
         Text = "Creating new " + theRev + "...";
         if (nodeCount < 1) {
@@ -82,8 +98,7 @@ namespace Redbrick_Addin {
 
     private void btnOK_Click(object sender, EventArgs e) {
       DrawingRev r;
-
-      SolidWorks.Interop.swconst.swCustomInfoType_e tType = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText;
+      swCustomInfoType_e tType = swCustomInfoType_e.swCustomInfoText;
       SwProperty rev = new SwProperty("REVISION " + (char)(nodeCount + 65), tType, cbRev.Text, true);
       SwProperty eco = new SwProperty("ECO " + (nodeCount + 1).ToString(), tType, tbECO.Text, true);
       // I usually only apply this filter on insertion, but this field is only ever 
@@ -103,11 +118,47 @@ namespace Redbrick_Addin {
         r.Date = date;
       } else {
         r = new DrawingRev(rev, eco, desc, list, date);
-        Revs.Add(r);
       }
+
+      Revs.Add(r);
+      r.SwApp = Revs.SwApp;
+
+      if (new_rev) {
+        AddECRItem(r);
+      }
+
       this.Close();
     }
 
+    private void AddECRItem(DrawingRev r) {
+      string partpath = (r.SwApp.ActiveDoc as ModelDoc2).GetPathName();
+      string partno = System.IO.Path.GetFileNameWithoutExtension(partpath);
+      string question = string.Format(Properties.Resources.InsertIntoEcrItems,
+        System.IO.Path.GetFileName(partno),
+        r.Eco.Value);
+
+      swMessageBoxResult_e mbr = swMessageBoxResult_e.swMbHitNo;
+
+      int en = 0;
+      if (int.TryParse(r.Eco.Value, out en) && 
+        !cutlist_data.ECRIsBogus(r.Eco.Value) &&
+        !cutlist_data.ECRItemExists(en, partno, revision.Value)) {
+
+        mbr = (swMessageBoxResult_e)r.SwApp.SendMsgToUser2(question,
+            (int)swMessageBoxIcon_e.swMbQuestion,
+            (int)swMessageBoxBtn_e.swMbYesNo);
+      }
+
+      if (mbr == swMessageBoxResult_e.swMbHitYes) {
+        M2MData m = new M2MData();
+        cutlist_data.InsertECRItem(en,
+          partno,
+          revision.Value,
+          m.GetPartType(partno, revision.Value),
+          r.Revision.Value,
+          partpath);
+      }
+    }
 
     private void EditRev_FormClosing(object sender, FormClosingEventArgs e) {
       Properties.Settings.Default.EditRevLocation = Location;

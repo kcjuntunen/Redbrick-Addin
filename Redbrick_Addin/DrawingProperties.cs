@@ -276,7 +276,11 @@ namespace Redbrick_Addin {
 
               // This will have to do, unless Chris wants to add a short customer name field.
               if (si.Length < 4 && !s.Ctl.Name.Contains("cbM") && !s.Ctl.Name.Contains("cbR")) {
-                (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
+                if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {
+                  s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
+                } else {
+                  s.Value = (s.Ctl as System.Windows.Forms.ComboBox).Text;
+                }
               } else if (si.Length > 12) {                                                            // Longer than 12? Must be customer codes.
                 string[] cc = si.Split('-', ' ');
                 s.Value = cc[0] + " - " + cc[cc.Length - 1];

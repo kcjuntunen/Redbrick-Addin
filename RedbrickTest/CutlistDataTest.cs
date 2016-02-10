@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Redbrick_Addin;
 using System.Data;
 using System.Diagnostics;
+
 namespace RedbrickTest {
   [TestClass]
   public class CutlistDataTest {
@@ -70,13 +71,13 @@ namespace RedbrickTest {
     }
 
     [TestMethod]
-    public void TestGetLastLegacyECO() {
+    public void GetLastLegacyECO() {
       int x = cd.GetLastLegacyECR();
       Debug.Assert(x >= 8845);
     }
 
     [TestMethod]
-    public void TestGetDrawingID() {
+    public void GetDrawingID() {
       Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOFO\KOFO1536-02.PDF")) == 51560);
       Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505FWTI-INSTALL.PDF")) == 16344);
       Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505sdflkjgsdf.PDF")) == 0);
@@ -90,10 +91,50 @@ namespace RedbrickTest {
     }
 
     [TestMethod]
-    public void TestECRIsBogus() {
+    public void GetDrawingData() {
+      Debug.Assert((int)cd.GetDrawingData(@"KOFO1536-02.PDF")[0] == 51560);
+      Debug.Assert(cd.GetDrawingData(@"AX7505FWTI-INSTALL.PDF")[2].ToString() == @"K:\TARGET\INSTALL\");
+      Debug.Assert((int)cd.GetDrawingData(@"AX7505sdflkjgsdf.PDF")[0] == 0);
+      Debug.Assert((int)cd.GetDrawingData(@"KOCO1211-03.pdf")[0] == 6834);
+    }
+
+    [TestMethod]
+    public void ECRIsBogus() {
       Debug.Assert(cd.ECRIsBogus("8846") == false);
       Debug.Assert(cd.ECRIsBogus("9000") == true);
       Debug.Assert(cd.ECRIsBogus("8830") == true);
+
+      Debug.Assert(cd.ECRIsBogus(8846) == false);
+      Debug.Assert(cd.ECRIsBogus(9000) == true);
+      Debug.Assert(cd.ECRIsBogus(8830) == true);
+    }
+
+    [TestMethod]
+    public void GetMaterials() {
+      //DataTable d = cd.Materials.Tables[0];
+      System.Data.DataSet ds = cd.Materials;
+      System.Data.DataTable dt = ds.Tables[0];
+
+      string testString = dt.Rows[1539].ItemArray.GetValue(1).ToString();
+      Debug.WriteLine(testString);
+      Debug.Assert(testString == "SLB FM 8841-WR G1 P .562");
+
+      testString = dt.Rows[1517].ItemArray.GetValue(2).ToString();
+      Debug.WriteLine(testString);
+      Debug.Assert(testString == "SPECTRUM BLUE/FROSTY WHITE");
+    }
+
+    [TestMethod]
+    public void EcrItemExists() {
+      Debug.Assert(cd.ECRItemExists(8847, "SS1010-Z3", "100"));
+      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "100"));
+      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "100"));
+      Debug.Assert(cd.ECRItemExists(8847, "WGFX1532-03", "100") == false);
+      Debug.Assert(cd.ECRItemExists(8850, "SS1009-Z3", "100") == false);
+      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "101") == false);
+      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "101") == false);
+      Debug.Assert(cd.ECRItemExists(7000, "WGFX1532-02", "101") == false);
+      Debug.Assert(cd.ECRItemExists(8848, "WGFX1532-03", "101") == false);
     }
 
   }

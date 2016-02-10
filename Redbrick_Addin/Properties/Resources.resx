@@ -160,4 +160,7 @@
   <data name="UpdateFrom" xml:space="preserve">
     <value>Update from {0} to {1}?</value>
   </data>
+  <data name="InsertIntoEcrItems" xml:space="preserve">
+    <value>Insert '{0}' into ECR# {1} items?</value>
+  </data>
 </root>

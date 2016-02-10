@@ -98,6 +98,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Insert &apos;{0}&apos; into ECR# {1} items?.
+        /// </summary>
+        internal static string InsertIntoEcrItems {
+            get {
+                return ResourceManager.GetString("InsertIntoEcrItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Insert Into Cutlist.
         /// </summary>
         internal static string MakeOriginalButtonText {

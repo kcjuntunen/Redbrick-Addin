@@ -1,7 +1,12 @@
 ﻿
-0.8.10.4:
-	Why wasn't I handling revs? I dunno.
+* 0.8.10.5
+** LastCutlist updated on drawing mode generation
+** Parsing tweaks
+** ECR items can be inserted on drawing updates.
 
-0.8.10.3:
-	* Restricted name finding to department.
-	* Better author resolution.
+* 0.8.10.4
+** Why wasn't I handling revs? I dunno.
+
+* 0.8.10.3
+** Restricted name finding to department.
+** Better author resolution.

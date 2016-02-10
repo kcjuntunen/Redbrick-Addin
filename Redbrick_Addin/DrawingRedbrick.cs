@@ -64,7 +64,7 @@ namespace Redbrick_Addin {
       if (partNo != null) {
         partNo.Ctl = this.tbItemNo;
       } else {
-        partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-FILE NAME\"", true);
+        partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true);
         partNo.SwApp = this.SwApp;
         partNo.Ctl = this.tbItemNo;
         this.PropertySet.Add(partNo);

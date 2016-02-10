@@ -48,6 +48,7 @@ namespace Redbrick_Addin
       this.tbItemNoRes = new System.Windows.Forms.TextBox();
       this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
       this.label15 = new System.Windows.Forms.Label();
+      this.cbRevision = new System.Windows.Forms.ComboBox();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.label5 = new System.Windows.Forms.Label();
@@ -73,7 +74,6 @@ namespace Redbrick_Addin
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
       this.btnOK = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
-      this.cbRevision = new System.Windows.Forms.ComboBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel5.SuspendLayout();
@@ -246,6 +246,15 @@ namespace Redbrick_Addin
       this.label15.Size = new System.Drawing.Size(58, 44);
       this.label15.TabIndex = 7;
       this.label15.Text = "Revision";
+      // 
+      // cbRevision
+      // 
+      this.cbRevision.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbRevision.FormattingEnabled = true;
+      this.cbRevision.Location = new System.Drawing.Point(67, 3);
+      this.cbRevision.Name = "cbRevision";
+      this.cbRevision.Size = new System.Drawing.Size(146, 21);
+      this.cbRevision.TabIndex = 8;
       // 
       // groupBox1
       // 
@@ -521,15 +530,6 @@ namespace Redbrick_Addin
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
       this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-      // 
-      // cbRevision
-      // 
-      this.cbRevision.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.cbRevision.FormattingEnabled = true;
-      this.cbRevision.Location = new System.Drawing.Point(67, 3);
-      this.cbRevision.Name = "cbRevision";
-      this.cbRevision.Size = new System.Drawing.Size(146, 21);
-      this.cbRevision.TabIndex = 8;
       // 
       // DrawingRedbrick
       // 

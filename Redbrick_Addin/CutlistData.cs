@@ -649,7 +649,7 @@ namespace Redbrick_Addin {
       int drId = 0;
       string SQL = @"SELECT FileID FROM GEN_DRAWINGS WHERE FName LIKE ?;";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        comm.Parameters.AddWithValue("@drawingPath", drawingPath.Name);
+        comm.Parameters.AddWithValue("@drawingPath", drawingPath.Name + "%");
         using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
           if (dr.Read()) {
             drId = dr.GetInt32(0);
@@ -663,7 +663,7 @@ namespace Redbrick_Addin {
       int drId = 0;
       string SQL = @"SELECT FileID FROM GEN_DRAWINGS WHERE FName LIKE ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        comm.Parameters.AddWithValue("@filename", filename);
+        comm.Parameters.AddWithValue("@filename", filename + "%");
         using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
           if (dr.Read()) {
             drId = dr.GetInt32(0);
@@ -671,6 +671,24 @@ namespace Redbrick_Addin {
         }
       }
       return drId;
+    }
+
+    public object[] GetDrawingData(string filename) {
+      int drdata = 0;
+      object[] o = new object[] { };
+      string SQL = @"SELECT * FROM GEN_DRAWINGS WHERE FName LIKE ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@filename", filename + "%");
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (dr.Read()) {
+            o = new object[dr.FieldCount];
+            drdata = dr.GetValues(o);
+          } else {
+            o = new object[] {0, "NULL", "NULL", DateTime.Now};
+          }
+        }
+      }
+      return o;
     }
 
     public bool ECRIsBogus(string econumber) {
@@ -691,6 +709,25 @@ namespace Redbrick_Addin {
         } else {
           bogus = true;
         }
+      }
+      return bogus;
+    }
+
+    public bool ECRIsBogus(int econumber) {
+      bool bogus = true;
+      string SQL = string.Empty;
+      if (econumber > GetLastLegacyECR()) {
+        SQL = @"SELECT * FROM ECR_MAIN WHERE ECR_NUM = ?";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@eco", econumber);
+          using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+            if (dr.Read()) {
+              bogus = false;
+            }
+          }
+        }
+      } else {
+        bogus = true;
       }
       return bogus;
     }
@@ -931,7 +968,21 @@ namespace Redbrick_Addin {
       }
     }
 
-    public int InsertECRITem(int ecrId, string partnum, string rev, int type) {
+    public bool ECRItemExists(int ecrno, string partnum, string rev) {
+      bool res = true;
+      string SQL = @"SELECT * FROM ECR_ITEMS WHERE ECR_NUM = ? AND ITEMNUMBER = ? AND ITEMREV = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@en", ecrno);
+        comm.Parameters.AddWithValue("@pn", partnum);
+        comm.Parameters.AddWithValue("@rv", rev);
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          res = dr.Read();
+        }
+      }
+      return res;
+    }
+
+    private int InsertECRItemInner(int ecrId, string partnum, string rev, int type) {
       int newID = 0;
       if (ENABLE_DB_WRITE) {
         string SQL = @"INSERT INTO ECR_ITEMS (ECR_NUM, ITEMNUMBER, ITEMREV, TYPE) VALUES (?, ?, ?, ?); SELECT SCOPE_IDENTITY()";
@@ -940,11 +991,31 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@partnum", partnum);
           comm.Parameters.AddWithValue("@rev", rev);
           comm.Parameters.AddWithValue("@type", type);
-          newID = (int)comm.ExecuteScalar();
+          if (int.TryParse(comm.ExecuteScalar().ToString(), out newID)) {
+            return newID;
+          }
         }
       }
 
       return newID;
+    }
+
+    public int InsertECRItem(int ecrId, string partnum, string rev, int type, string lvl, string dwg_file_name) {
+      int ecr_item_id = 0;
+      if (ENABLE_DB_WRITE && !ECRIsBogus(ecrId) && !ECRItemExists(ecrId, partnum, rev)) {
+        ecr_item_id = InsertECRItemInner(ecrId, partnum, rev, type);
+        object[] o = GetDrawingData(Path.GetFileNameWithoutExtension(dwg_file_name) + ".pdf");
+        string SQL = @"INSERT INTO ECR_DRAWINGS (ITEM_ID, FILE_ID, DRWREV, DRWNAME, DRWPATH) VALUES (?, ?, ?, ?, ?)";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@itemID", ecr_item_id);
+          comm.Parameters.AddWithValue("@fileID", (int)o[0]);
+          comm.Parameters.AddWithValue("@lvl", lvl);
+          comm.Parameters.AddWithValue("@dname", o[1].ToString());
+          comm.Parameters.AddWithValue("@dpath", o[2].ToString());
+          comm.ExecuteNonQuery();
+        }
+      }
+      return ecr_item_id;
     }
 
     public int SetState(int cutlistid, int stateid) {
