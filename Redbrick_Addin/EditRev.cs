@@ -35,7 +35,7 @@ namespace Redbrick_Addin {
     }
 
     private void Init() {
-      CutlistData cd = new CutlistData();
+      CutlistData cd = cutlist_data;
 
       cbBy.DataSource = cd.GetAuthors().Tables[0];
       cbBy.DisplayMember = "NAME";
