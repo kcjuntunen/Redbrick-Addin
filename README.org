@@ -1,9 +1,14 @@
 ﻿
-
 * Usage
-
+** Model view
 1. Click on stuff, edit fields, make selections.
-2. Click the green check. There is no property writing, cutlist updating, &c. until the you click the green check.
+2. If the =Cutlist= combobox is populated, and has an item selected, material and edging will be updated.
+3. Click the green check. There is no property writing, cutlist updating, /&c/. until the you click the green check.
+** Drawing view
+1. Click on stuff, edit fields, make selections.
+2. If you add a revision with a non-bogus ECR number, you will have
+   the option to add this drawing to the related ECR item list.
+3. Click the green check. There is no property writing, /&c/. until the you click the green check.
 * Inserting into the cutlist DB
 For reasons in the footnotes, don't create cutlists from models in the development directory. The world won't end, but it would be mildly annoying later.
 ** From the model view to an existing cutlist
