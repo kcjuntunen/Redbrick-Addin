@@ -1295,6 +1295,57 @@ namespace Redbrick_Addin {
       }
     }
 
+    public DataRow GetCutJobData(string jobno) {
+      string SQL = @"SELECT * FROM CUT_JOBS WHERE JOB = ? ORDER BY CUT_JOBS.DATE DESC";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@jobn", jobno);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0].Rows[0];
+          }
+        }
+      }
+
+    }
+
+    public DataTable GetWCData(string wcID) {
+      string SQL = @"SELECT * FROM GEN_WORKC WHERE WC_ID = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@wcID", wcID);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
+    public DataTable GetWCData() {
+      string SQL = @"SELECT * FROM GEN_WORKC";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
+    public DataTable GetCutJobs() {
+      string SQL = @"SELECT * FROM CUT_JOBS";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
     public DataSet GetCutlistData(string item, string rev) {
       string SQL = @"SELECT * FROM CUT_CUTLISTS WHERE (((CUT_CUTLISTS.PARTNUM)=?)) AND (((CUT_CUTLISTS.REV)=?));";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {

@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using System.Linq;
+using System.Data.Linq;
+
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
@@ -327,6 +330,43 @@ namespace Redbrick_Addin {
     }
 
     private void dpDate_ValueChanged(object sender, EventArgs e) {
+
+    }
+
+    private void btnLookup_Click(object sender, EventArgs e) {
+      DataDisplay dd = new DataDisplay();
+      M2MData m = new M2MData();
+      DataTable jd = m.GetJobsDue();
+      DataTable cj = PropertySet.CutlistData.GetCutJobs();
+      DataTable wc = PropertySet.CutlistData.GetWCData();
+      ModelDoc2 doc = (ModelDoc2)PropertySet.SwApp.ActiveDoc;
+      string name = string.Empty;
+      if (doc != null) {
+        name = doc.GetPathName();
+        dd.Text = System.IO.Path.GetFileNameWithoutExtension(name);
+      }
+
+      IEnumerable<DataRow> q1 = (from job in jd.AsEnumerable()
+                                 where job.Field<string>("fpartno").Contains(System.IO.Path.GetFileNameWithoutExtension(name))
+                                 select job);
+
+      var q = from job in q1.AsEnumerable<DataRow>()
+              join wkcen in wc.AsEnumerable() on job.Field<string>("fpro_id") equals wkcen.Field<string>("WC_ID")
+              join cujo in cj.AsEnumerable() on job.Field<string>("fjobno").Trim() equals cujo.Field<string>("JOB").Trim()
+              where job.Field<string>("fpro_id").StartsWith("2") || job.Field<string>("fpro_id").StartsWith("5")
+              select new {
+                JobNo = job["fjobno"],
+                Status = job["fstatus"],
+                PartNo = job["fpartno"],
+                Rev = job["fpartrev"],
+                Qty = job["foperqty"],
+                DueDate = job["fddue_date"],
+                WC = wkcen["WC_NAME"],
+                Printed = cujo["DATE"]
+              };
+
+      dd.Grid.DataSource = DataDisplay.ToDataTable(q.ToList());
+      dd.ShowDialog();
 
     }
   }

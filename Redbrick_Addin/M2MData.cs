@@ -121,6 +121,40 @@ namespace Redbrick_Addin {
       return parttype;
     }
 
+    public DataTable GetJobsDue() {
+      string SQL = @"SELECT jomast.fjobno, jomast.fstatus, jomast.fpartno, jomast.fpartrev, jodrtg.foperqty, jomast.fddue_date,  jodrtg.fpro_id " +
+        @"FROM jomast INNER JOIN jodrtg ON jomast.fjobno = jodrtg.fjobno " +
+        //@"WHERE (jomast.fstatus NOT LIKE @crit) " +
+        @"ORDER BY jomast.fjobno;";
+      using (SqlCommand comm = new SqlCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@crit", "C%");
+        using (SqlDataAdapter da = new SqlDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
+    public DataTable GetJobData(string partno, string partrev) {
+      string SQL = @"SELECT jomast.fjobno, jomast.fstatus, jomast.fpartno, jomast.fpartrev, jodrtg.foperqty, jomast.fddue_date " +
+        @"FROM jomast INNER JOIN jodrtg ON jomast.fjobno = jodrtg.fjobno " +
+        //"WHERE (jomast.fstatus NOT LIKE @crit) AND ((jomast.fpartno)= @partno ) AND ((jomast.fpartrev)= @partrev)) " +
+        "WHERE ((jomast.fpartno)= @partno ) AND ((jomast.fpartrev)= @partrev)) " +
+        @"ORDER BY jomast.fjobno;";
+      using (SqlCommand comm = new SqlCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@crit", "C%");
+        comm.Parameters.AddWithValue("@partno", partno);
+        comm.Parameters.AddWithValue("@partrev", partrev);
+        using (SqlDataAdapter da = new SqlDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
 
     // --------------------------------------------------------------------------
     private SqlCommand ConstructCommand(string SQL, string prtno, string prtrv) {

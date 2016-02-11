@@ -74,6 +74,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
       this.btnOK = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
+      this.btnLookup = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel5.SuspendLayout();
@@ -115,6 +116,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel2.Controls.Add(this.label2, 1, 2);
       this.tableLayoutPanel2.Controls.Add(this.tbItemNoRes, 1, 1);
       this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel5, 0, 6);
+      this.tableLayoutPanel2.Controls.Add(this.btnLookup, 1, 6);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -188,8 +190,7 @@ namespace Redbrick_Addin
       this.btnCreate.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCreate.Location = new System.Drawing.Point(225, 97);
       this.btnCreate.Name = "btnCreate";
-      this.tableLayoutPanel2.SetRowSpan(this.btnCreate, 2);
-      this.btnCreate.Size = new System.Drawing.Size(90, 74);
+      this.btnCreate.Size = new System.Drawing.Size(90, 24);
       this.btnCreate.TabIndex = 7;
       this.btnCreate.Text = "Create/Update";
       this.btnCreate.UseVisualStyleBackColor = true;
@@ -531,6 +532,17 @@ namespace Redbrick_Addin
       this.btnCancel.UseVisualStyleBackColor = true;
       this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
       // 
+      // btnLookup
+      // 
+      this.btnLookup.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnLookup.Location = new System.Drawing.Point(225, 127);
+      this.btnLookup.Name = "btnLookup";
+      this.btnLookup.Size = new System.Drawing.Size(90, 44);
+      this.btnLookup.TabIndex = 8;
+      this.btnLookup.Text = "Lookup";
+      this.btnLookup.UseVisualStyleBackColor = true;
+      this.btnLookup.Click += new System.EventHandler(this.btnLookup_Click);
+      // 
       // DrawingRedbrick
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -595,5 +607,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.ComboBox cbRevision;
+        private System.Windows.Forms.Button btnLookup;
     }
 }
