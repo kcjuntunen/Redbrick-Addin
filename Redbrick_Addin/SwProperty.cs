@@ -334,10 +334,9 @@ namespace Redbrick_Addin {
 
           if (int.TryParse(this._value, out tp)) {
             ID = _resValue;
-            _value = cd.GetOpByID(_resValue);
+            _descr = cd.GetOpAbbreviationByID(_resValue);
           } else {
             ID = cd.GetOpIDByName(_resValue).ToString();
-            _value = cd.GetOpByID(ID);
           }
         }
       } else {
