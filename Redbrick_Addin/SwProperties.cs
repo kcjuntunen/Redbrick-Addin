@@ -876,7 +876,7 @@ namespace Redbrick_Addin {
       bq.Get(modeldoc, cutlistData);
       c.Get(modeldoc, cutlistData);
       uc.Get(modeldoc, cutlistData);
-      
+
       if (IsAmongTheProperties(op1.Name, modeldoc)) {
         op1.Get(modeldoc, cutlistData);
         op1id.ID = cutlistData.GetOpIDByName(op1.ResValue).ToString();
@@ -987,8 +987,19 @@ namespace Redbrick_Addin {
       }
 
       bool res = false;
-      List<string> gl = new List<string>((string[])glpm.GetNames());
-      List<string> sp = new List<string>((string[])sppm.GetNames());
+      string[] testArray = (string[])glpm.GetNames();
+      List<string> gl = new List<string>();
+      List<string> sp = new List<string>();
+
+      if (testArray != null) {
+        gl = new List<string>(testArray);
+      }
+
+      testArray = (string[])sppm.GetNames();
+      if (testArray != null) {
+        sp = new List<string>(testArray);
+      }
+
       if (gl.Contains(propName) || sp.Contains(propName)) {
         res = true;
       }
@@ -1199,8 +1210,8 @@ namespace Redbrick_Addin {
       DelSpecific(md);
       DelGlobal(md);
       foreach (SwProperty p in _innerArray) {
-          p.Del(md);
-          p.Write2(md); 
+        p.Del(md);
+        p.Write2(md);
       }
     }
 
