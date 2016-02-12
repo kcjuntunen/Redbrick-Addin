@@ -842,8 +842,8 @@ namespace Redbrick_Addin {
       SwProperty wt = new SwProperty("WALL THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"Thickness@Sheet-Metal1\"", true);
       SwProperty ol = new SwProperty("OVERL", swCustomInfoType_e.swCustomInfoDouble, "0.0", true);
       SwProperty ow = new SwProperty("OVERW", swCustomInfoType_e.swCustomInfoDouble, "0.0", true);
-      SwProperty cnc1 = new SwProperty("CNC1", swCustomInfoType_e.swCustomInfoDouble, "NA", true);
-      SwProperty cnc2 = new SwProperty("CNC2", swCustomInfoType_e.swCustomInfoDouble, "NA", true);
+      SwProperty cnc1 = new SwProperty("CNC1", swCustomInfoType_e.swCustomInfoText, "NA", true);
+      SwProperty cnc2 = new SwProperty("CNC2", swCustomInfoType_e.swCustomInfoText, "NA", true);
       SwProperty bq = new SwProperty("BLANK QTY", swCustomInfoType_e.swCustomInfoNumber, "1", true);
       SwProperty c = new SwProperty("COMMENT", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
       SwProperty uc = new SwProperty("UPDATE CNC", swCustomInfoType_e.swCustomInfoText, "N", true);
