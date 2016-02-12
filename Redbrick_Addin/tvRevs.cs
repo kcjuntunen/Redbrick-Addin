@@ -39,7 +39,17 @@ namespace Redbrick_Addin {
           TreeNode tnRB = new TreeNode("Requested by: " + e.RequestedBy, 0, 0);
           TreeNode tnR = new TreeNode("Revision Description:" + e.Revision, 0, 0);
           TreeNode tnS = new TreeNode("Status: " + e.Status, 0, 0);
-          tnC = new TreeNode("Changes: " + e.Changes);
+
+          if ((e.Changes != null) && e.Changes.Contains("\n")) {
+            List<TreeNode> nodes = new List<TreeNode>();
+            string[] changeNodes = e.Changes.Split('\n');
+            foreach (string s in changeNodes) {
+              nodes.Add(new TreeNode(s));
+            }
+            tnC = new TreeNode("Changes ", nodes.ToArray());
+          } else {
+            tnC = new TreeNode("Changes: " + e.Changes);
+          }
           TreeNode[] ts = { tnC, tnD, tnRB, tnR, tnS };
           TreeNode tnDesc = new TreeNode(r.Description.Value);
           tnECO = new TreeNode(r.Eco.Value, ts);
