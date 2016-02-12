@@ -3,7 +3,7 @@
 ** Model view
 1. Click on stuff, edit fields, make selections.
 2. If the =Cutlist= combobox is populated, and has an item selected, material and edging will be updated.
-3. Click the green check. There is no property writing, cutlist updating, /&c/. until the you click the green check.
+3. Click the green check. There is no property writing, cutlist updating, /&c/. until the you click the green check. Fiddling with the =Status= combobox, however, results in immediate updating of the cutlist status.
 ** Drawing view
 1. Click on stuff, edit fields, make selections.
 2. If you add a revision with a non-bogus ECR number, you will have
