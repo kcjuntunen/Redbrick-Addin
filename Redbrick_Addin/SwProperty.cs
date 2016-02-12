@@ -317,8 +317,10 @@ namespace Redbrick_Addin {
       if (res == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent || 
         tempval == string.Empty) {
         res = gcpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
-        Value = tempval;
-        ResValue = tempresval;
+        if (tempval != string.Empty) {
+          Value = tempval;
+          ResValue = tempresval;
+        }
       } else {
         Value = tempval;
         ResValue = tempresval;
