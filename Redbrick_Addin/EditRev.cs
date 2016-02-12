@@ -35,7 +35,12 @@ namespace Redbrick_Addin {
     }
 
     private void Init() {
-      CutlistData cd = cutlist_data;
+      CutlistData cd;
+      if (cutlist_data != null) {
+        cd = cutlist_data;
+      } else {
+        cd = new CutlistData();
+      }
 
       cbBy.DataSource = cd.GetAuthors().Tables[0];
       cbBy.DisplayMember = "NAME";
@@ -105,8 +110,14 @@ namespace Redbrick_Addin {
       // displayed on drawings. We only want all caps for that as well.
       SwProperty desc = new SwProperty("DESCRIPTION " + (nodeCount + 1).ToString(), tType, CutlistData.FilterString(tbDesc.Text, Properties.Settings.Default.FlameWar), true);
       cbBy.ValueMember = "INITIAL";
-      SwProperty list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, (cbBy.SelectedValue as string).Substring(0, 2), true);
-      //cbBy.ValueMember = "LAST";
+      
+      SwProperty list;
+      if (cbBy.SelectedValue != null) {
+        list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, (cbBy.SelectedValue as string).Substring(0, 2), true);
+      } else {
+        list = new SwProperty("LIST " + (nodeCount + 1).ToString(), tType, string.Empty, true);
+      }
+
       SwProperty date = new SwProperty("DATE " + (nodeCount + 1).ToString(), tType, dtpDate.Value.ToShortDateString(), true);
 
       if (Revs.Contains("REVISION " + (char)(nodeCount + 65))) {
