@@ -309,16 +309,87 @@ namespace Redbrick_Addin {
       } else {
         scpm = md.Extension.get_CustomPropertyManager(string.Empty);
       }
+      
+      int res;
+
+      res = scpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+
+      if (res == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent || 
+        tempval == string.Empty) {
+        res = gcpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+        Value = tempval;
+        ResValue = tempresval;
+      } else {
+        Value = tempval;
+        ResValue = tempresval;
+      }
+
+      if (Name.ToUpper().Contains("CUTLIST MATERIAL") || Name.ToUpper().Contains("CLID")) {
+        int tp = 0;
+        if (int.TryParse(Value, out tp)) {
+          ID = Value;
+          Descr = cd.GetMaterialByID(Value);
+          Value = ID;
+        } else {
+          ID = cd.GetMaterialID(Value).ToString();
+          Descr = Value;
+        }
+      }
+
+      if (Name.Contains("OP")) {
+        int tp = 0;
+        if (int.TryParse(Value, out tp)) {
+          ID = Value;
+          Descr = cd.GetOpAbbreviationByID(Value);
+        } else {
+          ID = cd.GetOpIDByName(Value).ToString();
+          Descr = Value;
+        }
+      }
+
+      if (Name.ToUpper().Contains("EDGE") || (Name.ToUpper().StartsWith("E") && Name.ToUpper().EndsWith("ID"))) {
+        int tp = 0;
+        if (int.TryParse(Value, out tp)) {
+          ID = Value;
+          Descr = cd.GetEdgeByID(Value);
+        } else {
+          ID = cd.GetEdgeID(Value).ToString();
+          Descr = Value;
+        }
+      }
+    }
+
+    /// <summary>
+    /// Directly draws from SW, assinging SwApp. Why do I have all these?
+    /// </summary>
+    /// <param name="md">A ModelDoc2.</param>
+    /// <param name="cd">The Cutlist handler.</param>
+    public void Get2(ModelDoc2 md, CutlistData cd) {
+      Configuration cf = md.ConfigurationManager.ActiveConfiguration;
+
+      CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+      CustomPropertyManager scpm;
+
+      bool wasResolved;
+      bool useCached = false;
+      string tempval = string.Empty;
+      string tempresval = string.Empty;
+
+      if (cf != null) {
+        scpm = md.Extension.get_CustomPropertyManager(cf.Name);
+      } else {
+        scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+      }
       int res;
 
       if (this.Global) {
         res = gcpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
-        if (wasResolved) {
+        if (res == (int)swCustomInfoGetResult_e.swCustomInfoGetResult_NotPresent) {
           Value = tempval;
           ResValue = tempresval;
           Type = (swCustomInfoType_e)gcpm.GetType2(this.Name);
         } else { // check in wrong place; sometimes it's there.
-          scpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
+          res = scpm.Get5(Name, useCached, out tempval, out tempresval, out wasResolved);
           if (wasResolved) {
             Value = tempval;
             ResValue = tempresval;
