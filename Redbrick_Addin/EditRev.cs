@@ -129,9 +129,9 @@ namespace Redbrick_Addin {
         r.Date = date;
       } else {
         r = new DrawingRev(rev, eco, desc, list, date);
+        Revs.Add(r);
       }
 
-      Revs.Add(r);
       r.SwApp = Revs.SwApp;
 
       if (new_rev) {
