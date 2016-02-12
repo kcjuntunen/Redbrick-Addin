@@ -529,7 +529,7 @@ namespace Redbrick_Addin {
     }
 
     public int GetOpTypeIDByName(string name) {
-      if (name == string.Empty)
+      if (name == null || name == string.Empty)
         return 1;
 
       string SQL = @"SELECT TYPEID FROM CUT_PART_TYPES WHERE TYPEDESC Like ?";
