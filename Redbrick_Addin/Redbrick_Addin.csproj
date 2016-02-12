@@ -170,6 +170,12 @@
     <Compile Include="GeneralProperties.Designer.cs">
       <DependentUpon>GeneralProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="MachineProgramManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MachineProgramManager.Designer.cs">
+      <DependentUpon>MachineProgramManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="MachineProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -249,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralProperties.resx">
       <DependentUpon>GeneralProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MachineProgramManager.resx">
+      <DependentUpon>MachineProgramManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MachineProperties.resx">
       <DependentUpon>MachineProperties.cs</DependentUpon>

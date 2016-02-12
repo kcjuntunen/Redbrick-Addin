@@ -259,6 +259,33 @@ namespace Redbrick_Addin {
       }
     }
 
+    public DataTable GetMachines() {
+      string SQL = @"SELECT * FROM CUT_MACHINES ORDER BY CUT_MACHINES.TYPE ASC, CUT_MACHINES.NICKNAME DESC";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
+    public DataTable GetMachinesByProg(string searchterm, int priority) {
+      string SQL = @"SELECT DISTINCT CUT_MACHINES.MACHNAME FROM (CUT_MACHINE_PROGRAMS LEFT JOIN CUT_MACHINES ON CUT_MACHINE_PROGRAMS.MACHID = CUT_MACHINES.MACHID) " +
+            "LEFT JOIN CUT_PARTS ON CUT_MACHINE_PROGRAMS.PARTID = CUT_PARTS.PARTID WHERE (((CUT_PARTS.CNC1) LIKE ? and PRIORITY = ?))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@srchterm", "%" + searchterm + "%");
+        comm.Parameters.AddWithValue("@pri", priority);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
     public DataSet GetWherePartUsed(int partID) {
       string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
           @"CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
