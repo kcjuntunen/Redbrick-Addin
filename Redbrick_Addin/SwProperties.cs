@@ -836,10 +836,10 @@ namespace Redbrick_Addin {
       GetMaterialMetaData();
       SwProperty d = new SwProperty("Description", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
       SwProperty iic = new SwProperty("INCLUDE IN CUTLIST", swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true);
-      SwProperty l = new SwProperty("LENGTH", swCustomInfoType_e.swCustomInfoText, "D1@Sketch1", true);
-      SwProperty w = new SwProperty("WIDTH", swCustomInfoType_e.swCustomInfoText, "D2@Sketch1", true);
-      SwProperty t = new SwProperty("THICKNESS", swCustomInfoType_e.swCustomInfoText, "D1@Boss-Extrude1", true);
-      SwProperty wt = new SwProperty("WALL THICKNESS", swCustomInfoType_e.swCustomInfoText, "Thickness@Sheet-Metal1", true);
+      SwProperty l = new SwProperty("LENGTH", swCustomInfoType_e.swCustomInfoText, "\"D1@Sketch1\"", true);
+      SwProperty w = new SwProperty("WIDTH", swCustomInfoType_e.swCustomInfoText, "\"D2@Sketch1\"", true);
+      SwProperty t = new SwProperty("THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"D1@Boss-Extrude1\"", true);
+      SwProperty wt = new SwProperty("WALL THICKNESS", swCustomInfoType_e.swCustomInfoText, "\"Thickness@Sheet-Metal1\"", true);
       SwProperty ol = new SwProperty("OVERL", swCustomInfoType_e.swCustomInfoDouble, "0.0", true);
       SwProperty ow = new SwProperty("OVERW", swCustomInfoType_e.swCustomInfoDouble, "0.0", true);
       SwProperty cnc1 = new SwProperty("CNC1", swCustomInfoType_e.swCustomInfoDouble, "NA", true);
