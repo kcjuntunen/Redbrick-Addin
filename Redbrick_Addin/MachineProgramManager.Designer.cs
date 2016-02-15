@@ -46,10 +46,11 @@ namespace Redbrick_Addin {
       this.lbPri1.Location = new System.Drawing.Point(149, 43);
       this.lbPri1.Name = "lbPri1";
       this.tlpMain.SetRowSpan(this.lbPri1, 3);
-      this.lbPri1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+      this.lbPri1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
       this.lbPri1.Size = new System.Drawing.Size(140, 238);
       this.lbPri1.TabIndex = 1;
       this.lbPri1.SelectedIndexChanged += new System.EventHandler(this.lbPri1_SelectedIndexChanged);
+      this.lbPri1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbPri1_MouseDown);
       // 
       // tlpMain
       // 
@@ -89,9 +90,11 @@ namespace Redbrick_Addin {
       this.lbPri2.Location = new System.Drawing.Point(295, 43);
       this.lbPri2.Name = "lbPri2";
       this.tlpMain.SetRowSpan(this.lbPri2, 3);
+      this.lbPri2.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
       this.lbPri2.Size = new System.Drawing.Size(140, 238);
       this.lbPri2.TabIndex = 2;
       this.lbPri2.SelectedIndexChanged += new System.EventHandler(this.lbPri2_SelectedIndexChanged);
+      this.lbPri2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbPri2_MouseDown);
       // 
       // lbPri3
       // 
@@ -100,9 +103,11 @@ namespace Redbrick_Addin {
       this.lbPri3.Location = new System.Drawing.Point(441, 43);
       this.lbPri3.Name = "lbPri3";
       this.tlpMain.SetRowSpan(this.lbPri3, 3);
+      this.lbPri3.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
       this.lbPri3.Size = new System.Drawing.Size(140, 238);
       this.lbPri3.TabIndex = 3;
       this.lbPri3.SelectedIndexChanged += new System.EventHandler(this.lbPri3_SelectedIndexChanged);
+      this.lbPri3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbPri3_MouseDown);
       // 
       // lbAssocPart
       // 
@@ -189,6 +194,7 @@ namespace Redbrick_Addin {
       this.btnOK.TabIndex = 6;
       this.btnOK.Text = "OK";
       this.btnOK.UseVisualStyleBackColor = true;
+      this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
       // 
       // btnCncl
       // 
@@ -199,6 +205,7 @@ namespace Redbrick_Addin {
       this.btnCncl.TabIndex = 7;
       this.btnCncl.Text = "Cancel";
       this.btnCncl.UseVisualStyleBackColor = true;
+      this.btnCncl.Click += new System.EventHandler(this.btnCncl_Click);
       // 
       // MachineProgramManager
       // 
@@ -207,8 +214,11 @@ namespace Redbrick_Addin {
       this.ClientSize = new System.Drawing.Size(584, 320);
       this.Controls.Add(this.tlpMain);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
       this.Name = "MachineProgramManager";
       this.Text = "Machine Program Manager";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MachineProgramManager_FormClosing);
+      this.Load += new System.EventHandler(this.MachineProgramManager_Load);
       this.tlpMain.ResumeLayout(false);
       this.tlpMain.PerformLayout();
       this.ResumeLayout(false);

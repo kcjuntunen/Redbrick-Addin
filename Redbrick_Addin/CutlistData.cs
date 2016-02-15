@@ -142,7 +142,7 @@ namespace Redbrick_Addin {
       lock (threadLock) {
         if (OpType != optype) {
           OpType = optype;
-          string SQL = @"SELECT OPID, OPNAME, OPDESCR, OPTYPE FROM CUT_PART_TYPES "
+          string SQL = @"SELECT OPID, OPNAME, OPNAME + ' - ' + OPDESCR AS OPDESCR, OPTYPE FROM CUT_PART_TYPES "
               + @"INNER JOIN CUT_OPS ON CUT_PART_TYPES.TYPEID = CUT_OPS.OPTYPE WHERE CUT_PART_TYPES.TYPEID = ? ORDER BY OPDESCR";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
             comm.Parameters.AddWithValue("@OpType", optype);
@@ -167,7 +167,7 @@ namespace Redbrick_Addin {
 
     private DataSet GetOps() {
       lock (threadLock) {
-        string SQL = @"SELECT * FROM CUT_OPS WHERE OPTYPE = ? ORDER BY OPDESCR";
+        string SQL = @"SELECT OPID, OPNAME, OPNAME + ' - ' + OPDESCR AS OPDESCR, OPTYPE FROM CUT_OPS WHERE OPTYPE = ? ORDER BY OPDESCR";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@OpType", OpType);
           using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
@@ -272,11 +272,50 @@ namespace Redbrick_Addin {
     }
 
     public DataTable GetMachinesByProg(string searchterm, int priority) {
-      string SQL = @"SELECT DISTINCT CUT_MACHINES.MACHNAME FROM (CUT_MACHINE_PROGRAMS LEFT JOIN CUT_MACHINES ON CUT_MACHINE_PROGRAMS.MACHID = CUT_MACHINES.MACHID) " +
-            "LEFT JOIN CUT_PARTS ON CUT_MACHINE_PROGRAMS.PARTID = CUT_PARTS.PARTID WHERE (((CUT_PARTS.CNC1) LIKE ? and PRIORITY = ?))";
+      //string SQL = @"SELECT CUT_MACHINE_PROGRAMS.MACHID, CUT_MACHINE_PROGRAMS.PARTID, CUT_MACHINE_PROGRAMS.PRIORITY FROM (CUT_MACHINE_PROGRAMS LEFT JOIN CUT_MACHINES ON CUT_MACHINE_PROGRAMS.MACHID = CUT_MACHINES.MACHID) " +
+      //      "LEFT JOIN CUT_PARTS ON CUT_MACHINE_PROGRAMS.PARTID = CUT_PARTS.PARTID WHERE (((CUT_PARTS.CNC1 LIKE ? OR CUT_PARTS.CNC2 LIKE ?) AND CUT_MACHINE_PROGRAMS.PRIORITY = ?))";
+      string SQL = @"SELECT CUT_MACHINE_PROGRAMS.MACHID, CUT_MACHINE_PROGRAMS.PARTID, CUT_MACHINE_PROGRAMS.PRIORITY FROM (CUT_MACHINE_PROGRAMS " +
+        "LEFT JOIN CUT_MACHINES ON CUT_MACHINE_PROGRAMS.MACHID = CUT_MACHINES.MACHID) LEFT JOIN CUT_PARTS ON CUT_MACHINE_PROGRAMS.PARTID = CUT_PARTS.PARTID " +
+        "WHERE ((CUT_PARTS.CNC1 LIKE ?) OR (CUT_PARTS.CNC2 LIKE ?)) AND (CUT_MACHINE_PROGRAMS.PRIORITY= ?)";
+
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        comm.Parameters.AddWithValue("@srchterm", "%" + searchterm + "%");
+        comm.Parameters.AddWithValue("@proga", "%" + searchterm + "%");
+        comm.Parameters.AddWithValue("@progb", "%" + searchterm + "%");
         comm.Parameters.AddWithValue("@pri", priority);
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
+    public DataTable GetPartsByCNC(string searchTerm) {
+      string SQL = "SELECT DISTINCT * FROM (CUT_MACHINE_PROGRAMS LEFT JOIN CUT_MACHINES ON CUT_MACHINE_PROGRAMS.MACHID = " +
+            "CUT_MACHINES.MACHID) LEFT JOIN CUT_PARTS ON CUT_MACHINE_PROGRAMS.PARTID = CUT_PARTS.PARTID " +
+            "WHERE ((CUT_PARTS.CNC1 LIKE ? OR CUT_PARTS.CNC2 LIKE ?)) ORDER BY CUT_PARTS.PARTNUM";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@proga", "%" + searchTerm + "%");
+        comm.Parameters.AddWithValue("@progb", "%" + searchTerm + "%");
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            return ds.Tables[0];
+          }
+        }
+      }
+    }
+
+    public DataTable GetWhereUsedByProg(string searchTerm) {
+      string SQL = "SELECT DISTINCT CUT_CUTLISTS.PARTNUM, CUT_CUTLISTS.REV " +
+            "FROM (CUT_CUTLIST_PARTS LEFT JOIN CUT_CUTLISTS ON CUT_CUTLIST_PARTS.CLID = CUT_CUTLISTS.CLID) " +
+            "LEFT JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID " +
+            "WHERE ((CUT_PARTS.CNC1 LIKE ? OR CUT_PARTS.CNC2 LIKE ?)) " +
+            "ORDER BY CUT_CUTLISTS.PARTNUM";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@proga", "%" + searchTerm + "%");
+        comm.Parameters.AddWithValue("@progb", "%" + searchTerm + "%");
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
@@ -711,7 +750,7 @@ namespace Redbrick_Addin {
             o = new object[dr.FieldCount];
             drdata = dr.GetValues(o);
           } else {
-            o = new object[] {0, "NULL", "NULL", DateTime.Now};
+            o = new object[] { 0, "NULL", "NULL", DateTime.Now };
           }
         }
       }
@@ -1043,6 +1082,60 @@ namespace Redbrick_Addin {
         }
       }
       return ecr_item_id;
+    }
+
+    public bool GetProgExists(int partID, int machID) {
+      string SQL = "SELECT PROGID FROM CUT_MACHINE_PROGRAMS WHERE (((CUT_MACHINE_PROGRAMS.PARTID)= ? ) AND ((CUT_MACHINE_PROGRAMS.MACHID)= ? ))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@partID", partID);
+        comm.Parameters.AddWithValue("@machID", machID);
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (dr.Read()) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    public int SetProgramExists(int partID, int machID, bool setMe) {
+      int affected = 0;
+      if (ENABLE_DB_WRITE) {
+        string SQL = string.Empty;
+        bool extant = GetProgExists(partID, machID);
+        if (setMe && !extant) {
+          SQL = "INSERT INTO CUT_MACHINE_PROGRAMS (MACHID, PARTID, PRIORITY) VALUES (?, ?, 1)";
+        } else if (setMe && extant) {
+          // Do nothing
+        } else {
+          SQL = "DELETE FROM CUT_MACHINE_PROGRAMS WHERE PARTID = ? AND MACHID = ?";
+        }
+        if (SQL != string.Empty) {
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@partID", partID);
+            comm.Parameters.AddWithValue("@machID", machID);
+            affected = comm.ExecuteNonQuery();
+          }
+        }
+      }
+      return affected;
+    }
+
+    public void SetProgramPriority(int partID, int machID, int priority) {
+      if (ENABLE_DB_WRITE) {
+        int affected = 0;
+        string SQL = "UPDATE CUT_MACHINE_PROGRAMS SET PRIORITY = ? WHERE MACHID = ? AND PARTID = ?";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@prio", priority);
+          comm.Parameters.AddWithValue("@machID", machID);
+          comm.Parameters.AddWithValue("@partID", partID);
+          affected = comm.ExecuteNonQuery();
+          if (affected < 1) {
+            comm.CommandText = "INSERT INTO CUT_MACHINE_PROGRAMS (PRIORITY, MACHID, PARTID) VALUES (?, ?, ?)";
+            affected = comm.ExecuteNonQuery();
+          }
+        }
+      }
     }
 
     public int SetState(int cutlistid, int stateid) {

@@ -503,5 +503,29 @@ namespace Redbrick_Addin.Properties {
                 return ((string)(this["M2MConnection"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point MPMLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["MPMLocation"]));
+            }
+            set {
+                this["MPMLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Size MPMSize {
+            get {
+                return ((global::System.Drawing.Size)(this["MPMSize"]));
+            }
+            set {
+                this["MPMSize"] = value;
+            }
+        }
     }
 }

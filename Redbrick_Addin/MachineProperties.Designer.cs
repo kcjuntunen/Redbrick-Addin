@@ -223,7 +223,7 @@ namespace Redbrick_Addin
       this.btnWhere.Name = "btnWhere";
       this.btnWhere.Size = new System.Drawing.Size(100, 23);
       this.btnWhere.TabIndex = 9;
-      this.btnWhere.Text = "Where Used";
+      this.btnWhere.Text = "Priority";
       this.btnWhere.UseVisualStyleBackColor = true;
       this.btnWhere.Click += new System.EventHandler(this.btnWhere_Click);
       // 
