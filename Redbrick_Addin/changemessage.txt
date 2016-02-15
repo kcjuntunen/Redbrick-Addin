@@ -1,4 +1,7 @@
 ﻿
+* 1.0.0.0
+** No longer leaking parts into recent cutlists.
+
 * 0.8.10.5
 ** Experimental overhaul of parsing algorithms.
 ** LastCutlist updated on drawing mode generation

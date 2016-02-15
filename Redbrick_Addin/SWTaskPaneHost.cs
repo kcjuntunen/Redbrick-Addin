@@ -165,7 +165,7 @@ namespace Redbrick_Addin {
 
     public void ConnectSelection() {
       System.GC.Collect(2, GCCollectionMode.Forced);
-
+      prop.CutlistID = 0;
       if (Document != null) {
         if (Document != md_last) {
 

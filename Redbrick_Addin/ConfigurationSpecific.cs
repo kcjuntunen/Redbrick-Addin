@@ -121,8 +121,12 @@ namespace Redbrick_Addin {
       }
 
       if (cbCutlist.Text == string.Empty) {
+        propertySet.CutlistID = 0;
         bRemove.Enabled = false;
       } else {
+        int sv = 0;
+        if (int.TryParse(cbCutlist.SelectedValue.ToString(), out sv))
+          propertySet.CutlistID = sv;
         bRemove.Enabled = true;
       }
     }
@@ -343,6 +347,7 @@ namespace Redbrick_Addin {
         }
 
         if (cbCutlist.Text == string.Empty) {
+          propertySet.CutlistID = 0;
           bRemove.Enabled = false;
         } else {
           bRemove.Enabled = true;
