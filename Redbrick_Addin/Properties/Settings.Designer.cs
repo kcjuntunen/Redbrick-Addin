@@ -103,6 +103,7 @@ namespace Redbrick_Addin.Properties {
   <string>PB</string>
   <string>PC</string>
   <string>PE</string>
+  <string>PETG</string>
   <string>PLWD</string>
   <string>POPLAR</string>
   <string>POSTFRM MDF</string>
