@@ -216,7 +216,7 @@ namespace Redbrick_Addin {
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
       this.Name = "MachineProgramManager";
-      this.Text = "Machine Program Manager";
+      this.Text = "Machine Priority Manager";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MachineProgramManager_FormClosing);
       this.Load += new System.EventHandler(this.MachineProgramManager_Load);
       this.tlpMain.ResumeLayout(false);
