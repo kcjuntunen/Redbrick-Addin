@@ -235,6 +235,7 @@ namespace Redbrick_Addin {
       dtpHeight = ParseFloat(tbH.Text);
 
       if (table != null) {
+        CutlistData.DeleteCutlist(itemNo, rev);
         CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
           itpCust, dtpLength, dtpWidth, dtpHeight, itpState, table.GetParts());
       } else if (part != null) {

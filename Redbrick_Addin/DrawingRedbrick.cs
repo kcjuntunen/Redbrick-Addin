@@ -369,5 +369,22 @@ namespace Redbrick_Addin {
       dd.ShowDialog();
 
     }
+
+    private void btnDelete_Click(object sender, EventArgs e) {
+      string prtno = tbItemNoRes.Text;
+      string revno = cbRevision.Text;
+
+      string question = string.Format("Really delete {0} REV {1}", 
+        prtno, 
+        revno);
+
+      swMessageBoxResult_e mebore = (swMessageBoxResult_e)SwApp.SendMsgToUser2(question,
+        (int)swMessageBoxIcon_e.swMbQuestion,
+        (int)swMessageBoxBtn_e.swMbYesNo);
+
+      if (mebore == swMessageBoxResult_e.swMbHitYes) {
+        PropertySet.CutlistData.DeleteCutlist(prtno, revno);
+      }
+    }
   }
 }

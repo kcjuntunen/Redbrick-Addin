@@ -1192,6 +1192,30 @@ namespace Redbrick_Addin {
       return affected;
     }
 
+    public int DeleteCutlist(string itemno, string rev) {
+      int affected = 0;
+      if (ENABLE_DB_WRITE) {
+        int clid = GetCutlistID(itemno, rev);
+        string SQL = "DELETE FROM CUT_CUTLISTS WHERE CLID = ?";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@clid", clid);
+          affected = comm.ExecuteNonQuery();
+        }
+
+        if (affected > 0) {
+          SQL = "DELETE FROM CUT_CUTLIST_PARTS WHERE CLID = ?";
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@clid", clid);
+            affected = comm.ExecuteNonQuery();
+          }
+        } else {
+          //throw new Exception(string.Format("Something is wrong; Couldn't properly resolve {0} REV {1}.", itemno, rev));
+        }
+      }
+
+      return affected;
+    }
+
     public int UpdateCutlist(string itemNo, string drawing, string rev, string descr, ushort custid, double l, double w, double h, ushort state,
       Dictionary<string, Part> prts) {
       int currentAuthor = GetCurrentAuthor();
