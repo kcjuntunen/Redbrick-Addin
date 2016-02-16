@@ -326,7 +326,7 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetWherePartUsed(int partID) {
-      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
+      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV ' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
           @"CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
           @"CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
           @"(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
@@ -337,6 +337,26 @@ namespace Redbrick_Addin {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
+            DataRow dar = ds.Tables[0].NewRow();
+
+            dar[0] = 0;
+            dar[1] = string.Empty;
+            dar[2] = string.Empty;
+            dar[3] = 0.0f;
+
+            dar[4] = 0.0f;
+            dar[5] = 0.0f;
+            dar[6] = DateTime.Now;
+            dar[7] = 0;
+            dar[8] = 0;
+            dar[9] = 0;
+
+            dar[10] = string.Empty;
+            dar[11] = 1;
+            dar[12] = 1;
+
+            ds.Tables[0].Rows.Add(dar);
+
             return ds;
           }
         }
@@ -387,7 +407,7 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetWherePartUsed(string partDescr) {
-      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
+      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV ' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, " +
           @"CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, " +
           @"CUT_CUTLISTS.DRAWING, CUT_CUTLIST_PARTS.QTY, CUT_CUTLISTS.STATEID FROM " +
           @"(CUT_CUTLIST_PARTS INNER JOIN CUT_PARTS ON CUT_CUTLIST_PARTS.PARTID = CUT_PARTS.PARTID) INNER JOIN " +
@@ -398,6 +418,25 @@ namespace Redbrick_Addin {
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
+            DataRow dar = ds.Tables[0].NewRow();
+
+            dar[0] = 0;
+            dar[1] = string.Empty;
+            dar[2] = string.Empty;
+            dar[3] = 0.0f;
+
+            dar[4] = 0.0f;
+            dar[5] = 0.0f;
+            dar[6] = DateTime.Now;
+            dar[7] = 0;
+            dar[8] = 0;
+            dar[9] = 0;
+
+            dar[10] = string.Empty;
+            dar[11] = 1;
+            dar[12] = 1;
+
+            ds.Tables[0].Rows.Add(dar);
             return ds;
           }
         }
@@ -1494,7 +1533,7 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetCutlists() {
-      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DRAWING, " +
+      string SQL = @"SELECT CUT_CUTLISTS.CLID, (CUT_CUTLISTS.PARTNUM + ' REV ' + CUT_CUTLISTS.REV) AS PARTNUM, CUT_CUTLISTS.DRAWING, " +
         @"CUT_CUTLISTS.CUSTID, CUT_CUTLISTS.CDATE, CUT_CUTLISTS.DESCR, CUT_CUTLISTS.LENGTH, CUT_CUTLISTS.WIDTH, CUT_CUTLISTS.HEIGHT, " +
         @"CUT_CUTLISTS.SETUP_BY, CUT_CUTLISTS.STATE_BY, CUT_CUTLISTS.STATEID FROM CUT_CUTLISTS ORDER BY CUT_CUTLISTS.PARTNUM";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
