@@ -26,9 +26,12 @@ namespace Redbrick_Addin {
       cookie = Cookie;
 
       bool res = swApp.SetAddinCallbackInfo(0, this, cookie);
-
-      UISetup();
-      return true;
+      if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable()) {
+        UISetup();
+        return true;
+      } else {
+        return false;
+      }
     }
 
     public bool DisconnectFromSW() {
