@@ -56,6 +56,8 @@ namespace Redbrick_Addin {
     private void InitControlsWithDrawing() {
       for (int i = 100; i < 100 + Properties.Settings.Default.RevNoLimit; i++)
         cbRev.Items.Add(i.ToString());
+
+      cbRev.Items.Add("NS");
       cbRev.SelectedIndex = 0;
 
       string[] title = (DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ');
@@ -76,7 +78,7 @@ namespace Redbrick_Addin {
       cbSetupBy.DisplayMember = "NAME";
       cbSetupBy.ValueMember = "UID";
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
-
+      cbRev.Text = DrawingPropertySet.GetProperty("REVISION LEVEL").Value;
       InitTableData();
     }
 
