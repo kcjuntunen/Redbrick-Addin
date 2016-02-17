@@ -743,12 +743,21 @@ namespace Redbrick_Addin {
       oldel.Old = true;
       older.Old = true;
 
-
-      if (IsAmongTheProperties(oldMat.Name, modeldoc)) {
+      if (IsAmongTheProperties(oldMat.Name, modeldoc) && !IsAmongTheProperties(mat.Name, modeldoc)) {
         oldMat.Get(modeldoc, cutlistData);
         mat.ID = oldMat.ID;
         mat.Value = oldMat.Value;
         mat.ResValue = oldMat.ResValue;
+      } else if (IsAmongTheProperties(mat.Name, modeldoc)) {
+        mat.Get(modeldoc, cutlistData);
+        mat.ID = mat.Value;
+        mat.Descr = cutlistData.GetMaterialByID(mat.ID);
+        if (Properties.Settings.Default.Testing) {
+          oldMat.ID = mat.ID;
+          oldMat.Descr = mat.Descr;
+          oldMat.Value = mat.ResValue;
+          oldMat.ResValue = mat.ResValue;
+        }
       } else {
         mat.Get(modeldoc, cutlistData);
         mat.ID = mat.Value;
@@ -760,11 +769,21 @@ namespace Redbrick_Addin {
         oldMat.ResValue = mat.ResValue;
       }
 
-      if (IsAmongTheProperties(oldef.Name, modeldoc)) {
+      if (IsAmongTheProperties(oldef.Name, modeldoc) && !IsAmongTheProperties(ef.Name, modeldoc)) {
         oldef.Get(modeldoc, cutlistData);
         ef.ID = oldef.ID;
         ef.Value = oldef.Value;
         ef.ResValue = oldef.ResValue;
+      } else if (IsAmongTheProperties(ef.Name, modeldoc)) {
+        ef.Get(modeldoc, cutlistData);
+        ef.ID = ef.Value;
+        ef.Descr = cutlistData.GetEdgeByID(ef.ID);
+        if (Properties.Settings.Default.Testing) {
+          oldef.ID = ef.ID;
+          oldef.Descr = ef.Descr;
+          oldef.Value = ef.ResValue;
+          oldef.ResValue = ef.ResValue;
+        }
       } else {
         ef.Get(modeldoc, cutlistData);
         ef.ID = ef.Value;
@@ -775,11 +794,21 @@ namespace Redbrick_Addin {
         oldef.ResValue = ef.ResValue;
       }
 
-      if (IsAmongTheProperties(oldeb.Name, modeldoc)) {
+      if (IsAmongTheProperties(oldeb.Name, modeldoc) && !IsAmongTheProperties(eb.Name, modeldoc)) {
         oldeb.Get(modeldoc, cutlistData);
         eb.ID = oldeb.ID;
         eb.Value = oldeb.Value;
         eb.ResValue = oldeb.ResValue;
+      } else if (IsAmongTheProperties(eb.Name, modeldoc)) {
+        eb.Get(modeldoc, cutlistData);
+        eb.ID = eb.Value;
+        eb.Descr = cutlistData.GetEdgeByID(eb.ID);
+        if (Properties.Settings.Default.Testing) {
+          oldeb.ID = eb.ID;
+          oldeb.Descr = eb.Descr;
+          oldeb.Value = eb.ResValue;
+          oldeb.ResValue = eb.ResValue;
+        }
       } else {
         eb.Get(modeldoc, cutlistData);
         eb.ID = eb.Value;
@@ -788,12 +817,23 @@ namespace Redbrick_Addin {
         oldeb.Descr = eb.Descr;
         oldeb.Value = eb.ResValue;
         oldeb.ResValue = eb.ResValue;
-      }
-      if (IsAmongTheProperties(oldel.Name, modeldoc)) {
+      } 
+      
+      if (IsAmongTheProperties(oldel.Name, modeldoc) && !IsAmongTheProperties(el.Name, modeldoc)) {
         oldel.Get(modeldoc, cutlistData);
         el.ID = oldel.ID;
         el.Value = oldel.Value;
         el.ResValue = oldel.ResValue;
+      } else if (IsAmongTheProperties(el.Name, modeldoc)) {
+        el.Get(modeldoc, cutlistData);
+        el.ID = el.Value;
+        el.Descr = cutlistData.GetEdgeByID(el.ID);
+        if (Properties.Settings.Default.Testing) {
+          oldel.ID = el.ID;
+          oldel.Descr = el.Descr;
+          oldel.Value = el.ResValue;
+          oldel.ResValue = el.ResValue;
+        }
       } else {
         el.Get(modeldoc, cutlistData);
         el.ID = el.Value;
@@ -803,11 +843,22 @@ namespace Redbrick_Addin {
         oldel.Value = el.ResValue;
         oldel.ResValue = el.ResValue;
       }
-      if (IsAmongTheProperties(older.Name, modeldoc)) {
+
+      if (IsAmongTheProperties(older.Name, modeldoc) && !IsAmongTheProperties(er.Name, modeldoc)) {
         older.Get(modeldoc, cutlistData);
         er.ID = older.ID;
         er.Value = older.Value;
         er.ResValue = older.ResValue;
+      } else if (IsAmongTheProperties(er.Name, modeldoc)) {
+        er.Get(modeldoc, cutlistData);
+        er.ID = er.Value;
+        er.Descr = cutlistData.GetEdgeByID(er.ID);
+        if (Properties.Settings.Default.Testing) {
+          older.ID = er.ID;
+          older.Descr = er.Descr;
+          older.Value = er.ResValue;
+          older.ResValue = er.ResValue;
+        }
       } else {
         er.Get(modeldoc, cutlistData);
         er.ID = er.Value;
@@ -825,6 +876,7 @@ namespace Redbrick_Addin {
         Add(oldel);
         Add(older);
       }
+
       Add(mat);
       Add(ef);
       Add(eb);
