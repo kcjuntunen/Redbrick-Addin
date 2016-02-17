@@ -1,5 +1,9 @@
 ﻿
-* 1.0.0.0
+* 0.9.0.1
+** Handled null PartFileInfo
+** Delete button added
+** Revs carry through from drawings
+** Added spave after "REV"
 ** No longer leaking parts into recent cutlists.
 
 * 0.8.10.5

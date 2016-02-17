@@ -47,21 +47,21 @@ namespace Redbrick_Addin {
     }
 
     public void GetMaterialMetaData() {
-      string atHere = PartFileInfo.Name;
-      Add(new SwProperty("MATERIAL",
-        swCustomInfoType_e.swCustomInfoText,
-        string.Format("\"SW-Material@{0}\"", atHere),
-        true));
+        string atHere = PartFileInfo.Name;
+        Add(new SwProperty("MATERIAL",
+          swCustomInfoType_e.swCustomInfoText,
+          string.Format("\"SW-Material@{0}\"", atHere),
+          true));
 
-      Add(new SwProperty("WEIGHT",
-        swCustomInfoType_e.swCustomInfoText,
-        string.Format("\"SW-Mass@{0}\"", atHere),
-        true));
+        Add(new SwProperty("WEIGHT",
+          swCustomInfoType_e.swCustomInfoText,
+          string.Format("\"SW-Mass@{0}\"", atHere),
+          true));
 
-      Add(new SwProperty("VOLUME",
-        swCustomInfoType_e.swCustomInfoText,
-        string.Format("\"SW-Volume@{0}\"", atHere),
-        true));
+        Add(new SwProperty("VOLUME",
+          swCustomInfoType_e.swCustomInfoText,
+          string.Format("\"SW-Volume@{0}\"", atHere),
+          true));
     }
 
     /// <summary>
@@ -833,7 +833,9 @@ namespace Redbrick_Addin {
     }
 
     public void ParseGlobalPropertyData(CustomPropertyManager g) {
-      GetMaterialMetaData();
+      if (PartFileInfo != null && PartFileInfo.Name != string.Empty) {
+        GetMaterialMetaData();
+      }
       SwProperty d = new SwProperty("Description", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
       SwProperty iic = new SwProperty("INCLUDE IN CUTLIST", swCustomInfoType_e.swCustomInfoYesOrNo, "Yes", true);
       SwProperty l = new SwProperty("LENGTH", swCustomInfoType_e.swCustomInfoText, "\"D1@Sketch1\"", true);
