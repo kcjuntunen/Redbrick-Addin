@@ -50,6 +50,8 @@ namespace Redbrick_Addin
       // 
       // tableLayoutPanel1
       // 
+      this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.tableLayoutPanel1.ColumnCount = 3;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -71,157 +73,183 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.tbBlankL, 0, 5);
       this.tableLayoutPanel1.Controls.Add(this.tbBlankW, 1, 5);
       this.tableLayoutPanel1.Controls.Add(this.btnWhere, 2, 5);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 6;
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(316, 122);
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 165);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // label1
       // 
+      this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.label1.AutoSize = true;
       this.label1.Location = new System.Drawing.Point(3, 0);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(35, 13);
+      this.label1.Size = new System.Drawing.Size(60, 13);
       this.label1.TabIndex = 0;
       this.label1.Text = "CNC1";
       // 
       // label2
       // 
+      this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(108, 0);
+      this.label2.Location = new System.Drawing.Point(69, 0);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(35, 13);
+      this.label2.Size = new System.Drawing.Size(60, 13);
       this.label2.TabIndex = 0;
       this.label2.Text = "CNC2";
       // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(213, 43);
+      this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label3.Location = new System.Drawing.Point(135, 48);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(65, 13);
+      this.label3.Size = new System.Drawing.Size(62, 18);
       this.label3.TabIndex = 0;
       this.label3.Text = "Parts/Blank";
       // 
       // lchUpdate
       // 
       this.lchUpdate.AutoSize = true;
-      this.lchUpdate.Location = new System.Drawing.Point(213, 0);
+      this.lchUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.lchUpdate.Location = new System.Drawing.Point(135, 0);
       this.lchUpdate.Name = "lchUpdate";
-      this.lchUpdate.Size = new System.Drawing.Size(70, 13);
+      this.lchUpdate.Size = new System.Drawing.Size(62, 18);
       this.lchUpdate.TabIndex = 2;
       this.lchUpdate.Text = "Update CNC";
       // 
       // tbCNC1
       // 
-      this.tbCNC1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbCNC1.Location = new System.Drawing.Point(3, 16);
+      this.tbCNC1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbCNC1.Location = new System.Drawing.Point(3, 21);
+      this.tbCNC1.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbCNC1.Name = "tbCNC1";
-      this.tbCNC1.Size = new System.Drawing.Size(99, 22);
+      this.tbCNC1.Size = new System.Drawing.Size(60, 22);
       this.tbCNC1.TabIndex = 1;
       // 
       // tbCNC2
       // 
-      this.tbCNC2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbCNC2.Location = new System.Drawing.Point(108, 16);
+      this.tbCNC2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbCNC2.Location = new System.Drawing.Point(69, 21);
+      this.tbCNC2.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbCNC2.Name = "tbCNC2";
-      this.tbCNC2.Size = new System.Drawing.Size(99, 22);
+      this.tbCNC2.Size = new System.Drawing.Size(60, 22);
       this.tbCNC2.TabIndex = 2;
       // 
       // chUpdate
       // 
-      this.chUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.chUpdate.Location = new System.Drawing.Point(213, 16);
+      this.chUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.chUpdate.Location = new System.Drawing.Point(135, 21);
       this.chUpdate.Name = "chUpdate";
-      this.chUpdate.Size = new System.Drawing.Size(100, 24);
+      this.chUpdate.Size = new System.Drawing.Size(62, 24);
       this.chUpdate.TabIndex = 3;
       // 
       // tbPPB
       // 
       this.tbPPB.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbPPB.Location = new System.Drawing.Point(213, 59);
+      this.tbPPB.Location = new System.Drawing.Point(135, 69);
+      this.tbPPB.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbPPB.Name = "tbPPB";
-      this.tbPPB.Size = new System.Drawing.Size(100, 22);
+      this.tbPPB.Size = new System.Drawing.Size(62, 22);
       this.tbPPB.TabIndex = 6;
       this.tbPPB.Text = "1";
       // 
       // label4
       // 
+      this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(3, 43);
+      this.label4.Location = new System.Drawing.Point(3, 48);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(36, 13);
+      this.label4.Size = new System.Drawing.Size(60, 13);
       this.label4.TabIndex = 0;
       this.label4.Text = "OverL";
       // 
       // label5
       // 
+      this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(108, 43);
+      this.label5.Location = new System.Drawing.Point(69, 48);
       this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(42, 13);
+      this.label5.Size = new System.Drawing.Size(60, 13);
       this.label5.TabIndex = 0;
       this.label5.Text = "OverW";
       // 
       // label6
       // 
+      this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(3, 84);
+      this.label6.Location = new System.Drawing.Point(3, 96);
       this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(59, 13);
+      this.label6.Size = new System.Drawing.Size(60, 13);
       this.label6.TabIndex = 0;
       this.label6.Text = "Blank Size";
       // 
       // tbOverL
       // 
-      this.tbOverL.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbOverL.Location = new System.Drawing.Point(3, 59);
+      this.tbOverL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbOverL.Location = new System.Drawing.Point(3, 69);
+      this.tbOverL.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbOverL.Name = "tbOverL";
-      this.tbOverL.Size = new System.Drawing.Size(99, 22);
+      this.tbOverL.Size = new System.Drawing.Size(60, 22);
       this.tbOverL.TabIndex = 4;
       this.tbOverL.TextChanged += new System.EventHandler(this.tbOverL_TextChanged);
       this.tbOverL.Leave += new System.EventHandler(this.tbOverL_Validated);
       // 
       // tbOverW
       // 
-      this.tbOverW.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbOverW.Location = new System.Drawing.Point(108, 59);
+      this.tbOverW.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbOverW.Location = new System.Drawing.Point(69, 69);
+      this.tbOverW.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbOverW.Name = "tbOverW";
-      this.tbOverW.Size = new System.Drawing.Size(99, 22);
+      this.tbOverW.Size = new System.Drawing.Size(60, 22);
       this.tbOverW.TabIndex = 5;
       this.tbOverW.TextChanged += new System.EventHandler(this.tbOverW_TextChanged);
       this.tbOverW.Leave += new System.EventHandler(this.tbOverW_Validated);
       // 
       // tbBlankL
       // 
-      this.tbBlankL.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbBlankL.Location = new System.Drawing.Point(3, 100);
+      this.tbBlankL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbBlankL.Location = new System.Drawing.Point(3, 117);
+      this.tbBlankL.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbBlankL.Name = "tbBlankL";
-      this.tbBlankL.Size = new System.Drawing.Size(99, 22);
+      this.tbBlankL.Size = new System.Drawing.Size(60, 22);
       this.tbBlankL.TabIndex = 7;
       // 
       // tbBlankW
       // 
-      this.tbBlankW.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbBlankW.Location = new System.Drawing.Point(108, 100);
+      this.tbBlankW.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbBlankW.Location = new System.Drawing.Point(69, 117);
+      this.tbBlankW.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbBlankW.Name = "tbBlankW";
-      this.tbBlankW.Size = new System.Drawing.Size(99, 22);
+      this.tbBlankW.Size = new System.Drawing.Size(60, 22);
       this.tbBlankW.TabIndex = 8;
       // 
       // btnWhere
       // 
-      this.btnWhere.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.btnWhere.Location = new System.Drawing.Point(213, 100);
+      this.btnWhere.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnWhere.Location = new System.Drawing.Point(135, 117);
       this.btnWhere.Name = "btnWhere";
-      this.btnWhere.Size = new System.Drawing.Size(100, 23);
+      this.btnWhere.Size = new System.Drawing.Size(62, 22);
       this.btnWhere.TabIndex = 9;
       this.btnWhere.Text = "Priority";
       this.btnWhere.UseVisualStyleBackColor = true;
@@ -235,7 +263,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "MachineProperties";
-      this.Size = new System.Drawing.Size(316, 122);
+      this.Size = new System.Drawing.Size(250, 180);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);

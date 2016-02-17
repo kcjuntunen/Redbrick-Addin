@@ -58,11 +58,12 @@ namespace Redbrick_Addin
       // 
       // tableLayoutPanel1
       // 
-      this.tableLayoutPanel1.AutoSize = true;
+      this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
       this.tableLayoutPanel1.Controls.Add(this.cbEr, 0, 9);
       this.tableLayoutPanel1.Controls.Add(this.lEr, 0, 8);
       this.tableLayoutPanel1.Controls.Add(this.cbEl, 0, 7);
@@ -86,8 +87,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.nudQ, 1, 13);
       this.tableLayoutPanel1.Controls.Add(this.btnMakeOriginal, 0, 12);
       this.tableLayoutPanel1.Controls.Add(this.bRemove, 0, 13);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 14;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -104,115 +104,120 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(330, 303);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(216, 342);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // cbEr
       // 
-      this.cbEr.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbEr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbEr.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEr.FormattingEnabled = true;
       this.cbEr.Location = new System.Drawing.Point(3, 176);
+      this.cbEr.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbEr.Name = "cbEr";
-      this.cbEr.Size = new System.Drawing.Size(225, 21);
+      this.cbEr.Size = new System.Drawing.Size(156, 21);
       this.cbEr.TabIndex = 5;
       this.cbEr.SelectedIndexChanged += new System.EventHandler(this.cbEr_SelectedIndexChanged);
       // 
       // lEr
       // 
       this.lEr.AutoSize = true;
-      this.lEr.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lEr.Location = new System.Drawing.Point(3, 160);
       this.lEr.Name = "lEr";
-      this.lEr.Size = new System.Drawing.Size(225, 13);
+      this.lEr.Size = new System.Drawing.Size(84, 13);
       this.lEr.TabIndex = 0;
       this.lEr.Text = "Edge Right (W)";
       this.lEr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // cbEl
       // 
-      this.cbEl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbEl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbEl.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEl.FormattingEnabled = true;
       this.cbEl.Location = new System.Drawing.Point(3, 136);
+      this.cbEl.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbEl.Name = "cbEl";
-      this.cbEl.Size = new System.Drawing.Size(225, 21);
+      this.cbEl.Size = new System.Drawing.Size(156, 21);
       this.cbEl.TabIndex = 4;
       this.cbEl.SelectedIndexChanged += new System.EventHandler(this.cbEl_SelectedIndexChanged);
       // 
       // lEl
       // 
       this.lEl.AutoSize = true;
-      this.lEl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lEl.Location = new System.Drawing.Point(3, 120);
       this.lEl.Name = "lEl";
-      this.lEl.Size = new System.Drawing.Size(225, 13);
+      this.lEl.Size = new System.Drawing.Size(75, 13);
       this.lEl.TabIndex = 0;
       this.lEl.Text = "Edge Left (W)";
       this.lEl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // cbEb
       // 
-      this.cbEb.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbEb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbEb.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEb.FormattingEnabled = true;
       this.cbEb.Location = new System.Drawing.Point(3, 96);
+      this.cbEb.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbEb.Name = "cbEb";
-      this.cbEb.Size = new System.Drawing.Size(225, 21);
+      this.cbEb.Size = new System.Drawing.Size(156, 21);
       this.cbEb.TabIndex = 3;
       this.cbEb.SelectedIndexChanged += new System.EventHandler(this.cbEb_SelectedIndexChanged);
       // 
       // lEb
       // 
       this.lEb.AutoSize = true;
-      this.lEb.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lEb.Location = new System.Drawing.Point(3, 80);
       this.lEb.Name = "lEb";
-      this.lEb.Size = new System.Drawing.Size(225, 13);
+      this.lEb.Size = new System.Drawing.Size(74, 13);
       this.lEb.TabIndex = 0;
       this.lEb.Text = "Edge Back (L)";
       this.lEb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // cbEf
       // 
-      this.cbEf.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbEf.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbEf.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEf.FormattingEnabled = true;
       this.cbEf.Location = new System.Drawing.Point(3, 56);
+      this.cbEf.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbEf.Name = "cbEf";
-      this.cbEf.Size = new System.Drawing.Size(225, 21);
+      this.cbEf.Size = new System.Drawing.Size(156, 21);
       this.cbEf.TabIndex = 2;
       this.cbEf.SelectedIndexChanged += new System.EventHandler(this.cbEf_SelectedIndexChanged);
       // 
       // lEf
       // 
       this.lEf.AutoSize = true;
-      this.lEf.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lEf.Location = new System.Drawing.Point(3, 40);
       this.lEf.Name = "lEf";
-      this.lEf.Size = new System.Drawing.Size(225, 13);
+      this.lEf.Size = new System.Drawing.Size(78, 13);
       this.lEf.TabIndex = 0;
       this.lEf.Text = "Edge Front (L)";
       this.lEf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // cbMat
       // 
-      this.cbMat.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbMat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbMat.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbMat.FormattingEnabled = true;
       this.cbMat.Location = new System.Drawing.Point(3, 16);
+      this.cbMat.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbMat.Name = "cbMat";
-      this.cbMat.Size = new System.Drawing.Size(225, 21);
+      this.cbMat.Size = new System.Drawing.Size(156, 21);
       this.cbMat.TabIndex = 1;
       this.cbMat.SelectedIndexChanged += new System.EventHandler(this.cbMat_SelectedIndexChanged);
       // 
       // lMat
       // 
       this.lMat.AutoSize = true;
-      this.lMat.Dock = System.Windows.Forms.DockStyle.Fill;
       this.lMat.Location = new System.Drawing.Point(3, 0);
       this.lMat.Name = "lMat";
-      this.lMat.Size = new System.Drawing.Size(225, 13);
+      this.lMat.Size = new System.Drawing.Size(85, 13);
       this.lMat.TabIndex = 0;
       this.lMat.Text = "Cutlist Material";
       this.lMat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -221,10 +226,10 @@ namespace Redbrick_Addin
       // 
       this.leLColor.AutoSize = true;
       this.leLColor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.leLColor.Location = new System.Drawing.Point(234, 120);
+      this.leLColor.Location = new System.Drawing.Point(165, 120);
       this.leLColor.Name = "leLColor";
       this.tableLayoutPanel1.SetRowSpan(this.leLColor, 2);
-      this.leLColor.Size = new System.Drawing.Size(93, 40);
+      this.leLColor.Size = new System.Drawing.Size(48, 40);
       this.leLColor.TabIndex = 0;
       this.leLColor.Text = "Edge Left Color";
       this.leLColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -233,10 +238,10 @@ namespace Redbrick_Addin
       // 
       this.leBColor.AutoSize = true;
       this.leBColor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.leBColor.Location = new System.Drawing.Point(234, 80);
+      this.leBColor.Location = new System.Drawing.Point(165, 80);
       this.leBColor.Name = "leBColor";
       this.tableLayoutPanel1.SetRowSpan(this.leBColor, 2);
-      this.leBColor.Size = new System.Drawing.Size(93, 40);
+      this.leBColor.Size = new System.Drawing.Size(48, 40);
       this.leBColor.TabIndex = 0;
       this.leBColor.Text = "Edge Back Color";
       this.leBColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -245,10 +250,10 @@ namespace Redbrick_Addin
       // 
       this.leRColor.AutoSize = true;
       this.leRColor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.leRColor.Location = new System.Drawing.Point(234, 160);
+      this.leRColor.Location = new System.Drawing.Point(165, 160);
       this.leRColor.Name = "leRColor";
       this.tableLayoutPanel1.SetRowSpan(this.leRColor, 2);
-      this.leRColor.Size = new System.Drawing.Size(93, 40);
+      this.leRColor.Size = new System.Drawing.Size(48, 40);
       this.leRColor.TabIndex = 0;
       this.leRColor.Text = "Edge Right Color";
       this.leRColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -257,10 +262,10 @@ namespace Redbrick_Addin
       // 
       this.lMatColor.AutoSize = true;
       this.lMatColor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.lMatColor.Location = new System.Drawing.Point(234, 0);
+      this.lMatColor.Location = new System.Drawing.Point(165, 0);
       this.lMatColor.Name = "lMatColor";
       this.tableLayoutPanel1.SetRowSpan(this.lMatColor, 2);
-      this.lMatColor.Size = new System.Drawing.Size(93, 40);
+      this.lMatColor.Size = new System.Drawing.Size(48, 40);
       this.lMatColor.TabIndex = 0;
       this.lMatColor.Text = "Material Color";
       this.lMatColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -269,10 +274,10 @@ namespace Redbrick_Addin
       // 
       this.leFColor.AutoSize = true;
       this.leFColor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.leFColor.Location = new System.Drawing.Point(234, 40);
+      this.leFColor.Location = new System.Drawing.Point(165, 40);
       this.leFColor.Name = "leFColor";
       this.tableLayoutPanel1.SetRowSpan(this.leFColor, 2);
-      this.leFColor.Size = new System.Drawing.Size(93, 40);
+      this.leFColor.Size = new System.Drawing.Size(48, 40);
       this.leFColor.TabIndex = 0;
       this.leFColor.Text = "Edge Front Color";
       this.leFColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -289,58 +294,67 @@ namespace Redbrick_Addin
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(234, 200);
+      this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label2.Location = new System.Drawing.Point(165, 200);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(39, 13);
+      this.label2.Size = new System.Drawing.Size(48, 13);
       this.label2.TabIndex = 7;
       this.label2.Text = "Status";
       // 
       // cbCutlist
       // 
-      this.cbCutlist.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbCutlist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbCutlist.FormattingEnabled = true;
       this.cbCutlist.Location = new System.Drawing.Point(3, 216);
+      this.cbCutlist.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbCutlist.Name = "cbCutlist";
-      this.cbCutlist.Size = new System.Drawing.Size(225, 21);
+      this.cbCutlist.Size = new System.Drawing.Size(156, 21);
       this.cbCutlist.TabIndex = 8;
       this.cbCutlist.SelectedIndexChanged += new System.EventHandler(this.cbCutlist_SelectedIndexChanged);
       this.cbCutlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbCutlist_MouseClick);
       // 
       // cbStatus
       // 
-      this.cbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbStatus.FormattingEnabled = true;
-      this.cbStatus.Location = new System.Drawing.Point(234, 216);
+      this.cbStatus.Location = new System.Drawing.Point(165, 216);
+      this.cbStatus.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbStatus.Name = "cbStatus";
-      this.cbStatus.Size = new System.Drawing.Size(93, 21);
+      this.cbStatus.Size = new System.Drawing.Size(48, 21);
       this.cbStatus.TabIndex = 9;
       this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
       // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.label3.Location = new System.Drawing.Point(234, 259);
+      this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.label3.Location = new System.Drawing.Point(165, 240);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(93, 13);
+      this.label3.Size = new System.Drawing.Size(48, 30);
       this.label3.TabIndex = 11;
       this.label3.Text = "Quantity";
       // 
       // nudQ
       // 
-      this.nudQ.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.nudQ.Location = new System.Drawing.Point(234, 275);
+      this.nudQ.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.nudQ.Location = new System.Drawing.Point(165, 273);
+      this.nudQ.MinimumSize = new System.Drawing.Size(5, 0);
       this.nudQ.Name = "nudQ";
-      this.nudQ.Size = new System.Drawing.Size(93, 22);
+      this.nudQ.Size = new System.Drawing.Size(48, 22);
       this.nudQ.TabIndex = 12;
       this.nudQ.ValueChanged += new System.EventHandler(this.nudQ_ValueChanged);
       // 
       // btnMakeOriginal
       // 
-      this.btnMakeOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.btnMakeOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.btnMakeOriginal.Location = new System.Drawing.Point(3, 243);
+      this.btnMakeOriginal.MinimumSize = new System.Drawing.Size(5, 0);
       this.btnMakeOriginal.Name = "btnMakeOriginal";
-      this.btnMakeOriginal.Size = new System.Drawing.Size(225, 26);
+      this.btnMakeOriginal.Size = new System.Drawing.Size(156, 24);
       this.btnMakeOriginal.TabIndex = 10;
       this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
       this.btnMakeOriginal.UseVisualStyleBackColor = true;
@@ -348,10 +362,12 @@ namespace Redbrick_Addin
       // 
       // bRemove
       // 
-      this.bRemove.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.bRemove.Location = new System.Drawing.Point(3, 275);
+      this.bRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.bRemove.Location = new System.Drawing.Point(3, 273);
+      this.bRemove.MinimumSize = new System.Drawing.Size(5, 5);
       this.bRemove.Name = "bRemove";
-      this.bRemove.Size = new System.Drawing.Size(225, 25);
+      this.bRemove.Size = new System.Drawing.Size(156, 22);
       this.bRemove.TabIndex = 13;
       this.bRemove.Text = "Remove From Cutlist";
       this.bRemove.UseVisualStyleBackColor = true;
@@ -365,12 +381,11 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ConfigurationSpecific";
-      this.Size = new System.Drawing.Size(330, 303);
+      this.Size = new System.Drawing.Size(266, 364);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.nudQ)).EndInit();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
         }
 

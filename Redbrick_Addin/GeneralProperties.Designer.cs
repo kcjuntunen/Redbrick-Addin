@@ -51,10 +51,12 @@ namespace Redbrick_Addin
       // 
       // tableLayoutPanel1
       // 
+      this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
       this.tableLayoutPanel1.Controls.Add(this.tbComment, 0, 12);
       this.tableLayoutPanel1.Controls.Add(this.label5, 0, 11);
       this.tableLayoutPanel1.Controls.Add(this.tbWallThick, 0, 10);
@@ -72,33 +74,34 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.labResWidth, 1, 6);
       this.tableLayoutPanel1.Controls.Add(this.labResLength, 1, 3);
       this.tableLayoutPanel1.Controls.Add(this.bCopy, 1, 1);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 13;
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(305, 282);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 313);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // tbComment
       // 
-      this.tbComment.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbComment.Location = new System.Drawing.Point(3, 221);
+      this.tbComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tbComment.Location = new System.Drawing.Point(3, 261);
+      this.tbComment.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbComment.Multiline = true;
       this.tbComment.Name = "tbComment";
-      this.tbComment.Size = new System.Drawing.Size(238, 68);
+      this.tbComment.Size = new System.Drawing.Size(144, 43);
       this.tbComment.TabIndex = 6;
       this.tbComment.TextChanged += new System.EventHandler(this.tbComment_TextChanged);
       // 
@@ -106,9 +109,9 @@ namespace Redbrick_Addin
       // 
       this.label5.AutoSize = true;
       this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.label5.Location = new System.Drawing.Point(3, 205);
+      this.label5.Location = new System.Drawing.Point(3, 240);
       this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(238, 13);
+      this.label5.Size = new System.Drawing.Size(144, 18);
       this.label5.TabIndex = 0;
       this.label5.Text = "Comment";
       this.label5.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -116,9 +119,10 @@ namespace Redbrick_Addin
       // tbWallThick
       // 
       this.tbWallThick.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbWallThick.Location = new System.Drawing.Point(3, 180);
+      this.tbWallThick.Location = new System.Drawing.Point(3, 213);
+      this.tbWallThick.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbWallThick.Name = "tbWallThick";
-      this.tbWallThick.Size = new System.Drawing.Size(238, 22);
+      this.tbWallThick.Size = new System.Drawing.Size(144, 22);
       this.tbWallThick.TabIndex = 5;
       this.tbWallThick.Leave += new System.EventHandler(this.tbWallThick_Leave);
       // 
@@ -126,9 +130,9 @@ namespace Redbrick_Addin
       // 
       this.lWallThickness.AutoSize = true;
       this.lWallThickness.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.lWallThickness.Location = new System.Drawing.Point(3, 164);
+      this.lWallThickness.Location = new System.Drawing.Point(3, 192);
       this.lWallThickness.Name = "lWallThickness";
-      this.lWallThickness.Size = new System.Drawing.Size(238, 13);
+      this.lWallThickness.Size = new System.Drawing.Size(144, 18);
       this.lWallThickness.TabIndex = 0;
       this.lWallThickness.Text = "Wall Thickness";
       this.lWallThickness.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -136,9 +140,10 @@ namespace Redbrick_Addin
       // tbThick
       // 
       this.tbThick.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbThick.Location = new System.Drawing.Point(3, 139);
+      this.tbThick.Location = new System.Drawing.Point(3, 165);
+      this.tbThick.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbThick.Name = "tbThick";
-      this.tbThick.Size = new System.Drawing.Size(238, 22);
+      this.tbThick.Size = new System.Drawing.Size(144, 22);
       this.tbThick.TabIndex = 4;
       this.tbThick.Leave += new System.EventHandler(this.tbThick_Leave);
       // 
@@ -146,9 +151,9 @@ namespace Redbrick_Addin
       // 
       this.label6.AutoSize = true;
       this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.label6.Location = new System.Drawing.Point(3, 123);
+      this.label6.Location = new System.Drawing.Point(3, 144);
       this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(238, 13);
+      this.label6.Size = new System.Drawing.Size(144, 18);
       this.label6.TabIndex = 0;
       this.label6.Text = "Thickness";
       this.label6.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -156,9 +161,10 @@ namespace Redbrick_Addin
       // tbWidth
       // 
       this.tbWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbWidth.Location = new System.Drawing.Point(3, 98);
+      this.tbWidth.Location = new System.Drawing.Point(3, 117);
+      this.tbWidth.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbWidth.Name = "tbWidth";
-      this.tbWidth.Size = new System.Drawing.Size(238, 22);
+      this.tbWidth.Size = new System.Drawing.Size(144, 22);
       this.tbWidth.TabIndex = 3;
       this.tbWidth.Leave += new System.EventHandler(this.tbWidth_Leave);
       // 
@@ -166,9 +172,9 @@ namespace Redbrick_Addin
       // 
       this.label3.AutoSize = true;
       this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.label3.Location = new System.Drawing.Point(3, 82);
+      this.label3.Location = new System.Drawing.Point(3, 96);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(238, 13);
+      this.label3.Size = new System.Drawing.Size(144, 18);
       this.label3.TabIndex = 0;
       this.label3.Text = "Width";
       this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -176,9 +182,10 @@ namespace Redbrick_Addin
       // tbLength
       // 
       this.tbLength.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbLength.Location = new System.Drawing.Point(3, 57);
+      this.tbLength.Location = new System.Drawing.Point(3, 69);
+      this.tbLength.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbLength.Name = "tbLength";
-      this.tbLength.Size = new System.Drawing.Size(238, 22);
+      this.tbLength.Size = new System.Drawing.Size(144, 22);
       this.tbLength.TabIndex = 2;
       this.tbLength.Leave += new System.EventHandler(this.tbLength_Leave);
       // 
@@ -186,9 +193,9 @@ namespace Redbrick_Addin
       // 
       this.label2.AutoSize = true;
       this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.label2.Location = new System.Drawing.Point(3, 41);
+      this.label2.Location = new System.Drawing.Point(3, 48);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(238, 13);
+      this.label2.Size = new System.Drawing.Size(144, 18);
       this.label2.TabIndex = 0;
       this.label2.Text = "Length";
       this.label2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -196,9 +203,10 @@ namespace Redbrick_Addin
       // tbDescription
       // 
       this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tbDescription.Location = new System.Drawing.Point(3, 16);
+      this.tbDescription.Location = new System.Drawing.Point(3, 21);
+      this.tbDescription.MinimumSize = new System.Drawing.Size(5, 0);
       this.tbDescription.Name = "tbDescription";
-      this.tbDescription.Size = new System.Drawing.Size(238, 22);
+      this.tbDescription.Size = new System.Drawing.Size(144, 22);
       this.tbDescription.TabIndex = 1;
       this.tbDescription.TextChanged += new System.EventHandler(this.tbDescription_TextChanged);
       // 
@@ -208,7 +216,7 @@ namespace Redbrick_Addin
       this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label1.Location = new System.Drawing.Point(3, 0);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(238, 13);
+      this.label1.Size = new System.Drawing.Size(144, 18);
       this.label1.TabIndex = 0;
       this.label1.Text = "Description";
       this.label1.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -217,9 +225,9 @@ namespace Redbrick_Addin
       // 
       this.labResWallThickness.AutoSize = true;
       this.labResWallThickness.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labResWallThickness.Location = new System.Drawing.Point(247, 177);
+      this.labResWallThickness.Location = new System.Drawing.Point(153, 210);
       this.labResWallThickness.Name = "labResWallThickness";
-      this.labResWallThickness.Size = new System.Drawing.Size(55, 28);
+      this.labResWallThickness.Size = new System.Drawing.Size(44, 30);
       this.labResWallThickness.TabIndex = 0;
       this.labResWallThickness.Text = "00.000";
       this.labResWallThickness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -228,9 +236,9 @@ namespace Redbrick_Addin
       // 
       this.labResThickness.AutoSize = true;
       this.labResThickness.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labResThickness.Location = new System.Drawing.Point(247, 136);
+      this.labResThickness.Location = new System.Drawing.Point(153, 162);
       this.labResThickness.Name = "labResThickness";
-      this.labResThickness.Size = new System.Drawing.Size(55, 28);
+      this.labResThickness.Size = new System.Drawing.Size(44, 30);
       this.labResThickness.TabIndex = 0;
       this.labResThickness.Text = "00.000";
       this.labResThickness.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -239,9 +247,9 @@ namespace Redbrick_Addin
       // 
       this.labResWidth.AutoSize = true;
       this.labResWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labResWidth.Location = new System.Drawing.Point(247, 95);
+      this.labResWidth.Location = new System.Drawing.Point(153, 114);
       this.labResWidth.Name = "labResWidth";
-      this.labResWidth.Size = new System.Drawing.Size(55, 28);
+      this.labResWidth.Size = new System.Drawing.Size(44, 30);
       this.labResWidth.TabIndex = 0;
       this.labResWidth.Text = "00.000";
       this.labResWidth.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -251,9 +259,9 @@ namespace Redbrick_Addin
       // 
       this.labResLength.AutoSize = true;
       this.labResLength.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.labResLength.Location = new System.Drawing.Point(247, 54);
+      this.labResLength.Location = new System.Drawing.Point(153, 66);
       this.labResLength.Name = "labResLength";
-      this.labResLength.Size = new System.Drawing.Size(55, 28);
+      this.labResLength.Size = new System.Drawing.Size(44, 30);
       this.labResLength.TabIndex = 0;
       this.labResLength.Text = "00.000";
       this.labResLength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -264,7 +272,7 @@ namespace Redbrick_Addin
       this.bCopy.AutoSize = true;
       this.bCopy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.bCopy.Image = global::Redbrick_Addin.Properties.Resources.clipboard;
-      this.bCopy.Location = new System.Drawing.Point(247, 16);
+      this.bCopy.Location = new System.Drawing.Point(153, 21);
       this.bCopy.Name = "bCopy";
       this.tableLayoutPanel1.SetRowSpan(this.bCopy, 2);
       this.bCopy.Size = new System.Drawing.Size(22, 27);
@@ -281,7 +289,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "GeneralProperties";
-      this.Size = new System.Drawing.Size(305, 282);
+      this.Size = new System.Drawing.Size(250, 323);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);

@@ -35,27 +35,36 @@ namespace Redbrick_Addin {
 
     private void Init()                                     // If this didn't start out as a VSTA plugin, I probably wouldn't have
     {                                                       // to do this.
-      DockStyle d = DockStyle.Fill;
+      DockStyle d = DockStyle.None;
       gbSpecProp.Click += gbSpecProp_Click;
       ds = new DepartmentSelector(ref this.props);
-      ds.Dock = d;
+      ds.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+      //ds.Dock = d;
       cs = new ConfigurationSpecific(ref this.props);
-      cs.Dock = d;
+      cs.Location = new System.Drawing.Point(3, 13);
+      cs.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+      //cs.Dock = d;
       gp = new GeneralProperties(ref this.props);
-      gp.Dock = d;
+      gp.Location = new System.Drawing.Point(3, 13);
+      gp.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+      //gp.Dock = d;
       mp = new MachineProperties(ref this.props);
-      mp.Dock = d;
+      mp.Location = new System.Drawing.Point(3, 13);
+      mp.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+      //mp.Dock = d;
       op = new Ops(ref this.props);
+      op.Location = new System.Drawing.Point(3, 13);
+      op.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
       op.TabIndex = 2;
-      op.Dock = d;
+      //op.Dock = d;
       //ch = new CutlistHandler(ref this.props);
       //ch.TabIndex = 1;
       //ch.Dock = d;
 
       // If anything's not docked, dock it.
-      foreach (Control item in this.tlpMain.Controls) {
-        item.Dock = d;
-      }
+      //foreach (Control item in this.tlpMain.Controls) {
+      //  item.Dock = d;
+      //}
 
       gbSpecProp.Controls.Add(cs);
       gbGlobProp.Controls.Add(gp);

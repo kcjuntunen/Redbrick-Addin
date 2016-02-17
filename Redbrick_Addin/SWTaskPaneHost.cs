@@ -404,6 +404,7 @@ namespace Redbrick_Addin {
       ClearControls(this);
       // Fill everything so it stretches.
       DockStyle d = DockStyle.Fill;
+      
 
       // New model handler with current property (aquired in this.Connect...())
       mrb = new ModelRedbrick(ref prop);
@@ -414,10 +415,9 @@ namespace Redbrick_Addin {
       // Dock this control in the taskpane.
       Dock = d;
 
-      foreach (Control item in mrb.Controls) {
-        item.Dock = d;
-        //item.ResumeLayout(true);
-      }
+      //foreach (Control item in mrb.Controls) {
+      //  item.Dock = d;
+      //}
 
       // Gonna use access to all these controls.
       ds = mrb.aDepartmentSelector;
