@@ -257,7 +257,7 @@ namespace Redbrick_Addin {
 
     private void cbEf_SelectedIndexChanged(object sender, EventArgs e) {
       if (cbEf.SelectedValue != null)
-        leFColor.Text = (cbEf.SelectedItem as System.Data.DataRowView)[2].ToString();
+        leFColor.Text = (cbEf.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
       else
         leFColor.Text = string.Empty;
 
@@ -451,5 +451,37 @@ namespace Redbrick_Addin {
           UpdateCutlistBox();
       }
     }
+
+    private void cbMat_TextChanged(object sender, EventArgs e) {
+      cbMat.SelectedIndex = cbMat.FindString(cbMat.Text.Trim());
+    }
+
+    private void ResolveText(object sender, EventArgs e) {
+      if (sender is ComboBox) {
+        ComboBox s = (sender as ComboBox);
+        if (s.Text.Trim() == string.Empty) {
+          s.SelectedIndex = s.Items.Count - 1;
+        } else {
+          s.SelectedIndex = s.FindString(s.Text.Trim());
+        }
+      }
+    }
+
+    private void FocusHere(object sender, MouseEventArgs e) {
+      if (sender is ComboBox) {
+        if ((sender as ComboBox).DroppedDown) {
+          //
+        } else {
+          (sender as ComboBox).Focus();
+        }
+      } else if (sender is TextBox) {
+        (sender as TextBox).Focus();
+      }
+    }
+
+    private void StickyDrop(object sender, EventArgs e) {
+
+    }
+
   }
 }
