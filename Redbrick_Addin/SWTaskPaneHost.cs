@@ -404,7 +404,7 @@ namespace Redbrick_Addin {
       ClearControls(this);
       // Fill everything so it stretches.
       DockStyle d = DockStyle.Fill;
-      
+
 
       // New model handler with current property (aquired in this.Connect...())
       mrb = new ModelRedbrick(ref prop);
@@ -741,6 +741,7 @@ namespace Redbrick_Addin {
       //    Write();
 
       // Different config! Look again!
+      md_last = null;
       ConnectSelection();
       return 0;
     }
@@ -749,7 +750,41 @@ namespace Redbrick_Addin {
       if (PartSetup) {
         md_last = null;
         // update doc metadata & rebuild & save
-        mrb.Write(Document);
+
+        int hash = prop.cutlistData.GetHash(prop.PartName);
+        if (hash != prop.Hash) {
+          if (hash != 0) {
+            string question = string.Format(Properties.Resources.AlreadyInOtherLocation, prop.PartName);
+
+            swMessageBoxResult_e res = (swMessageBoxResult_e)prop.SwApp.SendMsgToUser2(question,
+              (int)swMessageBoxIcon_e.swMbQuestion,
+              (int)swMessageBoxBtn_e.swMbYesNo);
+            switch (res) {
+              case swMessageBoxResult_e.swMbHitAbort:
+                break;
+              case swMessageBoxResult_e.swMbHitCancel:
+                break;
+              case swMessageBoxResult_e.swMbHitIgnore:
+                break;
+              case swMessageBoxResult_e.swMbHitNo:
+                break;
+              case swMessageBoxResult_e.swMbHitOk:
+                break;
+              case swMessageBoxResult_e.swMbHitRetry:
+                break;
+              case swMessageBoxResult_e.swMbHitYes:
+                prop.cutlistData.MakeOriginal(prop);
+                mrb.Write(Document);
+                break;
+              default:
+                break;
+            }
+          } else {
+            mrb.Write(Document);
+          }
+        } else {
+          mrb.Write(Document);
+        }
         // rescoop new metadata
         ConnectSelection();
         //this.mrb.Update(ref this.prop);
