@@ -152,7 +152,7 @@ namespace Redbrick_Addin {
 
       DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue, PropertySet.GetProperty("REVISION LEVEL").Value);
       int stat = 0;
-      if (int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
+      if (ds.Tables[0].Rows.Count > 0 && int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
         cbStatus.SelectedValue = stat;
       }
 
@@ -405,10 +405,13 @@ namespace Redbrick_Addin {
     }
 
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
-      int clid = PropertySet.CutlistData.GetCutlistID(tbItemNoRes.Text, cbRevision.Text);
-      if (cbStatus.SelectedValue != null && clid != 0) {
-        PropertySet.CutlistData.SetState(clid, (int)cbStatus.SelectedValue);
+      if (tbItemNoRes.Text != null && tbItemNoRes.Text != string.Empty && cbRevision.SelectedValue != null) {
+        int clid = PropertySet.CutlistData.GetCutlistID(tbItemNoRes.Text, cbRevision.Text);
+        if (cbStatus.SelectedValue != null && clid != 0) {
+          PropertySet.CutlistData.SetState(clid, (int)cbStatus.SelectedValue);
+        }
       }
     }
+
   }
 }
