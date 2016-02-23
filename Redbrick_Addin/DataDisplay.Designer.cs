@@ -44,6 +44,7 @@ namespace Redbrick_Addin {
       this.ClientSize = new System.Drawing.Size(550, 347);
       this.Controls.Add(this.dataGridView1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
       this.Name = "DataDisplay";
       this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
