@@ -38,7 +38,7 @@ namespace Redbrick_Addin
       this.cbDepartment.Location = new System.Drawing.Point(0, 0);
       this.cbDepartment.Name = "cbDepartment";
       this.cbDepartment.Size = new System.Drawing.Size(153, 21);
-      this.cbDepartment.TabIndex = 0;
+      this.cbDepartment.TabIndex = 26;
       this.cbDepartment.DropDown += new System.EventHandler(this.cbDepartment_DropDown);
       // 
       // DepartmentSelector

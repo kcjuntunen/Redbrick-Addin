@@ -30,12 +30,12 @@ namespace Redbrick_Addin
         {
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.label1 = new System.Windows.Forms.Label();
+      this.cbOp1 = new System.Windows.Forms.ComboBox();
       this.label2 = new System.Windows.Forms.Label();
+      this.cbOp2 = new System.Windows.Forms.ComboBox();
       this.label3 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.label5 = new System.Windows.Forms.Label();
-      this.cbOp1 = new System.Windows.Forms.ComboBox();
-      this.cbOp2 = new System.Windows.Forms.ComboBox();
       this.cbOp3 = new System.Windows.Forms.ComboBox();
       this.cbOp4 = new System.Windows.Forms.ComboBox();
       this.cbOp5 = new System.Windows.Forms.ComboBox();
@@ -85,6 +85,18 @@ namespace Redbrick_Addin
       this.label1.TabIndex = 0;
       this.label1.Text = "OP1";
       // 
+      // cbOp1
+      // 
+      this.cbOp1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp1.FormattingEnabled = true;
+      this.cbOp1.Location = new System.Drawing.Point(43, 3);
+      this.cbOp1.MinimumSize = new System.Drawing.Size(5, 0);
+      this.cbOp1.Name = "cbOp1";
+      this.cbOp1.Size = new System.Drawing.Size(154, 21);
+      this.cbOp1.TabIndex = 27;
+      // 
       // label2
       // 
       this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -95,6 +107,18 @@ namespace Redbrick_Addin
       this.label2.Size = new System.Drawing.Size(34, 13);
       this.label2.TabIndex = 0;
       this.label2.Text = "OP2";
+      // 
+      // cbOp2
+      // 
+      this.cbOp2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp2.FormattingEnabled = true;
+      this.cbOp2.Location = new System.Drawing.Point(43, 30);
+      this.cbOp2.MinimumSize = new System.Drawing.Size(5, 0);
+      this.cbOp2.Name = "cbOp2";
+      this.cbOp2.Size = new System.Drawing.Size(154, 21);
+      this.cbOp2.TabIndex = 28;
       // 
       // label3
       // 
@@ -129,30 +153,6 @@ namespace Redbrick_Addin
       this.label5.TabIndex = 0;
       this.label5.Text = "OP5";
       // 
-      // cbOp1
-      // 
-      this.cbOp1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.cbOp1.FormattingEnabled = true;
-      this.cbOp1.Location = new System.Drawing.Point(43, 3);
-      this.cbOp1.MinimumSize = new System.Drawing.Size(5, 0);
-      this.cbOp1.Name = "cbOp1";
-      this.cbOp1.Size = new System.Drawing.Size(154, 21);
-      this.cbOp1.TabIndex = 1;
-      // 
-      // cbOp2
-      // 
-      this.cbOp2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.cbOp2.FormattingEnabled = true;
-      this.cbOp2.Location = new System.Drawing.Point(43, 30);
-      this.cbOp2.MinimumSize = new System.Drawing.Size(5, 0);
-      this.cbOp2.Name = "cbOp2";
-      this.cbOp2.Size = new System.Drawing.Size(154, 21);
-      this.cbOp2.TabIndex = 2;
-      // 
       // cbOp3
       // 
       this.cbOp3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -163,7 +163,7 @@ namespace Redbrick_Addin
       this.cbOp3.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp3.Name = "cbOp3";
       this.cbOp3.Size = new System.Drawing.Size(154, 21);
-      this.cbOp3.TabIndex = 3;
+      this.cbOp3.TabIndex = 29;
       // 
       // cbOp4
       // 
@@ -175,7 +175,7 @@ namespace Redbrick_Addin
       this.cbOp4.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp4.Name = "cbOp4";
       this.cbOp4.Size = new System.Drawing.Size(154, 21);
-      this.cbOp4.TabIndex = 4;
+      this.cbOp4.TabIndex = 30;
       // 
       // cbOp5
       // 
@@ -187,7 +187,7 @@ namespace Redbrick_Addin
       this.cbOp5.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp5.Name = "cbOp5";
       this.cbOp5.Size = new System.Drawing.Size(154, 21);
-      this.cbOp5.TabIndex = 5;
+      this.cbOp5.TabIndex = 31;
       // 
       // Ops
       // 

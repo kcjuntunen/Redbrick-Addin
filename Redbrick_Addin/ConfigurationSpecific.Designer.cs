@@ -119,6 +119,8 @@ namespace Redbrick_Addin
       this.cbEr.Size = new System.Drawing.Size(156, 21);
       this.cbEr.TabIndex = 5;
       this.cbEr.SelectedIndexChanged += new System.EventHandler(this.cbEr_SelectedIndexChanged);
+      this.cbEr.Leave += new System.EventHandler(this.ResolveText);
+      this.cbEr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEr
       // 
@@ -142,6 +144,8 @@ namespace Redbrick_Addin
       this.cbEl.Size = new System.Drawing.Size(156, 21);
       this.cbEl.TabIndex = 4;
       this.cbEl.SelectedIndexChanged += new System.EventHandler(this.cbEl_SelectedIndexChanged);
+      this.cbEl.Leave += new System.EventHandler(this.ResolveText);
+      this.cbEl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEl
       // 
@@ -165,6 +169,8 @@ namespace Redbrick_Addin
       this.cbEb.Size = new System.Drawing.Size(156, 21);
       this.cbEb.TabIndex = 3;
       this.cbEb.SelectedIndexChanged += new System.EventHandler(this.cbEb_SelectedIndexChanged);
+      this.cbEb.Leave += new System.EventHandler(this.ResolveText);
+      this.cbEb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEb
       // 
@@ -188,6 +194,8 @@ namespace Redbrick_Addin
       this.cbEf.Size = new System.Drawing.Size(156, 21);
       this.cbEf.TabIndex = 2;
       this.cbEf.SelectedIndexChanged += new System.EventHandler(this.cbEf_SelectedIndexChanged);
+      this.cbEf.Leave += new System.EventHandler(this.ResolveText);
+      this.cbEf.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEf
       // 
@@ -211,6 +219,8 @@ namespace Redbrick_Addin
       this.cbMat.Size = new System.Drawing.Size(156, 21);
       this.cbMat.TabIndex = 1;
       this.cbMat.SelectedIndexChanged += new System.EventHandler(this.cbMat_SelectedIndexChanged);
+      this.cbMat.Leave += new System.EventHandler(this.ResolveText);
+      this.cbMat.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lMat
       // 
@@ -226,6 +236,7 @@ namespace Redbrick_Addin
       // 
       this.leLColor.AutoSize = true;
       this.leLColor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.leLColor.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.leLColor.Location = new System.Drawing.Point(165, 144);
       this.leLColor.Name = "leLColor";
       this.tableLayoutPanel1.SetRowSpan(this.leLColor, 2);
@@ -238,6 +249,7 @@ namespace Redbrick_Addin
       // 
       this.leBColor.AutoSize = true;
       this.leBColor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.leBColor.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.leBColor.Location = new System.Drawing.Point(165, 96);
       this.leBColor.Name = "leBColor";
       this.tableLayoutPanel1.SetRowSpan(this.leBColor, 2);
@@ -250,6 +262,7 @@ namespace Redbrick_Addin
       // 
       this.leRColor.AutoSize = true;
       this.leRColor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.leRColor.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.leRColor.Location = new System.Drawing.Point(165, 192);
       this.leRColor.Name = "leRColor";
       this.tableLayoutPanel1.SetRowSpan(this.leRColor, 2);
@@ -262,6 +275,7 @@ namespace Redbrick_Addin
       // 
       this.lMatColor.AutoSize = true;
       this.lMatColor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.lMatColor.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.lMatColor.Location = new System.Drawing.Point(165, 0);
       this.lMatColor.Name = "lMatColor";
       this.tableLayoutPanel1.SetRowSpan(this.lMatColor, 2);
@@ -274,6 +288,7 @@ namespace Redbrick_Addin
       // 
       this.leFColor.AutoSize = true;
       this.leFColor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.leFColor.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.leFColor.Location = new System.Drawing.Point(165, 48);
       this.leFColor.Name = "leFColor";
       this.tableLayoutPanel1.SetRowSpan(this.leFColor, 2);
@@ -288,7 +303,7 @@ namespace Redbrick_Addin
       this.label1.Location = new System.Drawing.Point(3, 240);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(40, 13);
-      this.label1.TabIndex = 6;
+      this.label1.TabIndex = 0;
       this.label1.Text = "Cutlist";
       // 
       // label2
@@ -298,7 +313,7 @@ namespace Redbrick_Addin
       this.label2.Location = new System.Drawing.Point(165, 240);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(48, 18);
-      this.label2.TabIndex = 7;
+      this.label2.TabIndex = 0;
       this.label2.Text = "Status";
       // 
       // cbCutlist
@@ -310,7 +325,7 @@ namespace Redbrick_Addin
       this.cbCutlist.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbCutlist.Name = "cbCutlist";
       this.cbCutlist.Size = new System.Drawing.Size(156, 21);
-      this.cbCutlist.TabIndex = 8;
+      this.cbCutlist.TabIndex = 6;
       this.cbCutlist.SelectedIndexChanged += new System.EventHandler(this.cbCutlist_SelectedIndexChanged);
       this.cbCutlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbCutlist_MouseClick);
       // 
@@ -323,7 +338,7 @@ namespace Redbrick_Addin
       this.cbStatus.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbStatus.Name = "cbStatus";
       this.cbStatus.Size = new System.Drawing.Size(48, 21);
-      this.cbStatus.TabIndex = 9;
+      this.cbStatus.TabIndex = 7;
       this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
       // 
       // label3
@@ -333,7 +348,7 @@ namespace Redbrick_Addin
       this.label3.Location = new System.Drawing.Point(165, 288);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(48, 30);
-      this.label3.TabIndex = 11;
+      this.label3.TabIndex = 0;
       this.label3.Text = "Quantity";
       // 
       // nudQ
@@ -344,7 +359,7 @@ namespace Redbrick_Addin
       this.nudQ.MinimumSize = new System.Drawing.Size(5, 0);
       this.nudQ.Name = "nudQ";
       this.nudQ.Size = new System.Drawing.Size(48, 22);
-      this.nudQ.TabIndex = 12;
+      this.nudQ.TabIndex = 8;
       this.nudQ.ValueChanged += new System.EventHandler(this.nudQ_ValueChanged);
       // 
       // btnMakeOriginal
@@ -355,7 +370,7 @@ namespace Redbrick_Addin
       this.btnMakeOriginal.MinimumSize = new System.Drawing.Size(5, 0);
       this.btnMakeOriginal.Name = "btnMakeOriginal";
       this.btnMakeOriginal.Size = new System.Drawing.Size(156, 24);
-      this.btnMakeOriginal.TabIndex = 10;
+      this.btnMakeOriginal.TabIndex = 9;
       this.btnMakeOriginal.Text = global::Redbrick_Addin.Properties.Resources.MakeOriginalButtonText;
       this.btnMakeOriginal.UseVisualStyleBackColor = true;
       this.btnMakeOriginal.Click += new System.EventHandler(this.btnMakeOriginal_Click);
@@ -368,7 +383,7 @@ namespace Redbrick_Addin
       this.bRemove.MinimumSize = new System.Drawing.Size(5, 5);
       this.bRemove.Name = "bRemove";
       this.bRemove.Size = new System.Drawing.Size(156, 22);
-      this.bRemove.TabIndex = 13;
+      this.bRemove.TabIndex = 10;
       this.bRemove.Text = "Remove From Cutlist";
       this.bRemove.UseVisualStyleBackColor = true;
       this.bRemove.Click += new System.EventHandler(this.bRemove_Click);

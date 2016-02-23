@@ -60,7 +60,7 @@ namespace Redbrick_Addin
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tlpMain.Size = new System.Drawing.Size(244, 126);
+      this.tlpMain.Size = new System.Drawing.Size(244, 78);
       this.tlpMain.TabIndex = 0;
       // 
       // gbMachProp
@@ -69,9 +69,9 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gbMachProp.AutoSize = true;
       this.gbMachProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.gbMachProp.Location = new System.Drawing.Point(3, 57);
+      this.gbMachProp.Location = new System.Drawing.Point(3, 25);
       this.gbMachProp.Name = "gbMachProp";
-      this.gbMachProp.Size = new System.Drawing.Size(238, 21);
+      this.gbMachProp.Size = new System.Drawing.Size(238, 5);
       this.gbMachProp.TabIndex = 2;
       this.gbMachProp.TabStop = false;
       this.gbMachProp.Text = "Machine Properties";
@@ -82,9 +82,9 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gbGlobProp.AutoSize = true;
       this.gbGlobProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.gbGlobProp.Location = new System.Drawing.Point(3, 30);
+      this.gbGlobProp.Location = new System.Drawing.Point(3, 14);
       this.gbGlobProp.Name = "gbGlobProp";
-      this.gbGlobProp.Size = new System.Drawing.Size(238, 21);
+      this.gbGlobProp.Size = new System.Drawing.Size(238, 5);
       this.gbGlobProp.TabIndex = 1;
       this.gbGlobProp.TabStop = false;
       this.gbGlobProp.Text = "Global Properties";
@@ -97,7 +97,7 @@ namespace Redbrick_Addin
       this.gbSpecProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.gbSpecProp.Location = new System.Drawing.Point(3, 3);
       this.gbSpecProp.Name = "gbSpecProp";
-      this.gbSpecProp.Size = new System.Drawing.Size(238, 21);
+      this.gbSpecProp.Size = new System.Drawing.Size(238, 5);
       this.gbSpecProp.TabIndex = 0;
       this.gbSpecProp.TabStop = false;
       this.gbSpecProp.Text = "Configuration Specific";
@@ -109,10 +109,10 @@ namespace Redbrick_Addin
       this.gbOp.AutoSize = true;
       this.gbOp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.gbOp.Controls.Add(this.tlp1);
-      this.gbOp.Location = new System.Drawing.Point(3, 84);
+      this.gbOp.Location = new System.Drawing.Point(3, 36);
       this.gbOp.Name = "gbOp";
       this.gbOp.Size = new System.Drawing.Size(238, 39);
-      this.gbOp.TabIndex = 3;
+      this.gbOp.TabIndex = 0;
       this.gbOp.TabStop = false;
       this.gbOp.Text = "Ops";
       // 
@@ -145,7 +145,7 @@ namespace Redbrick_Addin
       this.xtraTable.RowCount = 1;
       this.xtraTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.xtraTable.Size = new System.Drawing.Size(250, 152);
-      this.xtraTable.TabIndex = 1;
+      this.xtraTable.TabIndex = 0;
       // 
       // ModelRedbrick
       // 

@@ -45,7 +45,6 @@ namespace Redbrick_Addin
       this.labResThickness = new System.Windows.Forms.Label();
       this.labResWidth = new System.Windows.Forms.Label();
       this.labResLength = new System.Windows.Forms.Label();
-      this.bCopy = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -73,7 +72,6 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.labResThickness, 1, 8);
       this.tableLayoutPanel1.Controls.Add(this.labResWidth, 1, 6);
       this.tableLayoutPanel1.Controls.Add(this.labResLength, 1, 3);
-      this.tableLayoutPanel1.Controls.Add(this.bCopy, 1, 1);
       this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 13;
@@ -90,6 +88,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 313);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
@@ -97,12 +96,13 @@ namespace Redbrick_Addin
       // 
       this.tbComment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.tableLayoutPanel1.SetColumnSpan(this.tbComment, 2);
       this.tbComment.Location = new System.Drawing.Point(3, 261);
-      this.tbComment.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbComment.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbComment.Multiline = true;
       this.tbComment.Name = "tbComment";
-      this.tbComment.Size = new System.Drawing.Size(144, 43);
-      this.tbComment.TabIndex = 6;
+      this.tbComment.Size = new System.Drawing.Size(194, 43);
+      this.tbComment.TabIndex = 16;
       this.tbComment.TextChanged += new System.EventHandler(this.tbComment_TextChanged);
       // 
       // label5
@@ -120,10 +120,10 @@ namespace Redbrick_Addin
       // 
       this.tbWallThick.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbWallThick.Location = new System.Drawing.Point(3, 213);
-      this.tbWallThick.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbWallThick.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbWallThick.Name = "tbWallThick";
       this.tbWallThick.Size = new System.Drawing.Size(144, 22);
-      this.tbWallThick.TabIndex = 5;
+      this.tbWallThick.TabIndex = 15;
       this.tbWallThick.Leave += new System.EventHandler(this.tbWallThick_Leave);
       // 
       // lWallThickness
@@ -141,10 +141,10 @@ namespace Redbrick_Addin
       // 
       this.tbThick.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbThick.Location = new System.Drawing.Point(3, 165);
-      this.tbThick.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbThick.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbThick.Name = "tbThick";
       this.tbThick.Size = new System.Drawing.Size(144, 22);
-      this.tbThick.TabIndex = 4;
+      this.tbThick.TabIndex = 14;
       this.tbThick.Leave += new System.EventHandler(this.tbThick_Leave);
       // 
       // label6
@@ -162,10 +162,10 @@ namespace Redbrick_Addin
       // 
       this.tbWidth.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbWidth.Location = new System.Drawing.Point(3, 117);
-      this.tbWidth.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbWidth.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbWidth.Name = "tbWidth";
       this.tbWidth.Size = new System.Drawing.Size(144, 22);
-      this.tbWidth.TabIndex = 3;
+      this.tbWidth.TabIndex = 13;
       this.tbWidth.Leave += new System.EventHandler(this.tbWidth_Leave);
       // 
       // label3
@@ -183,10 +183,10 @@ namespace Redbrick_Addin
       // 
       this.tbLength.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbLength.Location = new System.Drawing.Point(3, 69);
-      this.tbLength.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbLength.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbLength.Name = "tbLength";
       this.tbLength.Size = new System.Drawing.Size(144, 22);
-      this.tbLength.TabIndex = 2;
+      this.tbLength.TabIndex = 12;
       this.tbLength.Leave += new System.EventHandler(this.tbLength_Leave);
       // 
       // label2
@@ -202,12 +202,13 @@ namespace Redbrick_Addin
       // 
       // tbDescription
       // 
+      this.tableLayoutPanel1.SetColumnSpan(this.tbDescription, 2);
       this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbDescription.Location = new System.Drawing.Point(3, 21);
-      this.tbDescription.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbDescription.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbDescription.Name = "tbDescription";
-      this.tbDescription.Size = new System.Drawing.Size(144, 22);
-      this.tbDescription.TabIndex = 1;
+      this.tbDescription.Size = new System.Drawing.Size(194, 22);
+      this.tbDescription.TabIndex = 11;
       this.tbDescription.TextChanged += new System.EventHandler(this.tbDescription_TextChanged);
       // 
       // label1
@@ -267,20 +268,6 @@ namespace Redbrick_Addin
       this.labResLength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.labResLength.TextChanged += new System.EventHandler(this.labResLength_TextChanged);
       // 
-      // bCopy
-      // 
-      this.bCopy.AutoSize = true;
-      this.bCopy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.bCopy.Image = global::Redbrick_Addin.Properties.Resources.clipboard;
-      this.bCopy.Location = new System.Drawing.Point(153, 21);
-      this.bCopy.Name = "bCopy";
-      this.tableLayoutPanel1.SetRowSpan(this.bCopy, 2);
-      this.bCopy.Size = new System.Drawing.Size(22, 27);
-      this.bCopy.TabIndex = 2;
-      this.bCopy.UseVisualStyleBackColor = true;
-      this.bCopy.Visible = false;
-      this.bCopy.Click += new System.EventHandler(this.bCopy_Click);
-      // 
       // GeneralProperties
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,7 +288,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbDescription;
-        private System.Windows.Forms.Button bCopy;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lWallThickness;

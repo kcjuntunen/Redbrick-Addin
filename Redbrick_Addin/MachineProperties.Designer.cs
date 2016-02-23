@@ -132,20 +132,20 @@ namespace Redbrick_Addin
       this.tbCNC1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tbCNC1.Location = new System.Drawing.Point(3, 21);
-      this.tbCNC1.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbCNC1.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbCNC1.Name = "tbCNC1";
       this.tbCNC1.Size = new System.Drawing.Size(60, 22);
-      this.tbCNC1.TabIndex = 1;
+      this.tbCNC1.TabIndex = 17;
       // 
       // tbCNC2
       // 
       this.tbCNC2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tbCNC2.Location = new System.Drawing.Point(69, 21);
-      this.tbCNC2.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbCNC2.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbCNC2.Name = "tbCNC2";
       this.tbCNC2.Size = new System.Drawing.Size(60, 22);
-      this.tbCNC2.TabIndex = 2;
+      this.tbCNC2.TabIndex = 18;
       // 
       // chUpdate
       // 
@@ -154,16 +154,16 @@ namespace Redbrick_Addin
       this.chUpdate.Location = new System.Drawing.Point(135, 21);
       this.chUpdate.Name = "chUpdate";
       this.chUpdate.Size = new System.Drawing.Size(62, 24);
-      this.chUpdate.TabIndex = 3;
+      this.chUpdate.TabIndex = 19;
       // 
       // tbPPB
       // 
       this.tbPPB.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbPPB.Location = new System.Drawing.Point(135, 69);
-      this.tbPPB.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbPPB.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbPPB.Name = "tbPPB";
       this.tbPPB.Size = new System.Drawing.Size(62, 22);
-      this.tbPPB.TabIndex = 6;
+      this.tbPPB.TabIndex = 22;
       this.tbPPB.Text = "1";
       // 
       // label4
@@ -204,10 +204,10 @@ namespace Redbrick_Addin
       this.tbOverL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tbOverL.Location = new System.Drawing.Point(3, 69);
-      this.tbOverL.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbOverL.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbOverL.Name = "tbOverL";
       this.tbOverL.Size = new System.Drawing.Size(60, 22);
-      this.tbOverL.TabIndex = 4;
+      this.tbOverL.TabIndex = 20;
       this.tbOverL.TextChanged += new System.EventHandler(this.tbOverL_TextChanged);
       this.tbOverL.Leave += new System.EventHandler(this.tbOverL_Validated);
       // 
@@ -216,10 +216,10 @@ namespace Redbrick_Addin
       this.tbOverW.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tbOverW.Location = new System.Drawing.Point(69, 69);
-      this.tbOverW.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbOverW.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbOverW.Name = "tbOverW";
       this.tbOverW.Size = new System.Drawing.Size(60, 22);
-      this.tbOverW.TabIndex = 5;
+      this.tbOverW.TabIndex = 21;
       this.tbOverW.TextChanged += new System.EventHandler(this.tbOverW_TextChanged);
       this.tbOverW.Leave += new System.EventHandler(this.tbOverW_Validated);
       // 
@@ -228,20 +228,20 @@ namespace Redbrick_Addin
       this.tbBlankL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tbBlankL.Location = new System.Drawing.Point(3, 117);
-      this.tbBlankL.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbBlankL.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbBlankL.Name = "tbBlankL";
       this.tbBlankL.Size = new System.Drawing.Size(60, 22);
-      this.tbBlankL.TabIndex = 7;
+      this.tbBlankL.TabIndex = 23;
       // 
       // tbBlankW
       // 
       this.tbBlankW.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tbBlankW.Location = new System.Drawing.Point(69, 117);
-      this.tbBlankW.MinimumSize = new System.Drawing.Size(5, 0);
+      this.tbBlankW.MinimumSize = new System.Drawing.Size(5, 4);
       this.tbBlankW.Name = "tbBlankW";
       this.tbBlankW.Size = new System.Drawing.Size(60, 22);
-      this.tbBlankW.TabIndex = 8;
+      this.tbBlankW.TabIndex = 24;
       // 
       // btnWhere
       // 
@@ -250,9 +250,10 @@ namespace Redbrick_Addin
       this.btnWhere.Location = new System.Drawing.Point(135, 117);
       this.btnWhere.Name = "btnWhere";
       this.btnWhere.Size = new System.Drawing.Size(62, 22);
-      this.btnWhere.TabIndex = 9;
+      this.btnWhere.TabIndex = 25;
       this.btnWhere.Text = "Priority";
       this.btnWhere.UseVisualStyleBackColor = true;
+      this.btnWhere.Visible = false;
       this.btnWhere.Click += new System.EventHandler(this.btnWhere_Click);
       // 
       // MachineProperties
