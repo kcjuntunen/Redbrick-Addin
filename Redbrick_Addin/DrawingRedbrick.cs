@@ -27,6 +27,7 @@ namespace Redbrick_Addin {
       this.fillMat();
       this.fillAuthor();
       this.fillCustomer();
+      fillStatus();
       fillRev();
 
       this.GetData();
@@ -74,6 +75,10 @@ namespace Redbrick_Addin {
       }
 
       if (custo != null) {
+        if (custo.Value == string.Empty) {
+          string fn = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle();
+          cbCustomer.SelectedIndex = cbCustomer.FindString(fn.Substring(0, 2));
+        }
         custo.Ctl = this.cbCustomer;
       } else {
         custo = new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
@@ -145,6 +150,12 @@ namespace Redbrick_Addin {
         }
       }
 
+      DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue, PropertySet.GetProperty("REVISION LEVEL").Value);
+      int stat = 0;
+      if (int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
+        cbStatus.SelectedValue = stat;
+      }
+
       this.PropertySet.UpdateFields();
       //this.RevSet.UpdateListBox();
       this.tbItemNoRes.Text = this.PropertySet.GetProperty("PartNo").ResValue;
@@ -178,6 +189,12 @@ namespace Redbrick_Addin {
       for (int i = 100; i < 110; i++) {
         cbRevision.Items.Add(i);
       }
+    }
+
+    private void fillStatus() {
+      cbStatus.DataSource = PropertySet.CutlistData.States.Tables[0];
+      cbStatus.DisplayMember = "STATE";
+      cbStatus.ValueMember = "ID";
     }
 
     public delegate void selectLayer();
@@ -343,7 +360,7 @@ namespace Redbrick_Addin {
       string name = string.Empty;
       if (doc != null) {
         name = doc.GetPathName();
-        dd.Text = System.IO.Path.GetFileNameWithoutExtension(name);
+        dd.Text = System.IO.Path.GetFileNameWithoutExtension(name) + " printed...";
       }
 
       IEnumerable<DataRow> q1 = (from job in jd.AsEnumerable()
@@ -384,6 +401,13 @@ namespace Redbrick_Addin {
 
       if (mebore == swMessageBoxResult_e.swMbHitYes) {
         PropertySet.CutlistData.DeleteCutlist(prtno, revno);
+      }
+    }
+
+    private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
+      int clid = PropertySet.CutlistData.GetCutlistID(tbItemNoRes.Text, cbRevision.Text);
+      if (cbStatus.SelectedValue != null && clid != 0) {
+        PropertySet.CutlistData.SetState(clid, (int)cbStatus.SelectedValue);
       }
     }
   }
