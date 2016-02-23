@@ -1240,7 +1240,43 @@ namespace Redbrick_Addin {
         }
       }
 
+      int hash = cutlistData.GetHash(PartName);
+      if (hash != Hash) {
+        if (hash != 0) {
+          string question = string.Format(Properties.Resources.AlreadyInOtherLocation, PartName);
 
+          swMessageBoxResult_e res = (swMessageBoxResult_e)SwApp.SendMsgToUser2(question,
+            (int)swMessageBoxIcon_e.swMbQuestion,
+            (int)swMessageBoxBtn_e.swMbYesNo);
+          switch (res) {
+            case swMessageBoxResult_e.swMbHitAbort:
+              break;
+            case swMessageBoxResult_e.swMbHitCancel:
+              break;
+            case swMessageBoxResult_e.swMbHitIgnore:
+              break;
+            case swMessageBoxResult_e.swMbHitNo:
+              break;
+            case swMessageBoxResult_e.swMbHitOk:
+              break;
+            case swMessageBoxResult_e.swMbHitRetry:
+              break;
+            case swMessageBoxResult_e.swMbHitYes:
+              cutlistData.MakeOriginal(this);
+              UpdateCutlist();
+              break;
+            default:
+              break;
+          }
+        } else {
+          UpdateCutlist();
+        }
+      } else {
+        UpdateCutlist();
+      }
+    }
+
+    private void UpdateCutlist() {
       Part prt = CutlistData.MakePartFromPropertySet(this);
       prt.SetQuantity(CutlistQuantity);
 
