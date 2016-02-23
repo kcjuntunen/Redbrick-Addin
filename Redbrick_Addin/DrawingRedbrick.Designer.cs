@@ -49,6 +49,8 @@ namespace Redbrick_Addin
       this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
       this.label15 = new System.Windows.Forms.Label();
       this.cbRevision = new System.Windows.Forms.ComboBox();
+      this.cbStatus = new System.Windows.Forms.ComboBox();
+      this.label16 = new System.Windows.Forms.Label();
       this.btnLookup = new System.Windows.Forms.Button();
       this.btnDelete = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -76,8 +78,6 @@ namespace Redbrick_Addin
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
       this.btnOK = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
-      this.cbStatus = new System.Windows.Forms.ComboBox();
-      this.label16 = new System.Windows.Forms.Label();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel5.SuspendLayout();
@@ -265,6 +265,26 @@ namespace Redbrick_Addin
       this.cbRevision.Name = "cbRevision";
       this.cbRevision.Size = new System.Drawing.Size(146, 21);
       this.cbRevision.TabIndex = 8;
+      this.cbRevision.SelectedIndexChanged += new System.EventHandler(this.cbRevision_SelectedIndexChanged);
+      // 
+      // cbStatus
+      // 
+      this.cbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.cbStatus.FormattingEnabled = true;
+      this.cbStatus.Location = new System.Drawing.Point(67, 42);
+      this.cbStatus.Name = "cbStatus";
+      this.cbStatus.Size = new System.Drawing.Size(146, 21);
+      this.cbStatus.TabIndex = 9;
+      this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
+      // 
+      // label16
+      // 
+      this.label16.AutoSize = true;
+      this.label16.Location = new System.Drawing.Point(3, 39);
+      this.label16.Name = "label16";
+      this.label16.Size = new System.Drawing.Size(39, 13);
+      this.label16.TabIndex = 10;
+      this.label16.Text = "Status";
       // 
       // btnLookup
       // 
@@ -564,25 +584,6 @@ namespace Redbrick_Addin
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
       this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-      // 
-      // cbStatus
-      // 
-      this.cbStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.cbStatus.FormattingEnabled = true;
-      this.cbStatus.Location = new System.Drawing.Point(67, 42);
-      this.cbStatus.Name = "cbStatus";
-      this.cbStatus.Size = new System.Drawing.Size(146, 21);
-      this.cbStatus.TabIndex = 9;
-      this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
-      // 
-      // label16
-      // 
-      this.label16.AutoSize = true;
-      this.label16.Location = new System.Drawing.Point(3, 39);
-      this.label16.Name = "label16";
-      this.label16.Size = new System.Drawing.Size(39, 13);
-      this.label16.TabIndex = 10;
-      this.label16.Text = "Status";
       // 
       // DrawingRedbrick
       // 

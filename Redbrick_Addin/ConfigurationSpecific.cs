@@ -108,11 +108,15 @@ namespace Redbrick_Addin {
         cbCutlist.SelectedValue = Properties.Settings.Default.CurrentCutlist;
 
         if (cbCutlist.SelectedItem != null && int.TryParse((cbCutlist.SelectedItem as DataRowView)[(int)CutlistData.WhereUsedRes.STATEID].ToString(), out s)) {
+          nudQ.Enabled = true;
+          cbStatus.Enabled = true;
           cbStatus.SelectedValue = s;
           cbStatus.Text = cd.GetStateByID(s);
         }
       } else {
         cbStatus.Text = string.Empty;
+        nudQ.Enabled = false;
+        cbStatus.Enabled = false;
         nudQ.Value = 1;
       }
 
@@ -348,8 +352,12 @@ namespace Redbrick_Addin {
 
         if (cbCutlist.Text == string.Empty) {
           propertySet.CutlistID = 0;
+          nudQ.Enabled = false;
+          cbStatus.Enabled = false;
           bRemove.Enabled = false;
         } else {
+          nudQ.Enabled = true;
+          cbStatus.Enabled = true;
           bRemove.Enabled = true;
         }
 
