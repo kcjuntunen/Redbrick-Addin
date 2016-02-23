@@ -1394,8 +1394,8 @@ namespace Redbrick_Addin {
             affected = comm.ExecuteNonQuery();
           }
         }
-
-        if (affected < 1 && (GetPartID(kp.Key) < 1)) {
+        int prtID = GetPartID(kp.Key);
+        if (affected < 1 && (prtID < 1)) {
           SQL = @"INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
             @"OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
             @"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
