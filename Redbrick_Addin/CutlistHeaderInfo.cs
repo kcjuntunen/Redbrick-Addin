@@ -6,10 +6,16 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 
 namespace Redbrick_Addin {
   public partial class CutlistHeaderInfo : Form {
     private bool clicked = false;
+    private ModelDoc2 md;
+    private ModelDocExtension mde;
+    private int fracdisp;
+    private int decs;
+    private int decd;
 
     public enum CutlistFunction {
       AddToExistingAlreadySelected,
@@ -180,12 +186,33 @@ namespace Redbrick_Addin {
     }
 
     private void InitTableData() {
+      md = (ModelDoc2)DrawingPropertySet.SwApp.ActiveDoc;
+      mde = md.Extension;
+      fracdisp = mde.GetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified);
+      //int den = mde.GetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearFractionDenominator,
+      //  (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified);
+      decs = mde.GetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
+        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified);
+      decd = mde.GetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified);
+
       try {
+        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, (int)swFractionDisplay_e.swDECIMAL);
+        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
+          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, 3);
+        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, 3);
+        md.ForceRebuild3(false);
+      
         table = new swTableType.swTableType((DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2),
           Properties.Settings.Default.MasterTableHash);
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
         em.ShowDialog();
+      } finally {
+        //
       }
     }
 
@@ -208,6 +235,14 @@ namespace Redbrick_Addin {
       } else {
         UpdateCutlist(cbItemNo.Text, cbRev.Text);
       }
+
+      mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+      (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, fracdisp);
+      mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
+        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decs);
+      mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decd);
+      md.ForceRebuild3(false);
 
       Close();
     }
