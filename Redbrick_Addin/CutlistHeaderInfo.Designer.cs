@@ -191,6 +191,8 @@ namespace Redbrick_Addin {
       this.cbCustomer.Size = new System.Drawing.Size(265, 21);
       this.cbCustomer.TabIndex = 1;
       this.cbCustomer.ValueMember = "CUSTID";
+      this.cbCustomer.SelectedIndexChanged += new System.EventHandler(this.cbCustomer_SelectedIndexChanged);
+      this.cbCustomer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbCustomer_MouseDown);
       // 
       // tlpItemNo
       // 

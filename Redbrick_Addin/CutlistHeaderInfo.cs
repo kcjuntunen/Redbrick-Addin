@@ -11,6 +11,7 @@ using SolidWorks.Interop.swconst;
 namespace Redbrick_Addin {
   public partial class CutlistHeaderInfo : Form {
     private bool clicked = false;
+    private bool cust_clicked = false;
     private ModelDoc2 md;
     private ModelDocExtension mde;
     private int fracdisp;
@@ -100,6 +101,7 @@ namespace Redbrick_Addin {
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
       cbCustomer.ValueMember = "CUSTID";
+      cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
 
       cbSetupBy.DataSource = CutlistData.GetAuthors().Tables[0];
       cbSetupBy.DisplayMember = "NAME";
@@ -122,6 +124,7 @@ namespace Redbrick_Addin {
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
       cbCustomer.ValueMember = "CUSTID";
+      cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
 
       cbSetupBy.DataSource = CutlistData.GetAuthors().Tables[0];
       cbSetupBy.DisplayMember = "NAME";
@@ -340,6 +343,18 @@ namespace Redbrick_Addin {
 
     private void cbItemNo_MouseClick(object sender, MouseEventArgs e) {
       clicked = true;
+    }
+
+    private void cbCustomer_SelectedIndexChanged(object sender, EventArgs e) {
+      if (cust_clicked) {
+        Properties.Settings.Default.LastCustomerSelection = (sender as ComboBox).SelectedIndex;
+        Properties.Settings.Default.Save();
+        cust_clicked = false;
+      }
+    }
+
+    private void cbCustomer_MouseDown(object sender, MouseEventArgs e) {
+      cust_clicked = true;
     }
   }
 }
