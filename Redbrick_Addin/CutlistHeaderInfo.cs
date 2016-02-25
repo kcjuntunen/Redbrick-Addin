@@ -236,13 +236,15 @@ namespace Redbrick_Addin {
         UpdateCutlist(cbItemNo.Text, cbRev.Text);
       }
 
-      mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
-      (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, fracdisp);
-      mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
-        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decs);
-      mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
-        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decd);
-      md.ForceRebuild3(false);
+      if (mde != null) {
+        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, fracdisp);
+        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
+          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decs);
+        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decd);
+        md.ForceRebuild3(false);
+      }
 
       Close();
     }
