@@ -1799,7 +1799,7 @@ namespace Redbrick_Addin {
         filtered = filtered.Replace(chars[j, 0], chars[j, 1]);
       }
 
-      return filtered;
+      return filtered.Trim();
     }
 
     public static string FilterString(string raw, bool flame) {
@@ -1821,7 +1821,7 @@ namespace Redbrick_Addin {
         filtered = filtered.Replace(chars[j, 0], chars[j, 1]);
       }
 
-      return filtered;
+      return filtered.Trim();
     }
 
     public int UpdateMachinePrograms() {
