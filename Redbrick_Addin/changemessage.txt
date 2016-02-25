@@ -1,10 +1,15 @@
-﻿
+﻿* 0.9.0.4
+** Fixed unhandled null ModelDocExtension on single cutlist part insertion
+** Now storing last selected customer
+** No longer letting you guys sneak spaces into the beginning of part names
+
 * 0.9.0.3
 ** Handled fractions in BOMs
 ** Fiddled with layout, tabbing, focus behaviour.
 ** Exposed status settings on Drawing view
 ** Now asks about hash on checkmark as well
 ** Updated the annotation table handler
+
 * 0.9.0.2
 ** Fixed edging bug.
 ** Monkeyed with layout.
