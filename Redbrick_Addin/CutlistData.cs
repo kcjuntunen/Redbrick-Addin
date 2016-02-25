@@ -1354,6 +1354,7 @@ namespace Redbrick_Addin {
     /// </summary>
     /// <returns>PartID</returns>
     public int UpdatePart(KeyValuePair<string, Part> kp) {
+      // TODO: Do .Trim() haigher up the food chain.
       int affected = 0;
       if (ENABLE_DB_WRITE) {
         Part p = kp.Value;
@@ -1385,16 +1386,16 @@ namespace Redbrick_Addin {
           affected = comm.ExecuteNonQuery();
         }
 
-        if (GetHash(p.PartNumber) == 0) {
+        if (GetHash(p.PartNumber.Trim()) == 0) {
           SQL = @"UPDATE CUT_PARTS SET HASH = ? WHERE PARTNUM = ?";
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
             comm.Parameters.AddWithValue("@hash", Convert.ToInt32(hash, 16));
-            comm.Parameters.AddWithValue("@partnum", p.PartNumber);
+            comm.Parameters.AddWithValue("@partnum", p.PartNumber.Trim());
 
             affected = comm.ExecuteNonQuery();
           }
         }
-        int prtID = GetPartID(kp.Key);
+        int prtID = GetPartID(kp.Key.Trim());
         if (affected < 1 && (prtID < 1)) {
           SQL = @"INSERT INTO CUT_PARTS (PARTNUM, DESCR, FIN_L, FIN_W, THICKNESS, CNC1, CNC2, BLANKQTY, OVER_L, " +
             @"OVER_W, OP1ID, OP2ID, OP3ID, OP4ID, OP5ID, COMMENT, UPDATE_CNC, TYPE, HASH) VALUES " +
@@ -1421,9 +1422,9 @@ namespace Redbrick_Addin {
             affected = comm.ExecuteNonQuery();
           }
         }
-        return GetPartID(kp.Key);
+        return GetPartID(kp.Key.Trim());
       }
-      return GetPartID(kp.Key);
+      return GetPartID(kp.Key.Trim());
     }
 
     public int GetPartID(string prt) {
