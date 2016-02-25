@@ -528,5 +528,17 @@ namespace Redbrick_Addin.Properties {
                 this["MPMSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int LastCustomerSelection {
+            get {
+                return ((int)(this["LastCustomerSelection"]));
+            }
+            set {
+                this["LastCustomerSelection"] = value;
+            }
+        }
     }
 }

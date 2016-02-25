@@ -152,6 +152,8 @@ namespace Redbrick_Addin
       this.cbCustomer.Name = "cbCustomer";
       this.cbCustomer.Size = new System.Drawing.Size(216, 21);
       this.cbCustomer.TabIndex = 3;
+      this.cbCustomer.SelectedIndexChanged += new System.EventHandler(this.cbCustomer_SelectedIndexChanged);
+      this.cbCustomer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbCustomer_MouseDown);
       // 
       // label1
       // 

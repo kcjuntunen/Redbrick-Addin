@@ -16,6 +16,7 @@ namespace Redbrick_Addin {
   public partial class DrawingRedbrick : UserControl //Form
   {
     private DirtTracker dirtTracker;
+    private bool custo_clicked = false;
 
     public DrawingRedbrick(SldWorks sw) {
       this._swApp = sw;
@@ -52,6 +53,10 @@ namespace Redbrick_Addin {
       this.RevSet.Read();
 
       this.FillBoxes();
+
+      if (PropertySet.GetProperty("CUSTOMER").Value == string.Empty) {
+        cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
+      }
     }
 
     private void linkControls() {
@@ -75,10 +80,6 @@ namespace Redbrick_Addin {
       }
 
       if (custo != null) {
-        if (custo.Value == string.Empty) {
-          string fn = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle();
-          cbCustomer.SelectedIndex = cbCustomer.FindString(fn.Substring(0, 2));
-        }
         custo.Ctl = this.cbCustomer;
       } else {
         custo = new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
@@ -421,6 +422,18 @@ namespace Redbrick_Addin {
 
     private void cbRevision_SelectedIndexChanged(object sender, EventArgs e) {
       FillBoxes();
+    }
+
+    private void cbCustomer_SelectedIndexChanged(object sender, EventArgs e) {
+      if (custo_clicked) {
+        Properties.Settings.Default.LastCustomerSelection = (sender as ComboBox).SelectedIndex;
+        Properties.Settings.Default.Save();
+        custo_clicked = false;
+      }
+    }
+
+    private void cbCustomer_MouseDown(object sender, MouseEventArgs e) {
+      custo_clicked = true;
     }
 
   }
