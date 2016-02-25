@@ -182,6 +182,7 @@ namespace Redbrick_Addin
       this.tbItemNo.Name = "tbItemNo";
       this.tbItemNo.Size = new System.Drawing.Size(216, 22);
       this.tbItemNo.TabIndex = 1;
+      this.tbItemNo.Visible = false;
       // 
       // label4
       // 
@@ -191,6 +192,7 @@ namespace Redbrick_Addin
       this.label4.Size = new System.Drawing.Size(39, 13);
       this.label4.TabIndex = 0;
       this.label4.Text = "Item #";
+      this.label4.Click += new System.EventHandler(this.label4_Click);
       // 
       // btnCreate
       // 
@@ -229,6 +231,7 @@ namespace Redbrick_Addin
       this.tbItemNoRes.Name = "tbItemNoRes";
       this.tbItemNoRes.Size = new System.Drawing.Size(90, 22);
       this.tbItemNoRes.TabIndex = 2;
+      this.tbItemNoRes.Visible = false;
       // 
       // tableLayoutPanel5
       // 

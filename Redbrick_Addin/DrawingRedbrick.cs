@@ -71,6 +71,7 @@ namespace Redbrick_Addin {
       SwProperty rl = PropertySet.GetProperty("REVISION LEVEL");
 
       if (partNo != null) {
+        label4.Text = partNo.ResValue;
         partNo.Ctl = this.tbItemNo;
       } else {
         partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true);
@@ -434,6 +435,10 @@ namespace Redbrick_Addin {
 
     private void cbCustomer_MouseDown(object sender, MouseEventArgs e) {
       custo_clicked = true;
+    }
+
+    private void label4_Click(object sender, EventArgs e) {
+      System.Windows.Forms.Clipboard.SetText(label4.Text.Split(new string[] {" - "}, StringSplitOptions.None)[0]);
     }
 
   }
