@@ -13,7 +13,12 @@ namespace Redbrick_Addin {
     public RedbrickConfiguration() {
       InitializeComponent();
       Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-      Text = "Redbrick Configuration v" + cv.ToString();
+      string ver = cv.ToString();
+#if DEBUG
+      ver += "DEBUG";
+#endif
+
+      Text = "Redbrick Configuration v" + ver;
       init();
     }
 
