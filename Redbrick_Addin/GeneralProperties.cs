@@ -181,5 +181,13 @@ namespace Redbrick_Addin {
     private void tbDescription_TextChanged(object sender, EventArgs e) {
       CutlistData.FilterTextForControl(tbDescription);
     }
+
+    private void btnSwap_Click(object sender, EventArgs e) {
+      string temp = tbWidth.Text;
+      tbWidth.Text = tbLength.Text;
+      tbLength.Text = temp;
+      tbLength_Leave(sender, e);
+      tbWidth_Leave(sender, e);
+    }
   }
 }

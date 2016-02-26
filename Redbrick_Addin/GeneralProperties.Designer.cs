@@ -45,6 +45,7 @@ namespace Redbrick_Addin
       this.labResThickness = new System.Windows.Forms.Label();
       this.labResWidth = new System.Windows.Forms.Label();
       this.labResLength = new System.Windows.Forms.Label();
+      this.btnSwap = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -72,6 +73,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.labResThickness, 1, 8);
       this.tableLayoutPanel1.Controls.Add(this.labResWidth, 1, 6);
       this.tableLayoutPanel1.Controls.Add(this.labResLength, 1, 3);
+      this.tableLayoutPanel1.Controls.Add(this.btnSwap, 1, 4);
       this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 13;
@@ -247,6 +249,7 @@ namespace Redbrick_Addin
       // labResWidth
       // 
       this.labResWidth.AutoSize = true;
+      this.labResWidth.BackColor = System.Drawing.Color.Transparent;
       this.labResWidth.Dock = System.Windows.Forms.DockStyle.Fill;
       this.labResWidth.Location = new System.Drawing.Point(153, 114);
       this.labResWidth.Name = "labResWidth";
@@ -267,6 +270,18 @@ namespace Redbrick_Addin
       this.labResLength.Text = "00.000";
       this.labResLength.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.labResLength.TextChanged += new System.EventHandler(this.labResLength_TextChanged);
+      // 
+      // btnSwap
+      // 
+      this.btnSwap.FlatStyle = System.Windows.Forms.FlatStyle.System;
+      this.btnSwap.Font = new System.Drawing.Font("Segoe UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnSwap.Location = new System.Drawing.Point(153, 99);
+      this.btnSwap.Name = "btnSwap";
+      this.btnSwap.Size = new System.Drawing.Size(44, 12);
+      this.btnSwap.TabIndex = 17;
+      this.btnSwap.Text = "X";
+      this.btnSwap.UseVisualStyleBackColor = true;
+      this.btnSwap.Click += new System.EventHandler(this.btnSwap_Click);
       // 
       // GeneralProperties
       // 
@@ -302,5 +317,6 @@ namespace Redbrick_Addin
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbThick;
         private System.Windows.Forms.Label labResWallThickness;
+        private System.Windows.Forms.Button btnSwap;
     }
 }
