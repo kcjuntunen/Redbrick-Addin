@@ -360,47 +360,79 @@ namespace Redbrick_Addin {
 
     private void btnLookup_Click(object sender, EventArgs e) {
       DataDisplay dd = new DataDisplay();
-      M2MData m = new M2MData();
-      DataTable jd = m.GetJobsDue();
-      DataTable cj = PropertySet.CutlistData.GetCutJobs();
-      DataTable wc = PropertySet.CutlistData.GetWCData();
       ModelDoc2 doc = (ModelDoc2)PropertySet.SwApp.ActiveDoc;
+      CutlistData cd = PropertySet.CutlistData;
       string name = string.Empty;
+
+      swTableType.swTableType st = new swTableType.swTableType(doc, Properties.Settings.Default.MasterTableHash);
+      DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
+
       if (doc != null) {
         name = doc.GetPathName();
-        dd.Text = System.IO.Path.GetFileNameWithoutExtension(name) + " printed...";
+        dd.Text = System.IO.Path.GetFileNameWithoutExtension(name) + " cutlist BOM...";
       }
 
-      IEnumerable<DataRow> q1 = (from job in jd.AsEnumerable()
-                                 where job.Field<string>("fpartno").Contains(System.IO.Path.GetFileNameWithoutExtension(name))
-                                 select job);
-
-      var q = from job in q1.AsEnumerable<DataRow>()
-              join wkcen in wc.AsEnumerable() on job.Field<string>("fpro_id") equals wkcen.Field<string>("WC_ID")
-              join cujo in cj.AsEnumerable() on job.Field<string>("fjobno").Trim() equals cujo.Field<string>("JOB").Trim()
-              where job.Field<string>("fpro_id").StartsWith("2") || job.Field<string>("fpro_id").StartsWith("5")
-              select new {
-                JobNo = job["fjobno"],
-                Status = job["fstatus"],
-                PartNo = job["fpartno"],
-                Rev = job["fpartrev"],
-                Qty = job["foperqty"],
-                DueDate = job["fddue_date"],
-                WC = wkcen["WC_NAME"],
-                Printed = cujo["DATE"]
-              };
-
-      dd.Grid.DataSource = DataDisplay.ToDataTable(q.ToList());
+      dd.Grid.DataSource = stp;
       dd.ShowDialog();
+    }
 
+    private static DataTable DictToPartList(Dictionary<string, Part> d, CutlistData cd) {
+      List<object> lp = new List<object>();
+      DataTable dt = new DataTable();
+      foreach (KeyValuePair<string, Part> p in d) {
+        Part i = p.Value;
+        var o = new {
+          PartNumber = i.PartNumber,
+          Description = i.Description,
+          Qty = i.Qty,
+          MatID = cd.GetMaterialByID(i.MaterialID.ToString()),
+          L = i.Length,
+          W = i.Width,
+          T = i.Thickness,
+          BQ = i.BlankQty,
+          OL = i.OverL,
+          OW = i.OverW,
+          CNC1 = i.CNC1,
+          CNC2 = i.CNC2,
+          Op1 = cd.GetOpAbbreviationByID(i.get_OpID(0).ToString()),
+          Op2 = cd.GetOpAbbreviationByID(i.get_OpID(1).ToString()),
+          Op3 = cd.GetOpAbbreviationByID(i.get_OpID(2).ToString()),
+          Op4 = cd.GetOpAbbreviationByID(i.get_OpID(3).ToString()),
+          Op5 = cd.GetOpAbbreviationByID(i.get_OpID(4).ToString()),
+          EF = cd.GetEdgeByID(i.EdgeFrontID.ToString()),
+          EB = cd.GetEdgeByID(i.EdgeBackID.ToString()),
+          EL = cd.GetEdgeByID(i.EdgeLeftID.ToString()),
+          ER = cd.GetEdgeByID(i.EdgeRightID.ToString()),
+          Comment = i.Comment,
+          Deptartment = cd.GetDeptByID((int)i.DepartmentID),
+          Update = i.UpdateCNC ? "Yes" : "No"
+        };
+
+        lp.Add(o);
+      }
+
+      System.Reflection.PropertyInfo[] props = lp[0].GetType().GetProperties();
+      foreach (var prop in props) {
+        dt.Columns.Add(prop.Name);
+      }
+
+      foreach (var item in lp) {
+        var values = new object[props.Length];
+        for (var i = 0; i < props.Length; i++) {
+          values[i] = props[i].GetValue(item, null);
+        }
+        dt.Rows.Add(values);
+      }
+
+      return dt;
     }
 
     private void btnDelete_Click(object sender, EventArgs e) {
       string prtno = tbItemNoRes.Text;
       string revno = cbRevision.Text;
 
-      string question = string.Format("Really delete {0} REV {1}", 
-        prtno, 
+      string question = string.Format("Really delete {0} REV {1}",
+        prtno,
         revno);
 
       swMessageBoxResult_e mebore = (swMessageBoxResult_e)SwApp.SendMsgToUser2(question,
@@ -438,7 +470,7 @@ namespace Redbrick_Addin {
     }
 
     private void label4_Click(object sender, EventArgs e) {
-      System.Windows.Forms.Clipboard.SetText(label4.Text.Split(new string[] {" - "}, StringSplitOptions.None)[0]);
+      System.Windows.Forms.Clipboard.SetText(label4.Text.Split(new string[] { " - " }, StringSplitOptions.None)[0]);
     }
 
   }

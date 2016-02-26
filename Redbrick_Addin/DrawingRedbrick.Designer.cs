@@ -201,7 +201,7 @@ namespace Redbrick_Addin
       this.btnCreate.Name = "btnCreate";
       this.btnCreate.Size = new System.Drawing.Size(90, 24);
       this.btnCreate.TabIndex = 6;
-      this.btnCreate.Text = "Create/Update";
+      this.btnCreate.Text = "Update Cutlist";
       this.btnCreate.UseVisualStyleBackColor = true;
       this.btnCreate.Click += new System.EventHandler(this.button1_Click);
       // 
@@ -299,7 +299,7 @@ namespace Redbrick_Addin
       this.btnLookup.Name = "btnLookup";
       this.btnLookup.Size = new System.Drawing.Size(90, 24);
       this.btnLookup.TabIndex = 8;
-      this.btnLookup.Text = "Lookup";
+      this.btnLookup.Text = "Examine BOM";
       this.btnLookup.UseVisualStyleBackColor = true;
       this.btnLookup.Click += new System.EventHandler(this.btnLookup_Click);
       // 
