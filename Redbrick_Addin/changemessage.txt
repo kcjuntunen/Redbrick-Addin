@@ -1,4 +1,9 @@
-﻿* 0.9.0.4
+﻿* 0.9.0.5
+** Added L x W swap button per Ben
+** Made Op combobox behaviour consistent with CL comboboxes
+** BOM examiner
+
+* 0.9.0.4
 ** Fixed unhandled null ModelDocExtension on single cutlist part insertion
 ** Now storing last selected customer
 ** No longer letting you guys sneak spaces into the beginning of part names
