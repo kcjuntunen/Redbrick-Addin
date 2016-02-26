@@ -165,6 +165,26 @@ namespace Redbrick_Addin {
       }
     }
 
+    public DataSet GetAllOps() {
+      lock (threadLock) {
+        string SQL = @"SELECT * FROM CUT_OPS ORDER BY OPDESCR";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+            using (DataSet ds = new DataSet()) {
+              da.Fill(ds);
+              DataRow dar = ds.Tables[0].NewRow();
+              dar[0] = 0;
+              dar[1] = string.Empty;
+              dar[2] = string.Empty;
+              ds.Tables[0].Rows.Add(dar);
+              this.Ops = ds;
+              return this.Ops;
+            }
+          }
+        }
+      }
+    }
+
     private DataSet GetOps() {
       lock (threadLock) {
         string SQL = @"SELECT OPID, OPNAME, OPNAME + ' - ' + OPDESCR AS OPDESCR, OPTYPE FROM CUT_OPS WHERE OPTYPE = ? ORDER BY OPDESCR";
@@ -748,6 +768,22 @@ namespace Redbrick_Addin {
         }
       }
       return string.Empty;
+    }
+
+    public string GetDeptByID(int id) {
+      if (id == 0)
+        return string.Empty;
+
+      string SQL = @"SELECT TYPEDESC FROM CUT_PART_TYPES WHERE TYPEID = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@id", id);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.Read())
+            return dr.GetString(0);
+          else
+            return string.Empty;
+        }
+      }
     }
 
     public int GetDrawingID(FileInfo drawingPath) {
