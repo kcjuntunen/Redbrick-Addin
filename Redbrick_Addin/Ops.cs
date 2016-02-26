@@ -112,6 +112,29 @@ namespace Redbrick_Addin {
       return -1;
     }
 
+    private void ResolveText(object sender, EventArgs e) {
+      if (sender is ComboBox) {
+        ComboBox s = (sender as ComboBox);
+        if (s.Text.Trim() == string.Empty) {
+          s.SelectedIndex = s.Items.Count - 1;
+        } else {
+          s.SelectedIndex = s.FindString(s.Text.Trim());
+        }
+      }
+    }
+
+    private void FocusHere(object sender, MouseEventArgs e) {
+      if (sender is ComboBox) {
+        if ((sender as ComboBox).DroppedDown) {
+          //
+        } else {
+          (sender as ComboBox).Focus();
+        }
+      } else if (sender is TextBox) {
+        (sender as TextBox).Focus();
+      }
+    }
+
     public Control GetOp1Box() {
       return cbOp1;
     }

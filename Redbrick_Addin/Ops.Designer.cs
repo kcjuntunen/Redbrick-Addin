@@ -96,6 +96,8 @@ namespace Redbrick_Addin
       this.cbOp1.Name = "cbOp1";
       this.cbOp1.Size = new System.Drawing.Size(154, 21);
       this.cbOp1.TabIndex = 27;
+      this.cbOp1.Leave += new System.EventHandler(this.ResolveText);
+      this.cbOp1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // label2
       // 
@@ -119,6 +121,8 @@ namespace Redbrick_Addin
       this.cbOp2.Name = "cbOp2";
       this.cbOp2.Size = new System.Drawing.Size(154, 21);
       this.cbOp2.TabIndex = 28;
+      this.cbOp2.Leave += new System.EventHandler(this.ResolveText);
+      this.cbOp2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // label3
       // 
@@ -164,6 +168,8 @@ namespace Redbrick_Addin
       this.cbOp3.Name = "cbOp3";
       this.cbOp3.Size = new System.Drawing.Size(154, 21);
       this.cbOp3.TabIndex = 29;
+      this.cbOp3.Leave += new System.EventHandler(this.ResolveText);
+      this.cbOp3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // cbOp4
       // 
@@ -176,6 +182,8 @@ namespace Redbrick_Addin
       this.cbOp4.Name = "cbOp4";
       this.cbOp4.Size = new System.Drawing.Size(154, 21);
       this.cbOp4.TabIndex = 30;
+      this.cbOp4.Leave += new System.EventHandler(this.ResolveText);
+      this.cbOp4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // cbOp5
       // 
@@ -188,6 +196,8 @@ namespace Redbrick_Addin
       this.cbOp5.Name = "cbOp5";
       this.cbOp5.Size = new System.Drawing.Size(154, 21);
       this.cbOp5.TabIndex = 31;
+      this.cbOp5.Leave += new System.EventHandler(this.ResolveText);
+      this.cbOp5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // Ops
       // 
