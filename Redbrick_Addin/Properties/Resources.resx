@@ -163,4 +163,7 @@
   <data name="InsertIntoEcrItems" xml:space="preserve">
     <value>Insert '{0}' into ECR# {1} items?</value>
   </data>
+  <data name="ZeroValueDimension" xml:space="preserve">
+    <value>Some dimension(s) resolved to a value of 0.000.</value>
+  </data>
 </root>

@@ -10,6 +10,8 @@ namespace Redbrick_Addin {
   public partial class RedbrickConfiguration : Form {
     private CutlistData cd = new CutlistData();
     private bool initialated = false;
+    private bool sound_clicked = false;
+
     public RedbrickConfiguration() {
       InitializeComponent();
       Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
@@ -41,6 +43,9 @@ namespace Redbrick_Addin {
       chbTestingMode.Checked = Properties.Settings.Default.Testing;
       cbDept.SelectedValue = Properties.Settings.Default.UserDept;
       cbRevLimit.SelectedIndex = Properties.Settings.Default.RevLimit - 1;
+      chbSounds.Checked = Properties.Settings.Default.MakeSounds;
+      chbWarnings.Checked = Properties.Settings.Default.Warn;
+      chbIdiotLight.Checked = Properties.Settings.Default.IdiotLight;
       initialated = true;
     }
 
@@ -93,6 +98,34 @@ namespace Redbrick_Addin {
 
     private void chbFlameWar_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.FlameWar = chbFlameWar.Checked;
+    }
+
+    private void chbWarnings_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.Warn = chbWarnings.Checked;
+    }
+
+    private void chbSounds_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.MakeSounds = chbSounds.Checked;
+      if (chbSounds.Checked && sound_clicked) {
+        OpenFileDialog ofd = new OpenFileDialog();
+        ofd.InitialDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.ClipboardSound);
+        ofd.FileName = System.IO.Path.GetFileName(Properties.Settings.Default.ClipboardSound);
+        ofd.Filter = "Audio Files (*.wav)|*.wav";
+        if (ofd.ShowDialog() == DialogResult.OK) {
+          Properties.Settings.Default.ClipboardSound = ofd.FileName;
+        } else {
+          chbSounds.Checked = false;
+        }
+        sound_clicked = false;
+      }
+    }
+
+    private void chbSounds_Click(object sender, EventArgs e) {
+      sound_clicked = true;
+    }
+
+    private void chbIdiotLight_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.IdiotLight = chbIdiotLight.Checked;
     }
   }
 }

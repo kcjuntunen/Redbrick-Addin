@@ -540,5 +540,65 @@ namespace Redbrick_Addin.Properties {
                 this["LastCustomerSelection"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MakeSounds {
+            get {
+                return ((bool)(this["MakeSounds"]));
+            }
+            set {
+                this["MakeSounds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Warn {
+            get {
+                return ((bool)(this["Warn"]));
+            }
+            set {
+                this["Warn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Windows\\Media\\tada.wav")]
+        public string ClipboardSound {
+            get {
+                return ((string)(this["ClipboardSound"]));
+            }
+            set {
+                this["ClipboardSound"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.001")]
+        public double CheckEpsilon {
+            get {
+                return ((double)(this["CheckEpsilon"]));
+            }
+            set {
+                this["CheckEpsilon"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IdiotLight {
+            get {
+                return ((bool)(this["IdiotLight"]));
+            }
+            set {
+                this["IdiotLight"] = value;
+            }
+        }
     }
 }

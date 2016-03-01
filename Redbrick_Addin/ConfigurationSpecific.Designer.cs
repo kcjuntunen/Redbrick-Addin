@@ -131,6 +131,7 @@ namespace Redbrick_Addin
       this.lEr.TabIndex = 0;
       this.lEr.Text = "Edge Right (W)";
       this.lEr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.lEr.Click += new System.EventHandler(this.lEr_Click);
       // 
       // cbEl
       // 
@@ -156,6 +157,7 @@ namespace Redbrick_Addin
       this.lEl.TabIndex = 0;
       this.lEl.Text = "Edge Left (W)";
       this.lEl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.lEl.Click += new System.EventHandler(this.lEl_Click);
       // 
       // cbEb
       // 
@@ -181,6 +183,7 @@ namespace Redbrick_Addin
       this.lEb.TabIndex = 0;
       this.lEb.Text = "Edge Back (L)";
       this.lEb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.lEb.Click += new System.EventHandler(this.lEb_Click);
       // 
       // cbEf
       // 
@@ -206,6 +209,7 @@ namespace Redbrick_Addin
       this.lEf.TabIndex = 0;
       this.lEf.Text = "Edge Front (L)";
       this.lEf.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.lEf.Click += new System.EventHandler(this.lEf_Click);
       // 
       // cbMat
       // 
@@ -231,6 +235,7 @@ namespace Redbrick_Addin
       this.lMat.TabIndex = 0;
       this.lMat.Text = "Cutlist Material";
       this.lMat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.lMat.Click += new System.EventHandler(this.lMat_Click);
       // 
       // leLColor
       // 
@@ -244,6 +249,7 @@ namespace Redbrick_Addin
       this.leLColor.TabIndex = 0;
       this.leLColor.Text = "Edge Left Color";
       this.leLColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.leLColor.Click += new System.EventHandler(this.leLColor_Click);
       // 
       // leBColor
       // 
@@ -257,6 +263,7 @@ namespace Redbrick_Addin
       this.leBColor.TabIndex = 0;
       this.leBColor.Text = "Edge Back Color";
       this.leBColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.leBColor.Click += new System.EventHandler(this.leBColor_Click);
       // 
       // leRColor
       // 
@@ -270,6 +277,7 @@ namespace Redbrick_Addin
       this.leRColor.TabIndex = 0;
       this.leRColor.Text = "Edge Right Color";
       this.leRColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.leRColor.Click += new System.EventHandler(this.leRColor_Click);
       // 
       // lMatColor
       // 
@@ -283,6 +291,7 @@ namespace Redbrick_Addin
       this.lMatColor.TabIndex = 0;
       this.lMatColor.Text = "Material Color";
       this.lMatColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.lMatColor.Click += new System.EventHandler(this.lMatColor_Click);
       // 
       // leFColor
       // 
@@ -296,6 +305,7 @@ namespace Redbrick_Addin
       this.leFColor.TabIndex = 0;
       this.leFColor.Text = "Edge Front Color";
       this.leFColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.leFColor.Click += new System.EventHandler(this.leFColor_Click);
       // 
       // label1
       // 

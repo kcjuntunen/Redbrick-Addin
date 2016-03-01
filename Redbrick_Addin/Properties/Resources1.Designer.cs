@@ -197,5 +197,14 @@ namespace Redbrick_Addin.Properties {
                 return ResourceManager.GetString("UpdateTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some dimension(s) resolved to a value of 0.000..
+        /// </summary>
+        internal static string ZeroValueDimension {
+            get {
+                return ResourceManager.GetString("ZeroValueDimension", resourceCulture);
+            }
+        }
     }
 }
