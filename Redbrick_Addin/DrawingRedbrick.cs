@@ -363,17 +363,84 @@ namespace Redbrick_Addin {
       ModelDoc2 doc = (ModelDoc2)PropertySet.SwApp.ActiveDoc;
       CutlistData cd = PropertySet.CutlistData;
       string name = string.Empty;
+      swTableType.swTableType st;
 
-      swTableType.swTableType st = new swTableType.swTableType(doc, Properties.Settings.Default.MasterTableHash);
-      DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
+      try {
+        st = new swTableType.swTableType(doc, Properties.Settings.Default.MasterTableHash);
+        DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
 
-      if (doc != null) {
-        name = doc.GetPathName();
-        dd.Text = System.IO.Path.GetFileNameWithoutExtension(name) + " cutlist BOM...";
+        if (doc != null) {
+          name = doc.GetPathName();
+          dd.Text = System.IO.Path.GetFileNameWithoutExtension(name) + " cutlist BOM...";
+        }
+
+        dd.Grid.DataSource = stp;
+        dd.ShowDialog();
+      } catch (Exception ex) {
+        PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
       }
+    }
 
-      dd.Grid.DataSource = stp;
-      dd.ShowDialog();
+    private void btnMatList_Click(object sender, EventArgs e) {
+      DataDisplay dd = new DataDisplay();
+      ModelDoc2 doc = (ModelDoc2)PropertySet.SwApp.ActiveDoc;
+      CutlistData cd = PropertySet.CutlistData;
+      string name = string.Empty;
+      swTableType.swTableType st;
+
+      try {
+        st = new swTableType.swTableType(doc, Properties.Settings.Default.MasterTableHash);
+        DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
+
+        if (doc != null) {
+          name = doc.GetPathName();
+          dd.Text = "Materials/Edges used in " + System.IO.Path.GetFileNameWithoutExtension(name);
+        }
+
+        var q = (from a in stp.AsEnumerable()
+                 group a by a.Field<string>("Material") into x
+                 orderby x.Key
+                 select new { Material = x.Key, Count = x.Count() });
+
+        var r = (from a in stp.AsEnumerable()
+                 group a by a.Field<string>("EdgeFront") into x
+                 where x.Key != string.Empty
+                 orderby x.Key
+                 select new { Edging = x.Key, Count = x.Count() });
+
+        var s = (from a in stp.AsEnumerable()
+                 group a by a.Field<string>("EdgeBack") into x
+                 where x.Key != string.Empty
+                 orderby x.Key
+                 select new { Edging = x.Key, Count = x.Count() });
+
+        var t = (from a in stp.AsEnumerable()
+                 group a by a.Field<string>("EdgeLeft") into x
+                 where x.Key != string.Empty
+                 orderby x.Key
+                 select new { Edging = x.Key, Count = x.Count() });
+
+        var u = (from a in stp.AsEnumerable()
+                 group a by a.Field<string>("EdgeRight") into x
+                 where x.Key != string.Empty
+                 orderby x.Key
+                 select new { Edging = x.Key, Count = x.Count() });
+
+        var v = (from a in q select a.Material)
+          .Union
+          (from b in r select b.Edging)
+          .Union
+          (from c in s select c.Edging)
+          .Union
+          (from d in t select d.Edging)
+          .Union
+          (from f in u select f.Edging);
+
+        dd.Grid.DataSource = ListToDataTable(v.ToList());
+        dd.ShowDialog();
+      } catch (Exception ex) {
+        PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+      }
     }
 
     private static DataTable DictToPartList(Dictionary<string, Part> d, CutlistData cd) {
@@ -382,16 +449,16 @@ namespace Redbrick_Addin {
       foreach (KeyValuePair<string, Part> p in d) {
         Part i = p.Value;
         var o = new {
-          PartNumber = i.PartNumber,
+          Part = i.PartNumber,
           Description = i.Description,
           Qty = i.Qty,
-          MatID = cd.GetMaterialByID(i.MaterialID.ToString()),
+          Material = cd.GetMaterialByID(i.MaterialID.ToString()),
           L = i.Length,
           W = i.Width,
           T = i.Thickness,
-          BQ = i.BlankQty,
-          OL = i.OverL,
-          OW = i.OverW,
+          BlankQty = i.BlankQty,
+          OverL = i.OverL,
+          OverW = i.OverW,
           CNC1 = i.CNC1,
           CNC2 = i.CNC2,
           Op1 = cd.GetOpAbbreviationByID(i.get_OpID(0).ToString()),
@@ -399,13 +466,41 @@ namespace Redbrick_Addin {
           Op3 = cd.GetOpAbbreviationByID(i.get_OpID(2).ToString()),
           Op4 = cd.GetOpAbbreviationByID(i.get_OpID(3).ToString()),
           Op5 = cd.GetOpAbbreviationByID(i.get_OpID(4).ToString()),
-          EF = cd.GetEdgeByID(i.EdgeFrontID.ToString()),
-          EB = cd.GetEdgeByID(i.EdgeBackID.ToString()),
-          EL = cd.GetEdgeByID(i.EdgeLeftID.ToString()),
-          ER = cd.GetEdgeByID(i.EdgeRightID.ToString()),
+          EdgeFront = cd.GetEdgeByID(i.EdgeFrontID.ToString()),
+          EdgeBack = cd.GetEdgeByID(i.EdgeBackID.ToString()),
+          EdgeLeft = cd.GetEdgeByID(i.EdgeLeftID.ToString()),
+          EdgeRight = cd.GetEdgeByID(i.EdgeRightID.ToString()),
           Comment = i.Comment,
           Deptartment = cd.GetDeptByID((int)i.DepartmentID),
           Update = i.UpdateCNC ? "Yes" : "No"
+        };
+
+        lp.Add(o);
+      }
+
+      System.Reflection.PropertyInfo[] props = lp[0].GetType().GetProperties();
+      foreach (var prop in props) {
+        dt.Columns.Add(prop.Name);
+      }
+
+      foreach (var item in lp) {
+        var values = new object[props.Length];
+        for (var i = 0; i < props.Length; i++) {
+          values[i] = props[i].GetValue(item, null);
+        }
+        dt.Rows.Add(values);
+      }
+
+      return dt;
+    }
+
+
+    private static DataTable ListToDataTable(List<string> l) {
+      List<object> lp = new List<object>();
+      DataTable dt = new DataTable();
+      foreach (string p in l) {
+        var o = new {
+          Material = p
         };
 
         lp.Add(o);
