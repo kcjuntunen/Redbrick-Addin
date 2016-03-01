@@ -7,7 +7,7 @@ using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swcommands;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
-using SolidWorksTools;
+//using SolidWorksTools;
 
 using System.Runtime.InteropServices;
 

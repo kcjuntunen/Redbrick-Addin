@@ -10,7 +10,7 @@ using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swcommands;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
-using SolidWorksTools;
+//using SolidWorksTools;
 
 namespace Redbrick_Addin {
   public partial class ModelRedbrick : UserControl {

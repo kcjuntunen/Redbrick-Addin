@@ -10,7 +10,7 @@ using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swcommands;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
-using SolidWorksTools;
+//using SolidWorksTools;
 
 using System.Runtime.InteropServices;
 
@@ -44,6 +44,8 @@ namespace Redbrick_Addin {
     private bool PartSetup = false;
     private bool DrawSetup = false;
     private bool AssySetup = false;
+
+    private bool regen_ok = false;
 
     private ModelDoc2 md_last;
 
@@ -224,6 +226,7 @@ namespace Redbrick_Addin {
 
               switch (docT) {
                 case swDocumentTypes_e.swDocASSEMBLY:
+                  regen_ok = true;
                   if (!PartSetup) {
                     SetupPart();
                   }
@@ -238,7 +241,7 @@ namespace Redbrick_Addin {
                 case swDocumentTypes_e.swDocNONE:
                   break;
                 case swDocumentTypes_e.swDocPART:
-
+                  regen_ok = true;
                   if (!PartSetup) {
                     // ClearControls(this); // <-- redundant
                     // setup
@@ -260,6 +263,7 @@ namespace Redbrick_Addin {
               }
               break;
             case swDocumentTypes_e.swDocDRAWING:
+              regen_ok = false;
               ClearControls(this);
               SetupDrawing();
               break;
@@ -267,7 +271,7 @@ namespace Redbrick_Addin {
               SetupOther();
               break;
             case swDocumentTypes_e.swDocPART:
-
+              regen_ok = true;
               if (!PartSetup) {
                 // ClearControls(this); // <-- redundant
                 // setup
@@ -656,8 +660,8 @@ namespace Redbrick_Addin {
     }
 
     int pd_RegenNotify() {
-      md_last = null;
-      if (PartSetup) {
+      if (regen_ok) {
+        md_last = null;
         ConnectSelection();
       }
       return 0;
