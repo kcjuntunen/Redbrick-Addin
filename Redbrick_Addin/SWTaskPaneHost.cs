@@ -163,7 +163,45 @@ namespace Redbrick_Addin {
       od = overDocT;
     }
 
+    private void AskWrite() {
+      string q = "Write unwritten properties?";
+      swMessageBoxResult_e r = (swMessageBoxResult_e)SwApp.SendMsgToUser2(q,
+        (int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbYesNo);
+
+      switch (r) {
+        case swMessageBoxResult_e.swMbHitAbort:
+          break;
+        case swMessageBoxResult_e.swMbHitCancel:
+          break;
+        case swMessageBoxResult_e.swMbHitIgnore:
+          break;
+        case swMessageBoxResult_e.swMbHitNo:
+          break;
+        case swMessageBoxResult_e.swMbHitOk:
+          break;
+        case swMessageBoxResult_e.swMbHitRetry:
+          break;
+        case swMessageBoxResult_e.swMbHitYes:
+          Write();
+          break;
+        default:
+          break;
+      }
+    }
+
     public void ConnectSelection() {
+      if (Properties.Settings.Default.IdiotLight) {
+        string q = string.Format("I lost property data because you didn't click the green check.");
+        if (PartSetup && mrb.IsDirty) {
+          SwApp.SendMsgToUser2(q,
+        (int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
+        }
+        if (DrawSetup && drb.IsDirty) {
+          SwApp.SendMsgToUser2(q,
+        (int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
+        }
+      }
+
       System.GC.Collect(2, GCCollectionMode.Forced);
       prop.CutlistID = 0;
       if (Document != null) {
@@ -405,7 +443,6 @@ namespace Redbrick_Addin {
       // Fill everything so it stretches.
       DockStyle d = DockStyle.Fill;
 
-
       // New model handler with current property (aquired in this.Connect...())
       mrb = new ModelRedbrick(ref prop);
       // If it's not docked, dock it.
@@ -612,18 +649,25 @@ namespace Redbrick_Addin {
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
+        pd.RegenNotify += pd_RegenNotify;
         DisconnectDrawingEvents();
         PartEventsAssigned = true;
       }
     }
 
+    int pd_RegenNotify() {
+      md_last = null;
+      ConnectSelection();
+      return 0;
+    }
+    
     int pd_DestroyNotify2(int DestroyType) {
       ClearControls(this);
       return 0;
     }
 
     int pd_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType) {
-      // let's reconnect.
+      md_last = null;
       ConnectSelection();
       return 0;
     }
@@ -736,23 +780,54 @@ namespace Redbrick_Addin {
 
 
     int pd_ActiveConfigChangePostNotify() {
-      //if (mrb.IsDirty)
-      //  if (MaybeSave())
-      //    Write();
-
-      // Different config! Look again!
       md_last = null;
       ConnectSelection();
       return 0;
+    }
+
+    private void Check() {
+      if (Properties.Settings.Default.Warn) {
+        string message = string.Empty;
+        double o = 0;
+        if (double.TryParse(prop.GetProperty("LENGTH").ResValue, out o)) {
+          if (o == 0) {
+            message += "Length resolves to 0.000\".\n";
+          }
+        } else {
+          message += "Couldn't resolve length.\n";
+        }
+        if (double.TryParse(prop.GetProperty("WIDTH").ResValue, out o)) {
+          if (o == 0) {
+            message += "Width resolves to 0.000\".\n";
+          }
+        } else {
+          message += "Couldn't resolve width.\n";
+        }
+
+        int m = 0;
+        double epsilon = Properties.Settings.Default.CheckEpsilon;
+        if (double.TryParse(prop.GetProperty("THICKNESS").ResValue, out o) && 
+          int.TryParse(prop.GetProperty("MATID").ID, out m)) {
+          double thick = 0.0f;
+          double.TryParse(prop.cutlistData.GetMaterial(m).Rows[0][(int)CutlistData.MaterialFields.THICKNESS].ToString(), out thick);
+          if ((thick != 0) && (Math.Abs(thick - o) > epsilon)) {
+            message += string.Format("Part thickness ({0}) doesn't match material thickness ({1}).\n", o, thick);
+          }
+        } else {
+          message += "Couldn't resolve thickness or material ID.\n";
+        }
+        if (message.Length > 0) {
+          _swApp.SendMsgToUser2(message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+        }
+      }
     }
 
     public void Write() {
       if (PartSetup) {
         md_last = null;
         // update doc metadata & rebuild & save
-
         mrb.Write(Document);
-
+        Check();
         // rescoop new metadata
         ConnectSelection();
         //this.mrb.Update(ref this.prop);

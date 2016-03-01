@@ -72,11 +72,46 @@ namespace Redbrick_Addin {
       STATEID
     }
 
+    public enum MaterialFields {
+      MATID,
+      DESCR,
+      COLOR,
+      THICKNESS,
+      GRAIN,
+      TYPE,
+      OLD_DESCR
+    }
+
     public enum OpFields {
       OPID,
       OPNAME,
       OPDESCR,
       OPTYPE
+    }
+
+
+    public DataTable GetMaterial(int matid) {
+      lock (threadLock) {
+#if DEBUG
+        DateTime start;
+        DateTime end;
+        start = DateTime.Now;
+#endif
+        string SQL = @"SELECT * FROM CUT_MATERIALS WHERE MATID = ?";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@matid", matid);
+          using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+            using (DataSet ds = new DataSet()) {
+              da.Fill(ds);
+#if DEBUG
+              end = DateTime.Now;
+              System.Diagnostics.Debug.Print("*** MAT ***<<< " + (end - start).ToString() + " >>>");
+#endif
+              return ds.Tables[0];
+            }
+          }
+        }
+      }
     }
 
     private DataSet GetMaterials() {

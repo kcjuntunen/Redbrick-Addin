@@ -52,8 +52,8 @@ namespace Redbrick_Addin {
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tableLayoutPanel1.ColumnCount = 2;
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel1.Controls.Add(this.chbDBEnabled, 0, 0);
       this.tableLayoutPanel1.Controls.Add(this.chbTestingMode, 0, 1);
       this.tableLayoutPanel1.Controls.Add(this.cbDept, 1, 3);
@@ -75,8 +75,8 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 165);
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(331, 178);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // chbDBEnabled
@@ -105,16 +105,16 @@ namespace Redbrick_Addin {
       // 
       this.cbDept.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbDept.FormattingEnabled = true;
-      this.cbDept.Location = new System.Drawing.Point(163, 62);
+      this.cbDept.Location = new System.Drawing.Point(168, 62);
       this.cbDept.Name = "cbDept";
-      this.cbDept.Size = new System.Drawing.Size(165, 21);
+      this.cbDept.Size = new System.Drawing.Size(160, 21);
       this.cbDept.TabIndex = 3;
       this.cbDept.SelectedIndexChanged += new System.EventHandler(this.cbDept_SelectedIndexChanged);
       // 
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(163, 46);
+      this.label1.Location = new System.Drawing.Point(168, 46);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(94, 13);
       this.label1.TabIndex = 4;
@@ -135,7 +135,7 @@ namespace Redbrick_Addin {
       this.cbRevLimit.FormattingEnabled = true;
       this.cbRevLimit.Location = new System.Drawing.Point(3, 62);
       this.cbRevLimit.Name = "cbRevLimit";
-      this.cbRevLimit.Size = new System.Drawing.Size(154, 21);
+      this.cbRevLimit.Size = new System.Drawing.Size(159, 21);
       this.cbRevLimit.TabIndex = 7;
       this.cbRevLimit.SelectedIndexChanged += new System.EventHandler(this.cbRevLimit_SelectedIndexChanged);
       // 
@@ -154,7 +154,7 @@ namespace Redbrick_Addin {
       this.cbDefaultMaterial.FormattingEnabled = true;
       this.cbDefaultMaterial.Location = new System.Drawing.Point(3, 112);
       this.cbDefaultMaterial.Name = "cbDefaultMaterial";
-      this.cbDefaultMaterial.Size = new System.Drawing.Size(154, 21);
+      this.cbDefaultMaterial.Size = new System.Drawing.Size(159, 21);
       this.cbDefaultMaterial.TabIndex = 9;
       this.cbDefaultMaterial.SelectedIndexChanged += new System.EventHandler(this.cbDefaultMaterial_SelectedIndexChanged);
       // 
@@ -163,9 +163,9 @@ namespace Redbrick_Addin {
       this.chbFlameWar.AutoSize = true;
       this.chbFlameWar.Checked = true;
       this.chbFlameWar.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chbFlameWar.Location = new System.Drawing.Point(163, 3);
+      this.chbFlameWar.Location = new System.Drawing.Point(168, 3);
       this.chbFlameWar.Name = "chbFlameWar";
-      this.chbFlameWar.Size = new System.Drawing.Size(162, 17);
+      this.chbFlameWar.Size = new System.Drawing.Size(160, 17);
       this.chbFlameWar.TabIndex = 10;
       this.chbFlameWar.Text = "Filter comments to all caps";
       this.chbFlameWar.UseVisualStyleBackColor = true;
@@ -176,7 +176,7 @@ namespace Redbrick_Addin {
       this.chbWarnings.AutoSize = true;
       this.chbWarnings.Checked = true;
       this.chbWarnings.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chbWarnings.Location = new System.Drawing.Point(163, 89);
+      this.chbWarnings.Location = new System.Drawing.Point(168, 89);
       this.chbWarnings.Name = "chbWarnings";
       this.chbWarnings.Size = new System.Drawing.Size(76, 17);
       this.chbWarnings.TabIndex = 11;
@@ -189,7 +189,7 @@ namespace Redbrick_Addin {
       this.chbSounds.AutoSize = true;
       this.chbSounds.Checked = true;
       this.chbSounds.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chbSounds.Location = new System.Drawing.Point(163, 112);
+      this.chbSounds.Location = new System.Drawing.Point(168, 112);
       this.chbSounds.Name = "chbSounds";
       this.chbSounds.Size = new System.Drawing.Size(65, 17);
       this.chbSounds.TabIndex = 12;
@@ -201,7 +201,7 @@ namespace Redbrick_Addin {
       // chbIdiotLight
       // 
       this.chbIdiotLight.AutoSize = true;
-      this.chbIdiotLight.Location = new System.Drawing.Point(163, 139);
+      this.chbIdiotLight.Location = new System.Drawing.Point(168, 139);
       this.chbIdiotLight.Name = "chbIdiotLight";
       this.chbIdiotLight.Size = new System.Drawing.Size(135, 17);
       this.chbIdiotLight.TabIndex = 13;
@@ -221,7 +221,7 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.RowCount = 2;
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(337, 210);
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(337, 220);
       this.tableLayoutPanel2.TabIndex = 1;
       // 
       // tableLayoutPanel3
@@ -233,7 +233,7 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
       this.tableLayoutPanel3.Controls.Add(this.btnCancel, 0, 0);
       this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
-      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 177);
+      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 187);
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
       this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -268,11 +268,11 @@ namespace Redbrick_Addin {
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(337, 210);
+      this.ClientSize = new System.Drawing.Size(337, 220);
       this.Controls.Add(this.tableLayoutPanel2);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.MinimumSize = new System.Drawing.Size(345, 240);
+      this.MinimumSize = new System.Drawing.Size(345, 250);
       this.Name = "RedbrickConfiguration";
       this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
