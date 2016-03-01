@@ -54,6 +54,9 @@ namespace Redbrick_Addin {
     private void DataDisplay_Load(object sender, EventArgs e) {
       Location = Properties.Settings.Default.DataDisplayLocation;
       Size = Properties.Settings.Default.DataDisplaySize;
+      dataGridView1.AutoResizeColumns();
+
+      dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
     }
 
     private void DataDisplay_FormClosing(object sender, FormClosingEventArgs e) {
