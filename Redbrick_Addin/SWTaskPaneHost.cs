@@ -653,7 +653,7 @@ namespace Redbrick_Addin {
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
-        pd.RegenNotify += pd_RegenNotify;
+        //pd.RegenNotify += pd_RegenNotify;
         DisconnectDrawingEvents();
         PartEventsAssigned = true;
       }
@@ -832,6 +832,7 @@ namespace Redbrick_Addin {
     public void Write() {
       if (PartSetup) {
         md_last = null;
+        regen_ok = false;
         // update doc metadata & rebuild & save
         mrb.Write(Document);
         Check();
@@ -850,8 +851,10 @@ namespace Redbrick_Addin {
     public void Write(SldWorks s) {
       if (PartSetup) {
         md_last = null;
+        regen_ok = false;
         // update doc metadata & rebuild & save
         mrb.Write((ModelDoc2)s.ActiveDoc);
+        Check();
         // rescoop new metadata
         ConnectSelection();
         //this.mrb.Update(ref this.prop);
