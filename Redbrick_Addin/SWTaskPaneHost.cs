@@ -657,7 +657,9 @@ namespace Redbrick_Addin {
 
     int pd_RegenNotify() {
       md_last = null;
-      ConnectSelection();
+      if (PartSetup) {
+        ConnectSelection();
+      }
       return 0;
     }
     
@@ -745,7 +747,8 @@ namespace Redbrick_Addin {
 
     int ad_ActiveDisplayStateChangePostNotify(string DisplayStateName) {
       // gotta figure out when this goes off
-      throw new NotImplementedException();
+      //throw new NotImplementedException();
+      return 0;
     }
 
     int ad_DestroyNotify2(int DestroyType) {
