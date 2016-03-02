@@ -184,8 +184,11 @@ namespace Redbrick_Addin {
 
       // Not classy, but it makes the boxes update the first time around.
       clicked = true;
-      cbItemNo.SelectedIndex = cbItemNo.FindString(
-        cd.GetCutlistData(Properties.Settings.Default.CurrentCutlist).Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.PARTNUM].ToString());
+      CurrentCutlist = Properties.Settings.Default.CurrentCutlist;
+      if (CurrentCutlist != 0) {
+        cbItemNo.SelectedIndex = cbItemNo.FindString(
+          cd.GetCutlistData(CurrentCutlist).Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.PARTNUM].ToString());
+      }
     }
 
     private void InitTableData() {
@@ -356,5 +359,8 @@ namespace Redbrick_Addin {
     private void cbCustomer_MouseDown(object sender, MouseEventArgs e) {
       cust_clicked = true;
     }
+
+    public int CurrentCutlist { get; set; }
+
   }
 }
