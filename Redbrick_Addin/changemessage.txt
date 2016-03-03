@@ -1,4 +1,10 @@
-﻿* 0.9.0.5
+﻿
+* 0.9.0.6
+** Added a little validation (default on)
+** Added clipboard sounds (default on)
+** Added annoying warning (default off)
+
+* 0.9.0.5
 ** Added L x W swap button per Ben
 ** Made Op combobox behaviour consistent with CL comboboxes
 ** BOM examiner
