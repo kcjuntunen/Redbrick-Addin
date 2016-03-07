@@ -207,6 +207,7 @@ namespace Redbrick_Addin {
       this.chbIdiotLight.TabIndex = 13;
       this.chbIdiotLight.Text = "Green check warning";
       this.chbIdiotLight.UseVisualStyleBackColor = true;
+      this.chbIdiotLight.Visible = false;
       this.chbIdiotLight.CheckedChanged += new System.EventHandler(this.chbIdiotLight_CheckedChanged);
       // 
       // tableLayoutPanel2
