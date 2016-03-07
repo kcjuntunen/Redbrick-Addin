@@ -10,6 +10,7 @@ using SolidWorks.Interop.swconst;
 namespace Redbrick_Addin {
   public partial class GeneralProperties : UserControl {
     SwProperties propertySet;
+    private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
 
     public GeneralProperties(ref SwProperties prop) {
       propertySet = prop;
@@ -20,6 +21,15 @@ namespace Redbrick_Addin {
       propertySet = p;
       LinkControls();
       ToggleFields(propertySet.cutlistData.OpType);
+
+      if (Properties.Settings.Default.MakeSounds) {
+        try {
+          sp.LoadAsync();
+        } catch (Exception ex) {
+          propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+        }
+      }
+
     }
 
     private void LinkControls() {
@@ -189,5 +199,23 @@ namespace Redbrick_Addin {
       tbLength_Leave(sender, e);
       tbWidth_Leave(sender, e);
     }
+
+    private void Clip(string to_clip) {
+      if (to_clip != null && to_clip != string.Empty) {
+        System.Windows.Forms.Clipboard.SetText(to_clip);
+
+        if (Properties.Settings.Default.MakeSounds) {
+          try {
+            sp.PlaySync();
+          } catch (Exception ex) {
+            propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+          }
+        }
+
+      } else {
+        //
+      }
+    }
+
   }
 }

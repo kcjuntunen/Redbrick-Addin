@@ -95,6 +95,7 @@ namespace Redbrick_Addin
       this.label1.Size = new System.Drawing.Size(60, 13);
       this.label1.TabIndex = 0;
       this.label1.Text = "CNC1";
+      this.label1.Click += new System.EventHandler(this.label1_Click);
       // 
       // label2
       // 
@@ -106,6 +107,7 @@ namespace Redbrick_Addin
       this.label2.Size = new System.Drawing.Size(60, 13);
       this.label2.TabIndex = 0;
       this.label2.Text = "CNC2";
+      this.label2.Click += new System.EventHandler(this.label2_Click);
       // 
       // label3
       // 
@@ -176,6 +178,7 @@ namespace Redbrick_Addin
       this.label4.Size = new System.Drawing.Size(60, 13);
       this.label4.TabIndex = 0;
       this.label4.Text = "OverL";
+      this.label4.Click += new System.EventHandler(this.label4_Click);
       // 
       // label5
       // 
@@ -187,6 +190,7 @@ namespace Redbrick_Addin
       this.label5.Size = new System.Drawing.Size(60, 13);
       this.label5.TabIndex = 0;
       this.label5.Text = "OverW";
+      this.label5.Click += new System.EventHandler(this.label5_Click);
       // 
       // label6
       // 
@@ -198,6 +202,7 @@ namespace Redbrick_Addin
       this.label6.Size = new System.Drawing.Size(60, 13);
       this.label6.TabIndex = 0;
       this.label6.Text = "Blank Size";
+      this.label6.Click += new System.EventHandler(this.label6_Click);
       // 
       // tbOverL
       // 

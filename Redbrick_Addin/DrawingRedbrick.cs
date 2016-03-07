@@ -17,6 +17,7 @@ namespace Redbrick_Addin {
   {
     private DirtTracker dirtTracker;
     private bool custo_clicked = false;
+    private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
 
     public DrawingRedbrick(SldWorks sw) {
       this._swApp = sw;
@@ -33,6 +34,15 @@ namespace Redbrick_Addin {
 
       this.GetData();
       t();
+
+      if (Properties.Settings.Default.MakeSounds) {
+        try {
+          sp.LoadAsync();
+        } catch (Exception ex) {
+          PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+        }
+      }
+
       this.dirtTracker = new DirtTracker(this);
     }
 
@@ -565,7 +575,24 @@ namespace Redbrick_Addin {
     }
 
     private void label4_Click(object sender, EventArgs e) {
-      System.Windows.Forms.Clipboard.SetText(label4.Text.Split(new string[] { " - " }, StringSplitOptions.None)[0]);
+      Clip(label4.Text.Split(new string[] { " - " }, StringSplitOptions.None)[0]);
+    }
+
+    private void Clip(string to_clip) {
+      if (to_clip != null && to_clip != string.Empty) {
+        System.Windows.Forms.Clipboard.SetText(to_clip);
+
+        if (Properties.Settings.Default.MakeSounds) {
+          try {
+            sp.PlaySync();
+          } catch (Exception ex) {
+            PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+          }
+        }
+
+      } else {
+        //
+      }
     }
 
   }

@@ -53,6 +53,7 @@ namespace Redbrick_Addin
       this.label16 = new System.Windows.Forms.Label();
       this.btnLookup = new System.Windows.Forms.Button();
       this.btnDelete = new System.Windows.Forms.Button();
+      this.btnMatList = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.label5 = new System.Windows.Forms.Label();
@@ -78,7 +79,6 @@ namespace Redbrick_Addin
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
       this.btnOK = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
-      this.btnMatList = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel5.SuspendLayout();
@@ -317,6 +317,19 @@ namespace Redbrick_Addin
       this.btnDelete.Text = "Delete Cutlist";
       this.btnDelete.UseVisualStyleBackColor = true;
       this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+      // 
+      // btnMatList
+      // 
+      this.btnMatList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnMatList.Location = new System.Drawing.Point(225, 187);
+      this.btnMatList.Name = "btnMatList";
+      this.btnMatList.Size = new System.Drawing.Size(90, 19);
+      this.btnMatList.TabIndex = 9;
+      this.btnMatList.Text = "Material List";
+      this.btnMatList.UseVisualStyleBackColor = true;
+      this.btnMatList.Click += new System.EventHandler(this.btnMatList_Click);
       // 
       // groupBox1
       // 
@@ -592,19 +605,6 @@ namespace Redbrick_Addin
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
       this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-      // 
-      // btnMatList
-      // 
-      this.btnMatList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnMatList.Location = new System.Drawing.Point(225, 187);
-      this.btnMatList.Name = "btnMatList";
-      this.btnMatList.Size = new System.Drawing.Size(90, 19);
-      this.btnMatList.TabIndex = 9;
-      this.btnMatList.Text = "Material List";
-      this.btnMatList.UseVisualStyleBackColor = true;
-      this.btnMatList.Click += new System.EventHandler(this.btnMatList_Click);
       // 
       // DrawingRedbrick
       // 

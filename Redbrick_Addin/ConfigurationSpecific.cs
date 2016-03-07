@@ -39,14 +39,6 @@ namespace Redbrick_Addin {
       lEl.Click += lEl_Click;
       lEr.Click += lEr_Click;
       label1.Click += label1_Click;
-
-      if (Properties.Settings.Default.MakeSounds) {
-        try {
-          sp.LoadAsync();
-        } catch (Exception ex) {
-          propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-        }
-      }
     }
 
     private void fillStatus() {
@@ -59,6 +51,14 @@ namespace Redbrick_Addin {
       propertySet = prop;
       configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
       cd = prop.cutlistData;
+
+      if (Properties.Settings.Default.MakeSounds) {
+        try {
+          sp.LoadAsync();
+        } catch (Exception ex) {
+          propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+        }
+      }
 
       Updte();
     }
