@@ -217,5 +217,25 @@ namespace Redbrick_Addin {
       }
     }
 
+    public string Length { 
+      get { return labResLength.Text; }
+      private set { labResLength.Text = value; }
+    }
+
+    public string Width {
+      get { return labResWidth.Text; }
+      private set { labResWidth.Text = value; }
+    }
+
+    public string Thickness {
+      get { return labResThickness.Text; }
+      private set { labResThickness.Text = value; }
+    }
+
+    public string WallThickness {
+      get { return labResWallThickness.Text; }
+      private set { labResWallThickness.Text = value; }
+    }
+
   }
 }

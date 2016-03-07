@@ -611,7 +611,9 @@ namespace Redbrick_Addin {
     }
 
     int dd_ViewNewNotify2(object viewBeingAdded) {
-      Document = (ModelDoc2)viewBeingAdded;
+      if (viewBeingAdded is ModelDoc2) {
+        Document = (ModelDoc2)viewBeingAdded;
+      }
       ConnectSelection();
       return 0;
     }
@@ -813,16 +815,21 @@ namespace Redbrick_Addin {
 
         int m = 0;
         double epsilon = Properties.Settings.Default.CheckEpsilon;
-        string thkcmp = prop.GetProperty("DEPTID").ID == "2" ? "WALL THICKNESS" : "THICKNESS";
-        if (double.TryParse(prop.GetProperty(thkcmp).ResValue, out o) && 
-          int.TryParse(prop.GetProperty("MATID").ID, out m)) {
+        bool resMat = int.TryParse(prop.GetProperty("MATID").ID, out m);
+        double thk = 0.0f;
+        double wthk = 0.0f;
+        bool thkParsed = double.TryParse(gp.Thickness, out thk);
+        bool wthkParsed = double.TryParse(gp.WallThickness, out wthk);
+        if ((thkParsed || wthkParsed) && resMat) {
           double thick = 0.0f;
           double.TryParse(prop.cutlistData.GetMaterial(m).Rows[0][(int)CutlistData.MaterialFields.THICKNESS].ToString(), out thick);
-          if ((thick != 0) && (Math.Abs(thick - o) > epsilon)) {
-            message += string.Format("Part thickness ({0}) doesn't match material thickness ({1}).\n", o, thick);
+          if ((Math.Abs(thick - thk) < epsilon) || (Math.Abs(thick - wthk) < epsilon)) {
+            // looks fine
+          } else if (thick != 0) {
+            message += string.Format("Part thickness ({0}/{1}) doesn't match material thickness ({2}).\n", thk, wthk, thick);
           }
         } else {
-          message += "Couldn't resolve thickness or material ID.\n";
+          message += string.Format("Couldn't resolve [WALL] THICKNESS or material ID ({0}).\n", m);
         }
         if (message.Length > 0) {
           _swApp.SendMsgToUser2(message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
