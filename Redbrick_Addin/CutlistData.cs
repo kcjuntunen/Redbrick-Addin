@@ -115,29 +115,25 @@ namespace Redbrick_Addin {
     }
 
     private DataSet GetMaterials() {
-      if (_materials == null) {
-        lock (threadLock) {
+      lock (threadLock) {
 #if DEBUG
-          DateTime start;
-          DateTime end;
-          start = DateTime.Now;
+        DateTime start;
+        DateTime end;
+        start = DateTime.Now;
 #endif
-          string SQL = @"SELECT MATID,DESCR,COLOR FROM CUT_MATERIALS ORDER BY DESCR";
-          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-            using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
-              using (DataSet ds = new DataSet()) {
-                da.Fill(ds);
+        string SQL = @"SELECT MATID,DESCR,COLOR FROM CUT_MATERIALS ORDER BY DESCR";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+            using (DataSet ds = new DataSet()) {
+              da.Fill(ds);
 #if DEBUG
-                end = DateTime.Now;
-                System.Diagnostics.Debug.Print("*** MAT ***<<< " + (end - start).ToString() + " >>>");
+              end = DateTime.Now;
+              System.Diagnostics.Debug.Print("*** MAT ***<<< " + (end - start).ToString() + " >>>");
 #endif
-                return ds;
-              }
+              return ds;
             }
           }
         }
-      } else {
-        return _materials;
       }
     }
 
