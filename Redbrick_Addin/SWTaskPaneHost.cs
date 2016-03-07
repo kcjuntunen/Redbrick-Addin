@@ -813,7 +813,8 @@ namespace Redbrick_Addin {
 
         int m = 0;
         double epsilon = Properties.Settings.Default.CheckEpsilon;
-        if (double.TryParse(prop.GetProperty("THICKNESS").ResValue, out o) && 
+        string thkcmp = prop.GetProperty("DEPTID").ID == "2" ? "WALL THICKNESS" : "THICKNESS";
+        if (double.TryParse(prop.GetProperty(thkcmp).ResValue, out o) && 
           int.TryParse(prop.GetProperty("MATID").ID, out m)) {
           double thick = 0.0f;
           double.TryParse(prop.cutlistData.GetMaterial(m).Rows[0][(int)CutlistData.MaterialFields.THICKNESS].ToString(), out thick);
