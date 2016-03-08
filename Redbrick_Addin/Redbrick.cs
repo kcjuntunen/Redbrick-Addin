@@ -66,6 +66,8 @@ namespace Redbrick_Addin {
       switch (ButtonIndex) {
         case 0:
           taskpaneHost.Write();
+          if (Properties.Settings.Default.MakeSounds)
+            System.Media.SystemSounds.Beep.Play();
           break;
         case 1:
           RedbrickConfiguration rbc = new RedbrickConfiguration();

@@ -445,6 +445,9 @@ namespace Redbrick_Addin {
         if (cd.RemovePartFromCutlist(clid, propertySet) > 0)
           UpdateCutlistBox();
       }
+
+      if (Properties.Settings.Default.MakeSounds)
+        System.Media.SystemSounds.Beep.Play();
     }
 
     private void cbMat_TextChanged(object sender, EventArgs e) {

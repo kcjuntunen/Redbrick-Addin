@@ -546,6 +546,9 @@ namespace Redbrick_Addin {
 
       if (mebore == swMessageBoxResult_e.swMbHitYes) {
         PropertySet.CutlistData.DeleteCutlist(prtno, revno);
+
+        if (Properties.Settings.Default.MakeSounds)
+          System.Media.SystemSounds.Beep.Play();
       }
     }
 

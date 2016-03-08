@@ -252,6 +252,9 @@ namespace Redbrick_Addin {
         md.ForceRebuild3(false);
       }
 
+      if (Properties.Settings.Default.MakeSounds)
+        System.Media.SystemSounds.Beep.Play();
+
       Close();
     }
 

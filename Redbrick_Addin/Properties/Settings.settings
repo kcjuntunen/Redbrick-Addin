@@ -199,10 +199,10 @@
       <Value Profile="(Default)">6</Value>
     </Setting>
     <Setting Name="MakeSounds" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Warn" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ClipboardSound" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Windows\Media\tada.wav</Value>
