@@ -1259,6 +1259,52 @@ namespace Redbrick_Addin {
       return affected;
     }
 
+    public int EmptyCutlist(string itemno, string rev) {
+      int affected = 0;
+      int clid = 0;
+      List<int> l = new List<int>();
+      if (ENABLE_DB_WRITE) {
+        string SQL = "SELECT CUT_CUTLISTS.CLID, CUT_CUTLIST_PARTS.PARTID FROM CUT_CUTLISTS " +
+            "INNER JOIN CUT_CUTLIST_PARTS ON CUT_CUTLISTS.CLID = CUT_CUTLIST_PARTS.CLID " +
+            "WHERE (((CUT_CUTLISTS.PARTNUM)= ?) AND ((CUT_CUTLISTS.REV)= ?))";
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@partnum", itemno);
+          comm.Parameters.AddWithValue("@rev", rev);
+          using (OdbcDataReader dr = comm.ExecuteReader()) {
+            while (dr.Read()) {
+              if (clid == 0)
+                clid = dr.GetInt32(0);
+
+              l.Add(dr.GetInt32(1));
+            }
+          }
+        }
+
+        SQL = "DELETE FROM CUT_CUTLIST_PARTS WHERE CLID = ? AND PARTID = ?";
+
+        foreach (int prt in l) {
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@clid", clid);
+            comm.Parameters.AddWithValue("@prtid", prt);
+            //affected += comm.ExecuteNonQuery();
+          }
+        }
+
+
+        SQL = "DELETE FROM CUT_PARTS WHERE PARTID = ?";
+        foreach (int prt in l) {
+          if (GetWherePartUsed(prt).Tables[0].Rows.Count < 1) {
+            using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+              comm.Parameters.AddWithValue("@partid", prt);
+              //affected += comm.ExecuteNonQuery();
+            }
+          }
+        }
+
+      }
+      return affected;
+    }
+
     public int DeleteCutlist(string itemno, string rev) {
       int affected = 0;
       if (ENABLE_DB_WRITE) {
