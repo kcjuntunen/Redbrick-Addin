@@ -38,10 +38,15 @@ namespace Redbrick_Addin {
     }
 
     public void LinkControls() {
-      PropertySet.GetProperty("DEPT").Type = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoNumber;
-      PropertySet.GetProperty("DEPTARTMENT").Type = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText;
+      SwProperty newprop = PropertySet.GetProperty("DEPT");
+      newprop.Type = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoNumber;
       PropertySet.LinkControlToProperty("DEPT", true, cbDepartment);
-      PropertySet.LinkControlToProperty("DEPARTMENT", true, cbDepartment);
+
+      if (Properties.Settings.Default.Testing) {
+        SwProperty oldprop = PropertySet.GetProperty("DEPTARTMENT");
+        oldprop.Type = SolidWorks.Interop.swconst.swCustomInfoType_e.swCustomInfoText;
+        PropertySet.LinkControlToProperty("DEPARTMENT", true, cbDepartment);
+      }
     }
 
     private void cbDepartment_SelectedIndexChanged(object sender, EventArgs e) {
@@ -54,8 +59,13 @@ namespace Redbrick_Addin {
       if (used_mouse) {
         OpType = this.cbDepartment.SelectedIndex + 1;
         PropertySet.cutlistData.OpType = OpType;
-        PropertySet.GetProperty("DEPARTMENT").Value = OpType.ToString();
-        PropertySet.GetProperty("DEPARTMENT").ResValue = cbDepartment.Text;
+
+        if (Properties.Settings.Default.Testing) {
+          SwProperty oldprop = PropertySet.GetProperty("DEPARTMENT");
+          PropertySet.GetProperty("DEPARTMENT").Value = cbDepartment.SelectedText;
+          PropertySet.GetProperty("DEPARTMENT").ResValue = cbDepartment.SelectedText;
+        }
+
         int idx = this.OpType - 1; // Don't sort the table, and this works well.
         cbDepartment.SelectedIndex = idx;
         cbDepartment.DisplayMember = "TYPEDESC";
