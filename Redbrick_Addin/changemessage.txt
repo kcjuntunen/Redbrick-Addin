@@ -4,7 +4,7 @@
 *** No more double hit
 ** Improved dimension validation
 ** Cause material combobox to update more aggressively
-** Eliminated odd DEPARTMENT bug which caused an old stype property to leak in
+** Eliminated odd DEPARTMENT bug which caused an old style property to leak in
 
 * 0.9.0.6
 ** Added a little validation (default on)
