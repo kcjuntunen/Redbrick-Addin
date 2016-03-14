@@ -1,4 +1,11 @@
 ﻿
+* 0.9.0.7
+** Added promiscuous reassuring noises
+*** No more double hit
+** Improved dimension validation
+** Cause material combobox to update more aggressively
+** Eliminated odd DEPARTMENT bug which caused an old stype property to leak in
+
 * 0.9.0.6
 ** Added a little validation (default on)
 ** Added clipboard sounds (default on)
@@ -16,18 +23,18 @@
 
 * 0.9.0.3
 ** Handled fractions in BOMs
-** Fiddled with layout, tabbing, focus behaviour.
+** Fiddled with layout, tabbing, focus behaviour
 ** Exposed status settings on Drawing view
 ** Now asks about hash on checkmark as well
 ** Updated the annotation table handler
 
 * 0.9.0.2
-** Fixed edging bug.
-** Monkeyed with layout.
+** Fixed edging bug
+** Monkeyed with layout
 
 * 0.9.0.1
 ** Handled null PartFileInfo
 ** Delete button added
 ** Revs carry through from drawings
 ** Added space after "REV"
-** No longer leaking parts into recent cutlists.
+** No longer leaking parts into recent cutlists
