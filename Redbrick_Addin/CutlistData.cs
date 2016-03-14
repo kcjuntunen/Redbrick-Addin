@@ -544,7 +544,7 @@ namespace Redbrick_Addin {
       if (description == string.Empty)
         return Properties.Settings.Default.DefaultMaterial;
 
-      string SQL = @"SELECT MATID FROM CUT_MATERIALS WHERE DESCR = ?";
+      string SQL = @"SELECT MATID FROM CUT_MATERIALS WHERE OLD_DESCR = ?";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@description", description);
         using (OdbcDataReader dr = comm.ExecuteReader()) {
@@ -1286,7 +1286,7 @@ namespace Redbrick_Addin {
           using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
             comm.Parameters.AddWithValue("@clid", clid);
             comm.Parameters.AddWithValue("@prtid", prt);
-            //affected += comm.ExecuteNonQuery();
+            affected += comm.ExecuteNonQuery();
           }
         }
 
