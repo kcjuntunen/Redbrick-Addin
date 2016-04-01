@@ -1,4 +1,9 @@
-﻿
+﻿* 0.9.0.9
+** Cause edging combobox to update more aggressively
+** Fixed SETUP_BY bug
+** Fixed Drawing REV 101 bug
+** Changed default status to "READY"
+
 * 0.9.0.7
 ** Added promiscuous reassuring noises
 *** No more double hit
