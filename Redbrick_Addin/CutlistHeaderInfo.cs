@@ -263,6 +263,7 @@ namespace Redbrick_Addin {
     }
 
     private void UpdateCutlist(string itemNo, string rev) {
+      int itpSetup = int.Parse(cbSetupBy.SelectedValue.ToString());
       ushort itpState = 0;
       ushort itpCust = 0;
       double dtpLength = 0.0f;
@@ -271,7 +272,7 @@ namespace Redbrick_Addin {
 
       try {
         itpCust = ushort.Parse(cbCustomer.SelectedValue.ToString());
-        itpState = ushort.Parse(Status.ToString());
+        itpState = ushort.Parse(Properties.Settings.Default.DefaultState.ToString());
       } catch (Exception) {
 
       }
@@ -283,12 +284,12 @@ namespace Redbrick_Addin {
       if (table != null) {
         CutlistData.EmptyCutlist(itemNo, rev);
         CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
-          itpCust, dtpLength, dtpWidth, dtpHeight, itpState, table.GetParts());
+          itpCust, dtpLength, dtpWidth, dtpHeight, itpState, itpSetup, table.GetParts());
       } else if (part != null) {
         Dictionary<string, Part> d = new Dictionary<string, Part>();
         d.Add(part.PartNumber, part);
         CutlistData.UpdateCutlist(itemNo, cbDrawingReference.Text, rev, cbDescription.Text,
-          itpCust, dtpLength, dtpWidth, dtpHeight, itpState, d);
+          itpCust, dtpLength, dtpWidth, dtpHeight, itpState, itpSetup, d);
       } else {
         DrawingPropertySet.SwApp.SendMsgToUser2("Failed to read table or part.",
           (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,

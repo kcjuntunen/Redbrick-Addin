@@ -1329,14 +1329,14 @@ namespace Redbrick_Addin {
       return affected;
     }
 
-    public int UpdateCutlist(string itemNo, string drawing, string rev, string descr, ushort custid, double l, double w, double h, ushort state,
+    public int UpdateCutlist(string itemNo, string drawing, string rev, string descr, ushort custid, double l, double w, double h, ushort state, int auth,
       Dictionary<string, Part> prts) {
       int currentAuthor = GetCurrentAuthor();
       int affected = 0;
       if (ENABLE_DB_WRITE) {
         string SQL = string.Empty;
         SQL = @"UPDATE CUT_CUTLISTS SET DRAWING = ?, CUSTID = ?, CDATE = GETDATE(), DESCR = ?, " +
-         @"LENGTH = ?, WIDTH = ?, HEIGHT = ?, STATE_BY = ?, STATEID = ? " +
+         @"LENGTH = ?, WIDTH = ?, HEIGHT = ?, SETUP_BY = ?, STATE_BY = ?, STATEID = ? " +
          @"WHERE PARTNUM=? AND REV=?;";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -1346,6 +1346,7 @@ namespace Redbrick_Addin {
           comm.Parameters.AddWithValue("@l", l);
           comm.Parameters.AddWithValue("@w", w);
           comm.Parameters.AddWithValue("@h", h);
+          comm.Parameters.AddWithValue("@setupby", auth);
           comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
           comm.Parameters.AddWithValue("@stateid", (state < 1 ? 1 : Convert.ToInt32(state)));
           comm.Parameters.AddWithValue("@partnum", FilterString(itemNo));
@@ -1364,7 +1365,7 @@ namespace Redbrick_Addin {
             comm.Parameters.AddWithValue("@l", l);
             comm.Parameters.AddWithValue("@w", w);
             comm.Parameters.AddWithValue("@h", h);
-            comm.Parameters.AddWithValue("@setupby", currentAuthor);
+            comm.Parameters.AddWithValue("@setupby", auth);
             comm.Parameters.AddWithValue("@stateby", Convert.ToInt32(currentAuthor));
             comm.Parameters.AddWithValue("@stateid", Convert.ToInt32(Properties.Settings.Default.DefaultState));
             affected = comm.ExecuteNonQuery();
@@ -2014,14 +2015,7 @@ namespace Redbrick_Addin {
     private DataSet _edges;
 
     public DataSet Edges {
-      get {
-        if (_edges != null) {
-          return _edges.Copy();
-        } else {
-          _edges = GetEdges();
-          return _edges;
-        }
-      }
+      get { return GetEdges(); }
       private set { _edges = value; }
     }
 
