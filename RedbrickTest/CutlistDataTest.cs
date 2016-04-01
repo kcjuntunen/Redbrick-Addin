@@ -137,5 +137,11 @@ namespace RedbrickTest {
       Debug.Assert(cd.ECRItemExists(8848, "WGFX1532-03", "101") == false);
     }
 
+    [TestMethod]
+    public void TestGetCurrentAuthor() {
+      int u = cd.GetCurrentAuthor();
+      Debug.Assert(u == 27);
+    }
+
   }
 }
