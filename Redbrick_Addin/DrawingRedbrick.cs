@@ -81,7 +81,7 @@ namespace Redbrick_Addin {
       SwProperty rl = PropertySet.GetProperty("REVISION LEVEL");
 
       if (partNo != null) {
-        label4.Text = partNo.ResValue;
+        label4.Text = partNo.ResValue.Trim().Split(' ')[0];
         partNo.Ctl = this.tbItemNo;
       } else {
         partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true);
@@ -162,7 +162,8 @@ namespace Redbrick_Addin {
         }
       }
 
-      DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue, PropertySet.GetProperty("REVISION LEVEL").Value);
+      DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue.Trim().Split(' ')[0],
+        PropertySet.GetProperty("REVISION LEVEL").Value);
       int stat = 0;
       if (ds.Tables[0].Rows.Count > 0 && int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
         cbStatus.Enabled = true;
