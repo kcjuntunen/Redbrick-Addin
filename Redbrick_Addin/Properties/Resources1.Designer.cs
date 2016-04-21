@@ -70,7 +70,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This part ({0}) already exists in another location. Override?.
+        ///   Looks up a localized string similar to This part ({0}) was renamed, or already exists in another location. Override?.
         /// </summary>
         internal static string AlreadyInOtherLocation {
             get {

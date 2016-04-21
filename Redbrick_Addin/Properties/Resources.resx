@@ -146,7 +146,7 @@
     <value>Do you want to add {0} to an existing cutlist?</value>
   </data>
   <data name="AlreadyInOtherLocation" xml:space="preserve">
-    <value>This part ({0}) already exists in another location. Override?</value>
+    <value>This part ({0}) was renamed, or already exists in another location. Override?</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>You'll have to restart SolidWorks to see any effect.</value>
