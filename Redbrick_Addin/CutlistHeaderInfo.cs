@@ -12,6 +12,7 @@ namespace Redbrick_Addin {
   public partial class CutlistHeaderInfo : Form {
     private bool clicked = false;
     private bool cust_clicked = false;
+    private string description = "Description";
     private ModelDoc2 md;
     private ModelDocExtension mde;
     private int fracdisp;
@@ -51,12 +52,13 @@ namespace Redbrick_Addin {
       InitControlsWithPart(p, cd);
     }
 
-    public CutlistHeaderInfo(DrawingProperties dp) { 
+    public CutlistHeaderInfo(DrawingProperties dp, string descr) { 
       InitializeComponent();
       DrawingPropertySet = dp;
       CutlistData = dp.CutlistData;
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
+      description = descr;
       InitControlsWithDrawing();
     }
 
@@ -86,6 +88,8 @@ namespace Redbrick_Addin {
       cbSetupBy.ValueMember = "UID";
       cbSetupBy.SelectedValue = CutlistData.GetCurrentAuthor();
       cbRev.Text = DrawingPropertySet.GetProperty("REVISION LEVEL").Value;
+
+      cbDescription.Text = description;
       InitTableData();
     }
 

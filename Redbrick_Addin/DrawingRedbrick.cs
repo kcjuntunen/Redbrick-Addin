@@ -359,7 +359,8 @@ namespace Redbrick_Addin {
     public event EventHandler Closing;
 
     private void button1_Click(object sender, EventArgs e) {
-      CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet);
+      string descr = get_description(GetFirstView(_swApp));
+      CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr);
       try {
         chi.ShowDialog();
       } catch (ObjectDisposedException odex) {
@@ -539,6 +540,63 @@ namespace Redbrick_Addin {
       }
 
       return dt;
+    }
+
+    public static SolidWorks.Interop.sldworks.View GetFirstView(SldWorks sw) {
+      ModelDoc2 swModel = (ModelDoc2)sw.ActiveDoc;
+      SolidWorks.Interop.sldworks.View v;
+      DrawingDoc d = (DrawingDoc)swModel;
+      string[] shtNames = (String[])d.GetSheetNames();
+      string message = string.Empty;
+
+      //This should find the first page with something on it.
+      int x = 0;
+      do {
+        try {
+          d.ActivateSheet(shtNames[x]);
+        } catch (IndexOutOfRangeException e) {
+          throw new IndexOutOfRangeException("Went beyond the number of sheets.", e);
+        } catch (Exception e) {
+          throw e;
+        }
+        v = (SolidWorks.Interop.sldworks.View)d.GetFirstView();
+        v = (SolidWorks.Interop.sldworks.View)v.GetNextView();
+        x++;
+      } while ((v == null) && (x < d.GetSheetCount()));
+
+      message = (string)v.GetName2() + ":\n";
+
+      if (v == null) {
+        throw new Exception("I couldn't find a model anywhere in this document.");
+      }
+      return v;
+    }
+
+    public static string get_description(SolidWorks.Interop.sldworks.View v) {
+      ModelDoc2 md = (ModelDoc2)v.ReferencedDocument;
+      ConfigurationManager cfMgr = md.ConfigurationManager;
+      Configuration cf = cfMgr.ActiveConfiguration;
+
+      CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
+      CustomPropertyManager scpm;
+
+      string _value = "PART";
+      string _resValue = string.Empty;
+      bool wasResolved;
+      bool useCached = false;
+
+      if (cf != null) {
+        scpm = cf.CustomPropertyManager;
+      } else {
+        scpm = gcpm;
+      }
+      int res;
+
+      res = gcpm.Get5("Description", useCached, out _value, out _resValue, out wasResolved);
+      if (_value == string.Empty) {
+        res = scpm.Get5("Description", useCached, out _value, out _resValue, out wasResolved);
+      }
+      return _value;
     }
 
     private void btnDelete_Click(object sender, EventArgs e) {
