@@ -1,45 +1,13 @@
-﻿* 0.9.0.9
+﻿* 0.9.0.10
+** Cutlist header box is smart enough to not open without data
+** Cutlist header box pulls in a description from the first model in the drwg
+** Slightly clarified CRC check message
+** Got rid of edge description double copy sound
+** Remember cutlist un-selection
+** Fixed last-saved v. in-use config
+
+* 0.9.0.9
 ** Cause edging combobox to update more aggressively
 ** Fixed SETUP_BY bug
 ** Fixed Drawing REV 101 bug
 ** Changed default status to "READY"
-
-* 0.9.0.7
-** Added promiscuous reassuring noises
-*** No more double hit
-** Improved dimension validation
-** Cause material combobox to update more aggressively
-** Eliminated odd DEPARTMENT bug which caused an old style property to leak in
-
-* 0.9.0.6
-** Added a little validation (default on)
-** Added clipboard sounds (default on)
-** Added annoying warning (default off)
-
-* 0.9.0.5
-** Added L x W swap button per Ben
-** Made Op combobox behaviour consistent with CL comboboxes
-** BOM examiner
-
-* 0.9.0.4
-** Fixed unhandled null ModelDocExtension on single cutlist part insertion
-** Now storing last selected customer
-** No longer letting you guys sneak spaces into the beginning of part names
-
-* 0.9.0.3
-** Handled fractions in BOMs
-** Fiddled with layout, tabbing, focus behaviour
-** Exposed status settings on Drawing view
-** Now asks about hash on checkmark as well
-** Updated the annotation table handler
-
-* 0.9.0.2
-** Fixed edging bug
-** Monkeyed with layout
-
-* 0.9.0.1
-** Handled null PartFileInfo
-** Delete button added
-** Revs carry through from drawings
-** Added space after "REV"
-** No longer leaking parts into recent cutlists
