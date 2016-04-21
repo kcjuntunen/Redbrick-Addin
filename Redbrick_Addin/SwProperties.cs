@@ -107,14 +107,17 @@ namespace Redbrick_Addin {
             ParsePropertyData(g, docType);
           } else {
             // Getting specific props.
+            // string.Empty may mean "in-use"
+            // <http://help.solidworks.com/2016/English/api/sldworksapi/Change_Referenced_Configuration_Example_VB.htm>
+            //comp.ReferencedConfiguration = string.Empty;
             configName = comp.ReferencedConfiguration;
             CustomPropertyManager s = modeldoc.Extension.get_CustomPropertyManager(configName);
 
             cutlistData.OpType = ParseDept2(modeldoc);
             //ParsePropertyData2(g, docType);
             //ParsePropertyData2(s, docType);
-            ParseSpecificPropertyData(s);
             ParseGlobalPropertyData(g);
+            ParseSpecificPropertyData(s);
           }
         }
       }
@@ -726,18 +729,18 @@ namespace Redbrick_Addin {
     }
 
     public void ParseSpecificPropertyData(CustomPropertyManager g) {
-      SwProperty oldMat = new SwProperty("CUTLIST MATERIAL", swCustomInfoType_e.swCustomInfoText, "TBD MATERIAL", false);
+      SwProperty oldMat = new SwProperty(g, "CUTLIST MATERIAL", swCustomInfoType_e.swCustomInfoText, "TBD MATERIAL", false);
       SwProperty mat = new SwProperty("MATID", swCustomInfoType_e.swCustomInfoNumber, Properties.Settings.Default.DefaultMaterial.ToString(), false);
       oldMat.Old = true;
 
-      SwProperty oldef = new SwProperty("EDGE FRONT (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
-      SwProperty oldeb = new SwProperty("EDGE BACK (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
-      SwProperty oldel = new SwProperty("EDGE LEFT (W)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
-      SwProperty older = new SwProperty("EDGE RIGHT (W)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
-      SwProperty ef = new SwProperty("EFID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
-      SwProperty eb = new SwProperty("EBID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
-      SwProperty el = new SwProperty("ELID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
-      SwProperty er = new SwProperty("ERID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty oldef = new SwProperty(g, "EDGE FRONT (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty oldeb = new SwProperty(g, "EDGE BACK (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty oldel = new SwProperty(g, "EDGE LEFT (W)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty older = new SwProperty(g, "EDGE RIGHT (W)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
+      SwProperty ef = new SwProperty(g, "EFID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty eb = new SwProperty(g, "EBID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty el = new SwProperty(g, "ELID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
+      SwProperty er = new SwProperty(g, "ERID", swCustomInfoType_e.swCustomInfoNumber, "0", false);
       oldef.Old = true;
       oldeb.Old = true;
       oldel.Old = true;

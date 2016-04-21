@@ -24,6 +24,17 @@ namespace Redbrick_Addin {
       Global = global;
     }
 
+    public SwProperty(CustomPropertyManager c, string PropertyName, swCustomInfoType_e swType, string testValue, bool global) {
+      SWCustPropMgr = c;
+      Name = PropertyName;
+      Type = swType;
+      ID = "0";
+      Old = false;
+      Value = testValue;
+      ResValue = testValue;
+      Global = global;
+    }
+
     /// <summary>
     /// Contructs a stub property.
     /// </summary>
@@ -84,6 +95,10 @@ namespace Redbrick_Addin {
         CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
         CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
 
+        if (SWCustPropMgr != null) {
+          scpm = SWCustPropMgr;
+        }
+
         // Null reference on drawings. Not good. Let's just make everything global if there's no config.
         if (cf != null)
           scpm = md.Extension.get_CustomPropertyManager(cf.Name);
@@ -142,6 +157,10 @@ namespace Redbrick_Addin {
 
         CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);
         CustomPropertyManager scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+
+        if (SWCustPropMgr != null) {
+          scpm = SWCustPropMgr;
+        }
 
         // Null reference on drawings. Not good. Let's just make everything global if there's no config.
         if (cf != null)
@@ -222,6 +241,11 @@ namespace Redbrick_Addin {
         } else {
           scpm = gcpm;
         }
+
+        if (SWCustPropMgr != null) {
+          scpm = SWCustPropMgr;
+        }
+
         int res;
 
         if (this.Global) {
@@ -263,6 +287,11 @@ namespace Redbrick_Addin {
         } else {
           scpm = md.Extension.get_CustomPropertyManager(string.Empty);
         }
+
+        if (SWCustPropMgr != null) {
+          scpm = SWCustPropMgr;
+        }
+
         int res;
 
         if (this.Global) {
@@ -308,6 +337,10 @@ namespace Redbrick_Addin {
         scpm = md.Extension.get_CustomPropertyManager(cf.Name);
       } else {
         scpm = md.Extension.get_CustomPropertyManager(string.Empty);
+      }
+
+      if (SWCustPropMgr != null) {
+        scpm = SWCustPropMgr;
       }
       
       int res;
@@ -614,6 +647,8 @@ namespace Redbrick_Addin {
       get { return _swApp; }
       set { _swApp = value; }
     }
+
+    public CustomPropertyManager SWCustPropMgr { get; set; }
 
   }
 }
