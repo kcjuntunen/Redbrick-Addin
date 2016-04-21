@@ -212,6 +212,25 @@ namespace Redbrick_Addin {
       }
     }
 
+    static public void Clip(string to_clip) {
+      if ((to_clip != null && to_clip != string.Empty) && to_clip != System.Windows.Forms.Clipboard.GetText()) {
+        System.Windows.Forms.Clipboard.SetText(to_clip);
+        if (Properties.Settings.Default.MakeSounds) {
+          try {
+            System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
+            sp.PlaySync();
+          } catch (Exception ex) {
+            RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(ex);
+            em.ShowDialog();
+          }
+        }
+      } else {
+        if (Properties.Settings.Default.MakeSounds) {
+          System.Media.SystemSounds.Asterisk.Play();
+        }
+      }
+    }
+
     [ComRegisterFunction()]
     private static void ComRegister(Type t) {
       Properties.Settings.Default.Upgrade();

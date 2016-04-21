@@ -11,7 +11,7 @@ using SolidWorks.Interop.swconst;
 namespace Redbrick_Addin {
   public partial class MachineProperties : UserControl {
     SwProperties propertySet;
-    private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
+    //private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
 
     public MachineProperties(ref SwProperties prop) {
       propertySet = prop;
@@ -22,15 +22,6 @@ namespace Redbrick_Addin {
       propertySet = p;
       LinkControls();
       ToggleFields(this.propertySet.cutlistData.OpType);
-
-      if (Properties.Settings.Default.MakeSounds) {
-        try {
-          sp.LoadAsync();
-        } catch (Exception ex) {
-          propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-        }
-      }
-
     }
 
     public void Update(ref SwProperties p, double l, double w) {
@@ -188,43 +179,26 @@ namespace Redbrick_Addin {
       MachineProgramManager mpm = new MachineProgramManager(propertySet, tbCNC1.Text);
       mpm.ShowDialog();
     }
-
-    private void Clip(string to_clip) {
-      if (to_clip != null && to_clip != string.Empty) {
-        System.Windows.Forms.Clipboard.SetText(to_clip);
-
-        if (Properties.Settings.Default.MakeSounds) {
-          try {
-            sp.PlaySync();
-          } catch (Exception ex) {
-            propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-          }
-        }
-
-      } else {
-        //
-      }
-    }
     
     private void label6_Click(object sender, EventArgs e) {
       string clipping = string.Format("{0} X {1}", tbBlankL.Text, tbBlankW.Text);
-      Clip(clipping);
+      Redbrick.Clip(clipping);
     }
 
     private void label1_Click(object sender, EventArgs e) {
-      Clip(tbCNC1.Text);
+      Redbrick.Clip(tbCNC1.Text);
     }
 
     private void label2_Click(object sender, EventArgs e) {
-      Clip(tbCNC2.Text);
+      Redbrick.Clip(tbCNC2.Text);
     }
 
     private void label4_Click(object sender, EventArgs e) {
-      Clip(tbOverL.Text);
+      Redbrick.Clip(tbOverL.Text);
     }
 
     private void label5_Click(object sender, EventArgs e) {
-      Clip(tbOverW.Text);
+      Redbrick.Clip(tbOverW.Text);
     }
 
   }

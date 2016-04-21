@@ -19,7 +19,6 @@ namespace Redbrick_Addin {
     private GeneralProperties gp;
     private MachineProperties mp;
     private Ops op;
-    private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
     //private CutlistHandler ch;
 
     private bool deptEvents = false;
@@ -76,14 +75,10 @@ namespace Redbrick_Addin {
       //tlpMain.ResumeLayout(true);
       ResumeLayout(false);
       PerformLayout();
-
-      if (Properties.Settings.Default.MakeSounds) {
-        sp.Load();
-      }
     }
 
     void gbSpecProp_Click(object sender, EventArgs e) {
-      Clip(gbSpecProp.Text.Split(new char[] {' '})[0]);
+      Redbrick.Clip(gbSpecProp.Text.Split(new char[] {' '})[0]);
     }
 
 
@@ -214,22 +209,5 @@ namespace Redbrick_Addin {
     private void ModelRedbrick_Load(object sender, EventArgs e) {
 
     }
-    private void Clip(string to_clip) {
-      if (to_clip != null && to_clip != string.Empty) {
-        System.Windows.Forms.Clipboard.SetText(to_clip);
-
-        if (Properties.Settings.Default.MakeSounds) {
-          try {
-            sp.PlaySync();
-          } catch (Exception ex) {
-            props.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-          }
-        }
-
-      } else {
-        System.Windows.Forms.Clipboard.SetText(string.Empty);
-      }
-    }
-
   }
 }

@@ -14,7 +14,6 @@ namespace Redbrick_Addin {
     private CutlistData cd;
     private SwProperties propertySet;
     private bool changingwithmouse = false;
-    private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
 
     public ConfigurationSpecific(ref SwProperties prop) {
       propertySet = prop;
@@ -34,10 +33,6 @@ namespace Redbrick_Addin {
     }
 
     private void init() {
-      lEf.Click += lEf_Click;
-      lEb.Click += lEb_Click;
-      lEl.Click += lEl_Click;
-      lEr.Click += lEr_Click;
       label1.Click += label1_Click;
     }
 
@@ -51,14 +46,6 @@ namespace Redbrick_Addin {
       propertySet = prop;
       configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
       cd = prop.cutlistData;
-
-      if (Properties.Settings.Default.MakeSounds) {
-        try {
-          sp.LoadAsync();
-        } catch (Exception ex) {
-          propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-        }
-      }
 
       Updte();
     }
@@ -482,65 +469,47 @@ namespace Redbrick_Addin {
     }
 
     void label1_Click(object sender, EventArgs e) {
-      Clip(cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None)[0].Trim());
+      Redbrick.Clip(cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None)[0].Trim());
     }
 
     void lEr_Click(object sender, EventArgs e) {
-      Clip(cbEr.Text);
+      Redbrick.Clip(cbEr.Text);
     }
 
     void lEl_Click(object sender, EventArgs e) {
-      Clip(cbEl.Text);
+      Redbrick.Clip(cbEl.Text);
     }
 
     void lEb_Click(object sender, EventArgs e) {
-      Clip(cbEb.Text);
+      Redbrick.Clip(cbEb.Text);
     }
 
     void lEf_Click(object sender, EventArgs e) {
-      Clip(cbEf.Text);
+      Redbrick.Clip(cbEf.Text);
     }
 
     void lMat_Click(object sender, EventArgs e) {
-      Clip(cbMat.Text);
+      Redbrick.Clip(cbMat.Text);
     }
 
     private void lMatColor_Click(object sender, EventArgs e) {
-      Clip(lMatColor.Text);
+      Redbrick.Clip(lMatColor.Text);
     }
 
     private void leFColor_Click(object sender, EventArgs e) {
-      Clip(leFColor.Text);
+      Redbrick.Clip(leFColor.Text);
     }
 
     private void leBColor_Click(object sender, EventArgs e) {
-      Clip(leBColor.Text);
+      Redbrick.Clip(leBColor.Text);
     }
 
     private void leLColor_Click(object sender, EventArgs e) {
-      Clip(leLColor.Text);
+      Redbrick.Clip(leLColor.Text);
     }
 
     private void leRColor_Click(object sender, EventArgs e) {
-      Clip(leRColor.Text);
+      Redbrick.Clip(leRColor.Text);
     }
-
-    private void Clip(string to_clip) {
-      if (to_clip != null && to_clip != string.Empty) {
-        System.Windows.Forms.Clipboard.SetText(to_clip);
-
-        if (Properties.Settings.Default.MakeSounds) {
-          try {
-            sp.PlaySync();
-          } catch (Exception ex) {
-            propertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-          }
-        }
-
-      } else {
-        //
-      }
-    }
-
   }
 }
