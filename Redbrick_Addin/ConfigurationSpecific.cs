@@ -305,7 +305,7 @@ namespace Redbrick_Addin {
     private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e) {
       if (changingwithmouse) {
         int cc = 0;
-        if (int.TryParse(cbCutlist.SelectedValue.ToString(), out cc) && cc != 0) {
+        if (int.TryParse(cbCutlist.SelectedValue.ToString(), out cc) /* && cc != 0 */) {
           Properties.Settings.Default.CurrentCutlist = int.Parse(cbCutlist.SelectedValue.ToString());
           propertySet.CutlistID = Properties.Settings.Default.CurrentCutlist;
           Properties.Settings.Default.Save();
