@@ -217,6 +217,7 @@ namespace Redbrick_Addin {
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
         em.ShowDialog();
+        Close();
       } finally {
         //
       }
@@ -365,6 +366,5 @@ namespace Redbrick_Addin {
     }
 
     public int CurrentCutlist { get; set; }
-
   }
 }

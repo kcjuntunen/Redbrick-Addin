@@ -360,7 +360,15 @@ namespace Redbrick_Addin {
 
     private void button1_Click(object sender, EventArgs e) {
       CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet);
-      chi.ShowDialog();
+      try {
+        chi.ShowDialog();
+      } catch (ObjectDisposedException odex) {
+        // Failed to initiate.
+        // Usually, it closed itself because no table was found.
+      } catch (Exception ex) {
+        RedbrickErr.ErrMsg err = new RedbrickErr.ErrMsg(ex);
+        err.ShowDialog();
+      }
 
       FillBoxes();
     }
