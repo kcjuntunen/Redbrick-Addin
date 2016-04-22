@@ -730,7 +730,7 @@ namespace Redbrick_Addin {
 
     public void ParseSpecificPropertyData(CustomPropertyManager g) {
       SwProperty oldMat = new SwProperty(g, "CUTLIST MATERIAL", swCustomInfoType_e.swCustomInfoText, "TBD MATERIAL", false);
-      SwProperty mat = new SwProperty("MATID", swCustomInfoType_e.swCustomInfoNumber, Properties.Settings.Default.DefaultMaterial.ToString(), false);
+      SwProperty mat = new SwProperty(g, "MATID", swCustomInfoType_e.swCustomInfoNumber, Properties.Settings.Default.DefaultMaterial.ToString(), false);
       oldMat.Old = true;
 
       SwProperty oldef = new SwProperty(g, "EDGE FRONT (L)", swCustomInfoType_e.swCustomInfoText, string.Empty, false);
