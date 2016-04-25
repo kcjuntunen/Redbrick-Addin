@@ -371,6 +371,7 @@ namespace Redbrick_Addin {
 
     private void btnLookup_Click(object sender, EventArgs e) {
       DataDisplay dd = new DataDisplay();
+      dd.swApp = _swApp;
       ModelDoc2 doc = (ModelDoc2)PropertySet.SwApp.ActiveDoc;
       CutlistData cd = PropertySet.CutlistData;
       string name = string.Empty;
@@ -379,7 +380,7 @@ namespace Redbrick_Addin {
       try {
         st = new swTableType.swTableType(doc, Properties.Settings.Default.MasterTableHash);
         DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
-
+        dd.PathIndex = st.PathList;
         if (doc != null) {
           name = doc.GetPathName();
           dd.Text = System.IO.Path.GetFileNameWithoutExtension(name) + " cutlist BOM...";

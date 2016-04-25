@@ -36,6 +36,7 @@ namespace Redbrick_Addin {
       this.dataGridView1.Name = "dataGridView1";
       this.dataGridView1.Size = new System.Drawing.Size(550, 347);
       this.dataGridView1.TabIndex = 0;
+      this.dataGridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DataDisplay_MouseClick);
       // 
       // DataDisplay
       // 
@@ -51,6 +52,7 @@ namespace Redbrick_Addin {
       this.Text = "Data Display";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataDisplay_FormClosing);
       this.Load += new System.EventHandler(this.DataDisplay_Load);
+      this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DataDisplay_MouseClick);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       this.ResumeLayout(false);
 

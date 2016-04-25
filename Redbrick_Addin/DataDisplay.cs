@@ -8,10 +8,11 @@ using System.Windows.Forms;
 
 namespace Redbrick_Addin {
   public partial class DataDisplay : Form {
+    private string part = string.Empty;
     public DataDisplay() {
       InitializeComponent();
+      Grid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
     }
-
 
     public DataDisplay(List<object> items) {
       InitializeComponent();
@@ -54,8 +55,9 @@ namespace Redbrick_Addin {
     private void DataDisplay_Load(object sender, EventArgs e) {
       Location = Properties.Settings.Default.DataDisplayLocation;
       Size = Properties.Settings.Default.DataDisplaySize;
+      dataGridView1.AutoResizeRows();
+      dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
       dataGridView1.AutoResizeColumns();
-
       dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
     }
 
@@ -65,9 +67,123 @@ namespace Redbrick_Addin {
       Properties.Settings.Default.Save();
     }
 
+    public List<System.IO.FileInfo> PathIndex { get; set; }
+
+    public SolidWorks.Interop.sldworks.SldWorks swApp { get; set; }
+
     public DataGridView Grid {
       get { return dataGridView1; }
       private set { dataGridView1 = value; }
+    }
+
+    public string GetPath() {
+      return System.IO.Path.GetDirectoryName(
+        (swApp.ActiveDoc as SolidWorks.Interop.sldworks.ModelDoc2).
+        GetPathName());
+    }
+
+    private System.IO.FileInfo find_doc(string doc) {
+      if (PathIndex != null) {
+        foreach (System.IO.FileInfo fi in PathIndex) {
+          if (fi.Name.ToUpper().Contains(doc.ToUpper()))
+            return fi;
+        }
+      }
+
+      System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(GetPath());
+      System.IO.FileInfo[] fl = d.GetFiles();
+
+      try {
+        foreach (System.IO.FileInfo fi in fl) {
+          if (fi.Name.ToUpper().Contains(doc.ToUpper())) {
+            return fi;
+          }
+        }
+      } catch (Exception ex) {
+        swApp.SendMsgToUser2(string.Format("Couldn't find '{0}' in '{1}'.", doc, d.FullName),
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+      }
+
+      try {
+        d = new System.IO.DirectoryInfo(GetPath() + @"\" + doc.Substring(0, 4));
+        fl = d.GetFiles();
+
+        foreach (System.IO.FileInfo fi in fl) {
+          if (fi.Name.ToUpper().Contains(doc.ToUpper())) {
+            return fi;
+          }
+        }
+      } catch (Exception ex) {
+        swApp.SendMsgToUser2(string.Format("Couldn't find '{0}' in '{1}'.", doc, d.FullName),
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+      }
+
+      return new System.IO.FileInfo((swApp.ActiveDoc as SolidWorks.Interop.sldworks.ModelDoc2).GetTitle());
+    }
+
+    private void OnClickOpenModel(System.Object sender, EventArgs e) {
+      try {
+        int err = 0;
+        string t = find_doc(part).FullName;
+        swApp.ActivateDoc3(
+          t,
+          true,
+          (int)SolidWorks.Interop.swconst.swRebuildOnActivation_e.swDontRebuildActiveDoc, ref err);
+      } catch (NullReferenceException nex) {
+        swApp.SendMsgToUser2("You must select a row with something in it.\n" + nex.Message,
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+      } catch (Exception ex) {
+        swApp.SendMsgToUser2(ex.Message,
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+      } finally {
+        Close();
+      }
+    }
+
+    private void OnClickOpenDrawing(System.Object sender, EventArgs e) {
+      try {
+        System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(GetPath());
+        System.IO.FileInfo fi = find_doc(part);
+        string t = fi.FullName.ToUpper();
+        string ext = System.IO.Path.GetExtension(t).ToUpper();
+        string fullpath = t.Replace(ext, ".SLDDRW");
+        swApp.OpenDocSilent(fullpath,
+          (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocDRAWING,
+          (int)SolidWorks.Interop.swconst.swOpenDocOptions_e.swOpenDocOptions_Silent);
+      } catch (NullReferenceException nex) {
+        swApp.SendMsgToUser2("You must select a row with something in it.\n" + nex.Message,
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+      } catch (Exception ex) {
+        swApp.SendMsgToUser2(ex.Message,
+          (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+          (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+      } finally {
+        Close();
+      }
+    }
+
+    private void DataDisplay_MouseClick(object sender, MouseEventArgs e) {
+      if (e.Button == MouseButtons.Right && swApp != null) {
+        try {
+          ContextMenu m = new ContextMenu();
+          int current_row = Grid.HitTest(e.X, e.Y).RowIndex;
+          if (current_row >= 0) {
+            part = Grid["Part", current_row].Value.ToString();
+            m.MenuItems.Add(new MenuItem("Open Model...", OnClickOpenModel));
+            m.MenuItems.Add(new MenuItem("Open Drawing...", OnClickOpenDrawing));
+            //m.MenuItems.Add(new MenuItem(string.Format("Action specific to {0}...", Grid["Part", current_row].Value)));
+          }
+
+          m.Show(Grid, new Point(e.X, e.Y));
+        } catch (Exception ex) {
+          //
+        }
+      }
     }
   }
 }
