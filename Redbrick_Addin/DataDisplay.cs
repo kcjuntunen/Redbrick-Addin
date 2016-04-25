@@ -127,10 +127,17 @@ namespace Redbrick_Addin {
       try {
         int err = 0;
         string t = find_doc(part).FullName;
-        swApp.ActivateDoc3(
-          t,
-          true,
-          (int)SolidWorks.Interop.swconst.swRebuildOnActivation_e.swDontRebuildActiveDoc, ref err);
+        if (System.IO.File.Exists(t)) {
+          swApp.ActivateDoc3(
+            t,
+            true,
+            (int)SolidWorks.Interop.swconst.swRebuildOnActivation_e.swDontRebuildActiveDoc, ref err);
+          Close();
+        } else {
+          swApp.SendMsgToUser2(string.Format("Couldn't find '{0}'", t),
+            (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+            (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+        }
       } catch (NullReferenceException nex) {
         swApp.SendMsgToUser2("You must select a row with something in it.\n" + nex.Message,
           (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
@@ -140,7 +147,7 @@ namespace Redbrick_Addin {
           (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
           (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
       } finally {
-        Close();
+        //
       }
     }
 
@@ -151,9 +158,16 @@ namespace Redbrick_Addin {
         string t = fi.FullName.ToUpper();
         string ext = System.IO.Path.GetExtension(t).ToUpper();
         string fullpath = t.Replace(ext, ".SLDDRW");
-        swApp.OpenDocSilent(fullpath,
-          (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocDRAWING,
-          (int)SolidWorks.Interop.swconst.swOpenDocOptions_e.swOpenDocOptions_Silent);
+        if (System.IO.File.Exists(fullpath)) {
+          swApp.OpenDocSilent(fullpath,
+            (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocDRAWING,
+            (int)SolidWorks.Interop.swconst.swOpenDocOptions_e.swOpenDocOptions_Silent);
+          Close();
+        } else {
+          swApp.SendMsgToUser2(string.Format("Couldn't find '{0}'", fullpath),
+            (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
+            (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
+        }
       } catch (NullReferenceException nex) {
         swApp.SendMsgToUser2("You must select a row with something in it.\n" + nex.Message,
           (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
@@ -163,7 +177,7 @@ namespace Redbrick_Addin {
           (int)SolidWorks.Interop.swconst.swMessageBoxIcon_e.swMbStop,
           (int)SolidWorks.Interop.swconst.swMessageBoxBtn_e.swMbOk);
       } finally {
-        Close();
+        //
       }
     }
 
