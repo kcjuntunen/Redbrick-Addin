@@ -23,6 +23,7 @@ namespace Redbrick_Addin {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridView1 = new System.Windows.Forms.DataGridView();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.SuspendLayout();
@@ -30,6 +31,8 @@ namespace Redbrick_Addin {
       // dataGridView1
       // 
       this.dataGridView1.AllowUserToOrderColumns = true;
+      dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+      this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridView1.Location = new System.Drawing.Point(0, 0);

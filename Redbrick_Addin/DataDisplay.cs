@@ -12,6 +12,7 @@ namespace Redbrick_Addin {
     public DataDisplay() {
       InitializeComponent();
       Grid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+      
     }
 
     public DataDisplay(List<object> items) {

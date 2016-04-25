@@ -1,6 +1,7 @@
 ﻿
 * 0.9.1.1
-** Right-click on the datatable to open a drawing or model.
+** Right-click on the datatable to open a drawing or model
+** Alternate row color
 
 * 0.9.0.11
 ** Cutlist header box is smart enough to not open without data
