@@ -215,9 +215,11 @@ namespace Redbrick_Addin {
         mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
           (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, 3);
         md.ForceRebuild3(false);
-      
+
+        string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
+        Properties.Settings.Default.MasterTableHashes.CopyTo(hs, 0);
         table = new swTableType.swTableType((DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2),
-          Properties.Settings.Default.MasterTableHash);
+          hs);
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
         em.ShowDialog();

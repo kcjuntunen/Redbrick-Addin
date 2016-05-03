@@ -600,5 +600,33 @@ namespace Redbrick_Addin.Properties {
                 this["IdiotLight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F</string>
+  <string>7D-37-E7-57-82-09-28-71-D3-0B-94-7D-AC-44-D2-0F</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection MasterTableHashes {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["MasterTableHashes"]));
+            }
+            set {
+                this["MasterTableHashes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool OnlyActiveAuthors {
+            get {
+                return ((bool)(this["OnlyActiveAuthors"]));
+            }
+            set {
+                this["OnlyActiveAuthors"] = value;
+            }
+        }
     }
 }
