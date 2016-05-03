@@ -154,6 +154,7 @@ namespace Redbrick_Addin {
 
     private void OnClickOpenDrawing(System.Object sender, EventArgs e) {
       try {
+        int err = 0;
         System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(GetPath());
         System.IO.FileInfo fi = find_doc(part);
         string t = fi.FullName.ToUpper();
@@ -163,6 +164,9 @@ namespace Redbrick_Addin {
           swApp.OpenDocSilent(fullpath,
             (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocDRAWING,
             (int)SolidWorks.Interop.swconst.swOpenDocOptions_e.swOpenDocOptions_Silent);
+          swApp.ActivateDoc3(fullpath,
+            true,
+            (int)SolidWorks.Interop.swconst.swRebuildOnActivation_e.swDontRebuildActiveDoc, ref err);
           Close();
         } else {
           swApp.SendMsgToUser2(string.Format("Couldn't find '{0}'", fullpath),
