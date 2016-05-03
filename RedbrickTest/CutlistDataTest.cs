@@ -126,21 +126,29 @@ namespace RedbrickTest {
 
     [TestMethod]
     public void EcrItemExists() {
-      Debug.Assert(cd.ECRItemExists(8847, "SS1010-Z3", "100"));
-      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "100"));
-      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "100"));
-      Debug.Assert(cd.ECRItemExists(8847, "WGFX1532-03", "100") == false);
-      Debug.Assert(cd.ECRItemExists(8850, "SS1009-Z3", "100") == false);
-      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "101") == false);
-      Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "101") == false);
-      Debug.Assert(cd.ECRItemExists(7000, "WGFX1532-02", "101") == false);
-      Debug.Assert(cd.ECRItemExists(8848, "WGFX1532-03", "101") == false);
+      if (cd != null) {
+        Debug.Assert(cd.ECRItemExists(8847, "SS1010-Z3", "100"));
+        Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "100"));
+        Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "100"));
+        Debug.Assert(cd.ECRItemExists(8847, "WGFX1532-03", "100") == false);
+        Debug.Assert(cd.ECRItemExists(8850, "SS1009-Z3", "100") == false);
+        Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "101") == false);
+        Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "101") == false);
+        Debug.Assert(cd.ECRItemExists(7000, "WGFX1532-02", "101") == false);
+        Debug.Assert(cd.ECRItemExists(8848, "WGFX1532-03", "101") == false);
+      }
     }
 
     [TestMethod]
     public void TestGetCurrentAuthor() {
       int u = cd.GetCurrentAuthor();
       Debug.Assert(u == 27);
+    }
+
+    [TestMethod]
+    public void TestGetCustomersForDrawing() {
+      System.Collections.Generic.List<string> u = cd.GetCustomersForDrawing();
+
     }
 
   }
