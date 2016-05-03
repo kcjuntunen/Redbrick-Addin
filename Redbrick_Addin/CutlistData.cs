@@ -260,7 +260,11 @@ namespace Redbrick_Addin {
 
     public List<string> GetCustomersForDrawing() {
       List<string> output = new List<string>();
-      string SQL = @"SELECT CUSTOMER, CUSTNUM FROM GEN_CUSTOMERS WHERE GEN_CUSTOMERS.CUSTACTIVE = 1 ORDER BY CUSTOMER";
+      string SQL = @"SELECT CUSTOMER, CUSTNUM FROM GEN_CUSTOMERS ";
+      if (Properties.Settings.Default.OnlyCurrentCustomers) {
+        SQL += "WHERE GEN_CUSTOMERS.CUSTACTIVE = 1 ";
+      }
+      SQL += "ORDER BY CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           string tmpstr = string.Empty;
@@ -291,9 +295,12 @@ namespace Redbrick_Addin {
     }
 
     private DataSet GetCustomers(bool current) {
-      string SQL = @"SELECT * FROM GEN_CUSTOMERS WHERE GEN_CUSTOMERS.CUSTACTIVE = ? ORDER BY GEN_CUSTOMERS.CUSTOMER";
+      string SQL = @"SELECT * FROM GEN_CUSTOMERS ";
+      if (Properties.Settings.Default.OnlyCurrentCustomers) {
+        SQL += "WHERE GEN_CUSTOMERS.CUSTACTIVE = 1 ";
+      }
+      SQL += "ORDER BY GEN_CUSTOMERS.CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-        comm.Parameters.AddWithValue("@current", current);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
@@ -1023,10 +1030,13 @@ namespace Redbrick_Addin {
       start = DateTime.Now;
 #endif
       string SQL = @"SELECT UID, USERNAME, (FIRST + ' ' + LAST) AS NAME, INITIAL " +
-        "FROM GEN_USERS WHERE GEN_USERS.DEPT = ? AND ACTIVE = ? ORDER BY LAST";
+        "FROM GEN_USERS WHERE GEN_USERS.DEPT = ? ";
+      if (Properties.Settings.Default.OnlyActiveAuthors) {
+        SQL += "AND [ACTIVE] = 1 ";
+      }
+      SQL += "ORDER BY LAST";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@dept", Properties.Settings.Default.UserDept);
-        comm.Parameters.AddWithValue("@active", Properties.Settings.Default.OnlyActiveAuthors);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
@@ -1982,15 +1992,11 @@ namespace Redbrick_Addin {
 
     public DataSet Customers {
       get {
-        if (_customers != null && _customers.Tables[0].Rows.Count > 0) {
-          return _customers;
-        } else {
           if (Properties.Settings.Default.OnlyCurrentCustomers)
             _customers = GetCustomers(true);
           else
-            _customers = GetCustomers();
+            _customers = GetCustomers(false);
           return _customers;
-        }
       }
 
       private set {

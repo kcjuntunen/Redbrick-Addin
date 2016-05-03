@@ -46,6 +46,8 @@ namespace Redbrick_Addin {
       chbSounds.Checked = Properties.Settings.Default.MakeSounds;
       chbWarnings.Checked = Properties.Settings.Default.Warn;
       chbIdiotLight.Checked = Properties.Settings.Default.IdiotLight;
+      chbOnlyActive.Checked = Properties.Settings.Default.OnlyActiveAuthors;
+      chbOnlyActiveCustomers.Checked = Properties.Settings.Default.OnlyCurrentCustomers;
       initialated = true;
     }
 
@@ -126,6 +128,14 @@ namespace Redbrick_Addin {
 
     private void chbIdiotLight_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.IdiotLight = chbIdiotLight.Checked;
+    }
+
+    private void chbOnlyActive_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.OnlyActiveAuthors = chbOnlyActive.Checked;
+    }
+
+    private void chbOnlyActiveCustomers_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.OnlyCurrentCustomers = chbOnlyActiveCustomers.Checked;
     }
   }
 }
