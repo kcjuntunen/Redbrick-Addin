@@ -1,18 +1,10 @@
 ﻿
+* 0.9.1.2
+** Fixed numberless customer bug
+** Open drawing command wasn't clever enough to switch to an already opened drawing.
+	Now it is.
+** Added option show inactive customers/authors
+
 * 0.9.1.1
 ** Right-click on the datatable to open a drawing or model
 ** Alternate row color
-
-* 0.9.0.11
-** Cutlist header box is smart enough to not open without data
-** Cutlist header box pulls in a description from the first model in the drwg
-** Slightly clarified CRC check message
-** Got rid of edge description double copy sound
-** Remember cutlist un-selection
-** Fixed last-saved v. in-use config
-
-* 0.9.0.9
-** Cause edging combobox to update more aggressively
-** Fixed SETUP_BY bug
-** Fixed Drawing REV 101 bug
-** Changed default status to "READY"
