@@ -265,8 +265,13 @@ namespace Redbrick_Addin {
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           string tmpstr = string.Empty;
           while (dr.Read()) {
-            tmpstr = string.Format("{0} - {1}", dr.GetString(0), dr.GetString(1));
-            output.Add(tmpstr);
+            try {
+              tmpstr = string.Format("{0} - {1}", dr.GetString(0), dr.GetString(1));
+            } catch (Exception) {
+              tmpstr = string.Format("{0}", dr.GetString(0));
+            } finally {
+              output.Add(tmpstr);
+            }
           }
           return output;
         }
@@ -1018,9 +1023,10 @@ namespace Redbrick_Addin {
       start = DateTime.Now;
 #endif
       string SQL = @"SELECT UID, USERNAME, (FIRST + ' ' + LAST) AS NAME, INITIAL " +
-        "FROM GEN_USERS WHERE (((GEN_USERS.DEPT)=?)) ORDER BY LAST";
+        "FROM GEN_USERS WHERE GEN_USERS.DEPT = ? AND ACTIVE = ? ORDER BY LAST";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@dept", Properties.Settings.Default.UserDept);
+        comm.Parameters.AddWithValue("@active", Properties.Settings.Default.OnlyActiveAuthors);
         using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
           using (DataSet ds = new DataSet()) {
             da.Fill(ds);
