@@ -48,7 +48,7 @@ namespace Redbrick_Addin {
     private bool regen_ok = false;
 
     private ModelDoc2 md_last;
-
+    public int cookie;
     public SWTaskPaneHost() {
       InitializeComponent();
     }
@@ -298,7 +298,59 @@ namespace Redbrick_Addin {
       } else {
         Enabled = false;
       }
+#if EXPERIMENTAL
+      if (Document != null) {
+        Feature f = (Feature)Document.FirstFeature();
+        string typeName = f.GetTypeName2();
+        do {
+          f.GetNextSubFeature();
+          typeName = f.GetTypeName2();
+        } while (typeName.ToUpper().Contains("FILE"));
+        if (typeName != string.Empty) {
+          int res0 = SwApp.AddMenuPopupItem4(
+            (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocASSEMBLY,
+            cookie,
+            typeName,
+            "Uaaaaaaaaaaaaaaaaa.........",
+            "donothing(1)",
+            "enablemethod(1)",
+            "pow",
+            "bip;bop"
+            );
+          int res1 = SwApp.AddMenuPopupItem4(
+             (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocASSEMBLY,
+             cookie,
+             typeName,
+             "Ummmmmmmmmmmmmmm.........",
+             "donothing(2)",
+             "enablemethod(0)",
+             "pow",
+             "bip;bop"
+             );
+          int res2 = SwApp.AddMenuPopupItem(
+             (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocASSEMBLY,
+             (int)SolidWorks.Interop.swconst.swSelectType_e.swSelBODYFEATURES,
+             typeName,
+             "donothing(2)",
+             "bip;bop"
+             );
+          (SwApp.Frame() as Frame).SetStatusBarText(
+            string.Format("Runtime Command IDs: {0}, {1}, {2} | Feature: {3}", res0, res1, res2, typeName)
+            );
+        }
+      }
+#endif
     }
+
+#if EXPERIMENTAL
+    public void donothing(string data) {
+      SwApp.SendMsgToUser2(data, 0, 0);
+    }
+
+    public int enablemethod(int i) {
+      return i;
+    }
+#endif
 
     public void ConnectSelection2() { // Pretty sure I can deprecate this.
       System.GC.Collect(2, GCCollectionMode.Forced);

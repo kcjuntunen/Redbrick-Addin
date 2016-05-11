@@ -55,6 +55,7 @@ namespace Redbrick_Addin {
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
         CheckUpdate();
+        taskpaneHost.cookie = cookie;
         taskpaneHost.Start();
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
