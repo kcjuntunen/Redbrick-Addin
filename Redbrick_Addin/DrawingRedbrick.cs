@@ -37,6 +37,10 @@ namespace Redbrick_Addin {
       this.dirtTracker = new DirtTracker(this);
     }
 
+    public void Update() {
+      FillBoxes();
+    }
+
     public void t() {
       tvRevs t = new tvRevs(ref this._propSet, ref this._revSet);
       t.TabIndex = 16;
@@ -71,8 +75,10 @@ namespace Redbrick_Addin {
       SwProperty d = this.PropertySet.GetProperty("DATE");
       SwProperty rl = PropertySet.GetProperty("REVISION LEVEL");
 
+      string name = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ')[0].Trim();
+
       if (partNo != null) {
-        label4.Text = partNo.ResValue.Trim().Split(' ')[0];
+        label4.Text = name;
         partNo.Ctl = this.tbItemNo;
       } else {
         partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true);

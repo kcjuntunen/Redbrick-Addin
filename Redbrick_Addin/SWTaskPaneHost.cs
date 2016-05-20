@@ -653,6 +653,7 @@ namespace Redbrick_Addin {
       if (Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING && !DrawEventsAssigned) {
         dd = (DrawingDoc)Document;
         //dd.ChangeCustomPropertyNotify += dd_ChangeCustomPropertyNotify;
+        dd.AddItemNotify += dd_AddItemNotify;
         dd.DestroyNotify2 += dd_DestroyNotify2;
         dd.ViewNewNotify2 += dd_ViewNewNotify2;
         //dd.DestroyNotify += dd_DestroyNotify;
@@ -662,6 +663,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    int dd_AddItemNotify(int EntityType, string itemName) {
+      drb.Update();
+      return 0;
+    }
+    
     int dd_ViewNewNotify2(object viewBeingAdded) {
       if (viewBeingAdded is ModelDoc2) {
         Document = (ModelDoc2)viewBeingAdded;
