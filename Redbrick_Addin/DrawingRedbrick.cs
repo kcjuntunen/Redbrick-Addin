@@ -33,7 +33,7 @@ namespace Redbrick_Addin {
 
       this.GetData();
       t();
-
+      label4.Focus();
       this.dirtTracker = new DirtTracker(this);
     }
 
@@ -389,6 +389,19 @@ namespace Redbrick_Addin {
         }
 
         dd.Grid.DataSource = stp;
+
+        dd.ColorRows(
+          (r) => {
+            if (r.Cells["Department"].Value.ToString() == string.Empty ||
+              r.Cells["Update"].Value.ToString().ToUpper() == "YES" ||
+              r.Cells["Material"].Value.ToString().ToUpper() == "TBD MATERIAL") {
+                return true; 
+            } 
+            return false; },
+          Color.Red, 
+          Color.Yellow
+          );
+
         dd.ShowDialog();
       } catch (Exception ex) {
         PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
@@ -453,6 +466,9 @@ namespace Redbrick_Addin {
           (from f in u select f.Edging);
 
         dd.Grid.DataSource = ListToDataTable(v.ToList());
+        dd.ColorRows((rw) => { return rw.Cells["Material"].Value.ToString().Contains("TBD"); }, 
+          Color.Yellow, 
+          Color.Red);
         dd.ShowDialog();
       } catch (Exception ex) {
         PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
@@ -625,7 +641,7 @@ namespace Redbrick_Addin {
     }
 
     private void cbRevision_SelectedIndexChanged(object sender, EventArgs e) {
-      FillBoxes();
+      //FillBoxes();
     }
 
     private void cbCustomer_SelectedIndexChanged(object sender, EventArgs e) {

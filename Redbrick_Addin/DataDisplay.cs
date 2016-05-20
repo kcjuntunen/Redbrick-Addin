@@ -12,7 +12,6 @@ namespace Redbrick_Addin {
     public DataDisplay() {
       InitializeComponent();
       Grid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-      
     }
 
     public DataDisplay(List<object> items) {
@@ -30,6 +29,31 @@ namespace Redbrick_Addin {
       Text = string.Format(@"Where {0} is used...", search);
       dataGridView1.DataSource = dt;
     }
+
+    private Func<DataGridViewRow, bool> testFunc;
+    private Color back;
+    private Color fore;
+
+    public void ColorRows(Func<DataGridViewRow, bool>test_func, Color bg, Color fg) {
+      testFunc = test_func;
+      back = bg;
+      fore = fg;
+      dataGridView1.CellPainting += dataGridView1_CellPainting;
+    }
+
+    private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
+      foreach (DataGridViewRow row in dataGridView1.Rows) {
+        try {
+          if (testFunc(row)) {
+            row.DefaultCellStyle.ForeColor = fore;
+            row.DefaultCellStyle.BackColor = back;
+          }
+        } catch (Exception) {
+          //
+        }
+      }
+    }
+
 
     public static DataTable ToDataTable<T>(List<T> items) {
       var tb = new DataTable(typeof(T).Name);
