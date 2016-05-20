@@ -35,7 +35,7 @@ namespace Redbrick_Addin {
 
     private void Init()                                     // If this didn't start out as a VSTA plugin, I probably wouldn't have
     {                                                       // to do this.
-      DockStyle d = DockStyle.None;
+      //DockStyle d = DockStyle.None;
       gbSpecProp.Click += gbSpecProp_Click;
       ds = new DepartmentSelector(ref this.props);
       ds.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
