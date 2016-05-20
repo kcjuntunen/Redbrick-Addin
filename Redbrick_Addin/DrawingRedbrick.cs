@@ -425,13 +425,7 @@ namespace Redbrick_Addin {
         dd.Grid.DataSource = stp;
 
         dd.ColorRows(
-          (r) => {
-            if (r.Cells["Department"].Value.ToString() == string.Empty ||
-              r.Cells["Update"].Value.ToString().ToUpper() == "YES" ||
-              r.Cells["Material"].Value.ToString().ToUpper() == "TBD MATERIAL") {
-                return true; 
-            } 
-            return false; },
+          (r) => { return r.Cells["Update"].Value.ToString().ToUpper() == "YES"; },
           Color.Red, 
           Color.Yellow
           );
