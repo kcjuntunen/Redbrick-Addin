@@ -628,5 +628,17 @@ namespace Redbrick_Addin.Properties {
                 this["OnlyActiveAuthors"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool WrongCustomerWarning {
+            get {
+                return ((bool)(this["WrongCustomerWarning"]));
+            }
+            set {
+                this["WrongCustomerWarning"] = value;
+            }
+        }
     }
 }

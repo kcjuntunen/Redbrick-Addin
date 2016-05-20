@@ -196,12 +196,30 @@ namespace Redbrick_Addin {
       for (int i = 100; i < 110; i++) {
         cbRevision.Items.Add(i);
       }
+      cbRevision.Items.Add("NS");
     }
 
     private void fillStatus() {
       cbStatus.DataSource = PropertySet.CutlistData.States.Tables[0];
       cbStatus.DisplayMember = "STATE";
       cbStatus.ValueMember = "ID";
+    }
+
+    private bool check_itemnumber() {
+      if (Properties.Settings.Default.WrongCustomerWarning) {
+        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"[A-Z]{3,4}\d{4}");
+        string itnu = label4.Text;
+        string cuss = cbCustomer.Text;
+        if (r.IsMatch(itnu)) {
+          string itnusubst = itnu.Substring(0, 2);
+          string cusssubst = cuss.Substring(0, 2);
+          if (cusssubst != "ST") { //                       :-(       This will never work with Sterling.
+            return itnu.Substring(0, 2) == cuss.Substring(0, 2);
+          }
+        }
+        return true;
+      }
+      return true;
     }
 
     public delegate void selectLayer();
@@ -305,6 +323,14 @@ namespace Redbrick_Addin {
     }
 
     public void Write(DrawingDoc doc) {
+      if (!check_itemnumber()) {
+        string itnu = label4.Text;
+        string cuss = cbCustomer.Text.Split(' ')[0];
+        PropertySet.SwApp.SendMsgToUser2(
+          string.Format("The item number '{0}' possibly doesn't match the customer '{1}'.",itnu, cuss),
+          (int)swMessageBoxIcon_e.swMbWarning,
+          (int)swMessageBoxResult_e.swMbHitOk);
+      }
       this.PropertySet.ReadControls();
       this.PropertySet.Write(this.SwApp);
       this.RevSet.Write(this.SwApp);
@@ -313,6 +339,14 @@ namespace Redbrick_Addin {
     }
 
     public void Write(ModelDoc2 md) {
+      if (!check_itemnumber()) {
+        string itnu = label4.Text.Trim();
+        string cuss = cbCustomer.Text.Split('-')[0].Trim();
+        System.Windows.Forms.MessageBox.Show(
+          string.Format("The item number '{0}' possibly doesn't match the customer '{1}'.", itnu, cuss), 
+          "Wrong customer?",
+          MessageBoxButtons.OK);
+      }
       this.PropertySet.ReadControls();
       this.PropertySet.Write(md);
       this.RevSet.Write(md);
