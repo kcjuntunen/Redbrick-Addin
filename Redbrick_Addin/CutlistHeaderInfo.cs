@@ -71,12 +71,10 @@ namespace Redbrick_Addin {
 
       string[] title = (DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ');
       Text = "Add/Update Cutlist for " + title[0] + "...";
-      cbDrawingReference.Text = title[0];
-      //cbItemNo.DataSource = CutlistData.GetCutlists().Tables[0];
       cbItemNo.DisplayMember = "PARTNUM";
       cbItemNo.ValueMember = "CLID";
       cbDrawingReference.Text = DrawingPropertySet.GetProperty("PartNo").ResValue;
-      cbItemNo.Text = cbDrawingReference.Text;
+      cbItemNo.Text = title[0];
 
       cbCustomer.DataSource = CutlistData.Customers.Tables[0];
       cbCustomer.DisplayMember = "CUSTOMER";
@@ -240,29 +238,39 @@ namespace Redbrick_Addin {
     }
 
     private void btnCreate_Click(object sender, EventArgs e) {
-      string[] clData = cbItemNo.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
-      if (clData.Length > 1) {
-        if (CutlistData.GetCutlistID(clData[0].Trim(), clData[1].Trim()) > 0) {
-          UpdateCutlist(clData[0].Trim(), clData[1].Trim());
-        }
+      if (cbCustomer.Text == string.Empty) {
+        DrawingPropertySet.SwApp.SendMsgToUser2("Fill in the Customer box.",
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
+      } else if (cbItemNo.Text == string.Empty) {
+        DrawingPropertySet.SwApp.SendMsgToUser2("Fill in the Item Number box.",
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
       } else {
-        UpdateCutlist(cbItemNo.Text, cbRev.Text);
+        string[] clData = cbItemNo.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
+        if (clData.Length > 1) {
+          if (CutlistData.GetCutlistID(clData[0].Trim(), clData[1].Trim()) > 0) {
+            UpdateCutlist(clData[0].Trim(), clData[1].Trim());
+          }
+        } else {
+          UpdateCutlist(cbItemNo.Text, cbRev.Text);
+        }
+
+        if (mde != null) {
+          mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, fracdisp);
+          mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
+            (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decs);
+          mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
+            (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decd);
+          md.ForceRebuild3(false);
+        }
+
+        if (Properties.Settings.Default.MakeSounds)
+          System.Media.SystemSounds.Beep.Play();
+
+        Close();
       }
-
-      if (mde != null) {
-        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
-        (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, fracdisp);
-        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalPlaces,
-          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decs);
-        mde.SetUserPreferenceInteger((int)swUserPreferenceIntegerValue_e.swUnitsLinearDecimalDisplay,
-          (int)swUserPreferenceOption_e.swDetailingNoOptionSpecified, decd);
-        md.ForceRebuild3(false);
-      }
-
-      if (Properties.Settings.Default.MakeSounds)
-        System.Media.SystemSounds.Beep.Play();
-
-      Close();
     }
 
     private void UpdateExistingCutlist(string itemNo, string rev) {
