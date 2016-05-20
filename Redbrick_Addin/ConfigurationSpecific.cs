@@ -48,6 +48,7 @@ namespace Redbrick_Addin {
       cd = prop.cutlistData;
 
       Updte();
+      lMat.Focus();
     }
 
     public void Updte() {
