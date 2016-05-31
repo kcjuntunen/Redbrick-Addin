@@ -268,6 +268,7 @@ namespace Redbrick_Addin {
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           string tmpstr = string.Empty;
+          output.Add(tmpstr);
           while (dr.Read()) {
             try {
               tmpstr = string.Format("{0} - {1}", dr.GetString(0), dr.GetString(1));
@@ -306,6 +307,18 @@ namespace Redbrick_Addin {
             da.Fill(ds);
             return ds;
           }
+        }
+      }
+    }
+
+    public string GetCustomerByProject(string project) {
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT TOP 1 CUSTOMER FROM SCH_PROJECTS WHERE PROJECT LIKE ? ORDER BY CUSTOMER;", conn)) {
+        comm.Parameters.AddWithValue("@project", project + "%");
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.Read() && !dr.IsDBNull(0))
+            return dr.GetString(0);
+          else
+            return string.Empty;
         }
       }
     }
@@ -1193,7 +1206,7 @@ namespace Redbrick_Addin {
       if (ENABLE_DB_WRITE && !ECRIsBogus(ecrId) && !ECRItemExists(ecrId, partnum, rev)) {
         ecr_item_id = InsertECRItemInner(ecrId, partnum, rev, type);
         object[] o = GetDrawingData(Path.GetFileNameWithoutExtension(dwg_file_name) + ".pdf");
-        string SQL = @"INSERT INTO ECR_DRAWINGS (ITEM_ID, FILE_ID, DRWREV, DRWNAME, DRWPATH) VALUES (?, ?, ?, ?, ?)";
+        string SQL = @"INSERT INTO ECR_DRAWINGS (ITEM_ID, FILE_ID, DRWREV, DRW_FILE, ORIG_PATH) VALUES (?, ?, ?, ?, ?)";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@itemID", ecr_item_id);
           comm.Parameters.AddWithValue("@fileID", (int)o[0]);

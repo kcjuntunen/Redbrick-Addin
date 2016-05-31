@@ -33,12 +33,12 @@ namespace Redbrick_Addin {
 
       this.GetData();
       t();
-      label4.Focus();
       this.dirtTracker = new DirtTracker(this);
     }
 
     public void Update() {
       FillBoxes();
+      GetData();
     }
 
     public void t() {
@@ -59,7 +59,7 @@ namespace Redbrick_Addin {
 
       this.FillBoxes();
 
-      if (PropertySet.GetProperty("CUSTOMER").Value == string.Empty) {
+      if (Properties.Settings.Default.RememberLastCustomer && (PropertySet.GetProperty("CUSTOMER").Value == string.Empty)) {
         cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
       }
     }
@@ -159,7 +159,9 @@ namespace Redbrick_Addin {
         }
       }
 
-      DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue.Trim().Split(' ')[0],
+      //DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue.Trim().Split(' ')[0],
+      //  PropertySet.GetProperty("REVISION LEVEL").Value);
+      DataSet ds = PropertySet.CutlistData.GetCutlistData(name,
         PropertySet.GetProperty("REVISION LEVEL").Value);
       int stat = 0;
       if (ds.Tables[0].Rows.Count > 0 && int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
@@ -212,16 +214,13 @@ namespace Redbrick_Addin {
     }
 
     private bool check_itemnumber() {
-      if (Properties.Settings.Default.WrongCustomerWarning) {
+      if (Properties.Settings.Default.Warn) {
         System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"[A-Z]{3,4}\d{4}");
         string itnu = label4.Text;
-        string cuss = cbCustomer.Text;
         if (r.IsMatch(itnu)) {
           string itnusubst = itnu.Substring(0, 2);
-          string cusssubst = cuss.Substring(0, 2);
-          if (cusssubst != "ST") { //                       :-(       This will never work with Sterling.
-            return itnu.Substring(0, 2) == cuss.Substring(0, 2);
-          }
+          return PropertySet.CutlistData.GetCustomerByProject(itnu.Substring(0, 4)).Split(' ')[0].ToUpper() == 
+            cbCustomer.Text.Split(' ')[0];
         }
         return true;
       }
@@ -349,7 +348,7 @@ namespace Redbrick_Addin {
         string itnu = label4.Text.Trim();
         string cuss = cbCustomer.Text.Split('-')[0].Trim();
         System.Windows.Forms.MessageBox.Show(
-          string.Format("The item number '{0}' possibly doesn't match the customer '{1}'.", itnu, cuss), 
+          string.Format("The item number '{0}' doesn't match the customer '{1}'.", itnu, cuss), 
           "Wrong customer?",
           MessageBoxButtons.OK);
       }
@@ -666,8 +665,8 @@ namespace Redbrick_Addin {
     }
 
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
-      if (tbItemNoRes.Text != string.Empty && cbRevision.Text != string.Empty) {
-        int clid = PropertySet.CutlistData.GetCutlistID(tbItemNoRes.Text, cbRevision.Text);
+      if (label4.Text != string.Empty && cbRevision.Text != string.Empty) {
+        int clid = PropertySet.CutlistData.GetCutlistID(label4.Text, cbRevision.Text);
         if (cbStatus.SelectedValue != null && clid != 0) {
           PropertySet.CutlistData.SetState(clid, (int)cbStatus.SelectedValue);
         }
@@ -680,7 +679,11 @@ namespace Redbrick_Addin {
 
     private void cbCustomer_SelectedIndexChanged(object sender, EventArgs e) {
       if (custo_clicked) {
-        Properties.Settings.Default.LastCustomerSelection = (sender as ComboBox).SelectedIndex;
+        if (Properties.Settings.Default.RememberLastCustomer) {
+          Properties.Settings.Default.LastCustomerSelection = (sender as ComboBox).SelectedIndex;
+        } else {
+          Properties.Settings.Default.LastCustomerSelection = 0;
+        }
         Properties.Settings.Default.Save();
         custo_clicked = false;
       }

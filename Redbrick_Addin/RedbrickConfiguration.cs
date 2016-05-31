@@ -48,7 +48,7 @@ namespace Redbrick_Addin {
       chbIdiotLight.Checked = Properties.Settings.Default.IdiotLight;
       chbOnlyActive.Checked = Properties.Settings.Default.OnlyActiveAuthors;
       chbOnlyActiveCustomers.Checked = Properties.Settings.Default.OnlyCurrentCustomers;
-      chbCustomerWarn.Checked = Properties.Settings.Default.WrongCustomerWarning;
+      chbRememberCustomer.Checked = Properties.Settings.Default.RememberLastCustomer;
       initialated = true;
     }
 
@@ -140,7 +140,7 @@ namespace Redbrick_Addin {
     }
 
     private void chbCustomerWarn_CheckedChanged(object sender, EventArgs e) {
-      Properties.Settings.Default.WrongCustomerWarning = chbCustomerWarn.Checked;
+      Properties.Settings.Default.RememberLastCustomer = chbRememberCustomer.Checked;
     }
   }
 }

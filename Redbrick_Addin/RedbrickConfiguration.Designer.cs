@@ -39,11 +39,11 @@ namespace Redbrick_Addin {
       this.chbIdiotLight = new System.Windows.Forms.CheckBox();
       this.chbOnlyActive = new System.Windows.Forms.CheckBox();
       this.chbOnlyActiveCustomers = new System.Windows.Forms.CheckBox();
+      this.chbRememberCustomer = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.btnCancel = new System.Windows.Forms.Button();
       this.btnOK = new System.Windows.Forms.Button();
-      this.chbCustomerWarn = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
@@ -71,7 +71,7 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel1.Controls.Add(this.chbIdiotLight, 1, 6);
       this.tableLayoutPanel1.Controls.Add(this.chbOnlyActive, 0, 6);
       this.tableLayoutPanel1.Controls.Add(this.chbOnlyActiveCustomers, 0, 7);
-      this.tableLayoutPanel1.Controls.Add(this.chbCustomerWarn, 1, 7);
+      this.tableLayoutPanel1.Controls.Add(this.chbRememberCustomer, 1, 7);
       this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 8;
@@ -239,6 +239,17 @@ namespace Redbrick_Addin {
       this.chbOnlyActiveCustomers.UseVisualStyleBackColor = true;
       this.chbOnlyActiveCustomers.CheckedChanged += new System.EventHandler(this.chbOnlyActiveCustomers_CheckedChanged);
       // 
+      // chbRememberCustomer
+      // 
+      this.chbRememberCustomer.AutoSize = true;
+      this.chbRememberCustomer.Location = new System.Drawing.Point(209, 162);
+      this.chbRememberCustomer.Name = "chbRememberCustomer";
+      this.chbRememberCustomer.Size = new System.Drawing.Size(151, 17);
+      this.chbRememberCustomer.TabIndex = 16;
+      this.chbRememberCustomer.Text = "Remember last customer";
+      this.chbRememberCustomer.UseVisualStyleBackColor = true;
+      this.chbRememberCustomer.CheckedChanged += new System.EventHandler(this.chbCustomerWarn_CheckedChanged);
+      // 
       // tableLayoutPanel2
       // 
       this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -296,17 +307,6 @@ namespace Redbrick_Addin {
       this.btnOK.UseVisualStyleBackColor = true;
       this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
       // 
-      // chbCustomerWarn
-      // 
-      this.chbCustomerWarn.AutoSize = true;
-      this.chbCustomerWarn.Location = new System.Drawing.Point(209, 162);
-      this.chbCustomerWarn.Name = "chbCustomerWarn";
-      this.chbCustomerWarn.Size = new System.Drawing.Size(158, 17);
-      this.chbCustomerWarn.TabIndex = 16;
-      this.chbCustomerWarn.Text = "Wrong customer warning";
-      this.chbCustomerWarn.UseVisualStyleBackColor = true;
-      this.chbCustomerWarn.CheckedChanged += new System.EventHandler(this.chbCustomerWarn_CheckedChanged);
-      // 
       // RedbrickConfiguration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -351,6 +351,6 @@ namespace Redbrick_Addin {
     private System.Windows.Forms.CheckBox chbIdiotLight;
     private System.Windows.Forms.CheckBox chbOnlyActive;
     private System.Windows.Forms.CheckBox chbOnlyActiveCustomers;
-    private System.Windows.Forms.CheckBox chbCustomerWarn;
+    private System.Windows.Forms.CheckBox chbRememberCustomer;
   }
 }

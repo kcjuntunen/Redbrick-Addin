@@ -631,13 +631,13 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool WrongCustomerWarning {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool RememberLastCustomer {
             get {
-                return ((bool)(this["WrongCustomerWarning"]));
+                return ((bool)(this["RememberLastCustomer"]));
             }
             set {
-                this["WrongCustomerWarning"] = value;
+                this["RememberLastCustomer"] = value;
             }
         }
     }
