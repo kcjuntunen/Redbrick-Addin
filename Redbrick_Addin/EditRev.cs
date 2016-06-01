@@ -161,15 +161,34 @@ namespace Redbrick_Addin {
       }
 
       if (mbr == swMessageBoxResult_e.swMbHitYes) {
+        int parttype = 7;
+        // M2M
         M2MData m = new M2MData();
+        if (m.GetPartCount(partno, revision.Value) > 0) {
+          parttype = m.GetPartType(partno, revision.Value);
+        } else {
+        // Cutlist
+          int prtid = 0;
+          if (int.TryParse(
+            cutlist_data.GetCutlistData(partno, revision.Value).Tables[0].Columns["CLID"].ToString(), out prtid)) {
+            if (prtid > 0) {
+              parttype = 5;
+            }
+          } else {
+            int pu = 0;
+            if (cutlist_data.PartUsed(partno)) {
+                parttype = 6;
+            }
+          }
+        }
         cutlist_data.InsertECRItem(en,
           partno,
           revision.Value,
-          m.GetPartType(partno, revision.Value),
+          parttype,
           r.Revision.Value,
           partpath);
+        }
       }
-    }
 
     private void EditRev_FormClosing(object sender, FormClosingEventArgs e) {
       Properties.Settings.Default.EditRevLocation = Location;

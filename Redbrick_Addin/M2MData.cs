@@ -81,7 +81,7 @@ namespace Redbrick_Addin {
     }
 
     public int GetPartType(string prtno, string prtrv) {
-      int parttype = 0;
+      int parttype = 7;
 
       switch (GetProductClass(prtno, prtrv)) {
         case "01":
