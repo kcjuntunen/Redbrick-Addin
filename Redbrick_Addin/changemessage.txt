@@ -1,4 +1,7 @@
-﻿* 0.9.1.3
+﻿* 0.9.1.4
+** Fixed ECR item type resolution.
+
+* 0.9.1.3
 ** Fixed ECR item insertion error caused by Chris' sneakily changing field names.
 ** Identify customer by project via db
 ** Remembering customer is optional
