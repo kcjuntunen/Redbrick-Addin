@@ -640,5 +640,29 @@ namespace Redbrick_Addin.Properties {
                 this["RememberLastCustomer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-02\\shared\\shared\\general\\Engineering Utility\\ECR Drawings\\")]
+        public string ECRDrawingsDestination {
+            get {
+                return ((string)(this["ECRDrawingsDestination"]));
+            }
+            set {
+                this["ECRDrawingsDestination"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\Archive PDF.bmp")]
+        public string ArchiveIcon {
+            get {
+                return ((string)(this["ArchiveIcon"]));
+            }
+            set {
+                this["ArchiveIcon"] = value;
+            }
+        }
     }
 }

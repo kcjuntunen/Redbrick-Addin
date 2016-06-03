@@ -141,6 +141,14 @@ namespace Redbrick_Addin {
       this.Close();
     }
 
+
+    public delegate void AddedECREventHandler(object sender, EventArgs e);
+    public event AddedECREventHandler Added;
+    protected virtual void OnAdded(EventArgs e) {
+      if (Added != null)
+        Added(this, e);
+    }
+
     private void AddECRItem(DrawingRev r) {
       string partpath = (r.SwApp.ActiveDoc as ModelDoc2).GetPathName();
       string partno = System.IO.Path.GetFileNameWithoutExtension(partpath);
@@ -161,13 +169,16 @@ namespace Redbrick_Addin {
       }
 
       if (mbr == swMessageBoxResult_e.swMbHitYes) {
+        OnAdded(EventArgs.Empty);
+        ArchivePDF.csproj.ArchivePDFWrapper apw = new ArchivePDF.csproj.ArchivePDFWrapper(r.SwApp);
+        apw.Archive();
         int parttype = 7;
         // M2M
         M2MData m = new M2MData();
         if (m.GetPartCount(partno, revision.Value) > 0) {
           parttype = m.GetPartType(partno, revision.Value);
         } else {
-        // Cutlist
+          // Cutlist
           int prtid = 0;
           if (int.TryParse(
             cutlist_data.GetCutlistData(partno, revision.Value).Tables[0].Columns["CLID"].ToString(), out prtid)) {
@@ -175,9 +186,8 @@ namespace Redbrick_Addin {
               parttype = 5;
             }
           } else {
-            int pu = 0;
             if (cutlist_data.PartUsed(partno)) {
-                parttype = 6;
+              parttype = 6;
             }
           }
         }
@@ -186,7 +196,8 @@ namespace Redbrick_Addin {
           revision.Value,
           parttype,
           r.Revision.Value,
-          partpath);
+          partpath,
+          r.Eco.Value);
         }
       }
 

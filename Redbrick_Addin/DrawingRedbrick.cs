@@ -41,11 +41,18 @@ namespace Redbrick_Addin {
       GetData();
     }
 
+
     public void t() {
       tvRevs t = new tvRevs(ref this._propSet, ref this._revSet);
       t.TabIndex = 16;
       this.tableLayoutPanel1.Controls.Add(t, 0, 2);
       t.Dock = DockStyle.Fill;
+      t.Added += t_Added;
+    }
+
+    void t_Added(object sender, EventArgs e) {
+      DrawingDoc thisdd = (DrawingDoc)SwApp.ActiveDoc;
+      Write(thisdd);
     }
 
     private void SetLocation() {

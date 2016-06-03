@@ -226,5 +226,11 @@
     <Setting Name="RememberLastCustomer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="ECRDrawingsDestination" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Engineering Utility\ECR Drawings\</Value>
+    </Setting>
+    <Setting Name="ArchiveIcon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Archive PDF.bmp</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

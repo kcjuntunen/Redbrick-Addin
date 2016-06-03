@@ -98,11 +98,24 @@ namespace Redbrick_Addin {
       }
     }
 
+    public delegate void AddedECREventHandler(object sender, EventArgs e);
+    public event AddedECREventHandler Added;
+    protected virtual void OnAdded(EventArgs e) {
+      if (Added != null)
+        Added(this, e);
+    }
+
     private void btnNewRev_Click(object sender, EventArgs e) {
       EditRev er = new EditRev(ref this.revSet, this.tvRevisions.Nodes.Count, cd, propertySet.GetProperty("REVISION LEVEL"));
+      er.Added += er_Added;
       er.new_rev = true;
       er.ShowDialog();
-      this.Init();
+      if (!IsDisposed)
+        Init();
+    }
+
+    void er_Added(object sender, EventArgs e) {
+      OnAdded(EventArgs.Empty);
     }
 
     private void btnEditRev_Click(object sender, EventArgs e) {

@@ -1201,18 +1201,23 @@ namespace Redbrick_Addin {
       return newID;
     }
 
-    public int InsertECRItem(int ecrId, string partnum, string rev, int type, string lvl, string dwg_file_name) {
+    public int InsertECRItem(int ecrId, string partnum, string rev, int type, string lvl, string dwg_file_name, string ecrno) {
       int ecr_item_id = 0;
       if (ENABLE_DB_WRITE && !ECRIsBogus(ecrId) && !ECRItemExists(ecrId, partnum, rev)) {
         ecr_item_id = InsertECRItemInner(ecrId, partnum, rev, type);
         object[] o = GetDrawingData(Path.GetFileNameWithoutExtension(dwg_file_name) + ".pdf");
+          string DRW_FILE = ecrno + "_" + o[1].ToString().Replace(".pdf", "-" + lvl + ".pdf");
+          string ORIG_PATH = o[2].ToString() + o[1].ToString();
+          if (!File.Exists(Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE)) { // doublecheck
+            File.Copy(ORIG_PATH, Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE, false);
+          }
         string SQL = @"INSERT INTO ECR_DRAWINGS (ITEM_ID, FILE_ID, DRWREV, DRW_FILE, ORIG_PATH) VALUES (?, ?, ?, ?, ?)";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@itemID", ecr_item_id);
           comm.Parameters.AddWithValue("@fileID", (int)o[0]);
           comm.Parameters.AddWithValue("@lvl", lvl);
-          comm.Parameters.AddWithValue("@dname", o[1].ToString());
-          comm.Parameters.AddWithValue("@dpath", o[2].ToString());
+          comm.Parameters.AddWithValue("@dname", DRW_FILE);
+          comm.Parameters.AddWithValue("@dpath", ORIG_PATH);
           comm.ExecuteNonQuery();
         }
       }

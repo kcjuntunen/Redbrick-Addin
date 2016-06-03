@@ -23,6 +23,8 @@ Section
   File ".\bin\x64\Release\System.Security.dll"
   File ".\bin\x64\Release\System.Xml.dll"
   File ".\bin\x64\Release\swTableType.dll"
+  File ".\bin\x64\Release\ArchivePDF.dll"
+  File ".\bin\x64\Release\Newtonsoft.Json.dll"
   File ".\bin\x64\Release\SolidWorks.Interop.sldworks.dll"
   File ".\bin\x64\Release\Redbrick_Addin.dll"
   
@@ -31,7 +33,7 @@ Section
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
       "DisplayIcon" "$PROGRAMFILES64\Redbrick\redlego.ico"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
-      "EstimatedSize" 4058
+      "EstimatedSize" 15151
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
       "DisplayName" "Amstore Redbrick Property Manager"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Redbrick" \
@@ -55,6 +57,8 @@ Section "Uninstall"
   Delete "$INSTDIR\System.Data.dll"
   Delete "$INSTDIR\System.Security.dll"
   Delete "$INSTDIR\System.Xml.dll"
+  Delete "$INSTDIR\ArchivePDF.dll"
+  Delete "$INSTDIR\Newtonsoft.Json.dll"
   Delete "$INSTDIR\SolidWorks.Interop.sldworks.dll"
   Delete "$INSTDIR\Redbrick_Addin.dll"
   Delete "$INSTDIR\redlego.ico"

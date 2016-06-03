@@ -13,7 +13,7 @@ namespace Redbrick_Addin {
 
     public DrawingRevs(SldWorks sw) {
       this.SwApp = sw;
-      this._innerArray = new ArrayList(15);
+      this._innerArray = new ArrayList(Properties.Settings.Default.RevLimit);
     }
 
     public override string ToString() {
