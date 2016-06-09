@@ -70,7 +70,8 @@
     <AssemblyOriginatorKeyFile>rb.kf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchivePDF">
+    <Reference Include="ArchivePDF, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ArchivePDF\ArchivePDF\bin\Release\ArchivePDF.dll</HintPath>
     </Reference>
     <Reference Include="SolidWorks.Interop.sldworks">
