@@ -70,7 +70,6 @@ namespace Redbrick_Addin {
       md_last = null;
       if (SwApp == null)
         SwApp = RequestSW();
-
       ConnectSelection();
     }
 
@@ -486,11 +485,11 @@ namespace Redbrick_Addin {
 
       // drawing related events (spoiler: there aren't any)
       ConnectDrawingEvents();
-
       // Pow-bang! We're set up.
       DrawSetup = true;
       AssySetup = false;
       PartSetup = false;
+      drb.unselect();
     }
 
     private void SetupPart() {
@@ -664,7 +663,7 @@ namespace Redbrick_Addin {
     }
 
     int dd_AddItemNotify(int EntityType, string itemName) {
-      drb.Update();
+      drb.DrbUpdate();
       return 0;
     }
     
@@ -690,7 +689,7 @@ namespace Redbrick_Addin {
       SwProperty p = prop.GetProperty(propName);
       p.Value = NewValue;
       p.Type = (swCustomInfoType_e)valueType;
-      drb.Update();
+      drb.DrbUpdate();
       return 0;
     }
 

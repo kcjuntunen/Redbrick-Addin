@@ -30,13 +30,12 @@ namespace Redbrick_Addin {
       this.fillCustomer();
       fillStatus();
       fillRev();
-
       this.GetData();
       t();
       this.dirtTracker = new DirtTracker(this);
     }
 
-    public void Update() {
+    public void DrbUpdate() {
       FillBoxes();
       GetData();
     }
@@ -48,6 +47,12 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel1.Controls.Add(t, 0, 2);
       t.Dock = DockStyle.Fill;
       t.Added += t_Added;
+    }
+
+    public void unselect() {
+      Redbrick.unselect(tableLayoutPanel2.Controls);
+      Redbrick.unselect(tableLayoutPanel3.Controls);
+      Redbrick.unselect(tableLayoutPanel5.Controls);
     }
 
     void t_Added(object sender, EventArgs e) {

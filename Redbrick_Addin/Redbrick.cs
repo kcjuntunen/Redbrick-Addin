@@ -237,6 +237,15 @@ namespace Redbrick_Addin {
       }
     }
 
+
+    static public void unselect(System.Windows.Forms.Control.ControlCollection controls) {
+      foreach (System.Windows.Forms.Control c in controls) {
+        if (c is System.Windows.Forms.ComboBox) {
+          (c as System.Windows.Forms.ComboBox).SelectionLength = 0;
+        }
+      }
+    }
+
     [ComRegisterFunction()]
     private static void ComRegister(Type t) {
       Properties.Settings.Default.Upgrade();

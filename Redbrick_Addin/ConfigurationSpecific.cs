@@ -48,7 +48,8 @@ namespace Redbrick_Addin {
       cd = prop.cutlistData;
 
       Updte();
-      lMat.Focus();
+      Redbrick.unselect(Controls);
+      Redbrick.unselect(tableLayoutPanel1.Controls);
     }
 
     public void Updte() {
