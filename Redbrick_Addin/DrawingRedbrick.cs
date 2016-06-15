@@ -58,6 +58,7 @@ namespace Redbrick_Addin {
     void t_Added(object sender, EventArgs e) {
       DrawingDoc thisdd = (DrawingDoc)SwApp.ActiveDoc;
       Write(thisdd);
+      DrbUpdate();
     }
 
     private void SetLocation() {
