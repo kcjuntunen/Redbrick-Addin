@@ -1,4 +1,6 @@
-﻿
+﻿* 0.9.2.0
+** Fixed drawing-related regression
+
 * 0.9.2.1
 ** Manually unselecting text
 
