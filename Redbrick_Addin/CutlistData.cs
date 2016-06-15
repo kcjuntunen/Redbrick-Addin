@@ -312,7 +312,10 @@ namespace Redbrick_Addin {
     }
 
     public string GetCustomerByProject(string project) {
-      using (OdbcCommand comm = new OdbcCommand(@"SELECT TOP 1 CUSTOMER FROM SCH_PROJECTS WHERE PROJECT LIKE ? ORDER BY CUSTOMER;", conn)) {
+      string SQL = @"SELECT TOP 1 GEN_CUSTOMERS.CUSTOMER " +
+                    "FROM GEN_CUSTOMERS INNER JOIN SCH_PROJECTS ON GEN_CUSTOMERS.CUSTID = SCH_PROJECTS.CUSTID " +
+                    "WHERE (((SCH_PROJECTS.PROJECT) LIKE ? ));";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@project", project + "%");
         using (OdbcDataReader dr = comm.ExecuteReader()) {
           if (dr.Read() && !dr.IsDBNull(0))
