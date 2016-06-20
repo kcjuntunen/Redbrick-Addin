@@ -663,7 +663,7 @@ namespace Redbrick_Addin {
     }
 
     int dd_AddItemNotify(int EntityType, string itemName) {
-      drb.DrbUpdate();
+      //drb.DrbUpdate();
       return 0;
     }
     
@@ -689,7 +689,7 @@ namespace Redbrick_Addin {
       SwProperty p = prop.GetProperty(propName);
       p.Value = NewValue;
       p.Type = (swCustomInfoType_e)valueType;
-      drb.DrbUpdate();
+      //drb.DrbUpdate();
       return 0;
     }
 

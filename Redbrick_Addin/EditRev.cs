@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swcommands;
 using SolidWorks.Interop.swconst;
 
 namespace Redbrick_Addin {
@@ -135,7 +136,11 @@ namespace Redbrick_Addin {
       r.SwApp = Revs.SwApp;
 
       if (new_rev) {
-        AddECRItem(r);
+        try {
+          AddECRItem(r);
+        } catch (Exception ex) {
+          r.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+        }
       }
 
       this.Close();
@@ -150,8 +155,23 @@ namespace Redbrick_Addin {
     }
 
     private void AddECRItem(DrawingRev r) {
-      string partpath = (r.SwApp.ActiveDoc as ModelDoc2).GetPathName();
-      string partno = System.IO.Path.GetFileNameWithoutExtension(partpath);
+      ModelDoc2 md = (ModelDoc2)r.SwApp.ActiveDoc;
+      string partpath = md.GetPathName();
+      string partfilename = System.IO.Path.GetFileNameWithoutExtension(partpath);
+      if (md.GetPathName() == string.Empty) {
+        md.Extension.RunCommand((int)swCommands_e.swCommands_SaveAs, md.GetTitle());
+        if (md.GetPathName() == string.Empty) {
+          throw new Exception("Unsaved drawings cannot be added to an ECR.");
+        }
+        partpath = md.GetPathName();
+        partfilename = System.IO.Path.GetFileNameWithoutExtension(partpath);
+      }
+      string[] partarr = partfilename.Split(new string[] { "REV" }, StringSplitOptions.RemoveEmptyEntries);
+      string partno = partarr[0].Trim();
+      string rv = revision.Value;
+      if (partarr.Length > 1) {
+        rv = partarr[1].Trim();
+      }
       string question = string.Format(Properties.Resources.InsertIntoEcrItems,
         System.IO.Path.GetFileName(partno),
         r.Eco.Value);
@@ -193,7 +213,7 @@ namespace Redbrick_Addin {
         }
         cutlist_data.InsertECRItem(en,
           partno,
-          revision.Value,
+          rv,
           parttype,
           r.Revision.Value,
           partpath,

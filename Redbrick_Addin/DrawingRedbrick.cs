@@ -24,24 +24,27 @@ namespace Redbrick_Addin {
 
       this.PropertySet = new DrawingProperties(this._swApp);
       this.RevSet = new DrawingRevs(this._swApp);
-
-      this.fillMat();
-      this.fillAuthor();
-      this.fillCustomer();
-      fillStatus();
-      fillRev();
-      this.GetData();
+      DrbUpdate();
       t();
-      this.dirtTracker = new DirtTracker(this);
+      dirtTracker = new DirtTracker(this);
     }
 
     public void DrbUpdate() {
-      FillBoxes();
+      fillMat();
+      fillAuthor();
+      fillCustomer();
+      fillStatus();
+      fillRev();
       GetData();
     }
 
 
     public void t() {
+      foreach (Control cont in this.tableLayoutPanel1.Controls) {
+        if (cont is tvRevs) {
+          cont.Dispose();
+        }
+      }
       tvRevs t = new tvRevs(ref this._propSet, ref this._revSet);
       t.TabIndex = 16;
       this.tableLayoutPanel1.Controls.Add(t, 0, 2);
@@ -58,6 +61,7 @@ namespace Redbrick_Addin {
     void t_Added(object sender, EventArgs e) {
       DrawingDoc thisdd = (DrawingDoc)SwApp.ActiveDoc;
       Write(thisdd);
+      t();
       DrbUpdate();
     }
 
