@@ -283,6 +283,26 @@ namespace Redbrick_Addin {
       }
     }
 
+    public DataSet GetCustomersForDrawing2() {
+      string SQL = @"SELECT GEN_CUSTOMERS.[CUSTID], (CUSTOMER + ' - '+ CAST(CUSTNUM AS char(3))) AS CUSTSTRING FROM GEN_CUSTOMERS ";
+      if (Properties.Settings.Default.OnlyCurrentCustomers) {
+        SQL += "WHERE GEN_CUSTOMERS.CUSTACTIVE = 1 ";
+      }
+      SQL += "ORDER BY CUSTOMER";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        using (OdbcDataAdapter da = new OdbcDataAdapter(comm)) {
+          using (DataSet ds = new DataSet()) {
+            da.Fill(ds);
+            DataRow dr = ds.Tables[0].NewRow();
+            dr["CUSTID"] = 0;
+            dr["CUSTSTRING"] = string.Empty;
+            ds.Tables[0].Rows.Add(dr);
+            return ds;
+          }
+        }
+      }
+    }
+
     private DataSet GetCustomers() {
       string SQL = @"SELECT * FROM GEN_CUSTOMERS ORDER BY CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -322,6 +342,19 @@ namespace Redbrick_Addin {
             return dr.GetString(0);
           else
             return string.Empty;
+        }
+      }
+    }
+
+    public int GetCustomerIDByProject(string project) {
+      string SQL = @"SELECT SCH_PROJECTS.CUSTID FROM SCH_PROJECTS WHERE (((SCH_PROJECTS.PROJECT) = ?))";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@project", project);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.Read() && !dr.IsDBNull(0))
+            return dr.GetInt32(0);
+          else
+            return 0;
         }
       }
     }

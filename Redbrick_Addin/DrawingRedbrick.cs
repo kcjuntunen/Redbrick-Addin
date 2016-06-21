@@ -210,11 +210,17 @@ namespace Redbrick_Addin {
       cbAuthor.DataSource = PropertySet.CutlistData.GetAuthors().Tables[0];
     }
 
-    private void fillCustomer() {
+    private void fillCustomer2() {
       List<string> sc = PropertySet.CutlistData.GetCustomersForDrawing();
       foreach (string s in sc) {
         this.cbCustomer.Items.Add(s);
       }
+    }
+
+    private void fillCustomer() {
+      cbCustomer.ValueMember = "CUSTID";
+      cbCustomer.DisplayMember = "CUSTSTRING";
+      cbCustomer.DataSource = PropertySet.CutlistData.GetCustomersForDrawing2().Tables[0];
     }
 
     private void fillRev() {
@@ -232,12 +238,16 @@ namespace Redbrick_Addin {
 
     private bool check_itemnumber() {
       if (Properties.Settings.Default.Warn) {
-        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"[A-Z]{3,4}\d{4}");
-        string itnu = label4.Text;
+        string pattern = @"([A-Z]{3,4})(\d{4})";
+        System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(pattern);
+        string itnu = System.IO.Path.GetFileNameWithoutExtension((_swApp.ActiveDoc as ModelDoc2).GetPathName());
+        System.Text.RegularExpressions.Match matches = System.Text.RegularExpressions.Regex.Match(itnu, pattern);
         if (r.IsMatch(itnu)) {
           string itnusubst = itnu.Substring(0, 2);
-          return PropertySet.CutlistData.GetCustomerByProject(itnu.Substring(0, 4)).Split(' ')[0].ToUpper() == 
-            cbCustomer.Text.Split(' ')[0];
+          int cid = 0;
+          if (int.TryParse(PropertySet.CutlistData.GetCustomerIDByProject(matches.Groups[1].ToString()).ToString(), out cid)) {
+            return cid == (int)cbCustomer.SelectedValue;
+          }
         }
         return true;
       }
