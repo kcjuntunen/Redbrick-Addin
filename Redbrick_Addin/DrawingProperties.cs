@@ -231,6 +231,9 @@ namespace Redbrick_Addin {
           if (s.Ctl is System.Windows.Forms.ComboBox) {
             int si = 0;
             string ss = s.Value.Split(' ', '-')[0];
+            if (s.Ctl.Name.Contains("cbM")) {
+              ss = s.Value;
+            }
             if (s.Ctl.Name.ToUpper().Contains("AUTHOR")) {
               si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(CutlistData.GetAuthorFullName(ss));
             } else {
