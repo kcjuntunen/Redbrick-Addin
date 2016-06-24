@@ -1,4 +1,7 @@
 ﻿
+* 0.9.5.0
+** Updated customer resolution methods
+
 * 0.9.4.0
 ** Handle 'REV' in filename for ECR gizmo
 ** Don't allow LVLs on unsaved drawings
