@@ -240,7 +240,7 @@ namespace Redbrick_Addin {
               si = (s.Ctl as System.Windows.Forms.ComboBox).FindString(ss);
             }
 
-            if (si < 0) {
+            if (si < 0 && !s.Ctl.Name.ToUpper().Contains("CUSTOMER")) {
               (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue = ss;
             } else {
               (s.Ctl as System.Windows.Forms.ComboBox).SelectedIndex = si;
@@ -267,8 +267,13 @@ namespace Redbrick_Addin {
       foreach (SwProperty s in this._innerArray) {
         if (s.Ctl != null) {
           if (s.Ctl is System.Windows.Forms.ComboBox) {
-            if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {                      // Shorter than 4? Must be initials.
-              s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
+            if ((s.Ctl as System.Windows.Forms.ComboBox).SelectedValue != null) {
+              if (s.Ctl.Name.Contains("cbCustomer")) {
+                string[] cc = (s.Ctl as System.Windows.Forms.ComboBox).Text.Split('-', ' ');
+                s.Value = cc[0] + " - " + cc[cc.Length - 1];
+              } else {
+                s.Value = (s.Ctl as System.Windows.Forms.ComboBox).SelectedValue.ToString().Substring(0, 2);
+              }
             } else {
               string si;
 
