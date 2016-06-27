@@ -246,7 +246,8 @@ namespace Redbrick_Addin {
           string itnusubst = itnu.Substring(0, 2);
           int cid = 0;
           if (int.TryParse(PropertySet.CutlistData.GetCustomerIDByProject(matches.Groups[1].ToString()).ToString(), out cid)) {
-            return cid == (int)cbCustomer.SelectedValue;
+            if (cbCustomer.SelectedValue != null)
+              return cid == (int)cbCustomer.SelectedValue;
           }
         }
         return true;
