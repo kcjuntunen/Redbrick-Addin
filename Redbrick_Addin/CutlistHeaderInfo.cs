@@ -286,10 +286,19 @@ namespace Redbrick_Addin {
       double dtpHeight = 0.0f;
 
       try {
-        itpCust = ushort.Parse(cbCustomer.SelectedValue.ToString());
-        itpState = ushort.Parse(Properties.Settings.Default.DefaultState.ToString());
-      } catch (Exception) {
+        if (!ushort.TryParse(CutlistData.GetCutlistData(itemNo, rev).Tables[0].
+          Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out itpState)) {
+          itpState = 0;
+        }
+      } catch (IndexOutOfRangeException ioore) {
+        // it's OK
+      } catch (Exception ex) {
+        RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(ex, CutlistData);
+        em.Show();
+      }
 
+      if (!ushort.TryParse(cbCustomer.SelectedValue.ToString(), out itpCust)) {
+        itpCust = 0;
       }
 
       dtpLength = ParseFloat(tbL.Text);
