@@ -284,7 +284,8 @@ namespace Redbrick_Addin {
     }
 
     public DataSet GetCustomersForDrawing2() {
-      string SQL = @"SELECT GEN_CUSTOMERS.[CUSTID], (CUSTOMER + ' - '+ CAST(CUSTNUM AS char(3))) AS CUSTSTRING FROM GEN_CUSTOMERS ";
+      string SQL = @"SELECT GEN_CUSTOMERS.[CUSTID], (ISNULL(CUSTOMER, '') + ' - '+ ISNULL(CAST(CUSTNUM AS char(3)), '')) "
+        + "AS CUSTSTRING FROM GEN_CUSTOMERS ";
       if (Properties.Settings.Default.OnlyCurrentCustomers) {
         SQL += "WHERE GEN_CUSTOMERS.CUSTACTIVE = 1 ";
       }
