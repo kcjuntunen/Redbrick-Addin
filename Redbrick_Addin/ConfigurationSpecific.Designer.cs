@@ -58,7 +58,8 @@ namespace Redbrick_Addin
       // 
       // tableLayoutPanel1
       // 
-      this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+      this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.tableLayoutPanel1.ColumnCount = 2;
@@ -353,13 +354,16 @@ namespace Redbrick_Addin
       // 
       // label3
       // 
+      this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.label3.AutoEllipsis = true;
       this.label3.AutoSize = true;
-      this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label3.Location = new System.Drawing.Point(165, 288);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(48, 30);
       this.label3.TabIndex = 0;
-      this.label3.Text = "Quantity";
+      this.label3.Text = "Qty.";
       // 
       // nudQ
       // 
@@ -406,7 +410,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ConfigurationSpecific";
-      this.Size = new System.Drawing.Size(266, 378);
+      this.Size = new System.Drawing.Size(250, 378);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.nudQ)).EndInit();

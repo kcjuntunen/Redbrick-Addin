@@ -263,7 +263,7 @@ namespace Redbrick_Addin
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(58, 39);
       this.label15.TabIndex = 7;
-      this.label15.Text = "Revision";
+      this.label15.Text = "Rev";
       // 
       // cbRevision
       // 

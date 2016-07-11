@@ -60,7 +60,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.Controls.Add(this.cbOp3, 1, 2);
       this.tableLayoutPanel1.Controls.Add(this.cbOp4, 1, 3);
       this.tableLayoutPanel1.Controls.Add(this.cbOp5, 1, 4);
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 8;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -71,7 +71,7 @@ namespace Redbrick_Addin
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 151);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(98, 151);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // label1
@@ -92,9 +92,8 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.cbOp1.FormattingEnabled = true;
       this.cbOp1.Location = new System.Drawing.Point(43, 3);
-      this.cbOp1.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp1.Name = "cbOp1";
-      this.cbOp1.Size = new System.Drawing.Size(154, 21);
+      this.cbOp1.Size = new System.Drawing.Size(52, 21);
       this.cbOp1.TabIndex = 27;
       this.cbOp1.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
@@ -117,9 +116,8 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.cbOp2.FormattingEnabled = true;
       this.cbOp2.Location = new System.Drawing.Point(43, 30);
-      this.cbOp2.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp2.Name = "cbOp2";
-      this.cbOp2.Size = new System.Drawing.Size(154, 21);
+      this.cbOp2.Size = new System.Drawing.Size(52, 21);
       this.cbOp2.TabIndex = 28;
       this.cbOp2.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
@@ -164,9 +162,8 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.cbOp3.FormattingEnabled = true;
       this.cbOp3.Location = new System.Drawing.Point(43, 57);
-      this.cbOp3.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp3.Name = "cbOp3";
-      this.cbOp3.Size = new System.Drawing.Size(154, 21);
+      this.cbOp3.Size = new System.Drawing.Size(52, 21);
       this.cbOp3.TabIndex = 29;
       this.cbOp3.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
@@ -178,9 +175,8 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.cbOp4.FormattingEnabled = true;
       this.cbOp4.Location = new System.Drawing.Point(43, 84);
-      this.cbOp4.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp4.Name = "cbOp4";
-      this.cbOp4.Size = new System.Drawing.Size(154, 21);
+      this.cbOp4.Size = new System.Drawing.Size(52, 21);
       this.cbOp4.TabIndex = 30;
       this.cbOp4.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
@@ -192,9 +188,8 @@ namespace Redbrick_Addin
             | System.Windows.Forms.AnchorStyles.Right)));
       this.cbOp5.FormattingEnabled = true;
       this.cbOp5.Location = new System.Drawing.Point(43, 111);
-      this.cbOp5.MinimumSize = new System.Drawing.Size(5, 0);
       this.cbOp5.Name = "cbOp5";
-      this.cbOp5.Size = new System.Drawing.Size(154, 21);
+      this.cbOp5.Size = new System.Drawing.Size(52, 21);
       this.cbOp5.TabIndex = 31;
       this.cbOp5.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
@@ -207,7 +202,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.tableLayoutPanel1);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "Ops";
-      this.Size = new System.Drawing.Size(250, 164);
+      this.Size = new System.Drawing.Size(104, 164);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel1.PerformLayout();
       this.ResumeLayout(false);
