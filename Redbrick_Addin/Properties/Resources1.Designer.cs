@@ -134,6 +134,24 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EB Op set without edge banding defined..
+        /// </summary>
+        internal static string NoEBWarning {
+            get {
+                return ResourceManager.GetString("NoEBWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CNC Op set without CNC1 set..
+        /// </summary>
+        internal static string NoProgramWarning {
+            get {
+                return ResourceManager.GetString("NoProgramWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon redlego {

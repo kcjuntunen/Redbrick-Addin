@@ -166,4 +166,10 @@
   <data name="ZeroValueDimension" xml:space="preserve">
     <value>Some dimension(s) resolved to a value of 0.000.</value>
   </data>
+  <data name="NoEBWarning" xml:space="preserve">
+    <value>EB Op set without edge banding defined.</value>
+  </data>
+  <data name="NoProgramWarning" xml:space="preserve">
+    <value>CNC Op set without CNC1 set.</value>
+  </data>
 </root>

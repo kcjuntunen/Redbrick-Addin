@@ -1231,6 +1231,64 @@ namespace Redbrick_Addin {
           }
         }
       }
+      string val_msg = Validate();
+      if (val_msg != string.Empty) {
+        SwApp.SendMsgToUser2(val_msg, (int)swMessageBoxIcon_e.swMbWarning, (int)swMessageBoxBtn_e.swMbOk);
+      }
+    }
+
+    private string Validate() {
+      string message = string.Empty;
+      if (Properties.Settings.Default.ProgWarn) {
+        bool have_cnc_ops = false;
+        bool have_prog = true;
+        bool have_eb_ops = false;
+        bool have_eb = false;
+
+        for (int i = 0; i < 5; i++) {
+          SwProperty p = GetProperty(string.Format("OP{0}ID", i + 1));
+          foreach (string op in Properties.Settings.Default.CNCOps) {
+            if (p.Ctl != null && (p.Ctl.Text.Split(' ')[0] == op)) {
+              have_cnc_ops |= true;
+            }
+          }
+          foreach (string op in Properties.Settings.Default.EBOps) {
+            if (p.Ctl != null && (p.Ctl.Text.Split(' ')[0] == op)) {
+              have_eb_ops |= true;
+            }
+          }
+        }
+
+        SwProperty pCNC1 = GetProperty("CNC1");
+        SwProperty pUpd = GetProperty("UPDATE CNC");
+        foreach (string s in new string[] { "NA", string.Empty }) {
+          if ((pCNC1.Ctl != null) && (pCNC1.Ctl.Text.ToUpper() == s)) {
+            if (pUpd.ID != @"True") {
+              have_prog = false;
+            }
+          }
+        }
+
+        if (have_cnc_ops) {
+          if (!have_prog) {
+            message += Properties.Resources.NoProgramWarning + System.Environment.NewLine;
+          }
+        }
+
+        foreach (SwProperty p in new SwProperty[] { GetProperty("EFID"), 
+        GetProperty("EBID"), GetProperty("ELID"), GetProperty("ERID")}) {
+          if (p.ID != @"0") {
+            have_eb |= true;
+          }
+        }
+
+        if (have_eb_ops) {
+          if (!have_eb) {
+            message += Properties.Resources.NoEBWarning + System.Environment.NewLine;
+          }
+        }
+      }
+      return message;
     }
 
     public void Write() {

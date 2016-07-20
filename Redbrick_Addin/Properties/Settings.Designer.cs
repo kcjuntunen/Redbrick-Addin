@@ -664,5 +664,50 @@ namespace Redbrick_Addin.Properties {
                 this["ArchiveIcon"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>CEB</string>
+  <string>CNC</string>
+  <string>GIO</string>
+  <string>LAC</string>
+  <string>WEE</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection CNCOps {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["CNCOps"]));
+            }
+            set {
+                this["CNCOps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>EB</string>\r\n  <string>CEB</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection EBOps {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EBOps"]));
+            }
+            set {
+                this["EBOps"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ProgWarn {
+            get {
+                return ((bool)(this["ProgWarn"]));
+            }
+            set {
+                this["ProgWarn"] = value;
+            }
+        }
     }
 }

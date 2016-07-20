@@ -232,5 +232,25 @@
     <Setting Name="ArchiveIcon" Type="System.String" Scope="User">
       <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Archive PDF.bmp</Value>
     </Setting>
+    <Setting Name="CNCOps" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;CEB&lt;/string&gt;
+  &lt;string&gt;CNC&lt;/string&gt;
+  &lt;string&gt;GIO&lt;/string&gt;
+  &lt;string&gt;LAC&lt;/string&gt;
+  &lt;string&gt;WEE&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="EBOps" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;EB&lt;/string&gt;
+  &lt;string&gt;CEB&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ProgWarn" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
