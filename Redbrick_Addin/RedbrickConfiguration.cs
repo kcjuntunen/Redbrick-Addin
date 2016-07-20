@@ -45,6 +45,7 @@ namespace Redbrick_Addin {
       cbRevLimit.SelectedIndex = Properties.Settings.Default.RevLimit - 1;
       chbSounds.Checked = Properties.Settings.Default.MakeSounds;
       chbWarnings.Checked = Properties.Settings.Default.Warn;
+      chbOpWarnings.Checked = Properties.Settings.Default.ProgWarn;
       chbIdiotLight.Checked = Properties.Settings.Default.IdiotLight;
       chbOnlyActive.Checked = Properties.Settings.Default.OnlyActiveAuthors;
       chbOnlyActiveCustomers.Checked = Properties.Settings.Default.OnlyCurrentCustomers;
@@ -141,6 +142,10 @@ namespace Redbrick_Addin {
 
     private void chbCustomerWarn_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.RememberLastCustomer = chbRememberCustomer.Checked;
+    }
+
+    private void chbOpWarnings_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.ProgWarn = chbOpWarnings.Checked;
     }
   }
 }
