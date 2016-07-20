@@ -1,4 +1,11 @@
 ﻿
+* 0.10.0.0
+** ArchivePDF fails more quickly
+       This resolves Issue #10
+       (https://github.com/kcjuntunen/deprecated_ArchivePDF/issues/10)
+** Added some validation for Ops
+    It can be turned off in the options menu.
+
 * 0.9.5.3
 ** NULL + "Stuff" = NULL -- fixed blank customers
 
