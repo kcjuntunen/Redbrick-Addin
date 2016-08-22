@@ -50,12 +50,16 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel1.Controls.Add(t, 0, 2);
       t.Dock = DockStyle.Fill;
       t.Added += t_Added;
+      //t.AddedLvl += t_AddedLvl;
+      //t.DeletedLvl += t_DeletedLvl;
     }
 
-    public void unselect() {
-      Redbrick.unselect(tableLayoutPanel2.Controls);
-      Redbrick.unselect(tableLayoutPanel3.Controls);
-      Redbrick.unselect(tableLayoutPanel5.Controls);
+    void t_DeletedLvl(object sender, EventArgs e) {
+      throw new NotImplementedException();
+    }
+
+    void t_AddedLvl(object sender, EventArgs e) {
+      throw new NotImplementedException();
     }
 
     void t_Added(object sender, EventArgs e) {
@@ -63,6 +67,12 @@ namespace Redbrick_Addin {
       Write(thisdd);
       t();
       DrbUpdate();
+    }
+
+    public void unselect() {
+      Redbrick.unselect(tableLayoutPanel2.Controls);
+      Redbrick.unselect(tableLayoutPanel3.Controls);
+      Redbrick.unselect(tableLayoutPanel5.Controls);
     }
 
     private void SetLocation() {

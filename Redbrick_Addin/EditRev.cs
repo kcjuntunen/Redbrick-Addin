@@ -103,7 +103,7 @@ namespace Redbrick_Addin {
     }
 
     private void btnOK_Click(object sender, EventArgs e) {
-      DrawingRev r;
+      DrawingRev r = null;
       swCustomInfoType_e tType = swCustomInfoType_e.swCustomInfoText;
       SwProperty rev = new SwProperty("REVISION " + (char)(nodeCount + 65), tType, cbRev.Text, true);
       SwProperty eco = new SwProperty("ECO " + (nodeCount + 1).ToString(), tType, tbECO.Text, true);
@@ -148,10 +148,17 @@ namespace Redbrick_Addin {
 
 
     public delegate void AddedECREventHandler(object sender, EventArgs e);
-    public event AddedECREventHandler Added;
+    public event EventHandler Added;
+    public event EventHandler AddedLvl;
+
     protected virtual void OnAdded(EventArgs e) {
       if (Added != null)
         Added(this, e);
+    }
+
+    protected virtual void OnAddedLvl(EventArgs e) {
+      if (AddedLvl != null)
+        AddedLvl(this, e);
     }
 
     private void AddECRItem(DrawingRev r) {
@@ -219,6 +226,8 @@ namespace Redbrick_Addin {
           partpath,
           r.Eco.Value);
         }
+
+      OnAddedLvl(new EventArgs());
       }
 
     private void EditRev_FormClosing(object sender, FormClosingEventArgs e) {

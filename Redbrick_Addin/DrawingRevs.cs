@@ -197,7 +197,8 @@ namespace Redbrick_Addin {
     #region ICollection<SwProperty> Members
 
     public void Add(DrawingRev item) {
-      this._innerArray.Add(item);
+      Remove(item);
+      _innerArray.Add(item);
     }
 
     public void Clear() {

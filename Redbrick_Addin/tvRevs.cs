@@ -98,20 +98,37 @@ namespace Redbrick_Addin {
       }
     }
 
-    public delegate void AddedECREventHandler(object sender, EventArgs e);
-    public event AddedECREventHandler Added;
+    //public delegate void AddedECREventHandler(object sender, EventArgs e);
+    public event EventHandler Added;
+    public event EventHandler AddedLvl;
+    public event EventHandler DeletedLvl;
     protected virtual void OnAdded(EventArgs e) {
       if (Added != null)
         Added(this, e);
     }
 
+    protected virtual void OnAddedLvl(EventArgs e) {
+      if (AddedLvl != null)
+        AddedLvl(this, e);
+    }
+
+    protected virtual void OnDeletedLvl(EventArgs e) {
+      if (DeletedLvl != null)
+        DeletedLvl(this, e);
+    }
+
     private void btnNewRev_Click(object sender, EventArgs e) {
       EditRev er = new EditRev(ref this.revSet, this.tvRevisions.Nodes.Count, cd, propertySet.GetProperty("REVISION LEVEL"));
       er.Added += er_Added;
+      er.AddedLvl+= er_AddedLvl;
       er.new_rev = true;
       er.ShowDialog();
       if (!IsDisposed)
         Init();
+    }
+
+    void er_AddedLvl(object sender, EventArgs e) {
+      OnAddedLvl(EventArgs.Empty);
     }
 
     void er_Added(object sender, EventArgs e) {
@@ -126,11 +143,11 @@ namespace Redbrick_Addin {
         }
         EditRev er = new EditRev(ref this.revSet, node.Index);
         er.ShowDialog();
-        this.Init();
+        Init();
       } else {
         EditRev er = new EditRev(ref this.revSet, 0);
         er.ShowDialog();
-        this.Init();
+        Init();
       }
     }
 
@@ -149,6 +166,7 @@ namespace Redbrick_Addin {
             this.revSet.Remove(revToDel);
             this.tvRevisions.Nodes.Remove(this.tvRevisions.Nodes[this.tvRevisions.Nodes.Count - 1]);
           }
+          OnDeletedLvl(EventArgs.Empty);
         }
       } else {
         System.Windows.Forms.MessageBox.Show("You must make a selection.");
