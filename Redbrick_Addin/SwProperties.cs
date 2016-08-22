@@ -1252,6 +1252,7 @@ namespace Redbrick_Addin {
               have_cnc_ops |= true;
             }
           }
+
           foreach (string op in Properties.Settings.Default.EBOps) {
             if (p.Ctl != null && (p.Ctl.Text.Split(' ')[0] == op)) {
               have_eb_ops |= true;
@@ -1269,10 +1270,8 @@ namespace Redbrick_Addin {
           }
         }
 
-        if (have_cnc_ops) {
-          if (!have_prog) {
-            message += Properties.Resources.NoProgramWarning + System.Environment.NewLine;
-          }
+        if (have_cnc_ops != have_prog) {
+          message += Properties.Resources.NoProgramWarning + System.Environment.NewLine;
         }
 
         foreach (SwProperty p in new SwProperty[] { GetProperty("EFID"), 
@@ -1282,10 +1281,8 @@ namespace Redbrick_Addin {
           }
         }
 
-        if (have_eb_ops) {
-          if (!have_eb) {
-            message += Properties.Resources.NoEBWarning + System.Environment.NewLine;
-          }
+        if (have_eb_ops != have_eb) {
+          message += Properties.Resources.NoEBWarning + System.Environment.NewLine;
         }
       }
       return message;
