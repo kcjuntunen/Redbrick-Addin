@@ -26,7 +26,12 @@ namespace Redbrick_Addin {
       this.RevSet = new DrawingRevs(this._swApp);
       DrbUpdate();
       t();
-      dirtTracker = new DirtTracker(this);
+    }
+
+    void dirtTracker_Besmirched(object sender, EventArgs e) {
+      if (!label4.Text.EndsWith("*")) {
+        label4.Text = label4.Text + "*";
+      }
     }
 
     public void DrbUpdate() {
@@ -37,7 +42,6 @@ namespace Redbrick_Addin {
       fillRev();
       GetData();
     }
-
 
     public void t() {
       foreach (Control cont in this.tableLayoutPanel1.Controls) {
@@ -81,6 +85,11 @@ namespace Redbrick_Addin {
     }
 
     private void GetData() {
+      try {
+        dirtTracker.Besmirched -= dirtTracker_Besmirched;
+      } catch (Exception) {
+        // I don't care.
+      }
       this.PropertySet.Read();
       this.RevSet.Read();
 
@@ -88,6 +97,13 @@ namespace Redbrick_Addin {
 
       if (Properties.Settings.Default.RememberLastCustomer && (PropertySet.GetProperty("CUSTOMER").Value == string.Empty)) {
         cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
+      }
+
+      dirtTracker = new DirtTracker(this);
+
+      if (dirtTracker != null) {
+        IsDirty = false;
+        dirtTracker.Besmirched += dirtTracker_Besmirched;
       }
     }
 

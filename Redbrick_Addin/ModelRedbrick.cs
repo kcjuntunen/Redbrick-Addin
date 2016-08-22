@@ -31,6 +31,15 @@ namespace Redbrick_Addin {
       _swApp = p.SwApp;
       InitializeComponent();                              // MS init
       Init();                                             // my additional init
+      dirtTracker = new DirtTracker(this);
+      dirtTracker.Besmirched += dirtTracker_Besmirched;
+      IsDirty = false;
+    }
+
+    void dirtTracker_Besmirched(object sender, EventArgs e) {
+      if (!gbSpecProp.Text.EndsWith("*")) {
+        gbSpecProp.Text = gbSpecProp.Text + "*";
+      }
     }
 
     private void Init()                                     // If this didn't start out as a VSTA plugin, I probably wouldn't have
@@ -83,6 +92,7 @@ namespace Redbrick_Addin {
 
 
     public void Update(ref SwProperties p) {
+      dirtTracker.Besmirched -= dirtTracker_Besmirched;
       //if (ch.CutlistComboBox.SelectedItem != null && ch.RevComboBox.Text != string.Empty) {
       //  Properties.Settings.Default.CurrentCutlist = int.Parse((ch.CutlistComboBox.SelectedItem as DataRowView)[0].ToString());
       //  Properties.Settings.Default.CurrentRev = int.Parse(ch.RevComboBox.Text);
@@ -106,7 +116,8 @@ namespace Redbrick_Addin {
         }
       }
       SetupDeptSelectEvent();
-      dirtTracker = new DirtTracker(this);
+      IsDirty = false;
+      dirtTracker.Besmirched += dirtTracker_Besmirched;
     }
 
     private void SetupDeptSelectEvent() {
