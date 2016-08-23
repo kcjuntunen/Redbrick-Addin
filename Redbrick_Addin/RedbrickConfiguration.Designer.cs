@@ -35,16 +35,16 @@ namespace Redbrick_Addin {
       this.cbDefaultMaterial = new System.Windows.Forms.ComboBox();
       this.chbFlameWar = new System.Windows.Forms.CheckBox();
       this.chbWarnings = new System.Windows.Forms.CheckBox();
-      this.chbSounds = new System.Windows.Forms.CheckBox();
-      this.chbIdiotLight = new System.Windows.Forms.CheckBox();
       this.chbOnlyActive = new System.Windows.Forms.CheckBox();
       this.chbOnlyActiveCustomers = new System.Windows.Forms.CheckBox();
       this.chbRememberCustomer = new System.Windows.Forms.CheckBox();
+      this.chbIdiotLight = new System.Windows.Forms.CheckBox();
+      this.chbSounds = new System.Windows.Forms.CheckBox();
+      this.chbOpWarnings = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.btnCancel = new System.Windows.Forms.Button();
       this.btnOK = new System.Windows.Forms.Button();
-      this.chbOpWarnings = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
@@ -194,32 +194,6 @@ namespace Redbrick_Addin {
       this.chbWarnings.UseVisualStyleBackColor = true;
       this.chbWarnings.CheckedChanged += new System.EventHandler(this.chbWarnings_CheckedChanged);
       // 
-      // chbSounds
-      // 
-      this.chbSounds.AutoSize = true;
-      this.chbSounds.Checked = true;
-      this.chbSounds.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chbSounds.Location = new System.Drawing.Point(209, 139);
-      this.chbSounds.Name = "chbSounds";
-      this.chbSounds.Size = new System.Drawing.Size(65, 17);
-      this.chbSounds.TabIndex = 12;
-      this.chbSounds.Text = "Sounds";
-      this.chbSounds.UseVisualStyleBackColor = true;
-      this.chbSounds.CheckedChanged += new System.EventHandler(this.chbSounds_CheckedChanged);
-      this.chbSounds.Click += new System.EventHandler(this.chbSounds_Click);
-      // 
-      // chbIdiotLight
-      // 
-      this.chbIdiotLight.AutoSize = true;
-      this.chbIdiotLight.Location = new System.Drawing.Point(209, 162);
-      this.chbIdiotLight.Name = "chbIdiotLight";
-      this.chbIdiotLight.Size = new System.Drawing.Size(135, 17);
-      this.chbIdiotLight.TabIndex = 13;
-      this.chbIdiotLight.Text = "Green check warning";
-      this.chbIdiotLight.UseVisualStyleBackColor = true;
-      this.chbIdiotLight.Visible = false;
-      this.chbIdiotLight.CheckedChanged += new System.EventHandler(this.chbIdiotLight_CheckedChanged);
-      // 
       // chbOnlyActive
       // 
       this.chbOnlyActive.AutoSize = true;
@@ -252,6 +226,42 @@ namespace Redbrick_Addin {
       this.chbRememberCustomer.Text = "Remember last customer";
       this.chbRememberCustomer.UseVisualStyleBackColor = true;
       this.chbRememberCustomer.CheckedChanged += new System.EventHandler(this.chbCustomerWarn_CheckedChanged);
+      // 
+      // chbIdiotLight
+      // 
+      this.chbIdiotLight.AutoSize = true;
+      this.chbIdiotLight.Location = new System.Drawing.Point(209, 162);
+      this.chbIdiotLight.Name = "chbIdiotLight";
+      this.chbIdiotLight.Size = new System.Drawing.Size(135, 17);
+      this.chbIdiotLight.TabIndex = 13;
+      this.chbIdiotLight.Text = "Green check warning";
+      this.chbIdiotLight.UseVisualStyleBackColor = true;
+      this.chbIdiotLight.CheckedChanged += new System.EventHandler(this.chbIdiotLight_CheckedChanged);
+      // 
+      // chbSounds
+      // 
+      this.chbSounds.AutoSize = true;
+      this.chbSounds.Checked = true;
+      this.chbSounds.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chbSounds.Location = new System.Drawing.Point(209, 139);
+      this.chbSounds.Name = "chbSounds";
+      this.chbSounds.Size = new System.Drawing.Size(65, 17);
+      this.chbSounds.TabIndex = 12;
+      this.chbSounds.Text = "Sounds";
+      this.chbSounds.UseVisualStyleBackColor = true;
+      this.chbSounds.CheckedChanged += new System.EventHandler(this.chbSounds_CheckedChanged);
+      this.chbSounds.Click += new System.EventHandler(this.chbSounds_Click);
+      // 
+      // chbOpWarnings
+      // 
+      this.chbOpWarnings.AutoSize = true;
+      this.chbOpWarnings.Location = new System.Drawing.Point(209, 112);
+      this.chbOpWarnings.Name = "chbOpWarnings";
+      this.chbOpWarnings.Size = new System.Drawing.Size(95, 17);
+      this.chbOpWarnings.TabIndex = 17;
+      this.chbOpWarnings.Text = "Op Warnings";
+      this.chbOpWarnings.UseVisualStyleBackColor = true;
+      this.chbOpWarnings.CheckedChanged += new System.EventHandler(this.chbOpWarnings_CheckedChanged);
       // 
       // tableLayoutPanel2
       // 
@@ -309,17 +319,6 @@ namespace Redbrick_Addin {
       this.btnOK.Text = "OK";
       this.btnOK.UseVisualStyleBackColor = true;
       this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-      // 
-      // chbOpWarnings
-      // 
-      this.chbOpWarnings.AutoSize = true;
-      this.chbOpWarnings.Location = new System.Drawing.Point(209, 112);
-      this.chbOpWarnings.Name = "chbOpWarnings";
-      this.chbOpWarnings.Size = new System.Drawing.Size(95, 17);
-      this.chbOpWarnings.TabIndex = 17;
-      this.chbOpWarnings.Text = "Op Warnings";
-      this.chbOpWarnings.UseVisualStyleBackColor = true;
-      this.chbOpWarnings.CheckedChanged += new System.EventHandler(this.chbOpWarnings_CheckedChanged);
       // 
       // RedbrickConfiguration
       // 

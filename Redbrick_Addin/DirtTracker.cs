@@ -17,13 +17,13 @@ namespace Redbrick_Addin {
 
     private void AssignHandlers(Control.ControlCollection cc) {
       foreach (Control c in cc) {
-        if ((c is TextBox) && (!c.Name.ToUpper().Contains("BLANK") || !c.Name.ToUpper().Contains("CUTLIST")))
+        if ((c is TextBox) && (!c.Name.ToUpper().Contains("BLANK") && !c.Name.ToUpper().Contains("CUTLIST")))
           (c as TextBox).TextChanged += new EventHandler(DirtTracker_TextChanged);
 
         if (c is CheckBox)
           (c as CheckBox).CheckedChanged += new EventHandler(DirtTracker_CheckChanged);
 
-        if ((c is ComboBox) && !c.Name.ToUpper().Contains("CUTLIST"))
+        if ((c is ComboBox) && (!c.Name.ToUpper().Contains("CUTLIST") && !c.Name.ToUpper().Contains("STATUS")))
           (c as ComboBox).SelectedIndexChanged += new EventHandler(DirtTracker_SelectionChanged);
 
         if (c is TreeView)

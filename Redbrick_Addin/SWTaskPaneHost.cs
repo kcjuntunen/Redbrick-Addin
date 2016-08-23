@@ -194,12 +194,16 @@ namespace Redbrick_Addin {
       if (Properties.Settings.Default.IdiotLight) {
         string q = string.Format("I lost property data because you didn't click the green check.");
         if (PartSetup && mrb.IsDirty) {
-          SwApp.SendMsgToUser2(q,
-        (int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
+        //  SwApp.SendMsgToUser2(q,
+        //(int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
+          if (System.Windows.Forms.MessageBox.Show(@"Save property changes?", @"Properties changed", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            Write();
         }
         if (DrawSetup && drb.IsDirty) {
-          SwApp.SendMsgToUser2(q,
-        (int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
+        //  SwApp.SendMsgToUser2(q,
+        //(int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
+          if (System.Windows.Forms.MessageBox.Show(@"Save property changes?", @"Properties changed", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            Write();
         }
       }
 
@@ -900,6 +904,7 @@ namespace Redbrick_Addin {
         regen_ok = false;
         // update doc metadata & rebuild & save
         mrb.Write(Document);
+        mrb.IsDirty = false;
         Check();
         // rescoop new metadata
         ConnectSelection();
@@ -909,6 +914,7 @@ namespace Redbrick_Addin {
       if (DrawSetup) {
         // update doc metadata & rebuild & save
         drb.Write(Document);
+        drb.IsDirty = false;
         drb.CorrectLayers(drb.chooseLayer);
       }
     }
