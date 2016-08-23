@@ -53,6 +53,7 @@ namespace Redbrick_Addin {
         //result = taskpaneView.AddStandardButton((int)swTaskPaneBitmapsOptions_e.swTaskPaneBitmapsOptions_Close, "Close");
         result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.RefreshIcon, "Refresh");
         result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.ArchiveIcon, "Archive PDF");
+        result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.HelpIcon, "Usage Help");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
         CheckUpdate();
@@ -82,6 +83,9 @@ namespace Redbrick_Addin {
         case 3:
           ArchivePDF.csproj.ArchivePDFWrapper apw = new ArchivePDF.csproj.ArchivePDFWrapper(swApp);
           apw.Archive();
+          break;
+        case 4:
+          System.Diagnostics.Process.Start(Properties.Settings.Default.UsageLink);
           break;
         default:
           break;

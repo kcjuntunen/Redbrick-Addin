@@ -252,5 +252,11 @@
     <Setting Name="ProgWarn" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="HelpIcon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\help_and_support.bmp</Value>
+    </Setting>
+    <Setting Name="UsageLink" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://kcjuntunen.github.io/readbrick_readme.html</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
