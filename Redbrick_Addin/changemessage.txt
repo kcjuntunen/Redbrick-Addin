@@ -1,5 +1,6 @@
 ﻿* 0.10.1.0
 ** make validation go both ways
+** Added a visual cue (*) to indicate whether something has changed and the green check has not been pressed.
 
 * 0.10.0.0
 ** ArchivePDF fails more quickly
