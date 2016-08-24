@@ -291,7 +291,7 @@ namespace Redbrick_Addin {
           itpState = 0;
         }
       } catch (IndexOutOfRangeException ioore) {
-        // it's OK
+        System.Diagnostics.Debug.Print(string.Format(@"{0}, but it's OK.", ioore.Message));
       } catch (Exception ex) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(ex, CutlistData);
         em.Show();
