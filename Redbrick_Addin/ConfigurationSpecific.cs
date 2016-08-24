@@ -347,6 +347,16 @@ namespace Redbrick_Addin {
 
     private void btnMakeOriginal_Click(object sender, EventArgs e) {
       int hash = propertySet.cutlistData.GetHash(propertySet.PartName);
+
+      if (propertySet.modeldoc.GetPathName() == string.Empty) {
+        propertySet.modeldoc.Extension.RunCommand(
+          (int)SolidWorks.Interop.swcommands.swCommands_e.swCommands_SaveAs,
+          propertySet.modeldoc.GetTitle());
+        if (propertySet.modeldoc.GetPathName() == string.Empty) {
+          throw new Exception("Unsaved models cannot be added to a cutlist.");
+        }
+      }
+
       if (hash != propertySet.Hash) {
         if (hash != 0) {
           string question = string.Format(Properties.Resources.AlreadyInOtherLocation, propertySet.PartName);

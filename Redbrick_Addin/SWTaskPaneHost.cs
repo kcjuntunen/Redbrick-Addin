@@ -702,6 +702,7 @@ namespace Redbrick_Addin {
         pd = (PartDoc)Document;
         // When the config changes, the app knows.
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
+        pd.FileSavePostNotify += pd_FileSavePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
         DisconnectDrawingEvents();
@@ -709,11 +710,18 @@ namespace Redbrick_Addin {
       }
     }
 
+    int pd_FileSavePostNotify(int saveType, string FileName) {
+      md_last = null;
+      ConnectSelection();
+      return 0;
+    }
+
     private void ConnectPartEvents(ModelDoc2 md) {
       if (md.GetType() == (int)swDocumentTypes_e.swDocPART && !PartEventsAssigned) {
         pd = (PartDoc)md;
         // When the config changes, the app knows.
         pd.ActiveConfigChangePostNotify += pd_ActiveConfigChangePostNotify;
+        pd.FileSavePostNotify += pd_FileSavePostNotify;
         //pd.ChangeCustomPropertyNotify += pd_ChangeCustomPropertyNotify;
         pd.DestroyNotify2 += pd_DestroyNotify2;
         //pd.RegenNotify += pd_RegenNotify;
@@ -761,6 +769,7 @@ namespace Redbrick_Addin {
         pd.ActiveConfigChangePostNotify -= pd_ActiveConfigChangePostNotify;
         pd.DestroyNotify2 -= pd_DestroyNotify2;
         pd.ChangeCustomPropertyNotify -= pd_ChangeCustomPropertyNotify;
+        pd.FileSavePostNotify -= pd_FileSavePostNotify;
       }
       PartEventsAssigned = false;
       PartSetup = false;
