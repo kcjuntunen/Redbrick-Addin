@@ -1,4 +1,12 @@
-﻿* 0.10.1.0
+﻿
+* 0.10.2.0
+** You can now be prompted before picking another part if properties have changed.
+If you want this functionality, click "Green check warning" in the config window.
+** Require save when creating a cutlist from a part.
+** BUGFIX: Correctly parse true/false value from UpdateCNC on inserting parts piecemeal-wise.
+** Added a help button. Probably nothing new to anyone though.
+
+* 0.10.1.0
 ** make validation go both ways
 ** Added a visual cue (*) to indicate whether something has changed and the green check has not been pressed.
 
