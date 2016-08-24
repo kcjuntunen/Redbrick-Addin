@@ -1896,7 +1896,7 @@ namespace Redbrick_Addin {
       p.Comment = swp.GetProperty("COMMENT").Value;
       p.CNC1 = swp.GetProperty("CNC1").Value;
       p.CNC2 = swp.GetProperty("CNC2").Value;
-      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").ID);
+      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").Value.ToUpper() == "YES" ? "True": "False");
 
       p.SetOverL(swp.GetProperty("OVERL").Value);
       p.SetOverW(swp.GetProperty("OVERW").Value);
@@ -1937,7 +1937,7 @@ namespace Redbrick_Addin {
       p.Comment = swp.GetProperty("COMMENT").Value;
       p.CNC1 = swp.GetProperty("CNC1").Value;
       p.CNC2 = swp.GetProperty("CNC2").Value;
-      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").ID);
+      p.SetUpdateCNC(swp.GetProperty("UPDATE CNC").Value.ToUpper() == "YES" ? "True" : "False");
 
       p.SetOverL(swp.GetProperty("OVERL").Value);
       p.SetOverW(swp.GetProperty("OVERW").Value);
