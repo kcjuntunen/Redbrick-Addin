@@ -328,11 +328,15 @@ namespace Redbrick_Addin {
     public bool IsDirty {
       get {
         if (this.dirtTracker != null)                       // TODO: Why is this null sometimes?
-          return this.dirtTracker.IsDirty;
+          return dirtTracker.IsDirty;
         else
           return false;
       }
-      set { this.dirtTracker.IsDirty = value; }
+      set {
+        if (dirtTracker != null) {
+          dirtTracker.IsDirty = value;
+        }
+      }
     }
 
     private DrawingProperties _propSet;
