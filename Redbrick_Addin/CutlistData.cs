@@ -26,6 +26,15 @@ namespace Redbrick_Addin {
       conn.Close();
     }
 
+    public enum Functions {
+      GreenCheck,
+      ArchivePDF,
+      InsertECR,
+      DrawingCollector,
+      ExportPrograms,
+      ConvertPrograms
+    }
+
     public enum ECODataColumns {
       USER_FIRST,
       USER_LAST,
@@ -1239,6 +1248,7 @@ namespace Redbrick_Addin {
     }
 
     public int InsertECRItem(int ecrId, string partnum, string rev, int type, string lvl, string dwg_file_name, string ecrno) {
+      IncrementOdometer(Functions.InsertECR);
       int ecr_item_id = 0;
       if (ENABLE_DB_WRITE && !ECRIsBogus(ecrId) && !ECRItemExists(ecrId, partnum, rev)) {
         ecr_item_id = InsertECRItemInner(ecrId, partnum, rev, type);
@@ -1776,8 +1786,56 @@ namespace Redbrick_Addin {
       return rowsAffected;
     }
 
+    public void IncrementOdometer(Functions funcCode) {
+      if (ENABLE_DB_WRITE) {
+        int current_value = GetOdometerValue(funcCode);
+        int rowsAffected = 0;
+        string SQL = @"UPDATE GEN_ODOMETER SET ODO = ? WHERE (FUNCID = ? AND USERID = ?);";
+
+        using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+          comm.Parameters.AddWithValue("@odo", ++current_value);
+          comm.Parameters.AddWithValue("@app", funcCode);
+          comm.Parameters.AddWithValue("@user", GetCurrentAuthor());
+          try {
+            rowsAffected = comm.ExecuteNonQuery();
+          } catch (InvalidOperationException ioe) {
+            throw ioe;
+          }
+        }
+
+        if (rowsAffected == 0) {
+          SQL = @"INSERT INTO GEN_ODOMETER (ODO, FUNCID, USERID) VALUES (?, ?, ?);";
+
+          using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+            comm.Parameters.AddWithValue("@odo", 1);
+            comm.Parameters.AddWithValue("@app", (int)funcCode);
+            comm.Parameters.AddWithValue("@user", GetCurrentAuthor());
+            try {
+              rowsAffected = comm.ExecuteNonQuery();
+            } catch (InvalidOperationException ioe) {
+              throw ioe;
+            }
+          }
+        }
+
+      }
+    }
+
+    private int GetOdometerValue(Functions funcCode) {
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT ODO FROM GEN_ODOMETER WHERE (FUNCID = ? AND USERID = ?)", conn)) {
+        comm.Parameters.AddWithValue("@app", (int)funcCode);
+        comm.Parameters.AddWithValue("@user", GetCurrentAuthor());
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.Read() && !dr.IsDBNull(0))
+            return dr.GetInt32(0);
+          else
+            return 0;
+        }
+      }
+    }
+
     public void InsertError(int errNo, string errmsg, string targetSite) {
-      string SQL = "INSERT INTO GEN_ERRORS ERRDATE, ERRUSER, ERRNUM, ERRMSG, ERROBJ, ERRCHK, ERRAPP VALUES " +
+      string SQL = "INSERT INTO GEN_ERRORS (ERRDATE, ERRUSER, ERRNUM, ERRMSG, ERROBJ, ERRCHK, ERRAPP) VALUES " +
         "(GETDATE(), ?, ?, ?, ?, ?, ?)";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
         comm.Parameters.AddWithValue("@ErrUser", GetCurrentAuthor());

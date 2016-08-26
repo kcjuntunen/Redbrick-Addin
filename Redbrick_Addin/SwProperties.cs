@@ -1289,6 +1289,7 @@ namespace Redbrick_Addin {
     }
 
     public void Write() {
+      cutlistData.IncrementOdometer(CutlistData.Functions.GreenCheck);
       DelSpecific(modeldoc);
       DelGlobal(modeldoc);
       foreach (SwProperty p in _innerArray) {

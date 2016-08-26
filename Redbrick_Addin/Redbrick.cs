@@ -81,6 +81,10 @@ namespace Redbrick_Addin {
           taskpaneHost.ReStart();
           break;
         case 3:
+          CutlistData cd = new CutlistData();
+          cd.IncrementOdometer(CutlistData.Functions.ArchivePDF);
+          cd.Dispose();
+          cd = null;
           ArchivePDF.csproj.ArchivePDFWrapper apw = new ArchivePDF.csproj.ArchivePDFWrapper(swApp);
           apw.Archive();
           break;

@@ -207,7 +207,7 @@ namespace Redbrick_Addin {
 
     public void Write(ModelDoc2 md) {
       CustomPropertyManager glP = md.Extension.get_CustomPropertyManager(string.Empty);
-
+      CutlistData.IncrementOdometer(CutlistData.Functions.GreenCheck);
       this.ClearProps(md);
       foreach (SwProperty p in this._innerArray) {
         p.Write(md);
