@@ -1,4 +1,7 @@
 ﻿
+* 0.10.2.2
+** Gauge checking routine changed to enforce a standard.
+
 * 0.10.2.1
 ** Made no-rev error look classier.
 ** Handled a possible null.
