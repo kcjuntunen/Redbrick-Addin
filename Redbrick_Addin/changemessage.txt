@@ -1,4 +1,8 @@
 ﻿
+* 0.10.2.1
+** Made no-rev error look classier.
+** Handled a possible null.
+
 * 0.10.2.0
 ** You can now be prompted before picking another part if properties have changed.
 If you want this functionality, click "Green check warning" in the config window.
@@ -16,12 +20,3 @@ If you want this functionality, click "Green check warning" in the config window
        (https://github.com/kcjuntunen/deprecated_ArchivePDF/issues/10)
 ** Added some validation for Ops
     It can be turned off in the options menu.
-
-* 0.9.5.3
-** NULL + "Stuff" = NULL -- fixed blank customers
-
-* 0.9.5.2
-** Remember status of cutlist
-
-* 0.9.5.0
-** Updated customer resolution methods
