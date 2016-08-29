@@ -1,4 +1,7 @@
 ﻿
+* 0.10.2.3
+** Fixed regression where the UpdateCNC checkbox got out of sync with the .ID property.
+
 * 0.10.2.2
 ** Gauge checking routine changed to enforce a standard.
 
