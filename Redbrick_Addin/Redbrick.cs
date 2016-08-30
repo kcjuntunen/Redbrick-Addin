@@ -19,6 +19,7 @@ namespace Redbrick_Addin {
     private SWTaskPaneHost taskpaneHost;
     private KeyValuePair<Version, Uri> publicVersion;
     private Version currentVersion;
+    private bool askedToUpdate = false;
     private string UpdateMessage = string.Empty;
 
     public bool ConnectToSW(object ThisSW, int Cookie) {
@@ -35,6 +36,7 @@ namespace Redbrick_Addin {
     }
 
     public bool DisconnectFromSW() {
+      CheckUpdate();
       this.UITearDown();
       return true;
     }
@@ -195,8 +197,9 @@ namespace Redbrick_Addin {
     }
 
     public void CheckUpdate() {
-      if (Old()) {
+      if (Old() && !askedToUpdate) {
         Update();
+        askedToUpdate = true;
       }
     }
 
