@@ -478,6 +478,7 @@ namespace Redbrick_Addin {
         string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
         Properties.Settings.Default.MasterTableHashes.CopyTo(hs, 0);
         st = new swTableType.swTableType(doc, hs);
+        cd.IncrementOdometer(CutlistData.Functions.ExamineBOM);
         DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
         dd.PathIndex = st.PathList;
         if (doc != null) {
@@ -509,7 +510,8 @@ namespace Redbrick_Addin {
       try {
         string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
         Properties.Settings.Default.MasterTableHashes.CopyTo(hs, 0);
-        st = new swTableType.swTableType(doc, hs);  
+        st = new swTableType.swTableType(doc, hs);
+        cd.IncrementOdometer(CutlistData.Functions.MaterialList);
         DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
 
         if (doc != null) {

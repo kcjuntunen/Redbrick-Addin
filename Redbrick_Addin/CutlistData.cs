@@ -30,6 +30,10 @@ namespace Redbrick_Addin {
       GreenCheck,
       ArchivePDF,
       InsertECR,
+      ExamineBOM,
+      MaterialList,
+      UpdateCutlistPart,
+      UpdateCutlist,
       DrawingCollector,
       ExportPrograms,
       ConvertPrograms
@@ -1415,6 +1419,7 @@ namespace Redbrick_Addin {
       int currentAuthor = GetCurrentAuthor();
       int affected = 0;
       if (ENABLE_DB_WRITE) {
+        IncrementOdometer(Functions.UpdateCutlist);
         string SQL = string.Empty;
         SQL = @"UPDATE CUT_CUTLISTS SET DRAWING = ?, CUSTID = ?, CDATE = GETDATE(), DESCR = ?, " +
          @"LENGTH = ?, WIDTH = ?, HEIGHT = ?, SETUP_BY = ?, STATE_BY = ?, STATEID = ? " +
