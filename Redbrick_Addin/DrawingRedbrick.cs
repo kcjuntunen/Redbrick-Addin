@@ -118,7 +118,7 @@ namespace Redbrick_Addin {
       SwProperty d = this.PropertySet.GetProperty("DATE");
       SwProperty rl = PropertySet.GetProperty("REVISION LEVEL");
 
-      string name = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ')[0].Trim();
+      string name = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Replace(@".SLDDRW", string.Empty).Split(' ')[0].Trim();
 
       if (partNo != null) {
         label4.Text = name;
