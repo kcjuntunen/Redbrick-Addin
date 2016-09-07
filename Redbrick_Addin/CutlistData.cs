@@ -1793,12 +1793,10 @@ namespace Redbrick_Addin {
 
     public void IncrementOdometer(Functions funcCode) {
       if (ENABLE_DB_WRITE) {
-        int current_value = GetOdometerValue(funcCode);
         int rowsAffected = 0;
-        string SQL = @"UPDATE GEN_ODOMETER SET ODO = ? WHERE (FUNCID = ? AND USERID = ?);";
+        string SQL = @"UPDATE GEN_ODOMETER SET ODO = ODO + 1 WHERE (FUNCID = ? AND USERID = ?);";
 
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
-          comm.Parameters.AddWithValue("@odo", ++current_value);
           comm.Parameters.AddWithValue("@app", funcCode);
           comm.Parameters.AddWithValue("@user", GetCurrentAuthor());
           try {
