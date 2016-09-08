@@ -29,8 +29,8 @@ namespace Redbrick_Addin {
     }
 
     void dirtTracker_Besmirched(object sender, EventArgs e) {
-      if (!label4.Text.EndsWith("*")) {
-        label4.Text = label4.Text + "*";
+      if (!label4.Text.EndsWith(Properties.Settings.Default.NotSavedMark)) {
+        label4.Text = label4.Text + Properties.Settings.Default.NotSavedMark;
       }
     }
 

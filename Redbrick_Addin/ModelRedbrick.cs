@@ -37,8 +37,8 @@ namespace Redbrick_Addin {
     }
 
     void dirtTracker_Besmirched(object sender, EventArgs e) {
-      if (!gbSpecProp.Text.EndsWith("*")) {
-        gbSpecProp.Text = gbSpecProp.Text + "*";
+      if (!gbSpecProp.Text.EndsWith(Properties.Settings.Default.NotSavedMark)) {
+        gbSpecProp.Text = gbSpecProp.Text + Properties.Settings.Default.NotSavedMark;
       }
     }
 

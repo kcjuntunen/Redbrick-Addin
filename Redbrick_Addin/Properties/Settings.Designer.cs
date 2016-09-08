@@ -435,39 +435,30 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\Refresh-icon.bmp")]
         public string RefreshIcon {
             get {
                 return ((string)(this["RefreshIcon"]));
             }
-            set {
-                this["RefreshIcon"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-02\\shared\\shared\\general\\RedBrick\\InstallRedBrick.exe")]
         public string InstallerNetworkPath {
             get {
                 return ((string)(this["InstallerNetworkPath"]));
             }
-            set {
-                this["InstallerNetworkPath"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files\\RedBrick\\RemoveRedbrick.exe")]
         public string UninstallerPath {
             get {
                 return ((string)(this["UninstallerPath"]));
-            }
-            set {
-                this["UninstallerPath"] = value;
             }
         }
         
@@ -601,7 +592,7 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
@@ -611,9 +602,6 @@ namespace Redbrick_Addin.Properties {
         public global::System.Collections.Specialized.StringCollection MasterTableHashes {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["MasterTableHashes"]));
-            }
-            set {
-                this["MasterTableHashes"] = value;
             }
         }
         
@@ -641,31 +629,25 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-02\\shared\\shared\\general\\Engineering Utility\\ECR Drawings\\")]
         public string ECRDrawingsDestination {
             get {
                 return ((string)(this["ECRDrawingsDestination"]));
             }
-            set {
-                this["ECRDrawingsDestination"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\Archive PDF.bmp")]
         public string ArchiveIcon {
             get {
                 return ((string)(this["ArchiveIcon"]));
             }
-            set {
-                this["ArchiveIcon"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
 <ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
@@ -679,12 +661,9 @@ namespace Redbrick_Addin.Properties {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["CNCOps"]));
             }
-            set {
-                this["CNCOps"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
@@ -692,9 +671,6 @@ namespace Redbrick_Addin.Properties {
         public global::System.Collections.Specialized.StringCollection EBOps {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["EBOps"]));
-            }
-            set {
-                this["EBOps"] = value;
             }
         }
         
@@ -710,27 +686,33 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\help_and_support.bmp")]
         public string HelpIcon {
             get {
                 return ((string)(this["HelpIcon"]));
             }
-            set {
-                this["HelpIcon"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://kcjuntunen.github.io/readbrick_readme.html")]
         public string UsageLink {
             get {
                 return ((string)(this["UsageLink"]));
             }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(" *")]
+        public string NotSavedMark {
+            get {
+                return ((string)(this["NotSavedMark"]));
+            }
             set {
-                this["UsageLink"] = value;
+                this["NotSavedMark"] = value;
             }
         }
     }

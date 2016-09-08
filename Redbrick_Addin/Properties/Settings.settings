@@ -167,13 +167,13 @@
   &lt;string&gt;.21-25&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="RefreshIcon" Type="System.String" Scope="User">
+    <Setting Name="RefreshIcon" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Refresh-icon.bmp</Value>
     </Setting>
-    <Setting Name="InstallerNetworkPath" Type="System.String" Scope="User">
+    <Setting Name="InstallerNetworkPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\RedBrick\InstallRedBrick.exe</Value>
     </Setting>
-    <Setting Name="UninstallerPath" Type="System.String" Scope="User">
+    <Setting Name="UninstallerPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">C:\Program Files\RedBrick\RemoveRedbrick.exe</Value>
     </Setting>
     <Setting Name="EngineeringDir" Type="System.String" Scope="User">
@@ -213,7 +213,7 @@
     <Setting Name="IdiotLight" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MasterTableHashes" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="MasterTableHashes" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F&lt;/string&gt;
@@ -226,13 +226,13 @@
     <Setting Name="RememberLastCustomer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ECRDrawingsDestination" Type="System.String" Scope="User">
+    <Setting Name="ECRDrawingsDestination" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Engineering Utility\ECR Drawings\</Value>
     </Setting>
-    <Setting Name="ArchiveIcon" Type="System.String" Scope="User">
+    <Setting Name="ArchiveIcon" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Archive PDF.bmp</Value>
     </Setting>
-    <Setting Name="CNCOps" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="CNCOps" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;CEB&lt;/string&gt;
@@ -242,7 +242,7 @@
   &lt;string&gt;WEE&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="EBOps" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="EBOps" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;EB&lt;/string&gt;
@@ -252,11 +252,14 @@
     <Setting Name="ProgWarn" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="HelpIcon" Type="System.String" Scope="User">
+    <Setting Name="HelpIcon" Type="System.String" Scope="Application">
       <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\help_and_support.bmp</Value>
     </Setting>
-    <Setting Name="UsageLink" Type="System.String" Scope="User">
+    <Setting Name="UsageLink" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://kcjuntunen.github.io/readbrick_readme.html</Value>
+    </Setting>
+    <Setting Name="NotSavedMark" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> *</Value>
     </Setting>
   </Settings>
 </SettingsFile>
