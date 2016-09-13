@@ -474,12 +474,10 @@ namespace Redbrick_Addin {
       string name = string.Empty;
       swTableType.swTableType st;
 
-      try {
-        string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
-        Properties.Settings.Default.MasterTableHashes.CopyTo(hs, 0);
-        st = new swTableType.swTableType(doc, hs);
+      //try {
+        st = new swTableType.swTableType(doc, Redbrick.MasterHashes);
         cd.IncrementOdometer(CutlistData.Functions.ExamineBOM);
-        DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
+        DataTable stp = (DataTable)DictToPartList(st.GetParts(Redbrick.BOMFilter), cd);
         dd.PathIndex = st.PathList;
         if (doc != null) {
           name = doc.GetPathName();
@@ -495,9 +493,9 @@ namespace Redbrick_Addin {
           );
 
         dd.ShowDialog();
-      } catch (Exception ex) {
-        PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-      }
+      //} catch (Exception ex) {
+      //  PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+      //}
     }
 
     private void btnMatList_Click(object sender, EventArgs e) {
@@ -508,9 +506,7 @@ namespace Redbrick_Addin {
       swTableType.swTableType st;
 
       try {
-        string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
-        Properties.Settings.Default.MasterTableHashes.CopyTo(hs, 0);
-        st = new swTableType.swTableType(doc, hs);
+        st = new swTableType.swTableType(doc, Redbrick.MasterHashes);
         cd.IncrementOdometer(CutlistData.Functions.MaterialList);
         DataTable stp = (DataTable)DictToPartList(st.GetParts(), cd);
 
@@ -599,7 +595,6 @@ namespace Redbrick_Addin {
           Deptartment = cd.GetDeptByID((int)i.DepartmentID),
           Update = i.UpdateCNC ? "Yes" : "No"
         };
-
         lp.Add(o);
       }
 

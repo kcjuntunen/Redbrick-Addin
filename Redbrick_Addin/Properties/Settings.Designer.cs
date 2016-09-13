@@ -715,5 +715,19 @@ namespace Redbrick_Addin.Properties {
                 this["NotSavedMark"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>[Zz][0-9]{4,5}.*|[A-Z]{3,4}[0-9]{4}.*</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection BOMFilter {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["BOMFilter"]));
+            }
+            set {
+                this["BOMFilter"] = value;
+            }
+        }
     }
 }

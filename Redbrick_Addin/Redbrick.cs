@@ -248,12 +248,27 @@ namespace Redbrick_Addin {
       }
     }
 
-
     static public void unselect(System.Windows.Forms.Control.ControlCollection controls) {
       foreach (System.Windows.Forms.Control c in controls) {
         if (c is System.Windows.Forms.ComboBox) {
           (c as System.Windows.Forms.ComboBox).SelectionLength = 0;
         }
+      }
+    }
+
+    static public string[] BOMFilter {
+      get {
+        string[] regex_patterns = new string[Properties.Settings.Default.BOMFilter.Count];
+        Properties.Settings.Default.BOMFilter.CopyTo(regex_patterns, 0);
+        return regex_patterns;
+      }
+    }
+
+    static public string[] MasterHashes {
+      get {
+        string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
+        Properties.Settings.Default.MasterTableHashes.CopyTo(hs, 0);
+        return hs;
       }
     }
 

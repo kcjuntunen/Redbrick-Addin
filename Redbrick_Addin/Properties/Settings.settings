@@ -261,5 +261,11 @@
     <Setting Name="NotSavedMark" Type="System.String" Scope="User">
       <Value Profile="(Default)"> *</Value>
     </Setting>
+    <Setting Name="BOMFilter" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;[Zz][0-9]{4,5}.*|[A-Z]{3,4}[0-9]{4}.*&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
