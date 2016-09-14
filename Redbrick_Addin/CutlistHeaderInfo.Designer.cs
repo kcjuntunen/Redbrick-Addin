@@ -86,7 +86,7 @@ namespace Redbrick_Addin {
       this.tlpMain.RowCount = 2;
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tlpMain.Size = new System.Drawing.Size(379, 349);
+      this.tlpMain.Size = new System.Drawing.Size(379, 320);
       this.tlpMain.TabIndex = 0;
       // 
       // gbCutlistSetup
@@ -95,13 +95,16 @@ namespace Redbrick_Addin {
       this.gbCutlistSetup.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gbCutlistSetup.Location = new System.Drawing.Point(3, 3);
       this.gbCutlistSetup.Name = "gbCutlistSetup";
-      this.gbCutlistSetup.Size = new System.Drawing.Size(373, 308);
+      this.gbCutlistSetup.Size = new System.Drawing.Size(373, 282);
       this.gbCutlistSetup.TabIndex = 0;
       this.gbCutlistSetup.TabStop = false;
       this.gbCutlistSetup.Text = "New Cutlist Set Up";
       // 
       // tlpControls
       // 
+      this.tlpControls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.tlpControls.ColumnCount = 1;
       this.tlpControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tlpControls.Controls.Add(this.tlpDate, 0, 0);
@@ -111,18 +114,17 @@ namespace Redbrick_Addin {
       this.tlpControls.Controls.Add(this.tableLayoutPanel2, 0, 4);
       this.tlpControls.Controls.Add(this.tableLayoutPanel3, 0, 5);
       this.tlpControls.Controls.Add(this.tableLayoutPanel4, 0, 6);
-      this.tlpControls.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tlpControls.Location = new System.Drawing.Point(3, 16);
       this.tlpControls.Name = "tlpControls";
       this.tlpControls.RowCount = 7;
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-      this.tlpControls.Size = new System.Drawing.Size(367, 289);
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tlpControls.Size = new System.Drawing.Size(367, 241);
       this.tlpControls.TabIndex = 0;
       // 
       // tlpDate
@@ -461,11 +463,11 @@ namespace Redbrick_Addin {
       this.tlpButtons.Controls.Add(this.btnCancel, 0, 0);
       this.tlpButtons.Controls.Add(this.btnCreate, 1, 0);
       this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tlpButtons.Location = new System.Drawing.Point(3, 317);
+      this.tlpButtons.Location = new System.Drawing.Point(3, 291);
       this.tlpButtons.Name = "tlpButtons";
       this.tlpButtons.RowCount = 1;
       this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tlpButtons.Size = new System.Drawing.Size(373, 29);
+      this.tlpButtons.Size = new System.Drawing.Size(373, 26);
       this.tlpButtons.TabIndex = 1;
       // 
       // btnCancel
@@ -473,7 +475,7 @@ namespace Redbrick_Addin {
       this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCancel.Location = new System.Drawing.Point(3, 3);
       this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(180, 23);
+      this.btnCancel.Size = new System.Drawing.Size(180, 20);
       this.btnCancel.TabIndex = 0;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
@@ -484,7 +486,7 @@ namespace Redbrick_Addin {
       this.btnCreate.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCreate.Location = new System.Drawing.Point(189, 3);
       this.btnCreate.Name = "btnCreate";
-      this.btnCreate.Size = new System.Drawing.Size(181, 23);
+      this.btnCreate.Size = new System.Drawing.Size(181, 20);
       this.btnCreate.TabIndex = 1;
       this.btnCreate.Text = "Create";
       this.btnCreate.UseVisualStyleBackColor = true;
@@ -494,9 +496,9 @@ namespace Redbrick_Addin {
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(379, 349);
+      this.ClientSize = new System.Drawing.Size(379, 320);
       this.Controls.Add(this.tlpMain);
-      this.MinimumSize = new System.Drawing.Size(387, 379);
+      this.MinimumSize = new System.Drawing.Size(387, 350);
       this.Name = "CutlistHeaderInfo";
       this.ShowIcon = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

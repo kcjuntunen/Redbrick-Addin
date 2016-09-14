@@ -50,6 +50,14 @@ namespace Redbrick_Addin {
       chbOnlyActive.Checked = Properties.Settings.Default.OnlyActiveAuthors;
       chbOnlyActiveCustomers.Checked = Properties.Settings.Default.OnlyCurrentCustomers;
       chbRememberCustomer.Checked = Properties.Settings.Default.RememberLastCustomer;
+      checkBox1.Checked = Properties.Settings.Default.WarnExcludeAssy;
+      checkBox2.Checked = Properties.Settings.Default.CHIHideLWH;
+      textBox1.Text = Properties.Settings.Default.BOMFilter[0].ToString();
+
+      ToolTip tt = new ToolTip();
+      tt.ShowAlways = true;
+      tt.SetToolTip(textBox1, "You probably don't want to mess with this.");
+
       initialated = true;
     }
 
@@ -146,6 +154,20 @@ namespace Redbrick_Addin {
 
     private void chbOpWarnings_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.ProgWarn = chbOpWarnings.Checked;
+    }
+
+    private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.WarnExcludeAssy = checkBox1.Checked;
+    }
+
+    private void textBox1_Leave(object sender, EventArgs e) {
+      System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
+      sc.Add(textBox1.Text);
+      Properties.Settings.Default.BOMFilter = sc;
+    }
+
+    private void checkBox2_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.CHIHideLWH = checkBox2.Checked;
     }
   }
 }

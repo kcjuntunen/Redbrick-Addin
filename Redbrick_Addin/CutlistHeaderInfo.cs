@@ -27,9 +27,9 @@ namespace Redbrick_Addin {
 
     public CutlistHeaderInfo(Part p, CutlistData cd, CutlistFunction c) {
       InitializeComponent();
+      SetLWHVisibility(Properties.Settings.Default.CHIHideLWH);
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
-
       switch (c) {
         case CutlistFunction.AddToExistingAlreadySelected:
           InitControlsWithPart(p, cd);
@@ -47,6 +47,7 @@ namespace Redbrick_Addin {
     
     public CutlistHeaderInfo(Part p, CutlistData cd) { // New Cutlist
       InitializeComponent();
+      SetLWHVisibility(Properties.Settings.Default.CHIHideLWH);
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
       InitControlsWithPart(p, cd);
@@ -54,12 +55,23 @@ namespace Redbrick_Addin {
 
     public CutlistHeaderInfo(DrawingProperties dp, string descr) { 
       InitializeComponent();
+      SetLWHVisibility(Properties.Settings.Default.CHIHideLWH);
       DrawingPropertySet = dp;
       CutlistData = dp.CutlistData;
       Location = Properties.Settings.Default.CutlistHeaderLocation;
       Size = Properties.Settings.Default.CutlistHeaderSize;
       description = descr;
       InitControlsWithDrawing();
+    }
+
+    public void SetLWHVisibility(bool hide) {
+      tableLayoutPanel2.Visible = !hide;
+      label5.Visible = !hide;
+      label6.Visible = !hide;
+      label7.Visible = !hide;
+      tbL.Visible = !hide;
+      tbW.Visible = !hide;
+      tbH.Visible = !hide;
     }
 
     private void InitControlsWithDrawing() {

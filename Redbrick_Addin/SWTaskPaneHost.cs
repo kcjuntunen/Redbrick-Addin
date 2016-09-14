@@ -865,44 +865,47 @@ namespace Redbrick_Addin {
     }
 
     private void Check() {
-      if (Properties.Settings.Default.Warn) {
-        string message = string.Empty;
-        double o = 0;
-        if (double.TryParse(prop.GetProperty("LENGTH").ResValue, out o)) {
-          if (o == 0) {
-            message += "Length resolves to 0.000\".\n";
+      if ((Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) &&
+        !Properties.Settings.Default.WarnExcludeAssy) {
+        if (Properties.Settings.Default.Warn) {
+          string message = string.Empty;
+          double o = 0;
+          if (double.TryParse(prop.GetProperty("LENGTH").ResValue, out o)) {
+            if (o == 0) {
+              message += "Length resolves to 0.000\".\n";
+            }
+          } else {
+            message += "Couldn't resolve length.\n";
           }
-        } else {
-          message += "Couldn't resolve length.\n";
-        }
-        if (double.TryParse(prop.GetProperty("WIDTH").ResValue, out o)) {
-          if (o == 0) {
-            message += "Width resolves to 0.000\".\n";
+          if (double.TryParse(prop.GetProperty("WIDTH").ResValue, out o)) {
+            if (o == 0) {
+              message += "Width resolves to 0.000\".\n";
+            }
+          } else {
+            message += "Couldn't resolve width.\n";
           }
-        } else {
-          message += "Couldn't resolve width.\n";
-        }
 
-        int m = 0;
-        double epsilon = Properties.Settings.Default.CheckEpsilon;
-        bool resMat = int.TryParse(prop.GetProperty("MATID").ID, out m);
-        double thk = 0.0f;
-        double wthk = 0.0f;
-        bool thkParsed = double.TryParse(gp.Thickness, out thk);
-        bool wthkParsed = double.TryParse(gp.WallThickness, out wthk);
-        if ((thkParsed || wthkParsed) && resMat) {
-          double thick = 0.0f;
-          double.TryParse(prop.cutlistData.GetMaterial(m).Rows[0][(int)CutlistData.MaterialFields.THICKNESS].ToString(), out thick);
-          if ((Math.Abs(thick - thk) < epsilon) || (Math.Abs(thick - wthk) < epsilon)) {
-            // looks fine
-          } else if (thick != 0) {
-            message += string.Format("Part thickness ({0}/{1}) doesn't match material thickness ({2}).\n", thk, wthk, thick);
+          int m = 0;
+          double epsilon = Properties.Settings.Default.CheckEpsilon;
+          bool resMat = int.TryParse(prop.GetProperty("MATID").ID, out m);
+          double thk = 0.0f;
+          double wthk = 0.0f;
+          bool thkParsed = double.TryParse(gp.Thickness, out thk);
+          bool wthkParsed = double.TryParse(gp.WallThickness, out wthk);
+          if ((thkParsed || wthkParsed) && resMat) {
+            double thick = 0.0f;
+            double.TryParse(prop.cutlistData.GetMaterial(m).Rows[0][(int)CutlistData.MaterialFields.THICKNESS].ToString(), out thick);
+            if ((Math.Abs(thick - thk) < epsilon) || (Math.Abs(thick - wthk) < epsilon)) {
+              // looks fine
+            } else if (thick != 0) {
+              message += string.Format("Part thickness ({0}/{1}) doesn't match material thickness ({2}).\n", thk, wthk, thick);
+            }
+          } else {
+            message += string.Format("Couldn't resolve [WALL] THICKNESS or material ID ({0}).\n", m);
           }
-        } else {
-          message += string.Format("Couldn't resolve [WALL] THICKNESS or material ID ({0}).\n", m);
-        }
-        if (message.Length > 0) {
-          _swApp.SendMsgToUser2(message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+          if (message.Length > 0) {
+            _swApp.SendMsgToUser2(message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+          }
         }
       }
     }
