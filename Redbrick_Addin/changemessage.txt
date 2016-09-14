@@ -1,4 +1,11 @@
 ﻿
+* 0.10.2.4
+** Fixed an edge case of a file extension making it into a part name.
+** Allowing regex filtering of part numbers on the Examine BOM  tool.
+** Changed the config layout
+*** Made exposure of L x W x H fields on the cutlist header form optional
+** Asking about updating on close now.
+
 * 0.10.2.3
 ** Fixed regression where the UpdateCNC checkbox got out of sync with the .ID property.
 
