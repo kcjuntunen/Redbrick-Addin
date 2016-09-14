@@ -184,7 +184,8 @@ namespace Redbrick_Addin {
         case swMessageBoxResult_e.swMbHitRetry:
           break;
         case swMessageBoxResult_e.swMbHitYes:
-          swApp.DestroyNotify += swApp_DestroyNotify;
+          //swApp.DestroyNotify += swApp_DestroyNotify;
+          swApp_DestroyNotify();
           //swApp.SendMsgToUser2(Properties.Resources.Restart,
           //  (int)swMessageBoxIcon_e.swMbWarning,
           //  (int)swMessageBoxBtn_e.swMbOk);
