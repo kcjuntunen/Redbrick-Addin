@@ -181,7 +181,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Amstore™ Property Editor©.
+        ///   Looks up a localized string similar to Property Editor {0}.
         /// </summary>
         internal static string Title {
             get {
@@ -190,7 +190,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your version of the Amstore™ Property Editor© is out of date.   Do you want to update from {0} to {1}?.
+        ///   Looks up a localized string similar to Your version of the  Property Editor is out of date.   Do you want to update from {0} to {1}?.
         /// </summary>
         internal static string Update {
             get {

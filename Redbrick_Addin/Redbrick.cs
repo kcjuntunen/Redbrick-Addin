@@ -43,9 +43,12 @@ namespace Redbrick_Addin {
 
     private void UISetup() {
       try {
+        Version cv = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+        string ver = cv.ToString();
+
         taskpaneView = swApp.CreateTaskpaneView2(Properties.Settings.Default.NetPath +
             Properties.Settings.Default.Icon,
-            Properties.Resources.Title);
+            string.Format(Properties.Resources.Title, ver));
 
         taskpaneHost = (SWTaskPaneHost)taskpaneView.AddControl(SWTaskPaneHost.SWTASKPANE_PROGID, string.Empty);
         taskpaneHost.OnRequestSW += new Func<SldWorks>(delegate { return this.swApp; });
@@ -58,7 +61,7 @@ namespace Redbrick_Addin {
         result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.HelpIcon, "Usage Help");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
-        CheckUpdate();
+        //CheckUpdate();
         taskpaneHost.cookie = cookie;
         taskpaneHost.Start();
       } catch (Exception e) {
@@ -182,9 +185,9 @@ namespace Redbrick_Addin {
           break;
         case swMessageBoxResult_e.swMbHitYes:
           swApp.DestroyNotify += swApp_DestroyNotify;
-          swApp.SendMsgToUser2(Properties.Resources.Restart,
-            (int)swMessageBoxIcon_e.swMbWarning,
-            (int)swMessageBoxBtn_e.swMbOk);
+          //swApp.SendMsgToUser2(Properties.Resources.Restart,
+          //  (int)swMessageBoxIcon_e.swMbWarning,
+          //  (int)swMessageBoxBtn_e.swMbOk);
           break;
         default:
           break;

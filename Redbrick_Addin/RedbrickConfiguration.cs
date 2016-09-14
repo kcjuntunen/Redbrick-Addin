@@ -56,7 +56,7 @@ namespace Redbrick_Addin {
 
       ToolTip tt = new ToolTip();
       tt.ShowAlways = true;
-      tt.SetToolTip(textBox1, "You probably don't want to mess with this.");
+      tt.SetToolTip(label4, "You probably don't want to mess with this.");
 
       initialated = true;
     }
