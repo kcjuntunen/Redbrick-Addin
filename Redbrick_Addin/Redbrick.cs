@@ -61,7 +61,6 @@ namespace Redbrick_Addin {
         result = taskpaneView.AddCustomButton(Properties.Settings.Default.NetPath + Properties.Settings.Default.HelpIcon, "Usage Help");
 
         taskpaneView.TaskPaneToolbarButtonClicked += taskpaneView_TaskPaneToolbarButtonClicked;
-        //CheckUpdate();
         taskpaneHost.cookie = cookie;
         taskpaneHost.Start();
       } catch (Exception e) {
@@ -109,11 +108,18 @@ namespace Redbrick_Addin {
       taskpaneView = null;
     }
 
+    /// <summary>
+    /// Copy the installer.
+    /// </summary>
     public void CopyInstaller() {
       System.IO.FileInfo nfi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
       nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe", true);
     }
 
+    /// <summary>
+    /// Get data from the version XML file that goes with the installer.
+    /// </summary>
+    /// <param name="t">Full path of target XML file.</param>
     private void GetPublicData(string t) {
       System.IO.FileInfo pi = new System.IO.FileInfo(t);
       Version v = new Version();
@@ -150,6 +156,10 @@ namespace Redbrick_Addin {
       UpdateMessage = m;
     }
 
+    /// <summary>
+    /// Determine whether we're using a version older than the one on the network.
+    /// </summary>
+    /// <returns>A bool.</returns>
     public bool Old() {
       System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
       if (true) {
@@ -163,6 +173,9 @@ namespace Redbrick_Addin {
       return false;
     }
 
+    /// <summary>
+    /// Ask user if update is wanted.
+    /// </summary>
     public void Update() {
       string chge = string.Format(Properties.Resources.Update, currentVersion.ToString(), publicVersion.Key.ToString());
       swMessageBoxResult_e res = (swMessageBoxResult_e)swApp.SendMsgToUser2(
@@ -195,11 +208,18 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Fire install process.
+    /// </summary>
+    /// <returns>0</returns>
     private int swApp_DestroyNotify() {
       System.Diagnostics.Process.Start(publicVersion.Value.ToString());
       return 0;
     }
 
+    /// <summary>
+    /// Update if old.
+    /// </summary>
     public void CheckUpdate() {
       if (Old() && !askedToUpdate) {
         Update();
@@ -207,12 +227,20 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Execute update.
+    /// </summary>
     private void DoUpdate() {
       System.Diagnostics.Process p = new System.Diagnostics.Process();
       p.StartInfo.FileName = Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe";
       p.Start();
     }
 
+    /// <summary>
+    /// Hash a string.
+    /// </summary>
+    /// <param name="fullPath">Full path of a part.</param>
+    /// <returns>A 32-bit int.</returns>
     static public int GetHash(string fullPath) {
 
       DamienG.Security.Cryptography.Crc32 crc = new DamienG.Security.Cryptography.Crc32();
@@ -233,6 +261,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Copy to_clip to clipboard.
+    /// </summary>
+    /// <param name="to_clip">A string.</param>
     static public void Clip(string to_clip) {
       if ((to_clip != null && to_clip != string.Empty) && to_clip != System.Windows.Forms.Clipboard.GetText()) {
         System.Windows.Forms.Clipboard.SetText(to_clip.Replace(Properties.Settings.Default.NotSavedMark, string.Empty));
@@ -252,6 +284,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// De-blue comboboxes.
+    /// </summary>
+    /// <param name="controls">A ControlCollection object.</param>
     static public void unselect(System.Windows.Forms.Control.ControlCollection controls) {
       foreach (System.Windows.Forms.Control c in controls) {
         if (c is System.Windows.Forms.ComboBox) {
@@ -260,6 +296,9 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Convert a specialized StringCollection to an array of strings.
+    /// </summary>
     static public string[] BOMFilter {
       get {
         string[] regex_patterns = new string[Properties.Settings.Default.BOMFilter.Count];
@@ -268,6 +307,9 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Convert a specialized StringCollection to an array of strings.
+    /// </summary>
     static public string[] MasterHashes {
       get {
         string[] hs = new string[Properties.Settings.Default.MasterTableHashes.Count];
