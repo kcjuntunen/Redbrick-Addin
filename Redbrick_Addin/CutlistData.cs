@@ -102,7 +102,11 @@ namespace Redbrick_Addin {
       OPTYPE
     }
 
-
+    /// <summary>
+    /// Return material data.
+    /// </summary>
+    /// <param name="matid">Material ID.</param>
+    /// <returns>A DataTable.</returns>
     public DataTable GetMaterial(int matid) {
       lock (threadLock) {
 #if DEBUG
@@ -127,6 +131,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get all materials for a ComboBox.
+    /// </summary>
+    /// <returns>A DataSet</returns>
     private DataSet GetMaterials() {
       lock (threadLock) {
 #if DEBUG
@@ -150,6 +158,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get all egdes for a ComboBox.
+    /// </summary>
+    /// <returns>A DataSet</returns>
     private DataSet GetEdges() {
       lock (threadLock) {
 #if DEBUG
@@ -182,6 +194,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get all Ops for a ComboBox.
+    /// </summary>
+    /// <param name="optype">Wood? Metal? What?</param>
+    /// <returns>A DataSet.</returns>
     private DataSet GetOps(int optype) {
       lock (threadLock) {
         if (OpType != optype) {
@@ -209,6 +226,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get all ops, regardless of type.
+    /// </summary>
+    /// <returns> A DataSet object.</returns>
     public DataSet GetAllOps() {
       lock (threadLock) {
         string SQL = @"SELECT * FROM CUT_OPS ORDER BY OPDESCR";
@@ -229,6 +250,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get all Ops for a ComboBox. It knows about OpType.
+    /// </summary>
+    /// <returns>A DataSet.</returns>
     private DataSet GetOps() {
       lock (threadLock) {
         string SQL = @"SELECT OPID, OPNAME, OPNAME + ' - ' + OPDESCR AS OPDESCR, OPTYPE FROM CUT_OPS WHERE OPTYPE = ? ORDER BY OPDESCR";
@@ -256,6 +281,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get possible Op Types.
+    /// </summary>
+    /// <returns>A DataSet object.</returns>
     public DataSet GetOpTypes() {
       lock (threadLock) {
         string SQL = @"SELECT * FROM CUT_PART_TYPES ORDER BY TYPEID";
@@ -271,6 +300,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get customers for drawing.
+    /// </summary>
+    /// <returns>A list of strings.</returns>
     public List<string> GetCustomersForDrawing() {
       List<string> output = new List<string>();
       string SQL = @"SELECT CUSTOMER, CUSTNUM FROM GEN_CUSTOMERS ";
@@ -296,6 +329,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Uhhh... Get customers for drawing.
+    /// </summary>
+    /// <returns>A DataSet object.</returns>
     public DataSet GetCustomersForDrawing2() {
       string SQL = @"SELECT GEN_CUSTOMERS.[CUSTID], (ISNULL(CUSTOMER, '') + ' - '+ ISNULL(CAST(CUSTNUM AS char(3)), '')) "
         + "AS CUSTSTRING FROM GEN_CUSTOMERS ";
@@ -317,6 +354,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get customer list
+    /// </summary>
+    /// <returns>A DataSet object.</returns>
     private DataSet GetCustomers() {
       string SQL = @"SELECT * FROM GEN_CUSTOMERS ORDER BY CUSTOMER";
       using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
@@ -329,6 +370,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Get customer list
+    /// </summary>
+    /// <param name="current">Current customers only?</param>
+    /// <returns>A DataSet object.</returns>
     private DataSet GetCustomers(bool current) {
       string SQL = @"SELECT * FROM GEN_CUSTOMERS ";
       if (Properties.Settings.Default.OnlyCurrentCustomers) {
@@ -345,6 +391,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Resolve a project prefix to the customer who owns it.
+    /// </summary>
+    /// <param name="project">Part number prefix</param>
+    /// <returns></returns>
     public string GetCustomerByProject(string project) {
       string SQL = @"SELECT TOP 1 GEN_CUSTOMERS.CUSTOMER " +
                     "FROM GEN_CUSTOMERS INNER JOIN SCH_PROJECTS ON GEN_CUSTOMERS.CUSTID = SCH_PROJECTS.CUSTID " +
