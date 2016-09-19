@@ -119,12 +119,6 @@
     </Compile>
     <Compile Include="Crc32.cs" />
     <Compile Include="CutlistData.cs" />
-    <Compile Include="CutlistHandler.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CutlistHandler.Designer.cs">
-      <DependentUpon>CutlistHandler.cs</DependentUpon>
-    </Compile>
     <Compile Include="CutlistHeaderInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,9 +227,6 @@
   <ItemGroup>
     <EmbeddedResource Include="ConfigurationSpecific.resx">
       <DependentUpon>ConfigurationSpecific.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CutlistHandler.resx">
-      <DependentUpon>CutlistHandler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CutlistHeaderInfo.resx">
       <DependentUpon>CutlistHeaderInfo.cs</DependentUpon>
