@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,12 +28,20 @@ namespace Redbrick_Addin {
       t();
     }
 
+    /// <summary>
+    /// Add a mark to indicate that a control has been messed with.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     void dirtTracker_Besmirched(object sender, EventArgs e) {
       if (!label4.Text.EndsWith(Properties.Settings.Default.NotSavedMark)) {
         label4.Text = label4.Text + Properties.Settings.Default.NotSavedMark;
       }
     }
 
+    /// <summary>
+    /// Update the Redbrick. Duh.
+    /// </summary>
     public void DrbUpdate() {
       fillMat();
       fillAuthor();
@@ -43,6 +51,9 @@ namespace Redbrick_Addin {
       GetData();
     }
 
+    /// <summary>
+    /// Populate the TreeView on this screen. Cool name, eh?
+    /// </summary>
     public void t() {
       foreach (Control cont in this.tableLayoutPanel1.Controls) {
         if (cont is tvRevs) {
@@ -66,6 +77,11 @@ namespace Redbrick_Addin {
       throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Updates the TreeView when a LVL is added.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void t_Added(object sender, EventArgs e) {
       DrawingDoc thisdd = (DrawingDoc)SwApp.ActiveDoc;
       Write(thisdd);
@@ -73,27 +89,28 @@ namespace Redbrick_Addin {
       DrbUpdate();
     }
 
+    /// <summary>
+    /// Gotta manually unselect programatically selected ComboBoxes. Why? I dunno.
+    /// </summary>
     public void unselect() {
       Redbrick.unselect(tableLayoutPanel2.Controls);
       Redbrick.unselect(tableLayoutPanel3.Controls);
       Redbrick.unselect(tableLayoutPanel5.Controls);
     }
 
-    private void SetLocation() {
-      this.Top = Properties.Settings.Default.Top;
-      this.Left = Properties.Settings.Default.Left;
-    }
-
+    /// <summary>
+    /// Populate controls.
+    /// </summary>
     private void GetData() {
       try {
         dirtTracker.Besmirched -= dirtTracker_Besmirched;
       } catch (Exception) {
         // I don't care.
       }
-      this.PropertySet.Read();
-      this.RevSet.Read();
+      PropertySet.Read();
+      RevSet.Read();
 
-      this.FillBoxes();
+      FillBoxes();
 
       if (Properties.Settings.Default.RememberLastCustomer && (PropertySet.GetProperty("CUSTOMER").Value == string.Empty)) {
         cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
@@ -107,10 +124,9 @@ namespace Redbrick_Addin {
       }
     }
 
-    private void linkControls() {
-      this.PropertySet.GetProperty("").Ctl = this.tbFinish1;
-    }
-
+    /// <summary>
+    /// Select known data in fields, and link controls to properties. I think this should be refactored.
+    /// </summary>
     private void FillBoxes() {
       SwProperty partNo = this.PropertySet.GetProperty("PartNo");
       SwProperty custo = this.PropertySet.GetProperty("CUSTOMER");
@@ -122,20 +138,20 @@ namespace Redbrick_Addin {
 
       if (partNo != null) {
         label4.Text = name;
-        partNo.Ctl = this.tbItemNo;
+        partNo.Ctl = tbItemNo;
       } else {
         partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true);
-        partNo.SwApp = this.SwApp;
-        partNo.Ctl = this.tbItemNo;
+        partNo.SwApp = SwApp;
+        partNo.Ctl = tbItemNo;
         this.PropertySet.Add(partNo);
       }
 
       if (custo != null) {
-        custo.Ctl = this.cbCustomer;
+        custo.Ctl = cbCustomer;
       } else {
         custo = new SwProperty("CUSTOMER", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-        custo.SwApp = this.SwApp;
-        custo.Ctl = this.cbCustomer;
+        custo.SwApp = SwApp;
+        custo.Ctl = cbCustomer;
         this.PropertySet.Add(custo);
       }
 
@@ -148,8 +164,8 @@ namespace Redbrick_Addin {
         by.Ctl = this.cbAuthor;
       } else {
         by = new SwProperty("DrawnBy", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-        by.SwApp = this.SwApp;
-        by.Ctl = this.cbAuthor;
+        by.SwApp = SwApp;
+        by.Ctl = cbAuthor;
         this.PropertySet.Add(by);
       }
 
@@ -157,8 +173,8 @@ namespace Redbrick_Addin {
         d.Ctl = this.dpDate;
       } else {
         d = new SwProperty("DATE", swCustomInfoType_e.swCustomInfoDate, string.Empty, true);
-        d.SwApp = this.SwApp;
-        d.Ctl = this.dpDate;
+        d.SwApp = SwApp;
+        d.Ctl = dpDate;
         this.PropertySet.Add(d);
       }
 
@@ -172,38 +188,34 @@ namespace Redbrick_Addin {
       }
 
       for (int i = 1; i < 6; i++) {
-        if (this.PropertySet.Contains("M" + i.ToString())) {
-          foreach (Control c in this.tableLayoutPanel3.Controls) {
+        if (PropertySet.Contains("M" + i.ToString())) {
+          foreach (Control c in tableLayoutPanel3.Controls) {
             if (c.Name.ToUpper().Contains("M" + i.ToString()))
-              this.PropertySet.GetProperty("M" + i.ToString()).Ctl = c;
+              PropertySet.GetProperty("M" + i.ToString()).Ctl = c;
 
 
             if (c.Name.ToUpper().Contains("FINISH" + i.ToString()))
               this.PropertySet.GetProperty("FINISH " + i.ToString()).Ctl = c;
           }
         } else {
-          foreach (Control c in this.tableLayoutPanel3.Controls) {
+          foreach (Control c in tableLayoutPanel3.Controls) {
             if (c.Name.ToUpper().Contains("M" + i.ToString())) {
               SwProperty mx = new SwProperty("M" + i.ToString(), swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-              mx.SwApp = this.SwApp;
+              mx.SwApp = SwApp;
               mx.Ctl = c;
-              //System.Diagnostics.Debug.Print("M: " + mx.Value);
-              this.PropertySet.Add(mx);
+              PropertySet.Add(mx);
             }
 
             if (c.Name.ToUpper().Contains("FINISH" + i.ToString())) {
               SwProperty fx = new SwProperty("FINISH " + i.ToString(), swCustomInfoType_e.swCustomInfoText, string.Empty, true);
-              fx.SwApp = this.SwApp;
+              fx.SwApp = SwApp;
               fx.Ctl = c;
-              //System.Diagnostics.Debug.Print("F: " + fx.Value);
-              this.PropertySet.Add(fx);
+              PropertySet.Add(fx);
             }
           }
         }
       }
 
-      //DataSet ds = PropertySet.CutlistData.GetCutlistData(PropertySet.GetProperty("PartNo").ResValue.Trim().Split(' ')[0],
-      //  PropertySet.GetProperty("REVISION LEVEL").Value);
       DataSet ds = PropertySet.CutlistData.GetCutlistData(name,
         PropertySet.GetProperty("REVISION LEVEL").Value);
       int stat = 0;
@@ -214,41 +226,46 @@ namespace Redbrick_Addin {
         cbStatus.Enabled = false;
       }
 
-      this.PropertySet.UpdateFields();
-      //this.RevSet.UpdateListBox();
-      this.tbItemNoRes.Text = this.PropertySet.GetProperty("PartNo").ResValue;
+      PropertySet.UpdateFields();
+      tbItemNoRes.Text = PropertySet.GetProperty("PartNo").ResValue;
     }
 
+    /// <summary>
+    /// Get possible materials.
+    /// TODO: This would be better coming from a table in the DB.
+    /// </summary>
     private void fillMat() {
       System.Collections.Specialized.StringCollection sc = Properties.Settings.Default.Materials;
       foreach (string s in sc) {
-        this.cbM1.Items.Add(s);
-        this.cbM2.Items.Add(s);
-        this.cbM3.Items.Add(s);
-        this.cbM4.Items.Add(s);
-        this.cbM5.Items.Add(s);
+        cbM1.Items.Add(s);
+        cbM2.Items.Add(s);
+        cbM3.Items.Add(s);
+        cbM4.Items.Add(s);
+        cbM5.Items.Add(s);
       }
     }
 
+    /// <summary>
+    /// Get authors from DB.
+    /// </summary>
     private void fillAuthor() {
       cbAuthor.ValueMember = "INITIAL";
       cbAuthor.DisplayMember = "NAME";
       cbAuthor.DataSource = PropertySet.CutlistData.GetAuthors().Tables[0];
     }
 
-    private void fillCustomer2() {
-      List<string> sc = PropertySet.CutlistData.GetCustomersForDrawing();
-      foreach (string s in sc) {
-        this.cbCustomer.Items.Add(s);
-      }
-    }
-
+    /// <summary>
+    /// Get customers from DB.
+    /// </summary>
     private void fillCustomer() {
       cbCustomer.ValueMember = "CUSTID";
       cbCustomer.DisplayMember = "CUSTSTRING";
       cbCustomer.DataSource = PropertySet.CutlistData.GetCustomersForDrawing2().Tables[0];
     }
 
+    /// <summary>
+    /// Fill Rev box.
+    /// </summary>
     private void fillRev() {
       for (int i = 100; i < 110; i++) {
         cbRevision.Items.Add(i);
@@ -256,12 +273,19 @@ namespace Redbrick_Addin {
       cbRevision.Items.Add("NS");
     }
 
+    /// <summary>
+    /// Get possible statuses.
+    /// </summary>
     private void fillStatus() {
       cbStatus.DataSource = PropertySet.CutlistData.States.Tables[0];
       cbStatus.DisplayMember = "STATE";
       cbStatus.ValueMember = "ID";
     }
 
+    /// <summary>
+    /// Validate that item number matches customer, if possible.
+    /// </summary>
+    /// <returns></returns>
     private bool check_itemnumber() {
       if (Properties.Settings.Default.Warn) {
         string pattern = @"([A-Z]{3,4})(\d{4})";
@@ -283,6 +307,10 @@ namespace Redbrick_Addin {
 
     public delegate void selectLayer();
 
+    /// <summary>
+    /// Execute a function on each page.
+    /// </summary>
+    /// <param name="f">Layer choosing function.</param>
     public void CorrectLayers(selectLayer f) {
       DrawingDoc d = (DrawingDoc)PropertySet.SwApp.ActiveDoc;
       Sheet curSht = (Sheet)d.GetCurrentSheet();
@@ -293,6 +321,9 @@ namespace Redbrick_Addin {
       d.ActivateSheet(curSht.GetName());
     }
 
+    /// <summary>
+    /// Make sure we have the right layer to show the latest LVL.
+    /// </summary>
     public void chooseLayer() {
       LayerMgr lm = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetLayerManager();
       string head = getLayerNameHeader(lm);
@@ -313,6 +344,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Determine whether it's an 'AMS' drawing, or otherwise.
+    /// </summary>
+    /// <param name="lm">A LayerMgr object.</param>
+    /// <returns>The first characters of layers we want on.</returns>
     private string getLayerNameHeader(LayerMgr lm) {
       foreach (string h in Properties.Settings.Default.LayerHeads) {
         foreach (string t in Properties.Settings.Default.LayerTails) {
@@ -325,9 +361,13 @@ namespace Redbrick_Addin {
       return "AMS";
     }
 
+    /// <summary>
+    /// Are there edited fields?
+    /// </summary>
     public bool IsDirty {
       get {
-        if (this.dirtTracker != null)                       // TODO: Why is this null sometimes?
+        // TODO: Why is this null sometimes?
+        if (this.dirtTracker != null)
           return dirtTracker.IsDirty;
         else
           return false;
@@ -341,6 +381,9 @@ namespace Redbrick_Addin {
 
     private DrawingProperties _propSet;
 
+    /// <summary>
+    /// Our set of properties.
+    /// </summary>
     public DrawingProperties PropertySet {
       get { return _propSet; }
       set { _propSet = value; }
@@ -348,6 +391,9 @@ namespace Redbrick_Addin {
 
     private DrawingRevs _revSet;
 
+    /// <summary>
+    /// Our set of LVLs.
+    /// </summary>
     public DrawingRevs RevSet {
       get { return _revSet; }
       set { _revSet = value; }
@@ -365,32 +411,39 @@ namespace Redbrick_Addin {
       //this.Close();
     }
 
+    /// <summary>
+    /// Time to write properties to drawing document.
+    /// </summary>
+    /// <param name="sender">Who clicked?</param>
+    /// <param name="e">Any args?</param>
     private void bOK_Click(object sender, EventArgs e) {
-      this.PropertySet.ReadControls();
-      this.PropertySet.Write(this.SwApp);
+      PropertySet.ReadControls();
+      PropertySet.Write(SwApp);
 
-      //this.RevSet.ReadControls();
-      this.RevSet.Write(this.SwApp);
-      (this.SwApp.ActiveDoc as ModelDoc2).ForceRebuild3(true);
-      //this.Close();
+      RevSet.Write(SwApp);
+      // If you're wondering what takes so long to write props on drawings sometimes, it's this:
+      (SwApp.ActiveDoc as ModelDoc2).ForceRebuild3(true);
     }
 
-    private void DrawingRedbrick_FormClosing(object sender, FormClosingEventArgs e) {
-      Properties.Settings.Default.Left = this.Left;
-      Properties.Settings.Default.Top = this.Top;
-      Properties.Settings.Default.Save();
-    }
-
+    /// <summary>
+    /// Nothing
+    /// </summary>
+    /// <param name="sender">unused</param>
+    /// <param name="e">unused</param>
     private void lbRevs_UserDeletedRow(object sender, DataGridViewRowEventArgs e) {
 
     }
 
+    /// <summary>
+    /// Write properties to drawing document.
+    /// </summary>
+    /// <param name="doc">The current DrawingDoc object.</param>
     public void Write(DrawingDoc doc) {
       if (!check_itemnumber()) {
         string itnu = label4.Text;
         string cuss = cbCustomer.Text.Split(' ')[0];
         PropertySet.SwApp.SendMsgToUser2(
-          string.Format("The item number '{0}' possibly doesn't match the customer '{1}'.",itnu, cuss),
+          string.Format("The item number '{0}' possibly doesn't match the customer '{1}'.", itnu, cuss),
           (int)swMessageBoxIcon_e.swMbWarning,
           (int)swMessageBoxResult_e.swMbHitOk);
       }
@@ -401,12 +454,16 @@ namespace Redbrick_Addin {
       this.dirtTracker = null;
     }
 
+    /// <summary>
+    /// Write properties to drawing document.
+    /// </summary>
+    /// <param name="md">The current ModelDoc object.</param>
     public void Write(ModelDoc2 md) {
       if (!check_itemnumber()) {
         string itnu = label4.Text.Trim();
         string cuss = cbCustomer.Text.Split('-')[0].Trim();
         System.Windows.Forms.MessageBox.Show(
-          string.Format("The item number '{0}' doesn't match the customer '{1}'.", itnu, cuss), 
+          string.Format("The item number '{0}' doesn't match the customer '{1}'.", itnu, cuss),
           "Wrong customer?",
           MessageBoxButtons.OK);
       }
@@ -446,6 +503,11 @@ namespace Redbrick_Addin {
 
     public event EventHandler Closing;
 
+    /// <summary>
+    /// Add/Update a cutlist.
+    /// </summary>
+    /// <param name="sender">Who clicked?</param>
+    /// <param name="e">Any args?</param>
     private void button1_Click(object sender, EventArgs e) {
       string descr = get_description(GetFirstView(_swApp));
       CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr);
@@ -462,10 +524,20 @@ namespace Redbrick_Addin {
       FillBoxes();
     }
 
+    /// <summary>
+    /// Nothing
+    /// </summary>
+    /// <param name="sender">unused</param>
+    /// <param name="e">unused</param>
     private void dpDate_ValueChanged(object sender, EventArgs e) {
 
     }
 
+    /// <summary>
+    /// Show what will be uploaded to the as a cutlist, only with hardware and other oddments filtered out.
+    /// </summary>
+    /// <param name="sender">Who clicked?</param>
+    /// <param name="e">Any args?</param>
     private void btnLookup_Click(object sender, EventArgs e) {
       DataDisplay dd = new DataDisplay();
       dd.swApp = _swApp;
@@ -474,7 +546,7 @@ namespace Redbrick_Addin {
       string name = string.Empty;
       swTableType.swTableType st;
 
-      //try {
+      try {
         st = new swTableType.swTableType(doc, Redbrick.MasterHashes);
         cd.IncrementOdometer(CutlistData.Functions.ExamineBOM);
         DataTable stp = (DataTable)DictToPartList(st.GetParts(Redbrick.BOMFilter), cd);
@@ -487,17 +559,24 @@ namespace Redbrick_Addin {
         dd.Grid.DataSource = stp;
 
         dd.ColorRows(
+          // λ! Wooo!
           (r) => { return r.Cells["Update"].Value.ToString().ToUpper() == "YES"; },
           Color.Red, 
           Color.Yellow
           );
 
         dd.ShowDialog();
-      //} catch (Exception ex) {
-      //  PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
-      //}
+      } catch (Exception ex) {
+        PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+      }
     }
 
+    /// <summary>
+    /// Show a list of materials used. Doesn't seem overly useful.
+    /// TODO: Make this button cool
+    /// </summary>
+    /// <param name="sender">Who clicked?</param>
+    /// <param name="e">Any args?</param>
     private void btnMatList_Click(object sender, EventArgs e) {
       DataDisplay dd = new DataDisplay();
       ModelDoc2 doc = (ModelDoc2)PropertySet.SwApp.ActiveDoc;
@@ -555,6 +634,7 @@ namespace Redbrick_Addin {
           (from f in u select f.Edging);
 
         dd.Grid.DataSource = ListToDataTable(v.ToList());
+        // heheheehe!
         dd.ColorRows((rw) => { return rw.Cells["Material"].Value.ToString().Contains("TBD"); }, 
           Color.Yellow, 
           Color.Red);
@@ -564,6 +644,12 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Take a dictionary, inspect the inner types of the resultant anonymous object, and make a DataTable object.
+    /// </summary>
+    /// <param name="d">A Dictionary<string, Part> of Part values, with their name as keys.</param>
+    /// <param name="cd">An active CutlistData object.</param>
+    /// <returns>A DataTable object.</returns>
     private static DataTable DictToPartList(Dictionary<string, Part> d, CutlistData cd) {
       List<object> lp = new List<object>();
       DataTable dt = new DataTable();
@@ -598,6 +684,7 @@ namespace Redbrick_Addin {
         lp.Add(o);
       }
 
+      // Wow, reflection! Fancy! C++ can't do this (yet).
       System.Reflection.PropertyInfo[] props = lp[0].GetType().GetProperties();
       foreach (var prop in props) {
         dt.Columns.Add(prop.Name);
@@ -614,7 +701,11 @@ namespace Redbrick_Addin {
       return dt;
     }
 
-
+    /// <summary>
+    /// Convert a simple List object into a DataTable object.
+    /// </summary>
+    /// <param name="l">A list of strings.</param>
+    /// <returns>A DataTable object.</returns>
     private static DataTable ListToDataTable(List<string> l) {
       List<object> lp = new List<object>();
       DataTable dt = new DataTable();
@@ -642,6 +733,11 @@ namespace Redbrick_Addin {
       return dt;
     }
 
+    /// <summary>
+    /// Returns the first view found in a drawing.
+    /// </summary>
+    /// <param name="sw">Active SldWorks object.</param>
+    /// <returns>A View object.</returns>
     public static SolidWorks.Interop.sldworks.View GetFirstView(SldWorks sw) {
       ModelDoc2 swModel = (ModelDoc2)sw.ActiveDoc;
       SolidWorks.Interop.sldworks.View v;
@@ -672,6 +768,11 @@ namespace Redbrick_Addin {
       return v;
     }
 
+    /// <summary>
+    /// Pull the description string from a part/assembly in a View.
+    /// </summary>
+    /// <param name="v">A View object.</param>
+    /// <returns>A description string.</returns>
     public static string get_description(SolidWorks.Interop.sldworks.View v) {
       ModelDoc2 md = (ModelDoc2)v.ReferencedDocument;
       ConfigurationManager cfMgr = md.ConfigurationManager;
@@ -699,6 +800,11 @@ namespace Redbrick_Addin {
       return _value;
     }
 
+    /// <summary>
+    /// Delete a LVL, and all sub LVLs.
+    /// </summary>
+    /// <param name="sender">Where'd the click come from?</param>
+    /// <param name="e">Args?</param>
     private void btnDelete_Click(object sender, EventArgs e) {
       string prtno = tbItemNoRes.Text;
       string revno = cbRevision.Text;
@@ -719,6 +825,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Update status on selection.
+    /// </summary>
+    /// <param name="sender">Where'd the click come from?</param>
+    /// <param name="e">Args?</param>
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
       if (label4.Text != string.Empty && cbRevision.Text != string.Empty) {
         int clid = PropertySet.CutlistData.GetCutlistID(label4.Text, cbRevision.Text);
@@ -728,10 +839,19 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Nothing
+    /// </summary>
+    /// <param name="sender">unused</param>
+    /// <param name="e">unused</param>
     private void cbRevision_SelectedIndexChanged(object sender, EventArgs e) {
-      //FillBoxes();
     }
 
+    /// <summary>
+    /// Store latest selected customer.
+    /// </summary>
+    /// <param name="sender">Where'd the click come from?</param>
+    /// <param name="e">Args?</param>
     private void cbCustomer_SelectedIndexChanged(object sender, EventArgs e) {
       if (custo_clicked) {
         if (Properties.Settings.Default.RememberLastCustomer) {
@@ -744,10 +864,20 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Determine whether there was a real user interation.
+    /// </summary>
+    /// <param name="sender">Where'd the click come from?</param>
+    /// <param name="e">Args?</param>
     private void cbCustomer_MouseDown(object sender, MouseEventArgs e) {
       custo_clicked = true;
     }
 
+    /// <summary>
+    /// Copy label content to the clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void label4_Click(object sender, EventArgs e) {
       Redbrick.Clip(label4.Text.Split(new string[] { " - " }, StringSplitOptions.None)[0]);
     }
