@@ -10,7 +10,6 @@ using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swcommands;
 using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
-//using SolidWorksTools;
 
 using System.Runtime.InteropServices;
 
@@ -53,6 +52,9 @@ namespace Redbrick_Addin {
       InitializeComponent();
     }
 
+    /// <summary>
+    /// After this object is created and some variables defined, we fire things up.
+    /// </summary>
     public void Start() {
       SwApp = RequestSW();
       prop = new SwProperties(_swApp);
@@ -64,6 +66,10 @@ namespace Redbrick_Addin {
       ConnectSelection();
     }
 
+    /// <summary>
+    /// I don't know how often this is used, but, the Redbrick (used to?) occasionally stop updating.
+    /// So I created this function to re-fire things up. I hardly use it manually anymore.
+    /// </summary>
     public void ReStart() {
       ClearControls(this);
 
@@ -73,6 +79,14 @@ namespace Redbrick_Addin {
       ConnectSelection();
     }
 
+    /// <summary>
+    /// This function uses this.ReStart(). Closing docs and switching to lightweight models screws stuff up,
+    /// so I handle them specially.
+    /// HINT: Lightweight models have no properties.
+    /// </summary>
+    /// <param name="Command">What command did SW receive from the user?</param>
+    /// <param name="reason">I don't use this.</param>
+    /// <returns>Nothing useful, unless you want a 0.</returns>
     int SwApp_CommandCloseNotify(int Command, int reason) {
       if ((swCommands_e)Command == swCommands_e.swCommands_Close || (swCommands_e)Command == swCommands_e.swCommands_Close_) {
         ClearControls(this);
@@ -87,17 +101,30 @@ namespace Redbrick_Addin {
       return 0;
     }
 
+    /// <summary>
+    /// Let's not leave the Redbrick looking useable.
+    /// </summary>
+    /// <param name="FileName">Unused</param>
+    /// <param name="reason">Unused</param>
+    /// <returns>A 0.</returns>
     int SwApp_FileCloseNotify(string FileName, int reason) {
       ClearControls(this);
       return 0;
     }
 
+    /// <summary>
+    /// Solidworks is closed.
+    /// </summary>
+    /// <returns>0!</returns>
     int SwApp_DestroyNotify() {
       ClearControls(this);
-      // Solidworks closed
       return 0;
     }
 
+    /// <summary>
+    /// Toss out old events and reconnect the Redbrick to the new doc.
+    /// </summary>
+    /// <returns>0. Every time.</returns>
     int SwApp_ActiveDocChangeNotify() {
       if (SwApp == null)
         SwApp = RequestSW();
@@ -117,6 +144,10 @@ namespace Redbrick_Addin {
       return 0;
     }
 
+    /// <summary>
+    /// Check for an existing hash. We basically want it to be fresh every time.
+    /// This would be a good place to abuse the Redbrick, if you had a mind to.
+    /// </summary>
     private void AddHash() {
       System.IO.FileInfo fi;
       try {
@@ -125,7 +156,7 @@ namespace Redbrick_Addin {
           prop.PartFileInfo = fi;
 
           if (!prop.Contains("CRC32")) {
-            prop.Hash = GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
+            prop.Hash = Redbrick.GetHash(string.Format("{0}\\{1}", prop.PartFileInfo.Directory.FullName, prop.PartFileInfo.Name));
             SwProperty p = new SwProperty("CRC32", swCustomInfoType_e.swCustomInfoNumber, prop.Hash.ToString(), true);
             p.Old = false;
             prop.Add(p);
@@ -142,6 +173,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Run this function after this.Document is populated. It fills two ref vars with swDocumentTypes_e.
+    /// </summary>
+    /// <param name="d">The document type.</param>
+    /// <param name="od">The top-level document type.</param>
     private void GetTypes(ref swDocumentTypes_e d, ref swDocumentTypes_e od) {
       swDocumentTypes_e docT = (swDocumentTypes_e)Document.GetType();
       ModelDoc2 overDoc = (ModelDoc2)_swApp.ActiveDoc;
@@ -164,6 +200,9 @@ namespace Redbrick_Addin {
       od = overDocT;
     }
 
+    /// <summary>
+    /// As yet unused warning.
+    /// </summary>
     private void AskWrite() {
       string q = "Write unwritten properties?";
       swMessageBoxResult_e r = (swMessageBoxResult_e)SwApp.SendMsgToUser2(q,
@@ -190,26 +229,27 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Overgrown monster function that does everything. We need some refactoring here.
+    /// </summary>
     public void ConnectSelection() {
       if (Properties.Settings.Default.IdiotLight) {
-        string q = string.Format("I lost property data because you didn't click the green check.");
         if (PartSetup && mrb.IsDirty) {
-        //  SwApp.SendMsgToUser2(q,
-        //(int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
           if (System.Windows.Forms.MessageBox.Show(@"Save property changes?", @"Properties changed", MessageBoxButtons.YesNo) == DialogResult.Yes)
             Write();
         }
         if (DrawSetup && drb.IsDirty) {
-        //  SwApp.SendMsgToUser2(q,
-        //(int)swMessageBoxIcon_e.swMbQuestion, (int)swMessageBoxBtn_e.swMbOk);
           if (System.Windows.Forms.MessageBox.Show(@"Save property changes?", @"Properties changed", MessageBoxButtons.YesNo) == DialogResult.Yes)
             Write();
         }
       }
 
+      // Since I create objects and just toss them out liberally, I want to force garbage collection.
+      // I think this leaves fewer GDI objects around. (This seems to be a good thing)
       System.GC.Collect(2, GCCollectionMode.Forced);
       prop.CutlistID = 0;
       if (Document != null) {
+        // ignore clicks on the same object
         if (Document != md_last) {
 
           // Blow out the propertyset so we can get new ones.
@@ -226,7 +266,7 @@ namespace Redbrick_Addin {
             case swDocumentTypes_e.swDocASSEMBLY:
               DisconnectAssemblyEvents();
               SetupAssy((ModelDoc2)_swApp.ActiveDoc);
-
+              // a switch in a switch!
               switch (docT) {
                 case swDocumentTypes_e.swDocASSEMBLY:
                   regen_ok = true;
@@ -355,116 +395,10 @@ namespace Redbrick_Addin {
     }
 #endif
 
-    public void ConnectSelection2() { // Pretty sure I can deprecate this.
-      System.GC.Collect(2, GCCollectionMode.Forced);
-      // Blow out the propertyset so we can get new ones.
-      prop.Clear();
-
-      if (Document != null) {
-        Enabled = true;
-        AddHash();
-
-        // what sort of doc is open?
-        swDocumentTypes_e docT = swDocumentTypes_e.swDocNONE;
-        swDocumentTypes_e overDocT = swDocumentTypes_e.swDocNONE;
-        GetTypes(ref docT, ref overDocT);
-
-        switch (docT) {
-          case swDocumentTypes_e.swDocASSEMBLY:
-            if (overDocT != swDocumentTypes_e.swDocASSEMBLY) {
-              DisconnectAssemblyEvents();
-            }
-            if (!PartSetup) {
-              // ClearControls(this); // <-- redundant
-              //prop.GetPropertyData(Document);
-              // Part/assembly props are about the same
-              SetupPart(prop.modeldoc);
-              // link whatever's in the prop to the controls
-              mrb.Update(ref prop);
-            } else {
-              // already set up. We can re-link with out re-setting-up.
-              mrb.Update(ref prop);
-            }
-            // this pretty much only assigns the selection manager and sets up events
-            if (!AssySetup)
-              SetupAssy();
-            break;
-          case swDocumentTypes_e.swDocDRAWING:
-            ClearControls(this);
-            SetupDrawing();
-            break;
-          // What's this?
-          case swDocumentTypes_e.swDocNONE:
-            SetupOther();
-            break;
-          case swDocumentTypes_e.swDocPART:
-            if (AssySetup && overDocT == swDocumentTypes_e.swDocPART) {
-              DisconnectAssemblyEvents();
-            }
-
-            if (!AssySetup && overDocT == swDocumentTypes_e.swDocASSEMBLY) {
-              SetupAssy();
-            }
-
-            if (!PartSetup) {
-              // ClearControls(this); // <-- redundant
-              // setup
-              SetupPart(prop.modeldoc);
-              // link
-              mrb.Update(ref prop);
-            } else {
-              DisconnectPartEvents();
-              ConnectPartEvents(prop.modeldoc);
-              PartSetup = true; // OK, this isn't how I meant to use this.
-              // or just link
-              mrb.Update(ref prop);
-            }
-            break;
-          case swDocumentTypes_e.swDocSDM:
-            // What's this?
-            SetupOther();
-            break;
-          default:
-            // OK, whatever.
-            SetupOther();
-            break;
-        }
-      } else {
-        Enabled = false;
-      }
-    }
-
-    static private int GetHash(string fullPath) {
-
-      DamienG.Security.Cryptography.Crc32 crc = new DamienG.Security.Cryptography.Crc32();
-
-      byte[] b = new byte[fullPath.Length];
-      string hash = string.Empty;
-
-      for (int i = 0; i < fullPath.Length; i++)
-        b[i] = (byte)fullPath[i];
-
-      foreach (byte byt in crc.ComputeHash(b))
-        hash += byt.ToString("x2").ToLower();
-
-      try {
-        return int.Parse(hash, System.Globalization.NumberStyles.HexNumber);
-      } catch (Exception) {
-        return 0;
-      }
-    }
-
-    private void SetupAssy() {
-      // Get a selection manager.
-      swSelMgr = Document.SelectionManager;
-
-      // connect events
-      ConnectAssemblyEvents();
-
-      // Zap!
-      AssySetup = true;
-    }
-
+    /// <summary>
+    /// Use this if we're looking at an assembly document.
+    /// </summary>
+    /// <param name="md">A ModelDoc2 object.</param>
     private void SetupAssy(ModelDoc2 md) {
       // Get a selection manager.
       swSelMgr = md.SelectionManager;
@@ -476,6 +410,9 @@ namespace Redbrick_Addin {
       AssySetup = true;
     }
 
+    /// <summary>
+    /// Use this if we're looking at a drawing document.
+    /// </summary>
     private void SetupDrawing() {
       // New drawing handler. It can use the whole swapp since it doesn't have to figure out the config.
       drb = new DrawingRedbrick(_swApp);
@@ -484,6 +421,7 @@ namespace Redbrick_Addin {
       Controls.Add(drb);
 
       // whatever's in here, make it dock.
+      // TODO: This is kinda stupid. It should be fixed 9-19-2016.
       foreach (Control item in Controls)
         item.Dock = DockStyle.Fill;
 
@@ -496,6 +434,10 @@ namespace Redbrick_Addin {
       drb.unselect();
     }
 
+    /// <summary>
+    /// Use this if we're looking at a part document. But it's also used were we're looking
+    /// at an assembly because we use the same properties.
+    /// </summary>
     private void SetupPart() {
       // Blow out any existing controls, and dump events.
       ClearControls(this);
@@ -529,6 +471,11 @@ namespace Redbrick_Addin {
       PartSetup = true;
     }
 
+    /// <summary>
+    /// Use this if we're looking at a part document. But it's also used were we're looking
+    /// at an assembly because we use the same properties.
+    /// </summary>
+    /// <param name="md">A ModelDoc2 object.</param>
     private void SetupPart(ModelDoc2 md) {
       // Blow out any existing controls, and dump events.
       ClearControls(this);
@@ -563,24 +510,10 @@ namespace Redbrick_Addin {
       PartSetup = true;
     }
 
-    private void ClearControls2(Control c) {
-      // any controls, no matter how deep, g'bye.
-      foreach (Control item in c.Controls) {
-        if (item.HasChildren) {
-          /* Recurse */
-          ClearControls(item);
-        }
-        c.Controls.Remove(item);
-        item.Dispose();
-      }
-
-      //if (Document != null && Document.GetType() != (int)swDocumentTypes_e.swDocASSEMBLY)
-      DisconnectAssemblyEvents();
-      DisconnectPartEvents();
-      DisconnectDrawingEvents();
-      // everything's undone.
-    }
-
+    /// <summary>
+    /// Blank out the Redbrick
+    /// </summary>
+    /// <param name="c">A Control object.</param>
     private void ClearControls(Control c) {
       foreach (Control item in c.Controls) {
         c.Controls.Remove(item);
@@ -596,7 +529,9 @@ namespace Redbrick_Addin {
       // everything's undone.
     }
 
-    // if this ever comes up, I suppose it's because the wrong kind of doc is open.
+    /// <summary>
+    /// If this ever comes up, I suppose it's because the wrong kind of doc is open.
+    /// </summary>
     private void SetupOther() {
       // Blow out any existing controls, and dump events.
       ClearControls(this);
@@ -606,29 +541,10 @@ namespace Redbrick_Addin {
           (int)swMessageBoxBtn_e.swMbOk);
     }
 
-    private void ConnectAssemblyEvents() {
-      if ((Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !AssmEventsAssigned) {
-        ad = (AssemblyDoc)Document;
-        ad.UserSelectionPreNotify += ad_UserSelectionPreNotify;
-
-        // user clicks part/subassembly
-        ad.UserSelectionPostNotify += ad_UserSelectionPostNotify;
-
-        // doc closing, I think.
-        ad.DestroyNotify2 += ad_DestroyNotify2;
-
-        // Not sure, and not implemented yet.
-        ad.ActiveDisplayStateChangePostNotify += ad_ActiveDisplayStateChangePostNotify;
-
-        // switching docs
-        ad.ActiveViewChangeNotify += ad_ActiveViewChangeNotify;
-        DisconnectDrawingEvents();
-        AssmEventsAssigned = true;
-      } else {
-        // We're already set up, I guess.
-      }
-    }
-
+    /// <summary>
+    /// Hook up events for the assembly context.
+    /// </summary>
+    /// <param name="md">A ModelDoc2 object.</param>
     private void ConnectAssemblyEvents(ModelDoc2 md) {
       if ((md.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) && !AssmEventsAssigned) {
         ad = (AssemblyDoc)md;
@@ -652,6 +568,9 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Hook up events in the drawing context.
+    /// </summary>
     private void ConnectDrawingEvents() {
       if (Document.GetType() == (int)swDocumentTypes_e.swDocDRAWING && !DrawEventsAssigned) {
         dd = (DrawingDoc)Document;
@@ -666,11 +585,22 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// This proved to be annoying.
+    /// </summary>
+    /// <param name="EntityType">Unused</param>
+    /// <param name="itemName">Unused</param>
+    /// <returns>Every time, a 0!</returns>
     int dd_AddItemNotify(int EntityType, string itemName) {
       //drb.DrbUpdate();
       return 0;
     }
-    
+
+    /// <summary>
+    /// If you have a blank drawing, conditions change as soon as you add a view. Alert the Redbrick!
+    /// </summary>
+    /// <param name="viewBeingAdded">Unused</param>
+    /// <returns>0</returns>
     int dd_ViewNewNotify2(object viewBeingAdded) {
       if (viewBeingAdded is ModelDoc2) {
         Document = (ModelDoc2)viewBeingAdded;
@@ -679,16 +609,34 @@ namespace Redbrick_Addin {
       return 0;
     }
 
+    /// <summary>
+    /// Update when the drawing is gone.
+    /// </summary>
+    /// <returns>0</returns>
     int dd_DestroyNotify() {
       ConnectSelection();
       return 0;
     }
 
+    /// <summary>
+    /// Dump controls if there's no longer any reason to have them.
+    /// </summary>
+    /// <param name="DestroyType">Unused</param>
+    /// <returns>0</returns>
     int dd_DestroyNotify2(int DestroyType) {
       ClearControls(this);
       return 0;
     }
 
+    /// <summary>
+    /// This never really worked the way I hoped.
+    /// </summary>
+    /// <param name="propName">Prop name</param>
+    /// <param name="Configuration">Configuration</param>
+    /// <param name="oldValue">unused</param>
+    /// <param name="NewValue">New Value</param>
+    /// <param name="valueType">Type of value</param>
+    /// <returns>0</returns>
     int dd_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType) {
       SwProperty p = prop.GetProperty(propName);
       p.Value = NewValue;
@@ -697,6 +645,9 @@ namespace Redbrick_Addin {
       return 0;
     }
 
+    /// <summary>
+    /// Hook up events in the part document context.
+    /// </summary>
     private void ConnectPartEvents() {
       if (Document.GetType() == (int)swDocumentTypes_e.swDocPART && !PartEventsAssigned) {
         pd = (PartDoc)Document;
@@ -710,12 +661,22 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Update after save. We get a filename and a hash when we've saved something that was unsaved.
+    /// </summary>
+    /// <param name="saveType">unused</param>
+    /// <param name="FileName">unused</param>
+    /// <returns>0</returns>
     int pd_FileSavePostNotify(int saveType, string FileName) {
       md_last = null;
       ConnectSelection();
       return 0;
     }
 
+    /// <summary>
+    /// Hook up events in the part document context.
+    /// </summary>
+    /// <param name="md">A ModelDoc2 object.</param>
     private void ConnectPartEvents(ModelDoc2 md) {
       if (md.GetType() == (int)swDocumentTypes_e.swDocPART && !PartEventsAssigned) {
         pd = (PartDoc)md;
@@ -730,6 +691,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Update on regen.
+    /// </summary>
+    /// <returns>0</returns>
     int pd_RegenNotify() {
       if (regen_ok) {
         md_last = null;
@@ -737,18 +702,35 @@ namespace Redbrick_Addin {
       }
       return 0;
     }
-    
+
+    /// <summary>
+    /// Update on destruction of object.
+    /// </summary>
+    /// <param name="DestroyType">unused</param>
+    /// <returns>0</returns>
     int pd_DestroyNotify2(int DestroyType) {
       ClearControls(this);
       return 0;
     }
 
+    /// <summary>
+    /// This has never worked the way I hoped it would.
+    /// </summary>
+    /// <param name="propName">Prop name</param>
+    /// <param name="Configuration">Configuration</param>
+    /// <param name="oldValue">unused</param>
+    /// <param name="NewValue">New Value</param>
+    /// <param name="valueType">Type of value</param>
+    /// <returns>0</returns>
     int pd_ChangeCustomPropertyNotify(string propName, string Configuration, string oldValue, string NewValue, int valueType) {
       md_last = null;
       ConnectSelection();
       return 0;
     }
 
+    /// <summary>
+    /// Unhook events in the assembly context.
+    /// </summary>
     private void DisconnectAssemblyEvents() {
       // unhook 'em all
       if (AssmEventsAssigned) {
@@ -763,6 +745,9 @@ namespace Redbrick_Addin {
       AssySetup = false;
     }
 
+    /// <summary>
+    /// Unhook events in the part context.
+    /// </summary>
     private void DisconnectPartEvents() {
       // unhook 'em all
       if (PartEventsAssigned) {
@@ -775,6 +760,9 @@ namespace Redbrick_Addin {
       PartSetup = false;
     }
 
+    /// <summary>
+    /// Unhook events in the drawing context.
+    /// </summary>
     private void DisconnectDrawingEvents() {
       // unhook 'em all
       if (DrawEventsAssigned) {
@@ -787,35 +775,11 @@ namespace Redbrick_Addin {
       DrawSetup = false;
     }
 
-    private bool MaybeSave() {
-      //swMessageBoxResult_e dr = (swMessageBoxResult_e)SwApp.SendMsgToUser2(Properties.Resources.MaybeSave,
-      //    (int)swMessageBoxIcon_e.swMbQuestion,
-      //    (int)swMessageBoxBtn_e.swMbYesNo);
-
-      //switch (dr) {
-      //  case swMessageBoxResult_e.swMbHitAbort:
-      //    break;
-      //  case swMessageBoxResult_e.swMbHitCancel:
-      //    break;
-      //  case swMessageBoxResult_e.swMbHitIgnore:
-      //    break;
-      //  case swMessageBoxResult_e.swMbHitNo:
-      //    return false;
-      //  case swMessageBoxResult_e.swMbHitOk:
-      //    break;
-      //  case swMessageBoxResult_e.swMbHitRetry:
-      //    break;
-      //  case swMessageBoxResult_e.swMbHitYes:
-      //    return true;
-      //  default:
-      //    return false;
-      //}
-
-      return true;
-    }
-
+    /// <summary>
+    /// A different doc is active, let's reconnect.
+    /// </summary>
+    /// <returns>0</returns>
     int ad_ActiveViewChangeNotify() {
-      // a different doc is active, let's reconnect.
       Document = SwApp.ActiveDoc;
       ConnectSelection();
       return 0;
@@ -827,18 +791,37 @@ namespace Redbrick_Addin {
       return 0;
     }
 
+    /// <summary>
+    /// In VBA, it would delete files from the network if the references still pointed to their objects. Just being superstitious.
+    /// </summary>
+    /// <param name="DestroyType">unused</param>
+    /// <returns>0</returns>
     int ad_DestroyNotify2(int DestroyType) {
       ClearControls(this);
-      // In VBA, it would delete files from the network if the references still pointed to their objects.
       Document = null;
-      //SwApp = null;
       return 0;
     }
 
+    /// <summary>
+    /// Nothing! Haha!
+    /// </summary>
+    /// <param name="SelType">unused</param>
+    /// <returns>0</returns>
     int ad_UserSelectionPreNotify(int SelType) {
       return 0;
     }
 
+    /// <summary>
+    /// On click, update Redbrick. 
+    /// 
+    /// This is where we used to wait 10-20 seconds for the built-in property manager. 
+    /// 
+    /// If you were wondering, people don't get raises for that kind of increase in productivity. 
+    /// It pays the same as sitting in front of a brake all day. I'm considering bringing the
+    /// wait back. We just need this:
+    /// System.Threading.Thread.Sleep(10000);
+    /// </summary>
+    /// <returns>0</returns>
     int ad_UserSelectionPostNotify() {
       // What do we got?
       swSelComp = swSelMgr.GetSelectedObjectsComponent2(1);
@@ -857,13 +840,15 @@ namespace Redbrick_Addin {
       return 0;
     }
 
-
     int pd_ActiveConfigChangePostNotify() {
       md_last = null;
       ConnectSelection();
       return 0;
     }
 
+    /// <summary>
+    /// I put all the L x W x T x WT validation in here. Refactoring needed.
+    /// </summary>
     private void Check() {
       if ((Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) &&
         !Properties.Settings.Default.WarnExcludeAssy) {
@@ -910,6 +895,9 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Write to property set, and update Redbrick.
+    /// </summary>
     public void Write() {
       if (PartSetup) {
         md_last = null;
@@ -931,25 +919,10 @@ namespace Redbrick_Addin {
       }
     }
 
-    public void Write(SldWorks s) {
-      if (PartSetup) {
-        md_last = null;
-        regen_ok = false;
-        // update doc metadata & rebuild & save
-        mrb.Write((ModelDoc2)s.ActiveDoc);
-        Check();
-        // rescoop new metadata
-        ConnectSelection();
-        //this.mrb.Update(ref this.prop);
-      }
-
-      if (DrawSetup) {
-        // update doc metadata & rebuild & save
-        drb.Write((DrawingDoc)s.ActiveDoc);
-      }
-    }
-
-    // This is how we get the swapp object down here.
+    /// <summary>
+    /// This is how we get the swapp object down here.
+    /// </summary>
+    /// <returns>A SldWorks object.</returns>
     protected SldWorks RequestSW() {
       if (OnRequestSW == null)
         throw new Exception("No SW!");
