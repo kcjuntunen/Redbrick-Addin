@@ -24,6 +24,9 @@ namespace Redbrick_Addin {
       init();
     }
 
+    /// <summary>
+    /// Pull data from config resources and populate the form.
+    /// </summary>
     private void init() {
       cbDefaultMaterial.DisplayMember = "DESCR";
       cbDefaultMaterial.ValueMember = "MATID";
@@ -61,14 +64,29 @@ namespace Redbrick_Addin {
       initialated = true;
     }
 
+    /// <summary>
+    /// On load, restore position and size.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void RedbrickConfiguration_Load(object sender, EventArgs e) {
       Location = Properties.Settings.Default.RBConfigLocation;
       Size = Properties.Settings.Default.RBConfigSize;
     }
 
+    /// <summary>
+    /// I was saving data here, but it didn't seem to keep.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void RedbrickConfiguration_FormClosing(object sender, FormClosingEventArgs e) {
     }
 
+    /// <summary>
+    /// Update user department data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void cbDept_SelectedIndexChanged(object sender, EventArgs e) {
       if (initialated) {
         int tp = 0;
@@ -78,18 +96,38 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Update rev limit data
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void cbRevLimit_SelectedIndexChanged(object sender, EventArgs e) {
       Properties.Settings.Default.RevLimit = (int)cbRevLimit.SelectedIndex + 1;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbDBEnabled_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.EnableDBWrite = chbDBEnabled.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbTestingMode_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.Testing = chbTestingMode.Checked;
     }
 
+    /// <summary>
+    /// Save data and close.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void btnOK_Click(object sender, EventArgs e) {
       Properties.Settings.Default.RBConfigLocation = Location;
       Properties.Settings.Default.RBConfigSize = Size;
@@ -97,10 +135,20 @@ namespace Redbrick_Addin {
       Close();
     }
 
+    /// <summary>
+    /// Just close.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void btnCancel_Click(object sender, EventArgs e) {
       Close();
     }
 
+    /// <summary>
+    /// What material should we default to?
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void cbDefaultMaterial_SelectedIndexChanged(object sender, EventArgs e) {
       int tp = Properties.Settings.Default.DefaultMaterial;
       if (initialated && int.TryParse(cbDefaultMaterial.SelectedValue.ToString(), out tp)) {
@@ -108,14 +156,29 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbFlameWar_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.FlameWar = chbFlameWar.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbWarnings_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.Warn = chbWarnings.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data. Also triggers a file selection box.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbSounds_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.MakeSounds = chbSounds.Checked;
       if (chbSounds.Checked && sound_clicked) {
@@ -132,40 +195,85 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbSounds_Click(object sender, EventArgs e) {
       sound_clicked = true;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbIdiotLight_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.IdiotLight = chbIdiotLight.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbOnlyActive_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.OnlyActiveAuthors = chbOnlyActive.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbOnlyActiveCustomers_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.OnlyCurrentCustomers = chbOnlyActiveCustomers.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbCustomerWarn_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.RememberLastCustomer = chbRememberCustomer.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void chbOpWarnings_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.ProgWarn = chbOpWarnings.Checked;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void checkBox1_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.WarnExcludeAssy = checkBox1.Checked;
     }
 
+    /// <summary>
+    /// Update textbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void textBox1_Leave(object sender, EventArgs e) {
       System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
       sc.Add(textBox1.Text);
       Properties.Settings.Default.BOMFilter = sc;
     }
 
+    /// <summary>
+    /// Update checkbox data.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void checkBox2_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.CHIHideLWH = checkBox2.Checked;
     }
