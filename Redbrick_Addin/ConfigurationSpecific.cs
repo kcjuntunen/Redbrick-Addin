@@ -23,6 +23,14 @@ namespace Redbrick_Addin {
 
       InitializeComponent();
       init();
+    }
+
+    /// <summary>
+    /// Our own init.
+    /// </summary>
+    private void init() {
+      label1.Click += label1_Click;
+
       fillMat();
       fillStatus();
       ComboBox[] cc = { this.cbEf, this.cbEb, this.cbEl, this.cbEr };
@@ -32,16 +40,19 @@ namespace Redbrick_Addin {
       LinkControls();
     }
 
-    private void init() {
-      label1.Click += label1_Click;
-    }
-
+    /// <summary>
+    /// Populate possible statuses.
+    /// </summary>
     private void fillStatus() {
       cbStatus.DataSource = propertySet.cutlistData.States.Tables[0];
       cbStatus.DisplayMember = "STATE";
       cbStatus.ValueMember = "ID";
     }
 
+    /// <summary>
+    /// Update fields with data from the SwProperties we receive.
+    /// </summary>
+    /// <param name="prop">An SwProperties object.</param>
     public void Update(ref SwProperties prop) {
       propertySet = prop;
       configurationName = prop.modeldoc.ConfigurationManager.ActiveConfiguration.Name;
@@ -52,8 +63,10 @@ namespace Redbrick_Addin {
       Redbrick.unselect(tableLayoutPanel1.Controls);
     }
 
+    /// <summary>
+    /// This is a sub-function of Update(). I broke it out so it could be executed by itself.
+    /// </summary>
     public void Updte() {
-
       _edgeDiffL = 0.0;
       _edgeDiffW = 0.0;
       LinkControls();
@@ -64,6 +77,9 @@ namespace Redbrick_Addin {
       UpdateCutlistBox();
     }
 
+    /// <summary>
+    /// Figure out where an item is used, and select the last one the user had selected.
+    /// </summary>
     private void UpdateCutlistBox() {
       DataSet ds = cd.GetWherePartUsed(propertySet.PartName);
       int s = 1;
@@ -108,20 +124,23 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Link controls to properties.
+    /// </summary>
     private void LinkControls() {
-      propertySet.LinkControlToProperty("MATID", false, this.cbMat);
-      propertySet.LinkControlToProperty("EFID", false, this.cbEf);
-      propertySet.LinkControlToProperty("EBID", false, this.cbEb);
-      propertySet.LinkControlToProperty("ELID", false, this.cbEl);
-      propertySet.LinkControlToProperty("ERID", false, this.cbEr);
+      propertySet.LinkControlToProperty("MATID", false, cbMat);
+      propertySet.LinkControlToProperty("EFID", false, cbEf);
+      propertySet.LinkControlToProperty("EBID", false, cbEb);
+      propertySet.LinkControlToProperty("ELID", false, cbEl);
+      propertySet.LinkControlToProperty("ERID", false, cbEr);
       propertySet.CutlistQuantity = nudQ.Value.ToString();
 
       if (Properties.Settings.Default.Testing) {
-        propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, this.cbMat);
-        propertySet.LinkControlToProperty("EDGE FRONT (L)", false, this.cbEf);
-        propertySet.LinkControlToProperty("EDGE BACK (L)", false, this.cbEb);
-        propertySet.LinkControlToProperty("EDGE LEFT (W)", false, this.cbEl);
-        propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, this.cbEr);
+        propertySet.LinkControlToProperty("CUTLIST MATERIAL", false, cbMat);
+        propertySet.LinkControlToProperty("EDGE FRONT (L)", false, cbEf);
+        propertySet.LinkControlToProperty("EDGE BACK (L)", false, cbEb);
+        propertySet.LinkControlToProperty("EDGE LEFT (W)", false, cbEl);
+        propertySet.LinkControlToProperty("EDGE RIGHT (W)", false, cbEr);
       }
 
       if (propertySet.cutlistData.ReturnHash(propertySet) == propertySet.Hash) {
@@ -131,6 +150,12 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Find the index of a val.
+    /// </summary>
+    /// <param name="dt">A DataTable object.</param>
+    /// <param name="val">The string, of which we want the index.</param>
+    /// <returns></returns>
     private int GetIndex(DataTable dt, string val) {
       if (dt != null) {
         int count = 0;
@@ -143,29 +168,9 @@ namespace Redbrick_Addin {
       return -1;
     }
 
-    private void fillComboBoxes() {
-      Thread t = new Thread(new ThreadStart(fillMat));
-      try {
-        t.Start();
-      } catch (ThreadStateException tse) {
-        System.Windows.Forms.MessageBox.Show(tse.Message);
-      } catch (OutOfMemoryException oome) {
-        System.Windows.Forms.MessageBox.Show(oome.Message);
-      }
-
-      ComboBox[] cc = { cbEf, cbEb, cbEl, cbEr };
-      foreach (ComboBox c in cc) {
-        t = new Thread(new ParameterizedThreadStart(fillEdg));
-        try {
-          t.Start((object)c);
-        } catch (ThreadStateException tse) {
-          System.Windows.Forms.MessageBox.Show(tse.Message);
-        } catch (OutOfMemoryException oome) {
-          System.Windows.Forms.MessageBox.Show(oome.Message);
-        }
-      }
-    }
-
+    /// <summary>
+    /// Fill material combobox with materials.
+    /// </summary>
     private void fillMat() {
       cbMat.DataSource = cd.Materials.Tables[0];
       cbMat.DisplayMember = "DESCR";
@@ -173,6 +178,10 @@ namespace Redbrick_Addin {
       cbMat.Text = string.Empty;
     }
 
+    /// <summary>
+    /// Fill edging combobox with edgings.
+    /// </summary>
+    /// <param name="occ"></param>
     private void fillEdg(object occ) {
       ComboBox c = (ComboBox)occ;
       c.DataSource = cd.Edges.Tables[0];
@@ -181,6 +190,10 @@ namespace Redbrick_Addin {
       c.Text = string.Empty;
     }
 
+    /// <summary>
+    /// Use all the Controls so long as it's not a metal part.
+    /// </summary>
+    /// <param name="opType"></param>
     public void ToggleFields(int opType) {
       bool wood = (opType != 2);
       lEf.Enabled = wood;
@@ -200,6 +213,12 @@ namespace Redbrick_Addin {
       cbEr.Enabled = wood;
     }
 
+    /// <summary>
+    /// Subtract edging thickness from part size.
+    /// </summary>
+    /// <param name="cb1"></param>
+    /// <param name="cb2"></param>
+    /// <param name="targ"></param>
     private void UpdateDiff(ComboBox cb1, ComboBox cb2, ref double targ) {
       targ = 0.0;
       double t = 0.0;
@@ -225,6 +244,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Select material; update color.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbMat_SelectedIndexChanged(object sender, EventArgs e) {
       if (cbMat.SelectedValue != null)
         lMatColor.Text = (cbMat.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
@@ -232,6 +256,11 @@ namespace Redbrick_Addin {
         lMatColor.Text = string.Empty;
     }
 
+    /// <summary>
+    /// Select edge; update color.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbEf_SelectedIndexChanged(object sender, EventArgs e) {
       if (cbEf.SelectedValue != null)
         leFColor.Text = (cbEf.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
@@ -241,6 +270,11 @@ namespace Redbrick_Addin {
       UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
     }
 
+    /// <summary>
+    /// Select edge; update color.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbEb_SelectedIndexChanged(object sender, EventArgs e) {
       if (cbEb.SelectedValue != null)
         leBColor.Text = (cbEb.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
@@ -250,6 +284,11 @@ namespace Redbrick_Addin {
       UpdateDiff(cbEf, cbEb, ref _edgeDiffL);
     }
 
+    /// <summary>
+    /// Select edge; update color.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbEl_SelectedIndexChanged(object sender, EventArgs e) {
       if (cbEl.SelectedValue != null)
         leLColor.Text = (cbEl.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
@@ -259,6 +298,11 @@ namespace Redbrick_Addin {
       UpdateDiff(cbEl, cbEr, ref _edgeDiffW);
     }
 
+    /// <summary>
+    /// Select edge; update color.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbEr_SelectedIndexChanged(object sender, EventArgs e) {
       if (this.cbEr.SelectedValue != null)
         leRColor.Text = (cbEr.SelectedItem as System.Data.DataRowView)["COLOR"].ToString();
@@ -304,6 +348,11 @@ namespace Redbrick_Addin {
       set { _edgeDiffW = value; }
     }
 
+    /// <summary>
+    /// Select cutlist; determine status; update fields.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbCutlist_SelectedIndexChanged(object sender, EventArgs e) {
       if (changingwithmouse) {
         int cc = 0;
@@ -341,10 +390,20 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Cutlist changed programmatically. I don't want events triggered without real user interaction.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbCutlist_MouseClick(object sender, MouseEventArgs e) {
       changingwithmouse = true;
     }
 
+    /// <summary>
+    /// Save if unsaved, and add Cutlist to DB.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnMakeOriginal_Click(object sender, EventArgs e) {
       int hash = propertySet.cutlistData.GetHash(propertySet.PartName);
 
@@ -394,6 +453,9 @@ namespace Redbrick_Addin {
       Updte();
     }
 
+    /// <summary>
+    /// Pop up the CutlistHeaderInfo form.
+    /// </summary>
     private void AddToCutlist() {
       string question = string.Format(Properties.Resources.AddToExistingCutlist, propertySet.PartName);
       swMessageBoxResult_e res = (swMessageBoxResult_e)propertySet.SwApp.SendMsgToUser2(question,
@@ -427,16 +489,31 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// Set status.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e) {
       if (cbStatus.SelectedValue != null && cbCutlist.SelectedValue != null) {
         propertySet.cutlistData.SetState((int)cbCutlist.SelectedValue, (int)cbStatus.SelectedValue);
       }
     }
 
+    /// <summary>
+    /// Tell property of current qty.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void nudQ_ValueChanged(object sender, EventArgs e) {
       propertySet.CutlistQuantity = nudQ.Value.ToString();
     }
 
+    /// <summary>
+    /// Remove part from particular cutlist.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void bRemove_Click(object sender, EventArgs e) {
       string[] cl = cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None);
       if (cl.Length > 1) {
@@ -449,10 +526,20 @@ namespace Redbrick_Addin {
         System.Media.SystemSounds.Beep.Play();
     }
 
+    /// <summary>
+    /// Select item matching to entered text.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void cbMat_TextChanged(object sender, EventArgs e) {
       cbMat.SelectedIndex = cbMat.FindString(cbMat.Text.Trim());
     }
 
+    /// <summary>
+    /// Resolve entered text to a ComboBox item.
+    /// </summary>
+    /// <param name="sender">What item triggered this? Looking for a ComboBox.</param>
+    /// <param name="e">Args?</param>
     private void ResolveText(object sender, EventArgs e) {
       if (sender is ComboBox) {
         ComboBox s = (sender as ComboBox);
@@ -464,6 +551,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    /// <summary>
+    /// You'd think focus would go with the thing you clicked on, or entered text into. Well, apparently not.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void FocusHere(object sender, MouseEventArgs e) {
       if (sender is ComboBox) {
         if ((sender as ComboBox).DroppedDown) {
@@ -476,50 +568,101 @@ namespace Redbrick_Addin {
       }
     }
 
-    private void StickyDrop(object sender, EventArgs e) {
-
-    }
-
+    /// <summary>
+    /// Send label1 contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void label1_Click(object sender, EventArgs e) {
       Redbrick.Clip(cbCutlist.Text.Split(new string[] { "REV" }, StringSplitOptions.None)[0].Trim());
     }
 
+    /// <summary>
+    /// Send lEr contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void lEr_Click(object sender, EventArgs e) {
       Redbrick.Clip(cbEr.Text);
     }
 
+    /// <summary>
+    /// Send lEl contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void lEl_Click(object sender, EventArgs e) {
       Redbrick.Clip(cbEl.Text);
     }
 
+    /// <summary>
+    /// Send lEb contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void lEb_Click(object sender, EventArgs e) {
       Redbrick.Clip(cbEb.Text);
     }
 
+    /// <summary>
+    /// Send lEf contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void lEf_Click(object sender, EventArgs e) {
       Redbrick.Clip(cbEf.Text);
     }
 
+    /// <summary>
+    /// Send lMat contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     void lMat_Click(object sender, EventArgs e) {
       Redbrick.Clip(cbMat.Text);
     }
 
+    /// <summary>
+    /// Send lMatColor contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void lMatColor_Click(object sender, EventArgs e) {
       Redbrick.Clip(lMatColor.Text);
     }
 
+    /// <summary>
+    /// Send leFColor contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void leFColor_Click(object sender, EventArgs e) {
       Redbrick.Clip(leFColor.Text);
     }
 
+    /// <summary>
+    /// Send leBColor contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void leBColor_Click(object sender, EventArgs e) {
       Redbrick.Clip(leBColor.Text);
     }
 
+    /// <summary>
+    /// Send leLColor contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void leLColor_Click(object sender, EventArgs e) {
       Redbrick.Clip(leLColor.Text);
     }
 
+    /// <summary>
+    /// Send leRColor contents to clipboard.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void leRColor_Click(object sender, EventArgs e) {
       Redbrick.Clip(leRColor.Text);
     }
