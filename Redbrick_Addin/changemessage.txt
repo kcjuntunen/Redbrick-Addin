@@ -1,4 +1,7 @@
 ﻿
+* 0.10.2.5
+** Rebuilt with updated dlls.
+
 * 0.10.2.4
 ** Fixed an edge case of a file extension making it into a part name.
 ** Allowing regex filtering of part numbers on the Examine BOM  tool.
