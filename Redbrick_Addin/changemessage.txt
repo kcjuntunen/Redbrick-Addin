@@ -1,4 +1,7 @@
 ﻿
+* 0.10.2.6
+** Really fixed it for reals this time.
+
 * 0.10.2.5
 ** Rebuilt with updated dlls.
 
