@@ -1308,11 +1308,11 @@ namespace Redbrick_Addin {
       if (ENABLE_DB_WRITE && !ECRIsBogus(ecrId) && !ECRItemExists(ecrId, partnum, rev)) {
         ecr_item_id = InsertECRItemInner(ecrId, partnum, rev, type);
         object[] o = GetDrawingData(Path.GetFileNameWithoutExtension(dwg_file_name) + ".pdf");
-          string DRW_FILE = ecrno + "_" + o[1].ToString().Replace(".pdf", "-" + lvl + ".pdf");
-          string ORIG_PATH = o[2].ToString() + o[1].ToString();
-          if (!File.Exists(Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE)) { // doublecheck
-            File.Copy(ORIG_PATH, Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE, false);
-          }
+        string DRW_FILE = ecrno + "_" + o[1].ToString().Replace(".pdf", "-" + lvl + ".pdf");
+        string ORIG_PATH = o[2].ToString() + o[1].ToString();
+        if (!File.Exists(Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE)) { // doublecheck
+          File.Copy(ORIG_PATH, Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE, false);
+        }
         string SQL = @"INSERT INTO ECR_DRAWINGS (ITEM_ID, FILE_ID, DRWREV, DRW_FILE, ORIG_PATH) VALUES (?, ?, ?, ?, ?)";
         using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
           comm.Parameters.AddWithValue("@itemID", ecr_item_id);
@@ -1323,7 +1323,30 @@ namespace Redbrick_Addin {
           comm.ExecuteNonQuery();
         }
       }
+      SetNewECRWIP(ecrId);
       return ecr_item_id;
+    }
+
+    public int GetECRStatus(int ecr) {
+      string SQL = @"SELECT STATUS FROM ECR_MAIN WHERE ECR_NUM = ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@ecrId", ecr);
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (dr.Read()) {
+            return dr.GetInt32(0);
+          }
+        }
+      }
+      return 0;
+    }
+
+    public void SetNewECRWIP(int ecr) {
+      string SQL = @"UPDATE ECR_MAIN SET STATUS = ? WHERE ECR_NUM = ? AND STATUS = 1;";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@status", 2);
+        comm.Parameters.AddWithValue("@ecrId", ecr);
+        comm.ExecuteNonQuery();
+      }
     }
 
     public bool GetProgExists(int partID, int machID) {
