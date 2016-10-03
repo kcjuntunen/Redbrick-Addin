@@ -1,4 +1,7 @@
 ﻿
+* 0.10.3.0
+** Automatically change ECR status to "WIP" when an item is inserted, but only if "STARTED".
+
 * 0.10.2.6
 ** Really fixed it for reals this time.
 
