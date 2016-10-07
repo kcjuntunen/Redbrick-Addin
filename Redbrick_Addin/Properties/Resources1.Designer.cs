@@ -79,6 +79,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No CNC op between panelsaw and edgebander; check overzise values..
+        /// </summary>
+        internal static string CheckOversize {
+            get {
+                return ResourceManager.GetString("CheckOversize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap clipboard {

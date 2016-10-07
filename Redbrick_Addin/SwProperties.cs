@@ -1231,10 +1231,57 @@ namespace Redbrick_Addin {
           }
         }
       }
-      string val_msg = Validate();
+      string val_msg = Validate() + CheckOversize();
       if (val_msg != string.Empty) {
         SwApp.SendMsgToUser2(val_msg, (int)swMessageBoxIcon_e.swMbWarning, (int)swMessageBoxBtn_e.swMbOk);
       }
+    }
+
+    private bool have_eb_op() {
+      bool have_eb_ops = false;
+      for (int i = 0; i < 5; i++) {
+        SwProperty p = GetProperty(string.Format("OP{0}ID", i + 1));
+        foreach (string op in Properties.Settings.Default.EBOps) {
+          if (p.Ctl != null && (p.Ctl.Text.Split(' ')[0] == op)) {
+            have_eb_ops |= true;
+          }
+        }
+      }
+      return have_eb_ops;
+    }
+
+    private bool IsCNCOp(string oper) {
+      bool have_cnc_ops = false;
+      foreach (string op in Properties.Settings.Default.CNCOps) {
+        if (oper.Split(' ')[0] == op) {
+          have_cnc_ops |= true;
+        }
+      }
+      return have_cnc_ops;
+    }
+
+    private string CheckOversize() {
+      string message = string.Empty;
+      double oversize_val = 
+        double.Parse(GetProperty(@"OVERL").Ctl.Text) +
+        double.Parse(GetProperty(@"OVERW").Ctl.Text);
+
+      int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
+
+      List<string> ops = new List<string> {};
+
+      for (int i = 1; i <= 5; i++)
+        ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Ctl.Text.Split(' ')[0]);
+
+      for (int i = 0; i < 5; i++) {
+        if (ops[i] == @"PS" && !IsCNCOp(ops[i + 1])) {
+          if (bq == 1 && oversize_val > 0) {
+            message = Properties.Resources.CheckOversize;
+	        }
+        }
+      }
+
+      return message;
     }
 
     private string Validate() {

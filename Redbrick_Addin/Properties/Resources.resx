@@ -172,4 +172,7 @@
   <data name="NoProgramWarning" xml:space="preserve">
     <value>CNC Op inconsistent with CNC programs.</value>
   </data>
+  <data name="CheckOversize" xml:space="preserve">
+    <value>No CNC op between panelsaw and edgebander; check overzise values.</value>
+  </data>
 </root>

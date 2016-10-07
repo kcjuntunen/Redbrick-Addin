@@ -217,6 +217,27 @@ namespace Redbrick_Addin {
       get { return op; }
     }
 
+    public string OP1 {
+      get { return op.GetOp1Box().Text; }
+    }
+
+    public string OP2 {
+      get { return op.GetOp2Box().Text; }
+    }
+
+    public string OP3 {
+      get { return op.GetOp3Box().Text; }
+    }
+
+    public string OP4 {
+      get { return op.GetOp4Box().Text; }
+    }
+
+    public string OP5 {
+      get { return op.GetOp5Box().Text; }
+    }
+
+
     private void ModelRedbrick_Load(object sender, EventArgs e) {
 
     }
