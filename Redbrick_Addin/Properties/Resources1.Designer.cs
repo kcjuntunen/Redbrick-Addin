@@ -143,6 +143,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Necessary network resources are not available. Redbrick not starting..
+        /// </summary>
+        internal static string NetworkNotAvailable {
+            get {
+                return ResourceManager.GetString("NetworkNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EB Op inconsistent with banding..
         /// </summary>
         internal static string NoEBWarning {

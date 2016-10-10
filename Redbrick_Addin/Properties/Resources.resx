@@ -175,4 +175,7 @@
   <data name="CheckOversize" xml:space="preserve">
     <value>No CNC op between panelsaw and edgebander; check overzise values.</value>
   </data>
+  <data name="NetworkNotAvailable" xml:space="preserve">
+    <value>Necessary network resources are not available. Redbrick not starting.</value>
+  </data>
 </root>

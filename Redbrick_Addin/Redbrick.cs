@@ -27,12 +27,48 @@ namespace Redbrick_Addin {
       cookie = Cookie;
 
       bool res = swApp.SetAddinCallbackInfo(0, this, cookie);
-      if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable()) {
+      if (CheckNetwork()) {
         UISetup();
         return true;
       } else {
+        swApp.SendMsgToUser2(Properties.Resources.NetworkNotAvailable,
+          (int)swMessageBoxIcon_e.swMbWarning,
+          (int)swMessageBoxBtn_e.swMbOk);
         return false;
       }
+    }
+
+    public static bool CheckNetwork() {
+      bool res = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+      System.Net.NetworkInformation.Ping p = new System.Net.NetworkInformation.Ping();
+      System.Net.NetworkInformation.PingReply pr = null;
+      string host = Properties.Settings.Default.NetPath.ToString().Split('\\')[2];
+      try {
+        pr = p.Send(host, 1000);
+
+        switch (pr.Status) {
+          case System.Net.NetworkInformation.IPStatus.Success:
+            res &= true;
+            break;
+          case System.Net.NetworkInformation.IPStatus.TimedOut:
+            res &= false;
+            break;
+          case System.Net.NetworkInformation.IPStatus.DestinationHostUnreachable:
+            res &= false;
+            break;
+          case System.Net.NetworkInformation.IPStatus.Unknown:
+            res &= false;
+            break;
+          default:
+            res &= false;
+            break;
+        }
+
+      } catch (Exception) {
+        res &= false;
+      }
+
+      return res;
     }
 
     public bool DisconnectFromSW() {
