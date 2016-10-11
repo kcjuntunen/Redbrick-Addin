@@ -1,4 +1,7 @@
 ﻿
+* 0.10.5.0
+** ArchivePDF options can be controlled from the Redbrick configuration window.
+
 * 0.10.4.1
 ** Rebuilt with repaired PDF Archiver
 
