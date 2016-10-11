@@ -57,6 +57,12 @@ namespace Redbrick_Addin {
       checkBox2.Checked = Properties.Settings.Default.CHIHideLWH;
       textBox1.Text = Properties.Settings.Default.BOMFilter[0].ToString();
 
+      textBox2.Text = Properties.Settings.Default.GaugePath;
+      checkBox3.Checked = Properties.Settings.Default.SaveFirst;
+      checkBox4.Checked = Properties.Settings.Default.SilenceGaugeErrors;
+      checkBox5.Checked = Properties.Settings.Default.ExportEDrw;
+      checkBox6.Checked = Properties.Settings.Default.ExportImg;
+
       ToolTip tt = new ToolTip();
       tt.ShowAlways = true;
       tt.SetToolTip(label4, "You probably don't want to mess with this.");
@@ -277,5 +283,36 @@ namespace Redbrick_Addin {
     private void checkBox2_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.CHIHideLWH = checkBox2.Checked;
     }
+
+    private void textBox2_DoubleClick(object sender, EventArgs e) {
+      OpenFileDialog ofd = new OpenFileDialog();
+      ofd.InitialDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.GaugePath);
+      ofd.FileName = System.IO.Path.GetFileName(Properties.Settings.Default.GaugePath);
+      ofd.Filter = "XML Data (*.xml)|*.xml";
+      if (ofd.ShowDialog() == DialogResult.OK) {
+        textBox2.Text = ofd.FileName;
+        Properties.Settings.Default.GaugePath = ofd.FileName;
+        Properties.Settings.Default.Save();
+      } else {
+
+      }
+    }
+
+    private void checkBox3_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.SaveFirst = checkBox3.Checked;
+    }
+
+    private void checkBox4_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.SilenceGaugeErrors = checkBox4.Checked;
+    }
+
+    private void checkBox5_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.ExportEDrw = checkBox5.Checked;
+    }
+
+    private void checkBox6_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.ExportImg = checkBox6.Checked;
+    }
+
   }
 }

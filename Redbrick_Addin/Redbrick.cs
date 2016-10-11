@@ -125,7 +125,7 @@ namespace Redbrick_Addin {
           cd.IncrementOdometer(CutlistData.Functions.ArchivePDF);
           cd.Dispose();
           cd = null;
-          ArchivePDF.csproj.ArchivePDFWrapper apw = new ArchivePDF.csproj.ArchivePDFWrapper(swApp);
+          ArchivePDF.csproj.ArchivePDFWrapper apw = new ArchivePDF.csproj.ArchivePDFWrapper(swApp, GeneratePathSet());
           apw.Archive();
           break;
         case 4:
@@ -330,6 +330,24 @@ namespace Redbrick_Addin {
           (c as System.Windows.Forms.ComboBox).SelectionLength = 0;
         }
       }
+    }
+
+    static public ArchivePDF.csproj.PathSet GeneratePathSet() {
+      ArchivePDF.csproj.PathSet ps = new ArchivePDF.csproj.PathSet();
+      ps.GaugePath = Properties.Settings.Default.GaugePath;
+      ps.ShtFmtPath = Properties.Settings.Default.ShtFmtPath;
+      ps.JPGPath = Properties.Settings.Default.JPGPath;
+      ps.KPath = Properties.Settings.Default.KPath;
+      ps.GPath = Properties.Settings.Default.GPath;
+      ps.MetalPath = Properties.Settings.Default.MetalPath;
+      ps.SaveFirst = Properties.Settings.Default.SaveFirst;
+      ps.SilenceGaugeErrors = Properties.Settings.Default.SilenceGaugeErrors;
+      ps.ExportPDF = Properties.Settings.Default.ExportPDF;
+      ps.ExportEDrw = Properties.Settings.Default.ExportEDrw;
+      ps.ExportImg = Properties.Settings.Default.ExportImg;
+      ps.WriteToDb = Properties.Settings.Default.EnableDBWrite;
+      ps.Initialated = true;
+      return ps;
     }
 
     /// <summary>

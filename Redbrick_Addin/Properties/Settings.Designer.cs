@@ -753,5 +753,119 @@ namespace Redbrick_Addin.Properties {
                 this["CHIHideLWH"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-22\\cad\\Solid Works\\Amstore_Macros\\gauges.xml")]
+        public string GaugePath {
+            get {
+                return ((string)(this["GaugePath"]));
+            }
+            set {
+                this["GaugePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-22\\cad\\Solid Works\\AMSTORE_SHEET_FORMATS\\zPostCard.slddrt")]
+        public string ShtFmtPath {
+            get {
+                return ((string)(this["ShtFmtPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-01\\details\\JPGs\\")]
+        public string JPGPath {
+            get {
+                return ((string)(this["JPGPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-01\\details\\")]
+        public string KPath {
+            get {
+                return ((string)(this["KPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-22\\cad\\PDF ARCHIVE\\")]
+        public string GPath {
+            get {
+                return ((string)(this["GPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-02\\shared\\shared\\general\\Metals\\METAL MANUFACTURING\\")]
+        public string MetalPath {
+            get {
+                return ((string)(this["MetalPath"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SaveFirst {
+            get {
+                return ((bool)(this["SaveFirst"]));
+            }
+            set {
+                this["SaveFirst"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SilenceGaugeErrors {
+            get {
+                return ((bool)(this["SilenceGaugeErrors"]));
+            }
+            set {
+                this["SilenceGaugeErrors"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExportPDF {
+            get {
+                return ((bool)(this["ExportPDF"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExportEDrw {
+            get {
+                return ((bool)(this["ExportEDrw"]));
+            }
+            set {
+                this["ExportEDrw"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExportImg {
+            get {
+                return ((bool)(this["ExportImg"]));
+            }
+            set {
+                this["ExportImg"] = value;
+            }
+        }
     }
 }
