@@ -867,5 +867,17 @@ namespace Redbrick_Addin.Properties {
                 this["ExportImg"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CutlistNotSelectedWarning {
+            get {
+                return ((bool)(this["CutlistNotSelectedWarning"]));
+            }
+            set {
+                this["CutlistNotSelectedWarning"] = value;
+            }
+        }
     }
 }

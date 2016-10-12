@@ -178,4 +178,7 @@
   <data name="NetworkNotAvailable" xml:space="preserve">
     <value>Necessary network resources are not available. Redbrick not starting.</value>
   </data>
+  <data name="CutlistNotSelected" xml:space="preserve">
+    <value>Cutlist not selected. Only global properties have been updated.</value>
+  </data>
 </root>

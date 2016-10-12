@@ -98,6 +98,15 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cutlist not selected. Only global properties have been updated..
+        /// </summary>
+        internal static string CutlistNotSelected {
+            get {
+                return ResourceManager.GetString("CutlistNotSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Cutlist.
         /// </summary>
         internal static string InsertIntoCutlistButtonText {

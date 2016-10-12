@@ -56,12 +56,12 @@ namespace Redbrick_Addin {
       checkBox1.Checked = Properties.Settings.Default.WarnExcludeAssy;
       checkBox2.Checked = Properties.Settings.Default.CHIHideLWH;
       textBox1.Text = Properties.Settings.Default.BOMFilter[0].ToString();
-
       textBox2.Text = Properties.Settings.Default.GaugePath;
       checkBox3.Checked = Properties.Settings.Default.SaveFirst;
       checkBox4.Checked = Properties.Settings.Default.SilenceGaugeErrors;
       checkBox5.Checked = Properties.Settings.Default.ExportEDrw;
       checkBox6.Checked = Properties.Settings.Default.ExportImg;
+      checkBox7.Checked = Properties.Settings.Default.CutlistNotSelectedWarning;
 
       ToolTip tt = new ToolTip();
       tt.ShowAlways = true;
@@ -135,6 +135,10 @@ namespace Redbrick_Addin {
     /// <param name="sender">Who triggered this event?</param>
     /// <param name="e">Any data come with it?</param>
     private void btnOK_Click(object sender, EventArgs e) {
+      System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
+      sc.Add(textBox1.Text);
+
+      Properties.Settings.Default.BOMFilter = sc;
       Properties.Settings.Default.RBConfigLocation = Location;
       Properties.Settings.Default.RBConfigSize = Size;
       Properties.Settings.Default.Save();
@@ -270,9 +274,6 @@ namespace Redbrick_Addin {
     /// <param name="sender">Who triggered this event?</param>
     /// <param name="e">Any data come with it?</param>
     private void textBox1_Leave(object sender, EventArgs e) {
-      System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
-      sc.Add(textBox1.Text);
-      Properties.Settings.Default.BOMFilter = sc;
     }
 
     /// <summary>
@@ -284,6 +285,11 @@ namespace Redbrick_Addin {
       Properties.Settings.Default.CHIHideLWH = checkBox2.Checked;
     }
 
+    /// <summary>
+    /// On doubleclick, select xml file.
+    /// </summary>
+    /// <param name="sender">Who triggered this event?</param>
+    /// <param name="e">Any data come with it?</param>
     private void textBox2_DoubleClick(object sender, EventArgs e) {
       OpenFileDialog ofd = new OpenFileDialog();
       ofd.InitialDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.GaugePath);
@@ -312,6 +318,10 @@ namespace Redbrick_Addin {
 
     private void checkBox6_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.ExportImg = checkBox6.Checked;
+    }
+
+    private void checkBox7_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.CutlistNotSelectedWarning = checkBox7.Checked;
     }
 
   }

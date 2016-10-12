@@ -1332,6 +1332,7 @@ namespace Redbrick_Addin {
           message += Properties.Resources.NoEBWarning + System.Environment.NewLine;
         }
       }
+
       return message;
     }
 
@@ -1392,6 +1393,10 @@ namespace Redbrick_Addin {
         cutlistData.UpdatePart(pair);
         if (CutlistID != 0) {
           cutlistData.UpdateCutlistPart(CutlistID, prtNo, pair);
+        } else if (Properties.Settings.Default.CutlistNotSelectedWarning) {
+          swApp.SendMsgToUser2(Properties.Resources.CutlistNotSelected,
+            (int)swMessageBoxIcon_e.swMbInformation,
+            (int)swMessageBoxBtn_e.swMbOk);
         }
       }
     }

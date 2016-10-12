@@ -64,6 +64,7 @@ namespace Redbrick_Addin {
       this.checkBox6 = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.checkBox7 = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -347,9 +348,10 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel4.Controls.Add(this.chbRememberCustomer, 0, 7);
       this.tableLayoutPanel4.Controls.Add(this.chbIdiotLight, 0, 6);
       this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 0, 3);
+      this.tableLayoutPanel4.Controls.Add(this.checkBox7, 0, 8);
       this.tableLayoutPanel4.Location = new System.Drawing.Point(7, 22);
       this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-      this.tableLayoutPanel4.RowCount = 8;
+      this.tableLayoutPanel4.RowCount = 9;
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -358,6 +360,7 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
       this.tableLayoutPanel4.Size = new System.Drawing.Size(380, 326);
       this.tableLayoutPanel4.TabIndex = 0;
       // 
@@ -596,6 +599,17 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 433);
       this.tableLayoutPanel2.TabIndex = 4;
       // 
+      // checkBox7
+      // 
+      this.checkBox7.AutoSize = true;
+      this.checkBox7.Location = new System.Drawing.Point(3, 195);
+      this.checkBox7.Name = "checkBox7";
+      this.checkBox7.Size = new System.Drawing.Size(164, 17);
+      this.checkBox7.TabIndex = 22;
+      this.checkBox7.Text = "Warn if cutlist not selected";
+      this.checkBox7.UseVisualStyleBackColor = true;
+      this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+      // 
       // RedbrickConfiguration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -673,5 +687,6 @@ namespace Redbrick_Addin {
     private System.Windows.Forms.CheckBox checkBox6;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+    private System.Windows.Forms.CheckBox checkBox7;
   }
 }
