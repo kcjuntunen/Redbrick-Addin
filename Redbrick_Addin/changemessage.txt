@@ -1,4 +1,8 @@
 ﻿
+* 0.10.6.0
+** Fixed regression when setting regex filter.
+** Added warning on cutlist not selected.
+
 * 0.10.5.0
 ** ArchivePDF options can be controlled from the Redbrick configuration window.
 
