@@ -311,7 +311,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("390, 350")]
         public global::System.Drawing.Size CutlistHeaderSize {
             get {
                 return ((global::System.Drawing.Size)(this["CutlistHeaderSize"]));
@@ -356,7 +356,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500, 100")]
         public global::System.Drawing.Size DataDisplaySize {
             get {
                 return ((global::System.Drawing.Size)(this["DataDisplaySize"]));
@@ -380,7 +380,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("450, 450")]
         public global::System.Drawing.Size RBConfigSize {
             get {
                 return ((global::System.Drawing.Size)(this["RBConfigSize"]));
@@ -392,7 +392,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3030")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3042")]
         public int DefaultMaterial {
             get {
                 return ((int)(this["DefaultMaterial"]));
@@ -510,7 +510,7 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("200, 200")]
         public global::System.Drawing.Size MPMSize {
             get {
                 return ((global::System.Drawing.Size)(this["MPMSize"]));

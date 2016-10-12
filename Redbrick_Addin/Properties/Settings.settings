@@ -127,7 +127,7 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="CutlistHeaderSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
+      <Value Profile="(Default)">390, 350</Value>
     </Setting>
     <Setting Name="RevNoLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
@@ -139,16 +139,16 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="DataDisplaySize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
+      <Value Profile="(Default)">500, 100</Value>
     </Setting>
     <Setting Name="RBConfigLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="RBConfigSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
+      <Value Profile="(Default)">450, 450</Value>
     </Setting>
     <Setting Name="DefaultMaterial" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3030</Value>
+      <Value Profile="(Default)">3042</Value>
     </Setting>
     <Setting Name="LayerHeads" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -193,7 +193,7 @@
       <Value Profile="(Default)">0, 0</Value>
     </Setting>
     <Setting Name="MPMSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
+      <Value Profile="(Default)">200, 200</Value>
     </Setting>
     <Setting Name="LastCustomerSelection" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">6</Value>

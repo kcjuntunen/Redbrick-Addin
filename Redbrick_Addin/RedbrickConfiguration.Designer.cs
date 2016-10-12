@@ -54,6 +54,7 @@ namespace Redbrick_Addin {
       this.chbIdiotLight = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
       this.checkBox1 = new System.Windows.Forms.CheckBox();
+      this.checkBox7 = new System.Windows.Forms.CheckBox();
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
       this.label5 = new System.Windows.Forms.Label();
@@ -64,7 +65,6 @@ namespace Redbrick_Addin {
       this.checkBox6 = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-      this.checkBox7 = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -460,6 +460,17 @@ namespace Redbrick_Addin {
       this.checkBox1.Text = "Exclude assembly level";
       this.checkBox1.UseVisualStyleBackColor = true;
       // 
+      // checkBox7
+      // 
+      this.checkBox7.AutoSize = true;
+      this.checkBox7.Location = new System.Drawing.Point(3, 195);
+      this.checkBox7.Name = "checkBox7";
+      this.checkBox7.Size = new System.Drawing.Size(164, 17);
+      this.checkBox7.TabIndex = 22;
+      this.checkBox7.Text = "Warn if cutlist not selected";
+      this.checkBox7.UseVisualStyleBackColor = true;
+      this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+      // 
       // tabPage3
       // 
       this.tabPage3.Controls.Add(this.tableLayoutPanel6);
@@ -598,17 +609,6 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 433);
       this.tableLayoutPanel2.TabIndex = 4;
-      // 
-      // checkBox7
-      // 
-      this.checkBox7.AutoSize = true;
-      this.checkBox7.Location = new System.Drawing.Point(3, 195);
-      this.checkBox7.Name = "checkBox7";
-      this.checkBox7.Size = new System.Drawing.Size(164, 17);
-      this.checkBox7.TabIndex = 22;
-      this.checkBox7.Text = "Warn if cutlist not selected";
-      this.checkBox7.UseVisualStyleBackColor = true;
-      this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
       // 
       // RedbrickConfiguration
       // 
