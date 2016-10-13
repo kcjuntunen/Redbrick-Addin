@@ -309,5 +309,14 @@
     <Setting Name="CutlistNotSelectedWarning" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="BOMTemplatePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\AMSTORE CUTLIST BOM\CL.sldbomtbt</Value>
+    </Setting>
+    <Setting Name="BOMLocationX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.01</Value>
+    </Setting>
+    <Setting Name="BOMLocationY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-0.01</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

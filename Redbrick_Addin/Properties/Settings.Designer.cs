@@ -879,5 +879,41 @@ namespace Redbrick_Addin.Properties {
                 this["CutlistNotSelectedWarning"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\AMSTORE-SVR-22\\cad\\Solid Works\\AMSTORE CUTLIST BOM\\CL.sldbomtbt")]
+        public string BOMTemplatePath {
+            get {
+                return ((string)(this["BOMTemplatePath"]));
+            }
+            set {
+                this["BOMTemplatePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.01")]
+        public double BOMLocationX {
+            get {
+                return ((double)(this["BOMLocationX"]));
+            }
+            set {
+                this["BOMLocationX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-0.01")]
+        public double BOMLocationY {
+            get {
+                return ((double)(this["BOMLocationY"]));
+            }
+            set {
+                this["BOMLocationY"] = value;
+            }
+        }
     }
 }

@@ -533,6 +533,30 @@ namespace Redbrick_Addin {
 
     }
 
+    private void insert_BOM() {
+      ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
+      DrawingDoc dd = (DrawingDoc)SwApp.ActiveDoc;
+      ModelDocExtension ex = (ModelDocExtension)md.Extension;
+      int bom_type = (int)swBomType_e.swBomType_PartsOnly;
+      int bom_numbering = (int)swNumberingType_e.swNumberingType_Flat;
+      int bom_anchor =(int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft;
+      SolidWorks.Interop.sldworks.View v = GetFirstView(SwApp);
+
+      if (dd.ActivateView(v.Name)) {
+        v.InsertBomTable4(
+          false,
+          Properties.Settings.Default.BOMLocationX, Properties.Settings.Default.BOMLocationY,
+          bom_anchor,
+          bom_type,
+          v.ReferencedConfiguration,
+          Properties.Settings.Default.BOMTemplatePath,
+          false,
+          bom_numbering,
+          false);
+      }
+
+    }
+
     /// <summary>
     /// Show what will be uploaded to the as a cutlist, only with hardware and other oddments filtered out.
     /// </summary>
@@ -880,6 +904,10 @@ namespace Redbrick_Addin {
     /// <param name="e"></param>
     private void label4_Click(object sender, EventArgs e) {
       Redbrick.Clip(label4.Text.Split(new string[] { " - " }, StringSplitOptions.None)[0]);
+    }
+
+    private void button1_Click_1(object sender, EventArgs e) {
+      insert_BOM();
     }
   }
 }
