@@ -57,6 +57,7 @@ namespace Redbrick_Addin {
       checkBox2.Checked = Properties.Settings.Default.CHIHideLWH;
       textBox1.Text = Properties.Settings.Default.BOMFilter[0].ToString();
       textBox2.Text = Properties.Settings.Default.GaugePath;
+      textBox3.Text = Properties.Settings.Default.BOMTemplatePath;
       checkBox3.Checked = Properties.Settings.Default.SaveFirst;
       checkBox4.Checked = Properties.Settings.Default.SilenceGaugeErrors;
       checkBox5.Checked = Properties.Settings.Default.ExportEDrw;
@@ -182,6 +183,7 @@ namespace Redbrick_Addin {
     /// <param name="e">Any data come with it?</param>
     private void chbWarnings_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.Warn = chbWarnings.Checked;
+      tableLayoutPanel5.Enabled = chbWarnings.Checked;
     }
 
     /// <summary>
@@ -322,6 +324,20 @@ namespace Redbrick_Addin {
 
     private void checkBox7_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.CutlistNotSelectedWarning = checkBox7.Checked;
+    }
+
+    private void textBox3_MouseDoubleClick(object sender, MouseEventArgs e) {
+      OpenFileDialog ofd = new OpenFileDialog();
+      ofd.InitialDirectory = System.IO.Path.GetDirectoryName(Properties.Settings.Default.BOMTemplatePath);
+      ofd.FileName = System.IO.Path.GetFileName(Properties.Settings.Default.BOMTemplatePath);
+      ofd.Filter = "Table Template Files (*.sldbomtbt)|*.sldbomtbt";
+      if (ofd.ShowDialog() == DialogResult.OK) {
+        textBox3.Text = ofd.FileName;
+        Properties.Settings.Default.BOMTemplatePath = ofd.FileName;
+        Properties.Settings.Default.Save();
+      } else {
+
+      }
     }
 
   }

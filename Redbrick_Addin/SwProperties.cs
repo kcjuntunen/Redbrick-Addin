@@ -1286,7 +1286,7 @@ namespace Redbrick_Addin {
 
     private string Validate() {
       string message = string.Empty;
-      if (Properties.Settings.Default.ProgWarn) {
+      if (Properties.Settings.Default.Warn && Properties.Settings.Default.ProgWarn) {
         bool have_cnc_ops = false;
         bool have_prog = true;
         bool have_eb_ops = false;
@@ -1393,7 +1393,7 @@ namespace Redbrick_Addin {
         cutlistData.UpdatePart(pair);
         if (CutlistID != 0) {
           cutlistData.UpdateCutlistPart(CutlistID, prtNo, pair);
-        } else if (Properties.Settings.Default.CutlistNotSelectedWarning) {
+        } else if (Properties.Settings.Default.Warn && Properties.Settings.Default.CutlistNotSelectedWarning) {
           swApp.SendMsgToUser2(Properties.Resources.CutlistNotSelected,
             (int)swMessageBoxIcon_e.swMbInformation,
             (int)swMessageBoxBtn_e.swMbOk);
