@@ -37,6 +37,8 @@ namespace Redbrick_Addin {
       this.label1 = new System.Windows.Forms.Label();
       this.cbDept = new System.Windows.Forms.ComboBox();
       this.chbSounds = new System.Windows.Forms.CheckBox();
+      this.textBox3 = new System.Windows.Forms.TextBox();
+      this.label6 = new System.Windows.Forms.Label();
       this.btnCancel = new System.Windows.Forms.Button();
       this.btnOK = new System.Windows.Forms.Button();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -47,14 +49,14 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
       this.label4 = new System.Windows.Forms.Label();
       this.textBox1 = new System.Windows.Forms.TextBox();
-      this.chbWarnings = new System.Windows.Forms.CheckBox();
-      this.chbOpWarnings = new System.Windows.Forms.CheckBox();
       this.chbFlameWar = new System.Windows.Forms.CheckBox();
-      this.chbRememberCustomer = new System.Windows.Forms.CheckBox();
-      this.chbIdiotLight = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
       this.checkBox1 = new System.Windows.Forms.CheckBox();
+      this.chbOpWarnings = new System.Windows.Forms.CheckBox();
+      this.chbIdiotLight = new System.Windows.Forms.CheckBox();
       this.checkBox7 = new System.Windows.Forms.CheckBox();
+      this.chbRememberCustomer = new System.Windows.Forms.CheckBox();
+      this.chbWarnings = new System.Windows.Forms.CheckBox();
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
       this.label5 = new System.Windows.Forms.Label();
@@ -65,8 +67,6 @@ namespace Redbrick_Addin {
       this.checkBox6 = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-      this.textBox3 = new System.Windows.Forms.TextBox();
-      this.label6 = new System.Windows.Forms.Label();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -253,6 +253,24 @@ namespace Redbrick_Addin {
       this.chbSounds.CheckedChanged += new System.EventHandler(this.chbSounds_CheckedChanged);
       this.chbSounds.Click += new System.EventHandler(this.chbSounds_Click);
       // 
+      // textBox3
+      // 
+      this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.textBox3.Location = new System.Drawing.Point(3, 281);
+      this.textBox3.Name = "textBox3";
+      this.textBox3.Size = new System.Drawing.Size(374, 22);
+      this.textBox3.TabIndex = 22;
+      this.textBox3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBox3_MouseDoubleClick);
+      // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Location = new System.Drawing.Point(3, 258);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(85, 13);
+      this.label6.TabIndex = 23;
+      this.label6.Text = "BOM Template:";
+      // 
       // btnCancel
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -383,29 +401,6 @@ namespace Redbrick_Addin {
       this.textBox1.Size = new System.Drawing.Size(374, 22);
       this.textBox1.TabIndex = 19;
       // 
-      // chbWarnings
-      // 
-      this.chbWarnings.AutoSize = true;
-      this.chbWarnings.Checked = true;
-      this.chbWarnings.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chbWarnings.Location = new System.Drawing.Point(3, 90);
-      this.chbWarnings.Name = "chbWarnings";
-      this.chbWarnings.Size = new System.Drawing.Size(76, 17);
-      this.chbWarnings.TabIndex = 11;
-      this.chbWarnings.Text = "Warnings";
-      this.chbWarnings.UseVisualStyleBackColor = true;
-      this.chbWarnings.CheckedChanged += new System.EventHandler(this.chbWarnings_CheckedChanged);
-      // 
-      // chbOpWarnings
-      // 
-      this.chbOpWarnings.AutoSize = true;
-      this.chbOpWarnings.Location = new System.Drawing.Point(43, 26);
-      this.chbOpWarnings.Name = "chbOpWarnings";
-      this.chbOpWarnings.Size = new System.Drawing.Size(95, 17);
-      this.chbOpWarnings.TabIndex = 17;
-      this.chbOpWarnings.Text = "Op Warnings";
-      this.chbOpWarnings.UseVisualStyleBackColor = true;
-      // 
       // chbFlameWar
       // 
       this.chbFlameWar.AutoSize = true;
@@ -417,26 +412,6 @@ namespace Redbrick_Addin {
       this.chbFlameWar.TabIndex = 10;
       this.chbFlameWar.Text = "Filter comments to all caps";
       this.chbFlameWar.UseVisualStyleBackColor = true;
-      // 
-      // chbRememberCustomer
-      // 
-      this.chbRememberCustomer.AutoSize = true;
-      this.chbRememberCustomer.Location = new System.Drawing.Point(3, 67);
-      this.chbRememberCustomer.Name = "chbRememberCustomer";
-      this.chbRememberCustomer.Size = new System.Drawing.Size(151, 17);
-      this.chbRememberCustomer.TabIndex = 16;
-      this.chbRememberCustomer.Text = "Remember last customer";
-      this.chbRememberCustomer.UseVisualStyleBackColor = true;
-      // 
-      // chbIdiotLight
-      // 
-      this.chbIdiotLight.AutoSize = true;
-      this.chbIdiotLight.Location = new System.Drawing.Point(43, 72);
-      this.chbIdiotLight.Name = "chbIdiotLight";
-      this.chbIdiotLight.Size = new System.Drawing.Size(135, 17);
-      this.chbIdiotLight.TabIndex = 13;
-      this.chbIdiotLight.Text = "Green check warning";
-      this.chbIdiotLight.UseVisualStyleBackColor = true;
       // 
       // tableLayoutPanel5
       // 
@@ -472,6 +447,27 @@ namespace Redbrick_Addin {
       this.checkBox1.TabIndex = 18;
       this.checkBox1.Text = "Exclude assembly level";
       this.checkBox1.UseVisualStyleBackColor = true;
+      this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+      // 
+      // chbOpWarnings
+      // 
+      this.chbOpWarnings.AutoSize = true;
+      this.chbOpWarnings.Location = new System.Drawing.Point(43, 26);
+      this.chbOpWarnings.Name = "chbOpWarnings";
+      this.chbOpWarnings.Size = new System.Drawing.Size(95, 17);
+      this.chbOpWarnings.TabIndex = 17;
+      this.chbOpWarnings.Text = "Op Warnings";
+      this.chbOpWarnings.UseVisualStyleBackColor = true;
+      // 
+      // chbIdiotLight
+      // 
+      this.chbIdiotLight.AutoSize = true;
+      this.chbIdiotLight.Location = new System.Drawing.Point(43, 72);
+      this.chbIdiotLight.Name = "chbIdiotLight";
+      this.chbIdiotLight.Size = new System.Drawing.Size(135, 17);
+      this.chbIdiotLight.TabIndex = 13;
+      this.chbIdiotLight.Text = "Green check warning";
+      this.chbIdiotLight.UseVisualStyleBackColor = true;
       // 
       // checkBox7
       // 
@@ -483,6 +479,29 @@ namespace Redbrick_Addin {
       this.checkBox7.Text = "Warn if cutlist not selected";
       this.checkBox7.UseVisualStyleBackColor = true;
       this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
+      // 
+      // chbRememberCustomer
+      // 
+      this.chbRememberCustomer.AutoSize = true;
+      this.chbRememberCustomer.Location = new System.Drawing.Point(3, 67);
+      this.chbRememberCustomer.Name = "chbRememberCustomer";
+      this.chbRememberCustomer.Size = new System.Drawing.Size(151, 17);
+      this.chbRememberCustomer.TabIndex = 16;
+      this.chbRememberCustomer.Text = "Remember last customer";
+      this.chbRememberCustomer.UseVisualStyleBackColor = true;
+      // 
+      // chbWarnings
+      // 
+      this.chbWarnings.AutoSize = true;
+      this.chbWarnings.Checked = true;
+      this.chbWarnings.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chbWarnings.Location = new System.Drawing.Point(3, 90);
+      this.chbWarnings.Name = "chbWarnings";
+      this.chbWarnings.Size = new System.Drawing.Size(76, 17);
+      this.chbWarnings.TabIndex = 11;
+      this.chbWarnings.Text = "Warnings";
+      this.chbWarnings.UseVisualStyleBackColor = true;
+      this.chbWarnings.CheckedChanged += new System.EventHandler(this.chbWarnings_CheckedChanged);
       // 
       // tabPage3
       // 
@@ -622,24 +641,6 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 463);
       this.tableLayoutPanel2.TabIndex = 4;
-      // 
-      // textBox3
-      // 
-      this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.textBox3.Location = new System.Drawing.Point(3, 281);
-      this.textBox3.Name = "textBox3";
-      this.textBox3.Size = new System.Drawing.Size(374, 22);
-      this.textBox3.TabIndex = 22;
-      this.textBox3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textBox3_MouseDoubleClick);
-      // 
-      // label6
-      // 
-      this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(3, 258);
-      this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(85, 13);
-      this.label6.TabIndex = 23;
-      this.label6.Text = "BOM Template:";
       // 
       // RedbrickConfiguration
       // 

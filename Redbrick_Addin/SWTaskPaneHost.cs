@@ -850,8 +850,10 @@ namespace Redbrick_Addin {
     /// I put all the L x W x T x WT validation in here. Refactoring needed.
     /// </summary>
     private void Check() {
-      if ((Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) &&
-        !Properties.Settings.Default.WarnExcludeAssy) {
+      bool exclude = !(Document.GetType() == (int)swDocumentTypes_e.swDocPART) ||
+        ((Document.GetType() == (int)swDocumentTypes_e.swDocASSEMBLY) &&
+        Properties.Settings.Default.WarnExcludeAssy);
+      if (!exclude) {
         if (Properties.Settings.Default.Warn) {
           string message = string.Empty;
           double o = 0;

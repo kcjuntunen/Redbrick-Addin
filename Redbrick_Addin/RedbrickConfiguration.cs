@@ -340,5 +340,9 @@ namespace Redbrick_Addin {
       }
     }
 
+    private void checkBox1_CheckedChanged_1(object sender, EventArgs e) {
+      Properties.Settings.Default.WarnExcludeAssy = checkBox1.Checked;
+    }
+
   }
 }
