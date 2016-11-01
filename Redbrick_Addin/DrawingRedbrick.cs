@@ -216,8 +216,8 @@ namespace Redbrick_Addin {
         }
       }
 
-      DataSet ds = PropertySet.CutlistData.GetCutlistData(name,
-        PropertySet.GetProperty("REVISION LEVEL").Value);
+      DataSet ds = PropertySet.CutlistData.GetCutlistData(name.Trim(),
+        PropertySet.GetProperty("REVISION LEVEL").Value.Trim());
       int stat = 0;
       if (ds.Tables[0].Rows.Count > 0 && int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
         cbStatus.Enabled = true;
