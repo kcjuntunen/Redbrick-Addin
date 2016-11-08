@@ -1267,6 +1267,8 @@ namespace Redbrick_Addin {
         double.Parse(GetProperty(@"OVERW").Ctl.Text);
 
       int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
+      int ps_op = 0;
+      int not_cnc_op = 0;
 
       List<string> ops = new List<string> {};
 
@@ -1274,9 +1276,15 @@ namespace Redbrick_Addin {
         ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Ctl.Text.Split(' ')[0]);
 
       for (int i = 0; i < 5; i++) {
-        if (ops[i] == @"PS" && !IsCNCOp(ops[i + 1])) {
+        if (ops[i] == @"PS")
+          ps_op = i;
+
+        if ((i + 1 < 5) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
+          not_cnc_op = i + 1;
           if (bq == 1 && oversize_val > 0) {
-            message = Properties.Resources.CheckOversize;
+            message = string.Format(Properties.Resources.CheckOversize,
+              ops[ps_op],
+              ops[not_cnc_op]);
 	        }
         }
       }

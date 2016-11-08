@@ -1,4 +1,8 @@
 ﻿
+* 0.10.7.0
+** Tries to automatically insert the BOM upon clicking "Examine BOM", "Material List", "Update Cutlist".
+** Oversize warning ignores LAM (as long as PS is the last Op)
+
 * 0.10.6.0
 ** Fixed regression when setting regex filter.
 ** Added warning on cutlist not selected.

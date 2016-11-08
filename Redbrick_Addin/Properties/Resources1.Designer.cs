@@ -79,7 +79,7 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No CNC op between panelsaw and edgebander; check overzise values..
+        ///   Looks up a localized string similar to No CNC op between {0} and {1}; check overzise values..
         /// </summary>
         internal static string CheckOversize {
             get {

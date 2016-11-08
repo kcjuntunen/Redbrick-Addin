@@ -173,7 +173,7 @@
     <value>CNC Op inconsistent with CNC programs.</value>
   </data>
   <data name="CheckOversize" xml:space="preserve">
-    <value>No CNC op between panelsaw and edgebander; check overzise values.</value>
+    <value>No CNC op between {0} and {1}; check overzise values.</value>
   </data>
   <data name="NetworkNotAvailable" xml:space="preserve">
     <value>Necessary network resources are not available. Redbrick not starting.</value>
