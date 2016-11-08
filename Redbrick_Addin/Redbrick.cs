@@ -350,6 +350,62 @@ namespace Redbrick_Addin {
       return ps;
     }
 
+    public static void InsertBOM(SldWorks swApp) {
+      ModelDoc2 md = (ModelDoc2)swApp.ActiveDoc;
+      DrawingDoc dd = (DrawingDoc)swApp.ActiveDoc;
+      ModelDocExtension ex = (ModelDocExtension)md.Extension;
+      int bom_type = (int)swBomType_e.swBomType_PartsOnly;
+      int bom_numbering = (int)swNumberingType_e.swNumberingType_Flat;
+      int bom_anchor = (int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft;
+      SolidWorks.Interop.sldworks.View v = GetFirstView(swApp);
+
+      if (dd.ActivateView(v.Name)) {
+        v.InsertBomTable4(
+          false,
+          Properties.Settings.Default.BOMLocationX, Properties.Settings.Default.BOMLocationY,
+          bom_anchor,
+          bom_type,
+          v.ReferencedConfiguration,
+          Properties.Settings.Default.BOMTemplatePath,
+          false,
+          bom_numbering,
+          false);
+      }
+    }
+
+    /// </summary>
+    /// <param name="sw">Active SldWorks object.</param>
+    /// <returns>A View object.</returns>
+    public static SolidWorks.Interop.sldworks.View GetFirstView(SldWorks sw) {
+      ModelDoc2 swModel = (ModelDoc2)sw.ActiveDoc;
+      SolidWorks.Interop.sldworks.View v;
+      DrawingDoc d = (DrawingDoc)swModel;
+      string[] shtNames = (String[])d.GetSheetNames();
+      string message = string.Empty;
+
+      //This should find the first page with something on it.
+      int x = 0;
+      do {
+        try {
+          d.ActivateSheet(shtNames[x]);
+        } catch (IndexOutOfRangeException e) {
+          throw new IndexOutOfRangeException("Went beyond the number of sheets.", e);
+        } catch (Exception e) {
+          throw e;
+        }
+        v = (SolidWorks.Interop.sldworks.View)d.GetFirstView();
+        v = (SolidWorks.Interop.sldworks.View)v.GetNextView();
+        x++;
+      } while ((v == null) && (x < d.GetSheetCount()));
+
+      message = (string)v.GetName2() + ":\n";
+
+      if (v == null) {
+        throw new Exception("I couldn't find a model anywhere in this document.");
+      }
+      return v;
+    }
+
     /// <summary>
     /// Convert a specialized StringCollection to an array of strings.
     /// </summary>

@@ -10,6 +10,7 @@ using SolidWorks.Interop.swconst;
 
 namespace Redbrick_Addin {
   public partial class CutlistHeaderInfo : Form {
+    private SldWorks _swApp;
     private bool clicked = false;
     private bool cust_clicked = false;
     private string description = "Description";
@@ -53,7 +54,8 @@ namespace Redbrick_Addin {
       InitControlsWithPart(p, cd);
     }
 
-    public CutlistHeaderInfo(DrawingProperties dp, string descr) { 
+    public CutlistHeaderInfo(DrawingProperties dp, string descr, SldWorks swapp) {
+      _swApp = swapp;
       InitializeComponent();
       SetLWHVisibility(Properties.Settings.Default.CHIHideLWH);
       DrawingPropertySet = dp;
@@ -228,6 +230,13 @@ namespace Redbrick_Addin {
 
         table = new swTableType.swTableType((DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2),
           Redbrick.MasterHashes);
+      } catch (NullReferenceException nre) {
+        if (_swApp != null) {
+          Redbrick.InsertBOM(_swApp);
+          InitTableData();
+        } else {
+          throw new NullReferenceException(@"No table found.");
+        }
       } catch (Exception e) {
         RedbrickErr.ErrMsg em = new RedbrickErr.ErrMsg(e);
         em.ShowDialog();

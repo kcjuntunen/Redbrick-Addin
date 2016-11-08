@@ -509,16 +509,17 @@ namespace Redbrick_Addin {
     /// <param name="sender">Who clicked?</param>
     /// <param name="e">Any args?</param>
     private void button1_Click(object sender, EventArgs e) {
-      string descr = get_description(GetFirstView(_swApp));
-      CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr);
+      string descr = get_description(Redbrick.GetFirstView(_swApp));
+      CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr, _swApp);
       try {
         chi.ShowDialog();
       } catch (ObjectDisposedException odex) {
         // Failed to initiate.
         // Usually, it closed itself because no table was found.
       } catch (Exception ex) {
-        RedbrickErr.ErrMsg err = new RedbrickErr.ErrMsg(ex);
-        err.ShowDialog();
+        _swApp.SendMsgToUser2(ex.Message,
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
       }
 
       FillBoxes();
@@ -590,8 +591,17 @@ namespace Redbrick_Addin {
           );
 
         dd.ShowDialog();
+      } catch (NullReferenceException nre) {
+        Redbrick.InsertBOM(_swApp);
+        btnLookup_Click(this, new EventArgs());
+      } catch (ArgumentOutOfRangeException aoore) {
+        PropertySet.SwApp.SendMsgToUser2(@"No acceptable parts in BOM.",
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
       } catch (Exception ex) {
-        PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
+        PropertySet.SwApp.SendMsgToUser2(ex.Message,
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
       }
     }
 
@@ -663,6 +673,13 @@ namespace Redbrick_Addin {
           Color.Yellow, 
           Color.Red);
         dd.ShowDialog();
+      } catch (NullReferenceException nre) {
+        Redbrick.InsertBOM(_swApp);
+        btnLookup_Click(this, new EventArgs());
+      } catch (ArgumentOutOfRangeException aoore) {
+        PropertySet.SwApp.SendMsgToUser2(@"No acceptable parts in BOM.",
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
       } catch (Exception ex) {
         PropertySet.SwApp.SendMsgToUser2(ex.Message, (int)swMessageBoxIcon_e.swMbStop, (int)swMessageBoxBtn_e.swMbOk);
       }
