@@ -1279,7 +1279,7 @@ namespace Redbrick_Addin {
         if (ops[i] == @"PS")
           ps_op = i;
 
-        if ((i + 1 < 5) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
+        if ((i < 4) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
           not_cnc_op = i + 1;
           if (bq == 1 && oversize_val > 0) {
             message = string.Format(Properties.Resources.CheckOversize,
