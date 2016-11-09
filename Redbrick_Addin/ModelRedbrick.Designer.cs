@@ -60,56 +60,60 @@ namespace Redbrick_Addin
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tlpMain.Size = new System.Drawing.Size(244, 78);
+      this.tlpMain.Size = new System.Drawing.Size(244, 126);
       this.tlpMain.TabIndex = 0;
       // 
       // gbMachProp
       // 
-      this.gbMachProp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+      this.gbMachProp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gbMachProp.AutoSize = true;
       this.gbMachProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.gbMachProp.Location = new System.Drawing.Point(3, 25);
+      this.gbMachProp.Location = new System.Drawing.Point(3, 57);
       this.gbMachProp.Name = "gbMachProp";
-      this.gbMachProp.Size = new System.Drawing.Size(238, 5);
+      this.gbMachProp.Size = new System.Drawing.Size(238, 21);
       this.gbMachProp.TabIndex = 2;
       this.gbMachProp.TabStop = false;
       this.gbMachProp.Text = "Machine Properties";
       // 
       // gbGlobProp
       // 
-      this.gbGlobProp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+      this.gbGlobProp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gbGlobProp.AutoSize = true;
       this.gbGlobProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.gbGlobProp.Location = new System.Drawing.Point(3, 14);
+      this.gbGlobProp.Location = new System.Drawing.Point(3, 30);
       this.gbGlobProp.Name = "gbGlobProp";
-      this.gbGlobProp.Size = new System.Drawing.Size(238, 5);
+      this.gbGlobProp.Size = new System.Drawing.Size(238, 21);
       this.gbGlobProp.TabIndex = 1;
       this.gbGlobProp.TabStop = false;
       this.gbGlobProp.Text = "Global Properties";
       // 
       // gbSpecProp
       // 
-      this.gbSpecProp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+      this.gbSpecProp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gbSpecProp.AutoSize = true;
       this.gbSpecProp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.gbSpecProp.Location = new System.Drawing.Point(3, 3);
       this.gbSpecProp.Name = "gbSpecProp";
-      this.gbSpecProp.Size = new System.Drawing.Size(238, 5);
+      this.gbSpecProp.Size = new System.Drawing.Size(238, 21);
       this.gbSpecProp.TabIndex = 0;
       this.gbSpecProp.TabStop = false;
       this.gbSpecProp.Text = "Configuration Specific";
       // 
       // gbOp
       // 
-      this.gbOp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+      this.gbOp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.gbOp.AutoSize = true;
       this.gbOp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.gbOp.Controls.Add(this.tlp1);
-      this.gbOp.Location = new System.Drawing.Point(3, 36);
+      this.gbOp.Location = new System.Drawing.Point(3, 84);
       this.gbOp.Name = "gbOp";
       this.gbOp.Size = new System.Drawing.Size(238, 39);
       this.gbOp.TabIndex = 0;
@@ -137,14 +141,14 @@ namespace Redbrick_Addin
       this.xtraTable.AutoSize = true;
       this.xtraTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
       this.xtraTable.ColumnCount = 1;
-      this.xtraTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.xtraTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
       this.xtraTable.Controls.Add(this.tlpMain, 0, 0);
       this.xtraTable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.xtraTable.Location = new System.Drawing.Point(0, 0);
       this.xtraTable.Name = "xtraTable";
       this.xtraTable.RowCount = 1;
-      this.xtraTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.xtraTable.Size = new System.Drawing.Size(250, 152);
+      this.xtraTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.xtraTable.Size = new System.Drawing.Size(250, 339);
       this.xtraTable.TabIndex = 0;
       // 
       // ModelRedbrick
@@ -155,7 +159,7 @@ namespace Redbrick_Addin
       this.Controls.Add(this.xtraTable);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Name = "ModelRedbrick";
-      this.Size = new System.Drawing.Size(250, 152);
+      this.Size = new System.Drawing.Size(250, 339);
       this.Load += new System.EventHandler(this.ModelRedbrick_Load);
       this.tlpMain.ResumeLayout(false);
       this.tlpMain.PerformLayout();

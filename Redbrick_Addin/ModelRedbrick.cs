@@ -21,6 +21,7 @@ namespace Redbrick_Addin {
     private Ops op;
     //private CutlistHandler ch;
 
+    Size s;
     private bool deptEvents = false;
 
     protected SwProperties props;
@@ -34,6 +35,8 @@ namespace Redbrick_Addin {
       dirtTracker = new DirtTracker(this);
       dirtTracker.Besmirched += dirtTracker_Besmirched;
       IsDirty = false;
+
+      s = gp.Size;
     }
 
     void dirtTracker_Besmirched(object sender, EventArgs e) {
@@ -46,6 +49,7 @@ namespace Redbrick_Addin {
     {                                                       // to do this.
       //DockStyle d = DockStyle.None;
       gbSpecProp.Click += gbSpecProp_Click;
+      gbGlobProp.Click += gbGlobProp_Click;
       ds = new DepartmentSelector(ref this.props);
       ds.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
       //ds.Dock = d;
@@ -86,8 +90,20 @@ namespace Redbrick_Addin {
       PerformLayout();
     }
 
+    void gbGlobProp_Click(object sender, EventArgs e) {
+      // Can't really do this yet. It needs to handle resizing well.
+      //MachineView();
+    }
+
     void gbSpecProp_Click(object sender, EventArgs e) {
       Redbrick.Clip(gbSpecProp.Text.Split(new char[] {' '})[0]);
+    }
+
+    public void MachineView() {
+      if (this.gp.Size == s)
+        this.gp.Size = new Size(0, 0);
+      else
+        this.gp.Size = s;
     }
 
 
