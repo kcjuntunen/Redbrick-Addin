@@ -176,7 +176,7 @@ namespace Redbrick_Addin {
     private void btnWhere_Click(object sender, EventArgs e) {
       //MachineProgramManager mpm = new MachineProgramManager(propertySet, tbCNC1.Text);
       //mpm.ShowDialog();
-      SolidWorks.Interop.sldworks.ModelDoc2 md = (SolidWorks.Interop.sldworks.ModelDoc2)propertySet.SwApp.ActiveDoc;
+      SolidWorks.Interop.sldworks.ModelDoc2 md = (SolidWorks.Interop.sldworks.ModelDoc2)propertySet.modeldoc;
       System.IO.FileInfo fi = new System.IO.FileInfo(md.GetPathName());
       string name = fi.Name.Replace(fi.Extension, string.Empty);
       Machine_Priority_Control.MachinePriority mp = new Machine_Priority_Control.MachinePriority(name);
