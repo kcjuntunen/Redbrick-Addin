@@ -174,10 +174,13 @@ namespace Redbrick_Addin {
     }
 
     private void btnWhere_Click(object sender, EventArgs e) {
-      //DataDisplay dd = new DataDisplay(propertySet.cutlistData.GetWhereProgUsed(tbCNC1.Text), tbCNC1.Text);
-      //dd.ShowDialog();
-      MachineProgramManager mpm = new MachineProgramManager(propertySet, tbCNC1.Text);
-      mpm.ShowDialog();
+      //MachineProgramManager mpm = new MachineProgramManager(propertySet, tbCNC1.Text);
+      //mpm.ShowDialog();
+      SolidWorks.Interop.sldworks.ModelDoc2 md = (SolidWorks.Interop.sldworks.ModelDoc2)propertySet.SwApp.ActiveDoc;
+      System.IO.FileInfo fi = new System.IO.FileInfo(md.GetPathName());
+      string name = fi.Name.Replace(fi.Extension, string.Empty);
+      Machine_Priority_Control.MachinePriority mp = new Machine_Priority_Control.MachinePriority(name);
+      mp.Show();
     }
     
     private void label6_Click(object sender, EventArgs e) {

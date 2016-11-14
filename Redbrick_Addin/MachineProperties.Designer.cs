@@ -258,7 +258,6 @@ namespace Redbrick_Addin
       this.btnWhere.TabIndex = 25;
       this.btnWhere.Text = "Priority";
       this.btnWhere.UseVisualStyleBackColor = true;
-      this.btnWhere.Visible = false;
       this.btnWhere.Click += new System.EventHandler(this.btnWhere_Click);
       // 
       // MachineProperties
