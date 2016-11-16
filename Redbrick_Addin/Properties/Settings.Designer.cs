@@ -915,5 +915,28 @@ namespace Redbrick_Addin.Properties {
                 this["BOMLocationY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>""D1@Sketch1""</string>
+  <string>""D2@Sketch1""</string>
+  <string>""D3@Sketch1""</string>
+  <string>""D2@Base-Flange1""</string>
+  <string>""Thickness@Sheet-Metal1""</string>
+  <string>""RD1@Annotations""</string>
+  <string>""RD2@Annotations""</string>
+  <string>""RD3@Annotations""</string>
+  <string>""RD4@Annotations""</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection SketchDimensions {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SketchDimensions"]));
+            }
+            set {
+                this["SketchDimensions"] = value;
+            }
+        }
     }
 }

@@ -15,6 +15,21 @@ namespace Redbrick_Addin {
     public GeneralProperties(ref SwProperties prop) {
       propertySet = prop;
       InitializeComponent();
+      AutoCompleteStringCollection skdim = new AutoCompleteStringCollection();
+      for (int i = 0; i < Properties.Settings.Default.SketchDimensions.Count; i++) {
+        skdim.Add(Properties.Settings.Default.SketchDimensions[i]);
+      }
+      tbLength.AutoCompleteSource = AutoCompleteSource.CustomSource;
+      tbLength.AutoCompleteCustomSource = skdim;
+
+      tbWidth.AutoCompleteSource = AutoCompleteSource.CustomSource;
+      tbWidth.AutoCompleteCustomSource = skdim;
+
+      tbThick.AutoCompleteSource = AutoCompleteSource.CustomSource;
+      tbThick.AutoCompleteCustomSource = skdim;
+
+      tbWallThick.AutoCompleteSource = AutoCompleteSource.CustomSource;
+      tbWallThick.AutoCompleteCustomSource = skdim;
     }
 
     public void Update(ref SwProperties p) {

@@ -318,5 +318,19 @@
     <Setting Name="BOMLocationY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">-0.01</Value>
     </Setting>
+    <Setting Name="SketchDimensions" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;"D1@Sketch1"&lt;/string&gt;
+  &lt;string&gt;"D2@Sketch1"&lt;/string&gt;
+  &lt;string&gt;"D3@Sketch1"&lt;/string&gt;
+  &lt;string&gt;"D2@Base-Flange1"&lt;/string&gt;
+  &lt;string&gt;"Thickness@Sheet-Metal1"&lt;/string&gt;
+  &lt;string&gt;"RD1@Annotations"&lt;/string&gt;
+  &lt;string&gt;"RD2@Annotations"&lt;/string&gt;
+  &lt;string&gt;"RD3@Annotations"&lt;/string&gt;
+  &lt;string&gt;"RD4@Annotations"&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

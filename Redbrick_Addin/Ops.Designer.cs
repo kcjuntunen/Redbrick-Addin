@@ -88,12 +88,13 @@ namespace Redbrick_Addin
       this.cbOp1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbOp1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbOp1.FormattingEnabled = true;
       this.cbOp1.Location = new System.Drawing.Point(43, 3);
       this.cbOp1.Name = "cbOp1";
       this.cbOp1.Size = new System.Drawing.Size(52, 21);
       this.cbOp1.TabIndex = 27;
-      this.cbOp1.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // label2
@@ -112,12 +113,13 @@ namespace Redbrick_Addin
       this.cbOp2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbOp2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbOp2.FormattingEnabled = true;
       this.cbOp2.Location = new System.Drawing.Point(43, 30);
       this.cbOp2.Name = "cbOp2";
       this.cbOp2.Size = new System.Drawing.Size(52, 21);
       this.cbOp2.TabIndex = 28;
-      this.cbOp2.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // label3
@@ -158,12 +160,13 @@ namespace Redbrick_Addin
       this.cbOp3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbOp3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbOp3.FormattingEnabled = true;
       this.cbOp3.Location = new System.Drawing.Point(43, 57);
       this.cbOp3.Name = "cbOp3";
       this.cbOp3.Size = new System.Drawing.Size(52, 21);
       this.cbOp3.TabIndex = 29;
-      this.cbOp3.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // cbOp4
@@ -171,12 +174,13 @@ namespace Redbrick_Addin
       this.cbOp4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbOp4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbOp4.FormattingEnabled = true;
       this.cbOp4.Location = new System.Drawing.Point(43, 84);
       this.cbOp4.Name = "cbOp4";
       this.cbOp4.Size = new System.Drawing.Size(52, 21);
       this.cbOp4.TabIndex = 30;
-      this.cbOp4.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // cbOp5
@@ -184,12 +188,13 @@ namespace Redbrick_Addin
       this.cbOp5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbOp5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbOp5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbOp5.FormattingEnabled = true;
       this.cbOp5.Location = new System.Drawing.Point(43, 111);
       this.cbOp5.Name = "cbOp5";
       this.cbOp5.Size = new System.Drawing.Size(52, 21);
       this.cbOp5.TabIndex = 31;
-      this.cbOp5.Leave += new System.EventHandler(this.ResolveText);
       this.cbOp5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // Ops

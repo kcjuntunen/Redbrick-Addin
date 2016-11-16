@@ -112,6 +112,8 @@ namespace Redbrick_Addin
       // 
       this.cbEr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbEr.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbEr.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbEr.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEr.FormattingEnabled = true;
       this.cbEr.Location = new System.Drawing.Point(3, 213);
@@ -120,7 +122,6 @@ namespace Redbrick_Addin
       this.cbEr.Size = new System.Drawing.Size(156, 21);
       this.cbEr.TabIndex = 5;
       this.cbEr.SelectedIndexChanged += new System.EventHandler(this.cbEr_SelectedIndexChanged);
-      this.cbEr.Leave += new System.EventHandler(this.ResolveText);
       this.cbEr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEr
@@ -138,6 +139,8 @@ namespace Redbrick_Addin
       // 
       this.cbEl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbEl.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbEl.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbEl.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEl.FormattingEnabled = true;
       this.cbEl.Location = new System.Drawing.Point(3, 165);
@@ -146,7 +149,6 @@ namespace Redbrick_Addin
       this.cbEl.Size = new System.Drawing.Size(156, 21);
       this.cbEl.TabIndex = 4;
       this.cbEl.SelectedIndexChanged += new System.EventHandler(this.cbEl_SelectedIndexChanged);
-      this.cbEl.Leave += new System.EventHandler(this.ResolveText);
       this.cbEl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEl
@@ -164,6 +166,8 @@ namespace Redbrick_Addin
       // 
       this.cbEb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbEb.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbEb.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbEb.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEb.FormattingEnabled = true;
       this.cbEb.Location = new System.Drawing.Point(3, 117);
@@ -172,7 +176,6 @@ namespace Redbrick_Addin
       this.cbEb.Size = new System.Drawing.Size(156, 21);
       this.cbEb.TabIndex = 3;
       this.cbEb.SelectedIndexChanged += new System.EventHandler(this.cbEb_SelectedIndexChanged);
-      this.cbEb.Leave += new System.EventHandler(this.ResolveText);
       this.cbEb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEb
@@ -190,6 +193,8 @@ namespace Redbrick_Addin
       // 
       this.cbEf.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbEf.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbEf.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbEf.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbEf.FormattingEnabled = true;
       this.cbEf.Location = new System.Drawing.Point(3, 69);
@@ -198,7 +203,6 @@ namespace Redbrick_Addin
       this.cbEf.Size = new System.Drawing.Size(156, 21);
       this.cbEf.TabIndex = 2;
       this.cbEf.SelectedIndexChanged += new System.EventHandler(this.cbEf_SelectedIndexChanged);
-      this.cbEf.Leave += new System.EventHandler(this.ResolveText);
       this.cbEf.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEf
@@ -216,6 +220,8 @@ namespace Redbrick_Addin
       // 
       this.cbMat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbMat.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbMat.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbMat.FlatStyle = System.Windows.Forms.FlatStyle.System;
       this.cbMat.FormattingEnabled = true;
       this.cbMat.Location = new System.Drawing.Point(3, 21);
@@ -224,7 +230,6 @@ namespace Redbrick_Addin
       this.cbMat.Size = new System.Drawing.Size(156, 21);
       this.cbMat.TabIndex = 1;
       this.cbMat.SelectedIndexChanged += new System.EventHandler(this.cbMat_SelectedIndexChanged);
-      this.cbMat.Leave += new System.EventHandler(this.ResolveText);
       this.cbMat.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lMat
@@ -331,6 +336,8 @@ namespace Redbrick_Addin
       // 
       this.cbCutlist.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbCutlist.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbCutlist.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbCutlist.FormattingEnabled = true;
       this.cbCutlist.Location = new System.Drawing.Point(3, 261);
       this.cbCutlist.MinimumSize = new System.Drawing.Size(5, 0);

@@ -72,11 +72,11 @@ namespace Redbrick_Addin
       this.cbRevision = new System.Windows.Forms.ComboBox();
       this.cbStatus = new System.Windows.Forms.ComboBox();
       this.label16 = new System.Windows.Forms.Label();
-      this.button1 = new System.Windows.Forms.Button();
-      this.btnLookup = new System.Windows.Forms.Button();
-      this.btnMatList = new System.Windows.Forms.Button();
-      this.btnDelete = new System.Windows.Forms.Button();
       this.btnCreate = new System.Windows.Forms.Button();
+      this.btnDelete = new System.Windows.Forms.Button();
+      this.btnLookup = new System.Windows.Forms.Button();
+      this.button1 = new System.Windows.Forms.Button();
+      this.btnMatList = new System.Windows.Forms.Button();
       this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
       this.btnOK = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
@@ -262,6 +262,8 @@ namespace Redbrick_Addin
       // 
       // cbM1
       // 
+      this.cbM1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbM1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbM1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbM1.FormattingEnabled = true;
       this.cbM1.Location = new System.Drawing.Point(3, 16);
@@ -271,6 +273,8 @@ namespace Redbrick_Addin
       // 
       // cbM2
       // 
+      this.cbM2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbM2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbM2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbM2.FormattingEnabled = true;
       this.cbM2.Location = new System.Drawing.Point(3, 57);
@@ -280,6 +284,8 @@ namespace Redbrick_Addin
       // 
       // cbM3
       // 
+      this.cbM3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbM3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbM3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbM3.FormattingEnabled = true;
       this.cbM3.Location = new System.Drawing.Point(3, 98);
@@ -289,6 +295,8 @@ namespace Redbrick_Addin
       // 
       // cbM4
       // 
+      this.cbM4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbM4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbM4.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbM4.FormattingEnabled = true;
       this.cbM4.Location = new System.Drawing.Point(3, 139);
@@ -298,6 +306,8 @@ namespace Redbrick_Addin
       // 
       // cbM5
       // 
+      this.cbM5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbM5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbM5.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbM5.FormattingEnabled = true;
       this.cbM5.Location = new System.Drawing.Point(3, 180);
@@ -393,6 +403,8 @@ namespace Redbrick_Addin
       // 
       // cbCustomer
       // 
+      this.cbCustomer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbCustomer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbCustomer.FormattingEnabled = true;
       this.cbCustomer.Location = new System.Drawing.Point(3, 71);
@@ -444,6 +456,8 @@ namespace Redbrick_Addin
       // 
       // cbAuthor
       // 
+      this.cbAuthor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbAuthor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbAuthor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbAuthor.FormattingEnabled = true;
       this.cbAuthor.Location = new System.Drawing.Point(225, 71);
@@ -504,6 +518,8 @@ namespace Redbrick_Addin
       // 
       this.cbRevision.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbRevision.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbRevision.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbRevision.FormattingEnabled = true;
       this.cbRevision.Location = new System.Drawing.Point(67, 3);
       this.cbRevision.Name = "cbRevision";
@@ -515,6 +531,8 @@ namespace Redbrick_Addin
       // 
       this.cbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.cbStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbStatus.FormattingEnabled = true;
       this.cbStatus.Location = new System.Drawing.Point(67, 32);
       this.cbStatus.Name = "cbStatus";
@@ -531,19 +549,30 @@ namespace Redbrick_Addin
       this.label16.TabIndex = 10;
       this.label16.Text = "Status";
       // 
-      // button1
+      // btnCreate
       // 
-      this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+      this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.button1.Location = new System.Drawing.Point(3, 224);
-      this.button1.Name = "button1";
-      this.button1.Size = new System.Drawing.Size(216, 29);
-      this.button1.TabIndex = 10;
-      this.button1.Text = "Insert BOM";
-      this.button1.UseVisualStyleBackColor = true;
-      this.button1.Visible = false;
-      this.button1.Click += new System.EventHandler(this.button1_Click_1);
+      this.btnCreate.Location = new System.Drawing.Point(225, 119);
+      this.btnCreate.Name = "btnCreate";
+      this.btnCreate.Size = new System.Drawing.Size(90, 29);
+      this.btnCreate.TabIndex = 6;
+      this.btnCreate.Text = "Update Cutlist";
+      this.btnCreate.UseVisualStyleBackColor = true;
+      this.btnCreate.Click += new System.EventHandler(this.button1_Click);
+      // 
+      // btnDelete
+      // 
+      this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDelete.Location = new System.Drawing.Point(225, 154);
+      this.btnDelete.Name = "btnDelete";
+      this.btnDelete.Size = new System.Drawing.Size(90, 29);
+      this.btnDelete.TabIndex = 7;
+      this.btnDelete.Text = "Delete Cutlist";
+      this.btnDelete.UseVisualStyleBackColor = true;
+      this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
       // 
       // btnLookup
       // 
@@ -558,6 +587,20 @@ namespace Redbrick_Addin
       this.btnLookup.UseVisualStyleBackColor = true;
       this.btnLookup.Click += new System.EventHandler(this.btnLookup_Click);
       // 
+      // button1
+      // 
+      this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.button1.Location = new System.Drawing.Point(3, 224);
+      this.button1.Name = "button1";
+      this.button1.Size = new System.Drawing.Size(216, 29);
+      this.button1.TabIndex = 10;
+      this.button1.Text = "Insert BOM";
+      this.button1.UseVisualStyleBackColor = true;
+      this.button1.Visible = false;
+      this.button1.Click += new System.EventHandler(this.button1_Click_1);
+      // 
       // btnMatList
       // 
       this.btnMatList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -570,31 +613,6 @@ namespace Redbrick_Addin
       this.btnMatList.Text = "Material List";
       this.btnMatList.UseVisualStyleBackColor = true;
       this.btnMatList.Click += new System.EventHandler(this.btnMatList_Click);
-      // 
-      // btnDelete
-      // 
-      this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnDelete.Location = new System.Drawing.Point(225, 154);
-      this.btnDelete.Name = "btnDelete";
-      this.btnDelete.Size = new System.Drawing.Size(90, 29);
-      this.btnDelete.TabIndex = 7;
-      this.btnDelete.Text = "Delete Cutlist";
-      this.btnDelete.UseVisualStyleBackColor = true;
-      this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-      // 
-      // btnCreate
-      // 
-      this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnCreate.Location = new System.Drawing.Point(225, 119);
-      this.btnCreate.Name = "btnCreate";
-      this.btnCreate.Size = new System.Drawing.Size(90, 29);
-      this.btnCreate.TabIndex = 6;
-      this.btnCreate.Text = "Update Cutlist";
-      this.btnCreate.UseVisualStyleBackColor = true;
-      this.btnCreate.Click += new System.EventHandler(this.button1_Click);
       // 
       // tableLayoutPanel4
       // 

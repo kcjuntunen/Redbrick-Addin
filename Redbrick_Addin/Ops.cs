@@ -113,14 +113,7 @@ namespace Redbrick_Addin {
     }
 
     private void ResolveText(object sender, EventArgs e) {
-      if (sender is ComboBox) {
-        ComboBox s = (sender as ComboBox);
-        if (s.Text.Trim() == string.Empty) {
-          s.SelectedIndex = s.Items.Count - 1;
-        } else {
-          s.SelectedIndex = s.FindString(s.Text.Trim());
-        }
-      }
+
     }
 
     private void FocusHere(object sender, MouseEventArgs e) {

@@ -541,14 +541,7 @@ namespace Redbrick_Addin {
     /// <param name="sender">What item triggered this? Looking for a ComboBox.</param>
     /// <param name="e">Args?</param>
     private void ResolveText(object sender, EventArgs e) {
-      if (sender is ComboBox) {
-        ComboBox s = (sender as ComboBox);
-        if (s.Text.Trim() == string.Empty) {
-          s.SelectedIndex = s.Items.Count - 1;
-        } else {
-          s.SelectedIndex = s.FindString(s.Text.Trim());
-        }
-      }
+
     }
 
     /// <summary>
