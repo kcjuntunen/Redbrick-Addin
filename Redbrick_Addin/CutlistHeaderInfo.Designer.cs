@@ -185,6 +185,8 @@ namespace Redbrick_Addin {
       // 
       // cbCustomer
       // 
+      this.cbCustomer.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbCustomer.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbCustomer.DisplayMember = "CUSTOMER";
       this.cbCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbCustomer.FormattingEnabled = true;
@@ -224,6 +226,8 @@ namespace Redbrick_Addin {
       // 
       // cbItemNo
       // 
+      this.cbItemNo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbItemNo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbItemNo.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbItemNo.FormattingEnabled = true;
       this.cbItemNo.Location = new System.Drawing.Point(75, 3);
@@ -235,6 +239,8 @@ namespace Redbrick_Addin {
       // 
       // cbRev
       // 
+      this.cbRev.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbRev.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbRev.FormattingEnabled = true;
       this.cbRev.Location = new System.Drawing.Point(309, 3);
       this.cbRev.Name = "cbRev";
@@ -267,6 +273,8 @@ namespace Redbrick_Addin {
       // 
       // cbDescription
       // 
+      this.cbDescription.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbDescription.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbDescription.FormattingEnabled = true;
       this.cbDescription.Location = new System.Drawing.Point(93, 3);
@@ -413,6 +421,8 @@ namespace Redbrick_Addin {
       // 
       // cbDrawingReference
       // 
+      this.cbDrawingReference.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbDrawingReference.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbDrawingReference.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbDrawingReference.FormattingEnabled = true;
       this.cbDrawingReference.Location = new System.Drawing.Point(93, 3);
