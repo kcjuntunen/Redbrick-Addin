@@ -74,9 +74,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ArchivePDF\ArchivePDF\bin\Release\ArchivePDF.dll</HintPath>
     </Reference>
-    <Reference Include="Machine Priority Control, Version=1.0.6162.22110, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
+    <Reference Include="Machine Priority Control, Version=1.0.6176.11843, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Machine.Priority.Control\Machine Priority Control\bin\Debug\Machine Priority Control.dll</HintPath>
+      <HintPath>..\..\Machine.Priority.Control\Machine Priority Control\bin\Release\Machine Priority Control.dll</HintPath>
     </Reference>
     <Reference Include="SolidWorks.Interop.sldworks, Version=22.5.0.77, Culture=neutral, PublicKeyToken=7c4797c3e4eeac03, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
