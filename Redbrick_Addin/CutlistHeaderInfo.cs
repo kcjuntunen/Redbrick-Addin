@@ -258,11 +258,15 @@ namespace Redbrick_Addin {
 
     private void btnCreate_Click(object sender, EventArgs e) {
       if (cbCustomer.Text == string.Empty) {
-        DrawingPropertySet.SwApp.SendMsgToUser2("Fill in the Customer box.",
+        DrawingPropertySet.SwApp.SendMsgToUser2(Properties.Resources.CustomerEmpty,
           (int)swMessageBoxIcon_e.swMbStop,
           (int)swMessageBoxBtn_e.swMbOk);
       } else if (cbItemNo.Text == string.Empty) {
-        DrawingPropertySet.SwApp.SendMsgToUser2("Fill in the Item Number box.",
+        DrawingPropertySet.SwApp.SendMsgToUser2(Properties.Resources.ItemNumberEmpty,
+          (int)swMessageBoxIcon_e.swMbStop,
+          (int)swMessageBoxBtn_e.swMbOk);
+      } else if (cbDescription.Text.Length > 40) {
+        DrawingPropertySet.SwApp.SendMsgToUser2(Properties.Resources.CutlistDescriptionTooLong,
           (int)swMessageBoxIcon_e.swMbStop,
           (int)swMessageBoxBtn_e.swMbOk);
       } else {
@@ -408,5 +412,9 @@ namespace Redbrick_Addin {
     }
 
     public int CurrentCutlist { get; set; }
+
+    private void cbDescription_Validating(object sender, CancelEventArgs e) {
+
+    }
   }
 }

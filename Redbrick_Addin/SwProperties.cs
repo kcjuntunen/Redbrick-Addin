@@ -1231,7 +1231,12 @@ namespace Redbrick_Addin {
           }
         }
       }
-      string val_msg = Validate() + CheckOversize();
+
+      string val_msg =
+        Validate() +
+        CheckOversize() +
+        CheckFieldLength();
+
       if (val_msg != string.Empty) {
         SwApp.SendMsgToUser2(val_msg, (int)swMessageBoxIcon_e.swMbWarning, (int)swMessageBoxBtn_e.swMbOk);
       }
@@ -1260,35 +1265,51 @@ namespace Redbrick_Addin {
       return have_cnc_ops;
     }
 
-    private string CheckOversize() {
-      string message = string.Empty;
-      double oversize_val = 
-        double.Parse(GetProperty(@"OVERL").Ctl.Text) +
-        double.Parse(GetProperty(@"OVERW").Ctl.Text);
-
-      int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
-      int ps_op = 0;
-      int not_cnc_op = 0;
-
-      List<string> ops = new List<string> {};
-
-      for (int i = 1; i <= 5; i++)
-        ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Ctl.Text.Split(' ')[0]);
-
-      for (int i = 0; i < 5; i++) {
-        if (ops[i] == @"PS")
-          ps_op = i;
-
-        if ((i < 4) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
-          not_cnc_op = i + 1;
-          if (bq == 1 && oversize_val > 0) {
-            message = string.Format(Properties.Resources.CheckOversize,
-              ops[ps_op],
-              ops[not_cnc_op]);
-	        }
+    private string CheckFieldLength() {
+      string err = string.Empty;
+      if (Properties.Settings.Default.Warn) {
+        string descr = GetProperty(@"DESCRIPTION").Ctl.Text;
+        if (descr.Length > 25) {
+          err = Properties.Resources.Bullet +
+            Properties.Resources.CheckFieldLength +
+            System.Environment.NewLine;
         }
       }
+      return err;
+    }
 
+    private string CheckOversize() {
+      string message = string.Empty;
+      if (Properties.Settings.Default.Warn && Properties.Settings.Default.ProgWarn) {
+        double oversize_val =
+          double.Parse(GetProperty(@"OVERL").Ctl.Text) +
+          double.Parse(GetProperty(@"OVERW").Ctl.Text);
+
+        int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
+        int ps_op = 0;
+        int not_cnc_op = 0;
+
+        List<string> ops = new List<string> { };
+
+        for (int i = 1; i <= 5; i++)
+          ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Ctl.Text.Split(' ')[0]);
+
+        for (int i = 0; i < 5; i++) {
+          if (ops[i] == @"PS")
+            ps_op = i;
+
+          if ((i < 4) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
+            not_cnc_op = i + 1;
+            if (bq == 1 && oversize_val > 0) {
+              message = Properties.Resources.Bullet +
+                string.Format(Properties.Resources.CheckOversize,
+                ops[ps_op],
+                ops[not_cnc_op]) +
+                System.Environment.NewLine;
+            }
+          }
+        }
+      }
       return message;
     }
 
@@ -1326,7 +1347,9 @@ namespace Redbrick_Addin {
         }
 
         if (have_cnc_ops != have_prog) {
-          message += Properties.Resources.NoProgramWarning + System.Environment.NewLine;
+          message += Properties.Resources.Bullet +
+            Properties.Resources.NoProgramWarning +
+            System.Environment.NewLine;
         }
 
         foreach (SwProperty p in new SwProperty[] { GetProperty("EFID"), 
@@ -1337,7 +1360,9 @@ namespace Redbrick_Addin {
         }
 
         if (have_eb_ops != have_eb) {
-          message += Properties.Resources.NoEBWarning + System.Environment.NewLine;
+          message += Properties.Resources.Bullet +
+            Properties.Resources.NoEBWarning +
+            System.Environment.NewLine;
         }
       }
 

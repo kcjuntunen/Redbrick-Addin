@@ -79,6 +79,24 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to • .
+        /// </summary>
+        internal static string Bullet {
+            get {
+                return ResourceManager.GetString("Bullet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description cannot be longer than 25 characters. Cutlist will fail to upload..
+        /// </summary>
+        internal static string CheckFieldLength {
+            get {
+                return ResourceManager.GetString("CheckFieldLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No CNC op between {0} and {1}; check overzise values..
         /// </summary>
         internal static string CheckOversize {
@@ -94,6 +112,24 @@ namespace Redbrick_Addin.Properties {
             get {
                 object obj = ResourceManager.GetObject("clipboard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill in the Customer box..
+        /// </summary>
+        internal static string CustomerEmpty {
+            get {
+                return ResourceManager.GetString("CustomerEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Description cannot be greater than 40 characters long. Cannot upload cutlist..
+        /// </summary>
+        internal static string CutlistDescriptionTooLong {
+            get {
+                return ResourceManager.GetString("CutlistDescriptionTooLong", resourceCulture);
             }
         }
         
@@ -121,6 +157,15 @@ namespace Redbrick_Addin.Properties {
         internal static string InsertIntoEcrItems {
             get {
                 return ResourceManager.GetString("InsertIntoEcrItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill in the Item Number box..
+        /// </summary>
+        internal static string ItemNumberEmpty {
+            get {
+                return ResourceManager.GetString("ItemNumberEmpty", resourceCulture);
             }
         }
         

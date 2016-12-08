@@ -74,7 +74,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ArchivePDF\ArchivePDF\bin\Release\ArchivePDF.dll</HintPath>
     </Reference>
-    <Reference Include="Machine Priority Control, Version=1.0.6176.11843, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
+    <Reference Include="Machine Priority Control, Version=1.0.6177.18315, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Machine.Priority.Control\Machine Priority Control\bin\Release\Machine Priority Control.dll</HintPath>
     </Reference>
