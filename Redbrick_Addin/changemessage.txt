@@ -1,6 +1,6 @@
 ﻿
-* 1.0.1.1
-** Priority Control update
-
-* 1.0.0.0
-** Added Machine Priority Control
+* 1.1.0.0
+** [UI] Revised appearance of warnings a bit.
+** [BUGFIX] Fixed  the bizarre double-dropdown problem.
+** [OPTION] Added option to automatically open the Machine Priority window when "Update CNC" is unchecked.
+** NOTE: Because of configuration update, all configurations will return to the defaults. If, for instance, you were using SW BOMs for proto cutlists, you'd have to turn "Testing Mode" on again.
