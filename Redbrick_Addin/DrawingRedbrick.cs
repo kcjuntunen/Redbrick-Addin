@@ -926,5 +926,10 @@ namespace Redbrick_Addin {
     private void button1_Click_1(object sender, EventArgs e) {
       insert_BOM();
     }
+
+    private void combobox_KeyDown(object sender, KeyEventArgs e) {
+      if (sender is ComboBox)
+        (sender as ComboBox).DroppedDown = false;
+    }
   }
 }

@@ -122,6 +122,7 @@ namespace Redbrick_Addin
       this.cbEr.Size = new System.Drawing.Size(156, 21);
       this.cbEr.TabIndex = 5;
       this.cbEr.SelectedIndexChanged += new System.EventHandler(this.cbEr_SelectedIndexChanged);
+      this.cbEr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbEr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEr
@@ -149,6 +150,7 @@ namespace Redbrick_Addin
       this.cbEl.Size = new System.Drawing.Size(156, 21);
       this.cbEl.TabIndex = 4;
       this.cbEl.SelectedIndexChanged += new System.EventHandler(this.cbEl_SelectedIndexChanged);
+      this.cbEl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbEl.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEl
@@ -176,6 +178,7 @@ namespace Redbrick_Addin
       this.cbEb.Size = new System.Drawing.Size(156, 21);
       this.cbEb.TabIndex = 3;
       this.cbEb.SelectedIndexChanged += new System.EventHandler(this.cbEb_SelectedIndexChanged);
+      this.cbEb.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbEb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEb
@@ -203,6 +206,7 @@ namespace Redbrick_Addin
       this.cbEf.Size = new System.Drawing.Size(156, 21);
       this.cbEf.TabIndex = 2;
       this.cbEf.SelectedIndexChanged += new System.EventHandler(this.cbEf_SelectedIndexChanged);
+      this.cbEf.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbEf.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lEf
@@ -230,6 +234,7 @@ namespace Redbrick_Addin
       this.cbMat.Size = new System.Drawing.Size(156, 21);
       this.cbMat.TabIndex = 1;
       this.cbMat.SelectedIndexChanged += new System.EventHandler(this.cbMat_SelectedIndexChanged);
+      this.cbMat.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbMat.MouseClick += new System.Windows.Forms.MouseEventHandler(this.FocusHere);
       // 
       // lMat
@@ -345,6 +350,7 @@ namespace Redbrick_Addin
       this.cbCutlist.Size = new System.Drawing.Size(156, 21);
       this.cbCutlist.TabIndex = 6;
       this.cbCutlist.SelectedIndexChanged += new System.EventHandler(this.cbCutlist_SelectedIndexChanged);
+      this.cbCutlist.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbCutlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbCutlist_MouseClick);
       // 
       // cbStatus

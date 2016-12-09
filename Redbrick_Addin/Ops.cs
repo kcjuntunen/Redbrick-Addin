@@ -128,6 +128,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    private void combobox_KeyDown(object sender, KeyEventArgs e) {
+      if (sender is ComboBox)
+        (sender as ComboBox).DroppedDown = false;
+    }
+
     public Control GetOp1Box() {
       return cbOp1;
     }

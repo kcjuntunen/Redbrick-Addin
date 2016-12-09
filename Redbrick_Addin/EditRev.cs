@@ -230,6 +230,11 @@ namespace Redbrick_Addin {
       OnAddedLvl(new EventArgs());
       }
 
+    private void combobox_KeyDown(object sender, KeyEventArgs e) {
+      if (sender is ComboBox)
+        (sender as ComboBox).DroppedDown = false;
+    }
+
     private void EditRev_FormClosing(object sender, FormClosingEventArgs e) {
       Properties.Settings.Default.EditRevLocation = Location;
       Properties.Settings.Default.Save();

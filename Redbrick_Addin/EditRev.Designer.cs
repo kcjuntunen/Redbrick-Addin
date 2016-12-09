@@ -103,12 +103,15 @@ namespace Redbrick_Addin
       // 
       // cbBy
       // 
+      this.cbBy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbBy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbBy.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbBy.FormattingEnabled = true;
       this.cbBy.Location = new System.Drawing.Point(3, 138);
       this.cbBy.Name = "cbBy";
       this.cbBy.Size = new System.Drawing.Size(196, 21);
       this.cbBy.TabIndex = 4;
+      this.cbBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // dtpDate
       // 

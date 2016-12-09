@@ -270,6 +270,7 @@ namespace Redbrick_Addin
       this.cbM1.Name = "cbM1";
       this.cbM1.Size = new System.Drawing.Size(87, 21);
       this.cbM1.TabIndex = 8;
+      this.cbM1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // cbM2
       // 
@@ -281,6 +282,7 @@ namespace Redbrick_Addin
       this.cbM2.Name = "cbM2";
       this.cbM2.Size = new System.Drawing.Size(87, 21);
       this.cbM2.TabIndex = 10;
+      this.cbM2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // cbM3
       // 
@@ -292,6 +294,7 @@ namespace Redbrick_Addin
       this.cbM3.Name = "cbM3";
       this.cbM3.Size = new System.Drawing.Size(87, 21);
       this.cbM3.TabIndex = 12;
+      this.cbM3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // cbM4
       // 
@@ -303,6 +306,7 @@ namespace Redbrick_Addin
       this.cbM4.Name = "cbM4";
       this.cbM4.Size = new System.Drawing.Size(87, 21);
       this.cbM4.TabIndex = 14;
+      this.cbM4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // cbM5
       // 
@@ -314,6 +318,7 @@ namespace Redbrick_Addin
       this.cbM5.Name = "cbM5";
       this.cbM5.Size = new System.Drawing.Size(87, 21);
       this.cbM5.TabIndex = 16;
+      this.cbM5.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // tbFinish1
       // 
@@ -412,6 +417,7 @@ namespace Redbrick_Addin
       this.cbCustomer.Size = new System.Drawing.Size(216, 21);
       this.cbCustomer.TabIndex = 3;
       this.cbCustomer.SelectedIndexChanged += new System.EventHandler(this.cbCustomer_SelectedIndexChanged);
+      this.cbCustomer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbCustomer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbCustomer_MouseDown);
       // 
       // label1
@@ -464,6 +470,7 @@ namespace Redbrick_Addin
       this.cbAuthor.Name = "cbAuthor";
       this.cbAuthor.Size = new System.Drawing.Size(90, 21);
       this.cbAuthor.TabIndex = 4;
+      this.cbAuthor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // label2
       // 
@@ -526,6 +533,7 @@ namespace Redbrick_Addin
       this.cbRevision.Size = new System.Drawing.Size(146, 21);
       this.cbRevision.TabIndex = 8;
       this.cbRevision.SelectedIndexChanged += new System.EventHandler(this.cbRevision_SelectedIndexChanged);
+      this.cbRevision.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // cbStatus
       // 
@@ -539,6 +547,7 @@ namespace Redbrick_Addin
       this.cbStatus.Size = new System.Drawing.Size(146, 21);
       this.cbStatus.TabIndex = 9;
       this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
+      this.cbStatus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // label16
       // 

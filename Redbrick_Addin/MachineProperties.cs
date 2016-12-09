@@ -204,5 +204,11 @@ namespace Redbrick_Addin {
       Redbrick.Clip(tbOverW.Text);
     }
 
+    private void chUpdate_CheckedChanged(object sender, EventArgs e) {
+      //if (!(sender as CheckBox).Checked) {
+      //  btnWhere_Click(sender, new EventArgs());
+      //}
+    }
+
   }
 }

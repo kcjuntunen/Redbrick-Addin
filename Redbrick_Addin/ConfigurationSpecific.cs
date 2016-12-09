@@ -659,5 +659,10 @@ namespace Redbrick_Addin {
     private void leRColor_Click(object sender, EventArgs e) {
       Redbrick.Clip(leRColor.Text);
     }
+
+    private void combobox_KeyDown(object sender, KeyEventArgs e) {
+      if (sender is ComboBox)
+        (sender as ComboBox).DroppedDown = false;
+    }
   }
 }

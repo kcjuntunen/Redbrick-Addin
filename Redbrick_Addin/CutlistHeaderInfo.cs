@@ -413,8 +413,9 @@ namespace Redbrick_Addin {
 
     public int CurrentCutlist { get; set; }
 
-    private void cbDescription_Validating(object sender, CancelEventArgs e) {
-
+    private void combobox_KeyDown(object sender, KeyEventArgs e) {
+      if (sender is ComboBox)
+        (sender as ComboBox).DroppedDown = false;
     }
   }
 }

@@ -86,7 +86,7 @@ namespace Redbrick_Addin {
       this.tlpMain.RowCount = 2;
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
       this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-      this.tlpMain.Size = new System.Drawing.Size(379, 320);
+      this.tlpMain.Size = new System.Drawing.Size(379, 348);
       this.tlpMain.TabIndex = 0;
       // 
       // gbCutlistSetup
@@ -95,7 +95,7 @@ namespace Redbrick_Addin {
       this.gbCutlistSetup.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gbCutlistSetup.Location = new System.Drawing.Point(3, 3);
       this.gbCutlistSetup.Name = "gbCutlistSetup";
-      this.gbCutlistSetup.Size = new System.Drawing.Size(373, 282);
+      this.gbCutlistSetup.Size = new System.Drawing.Size(373, 307);
       this.gbCutlistSetup.TabIndex = 0;
       this.gbCutlistSetup.TabStop = false;
       this.gbCutlistSetup.Text = "New Cutlist Set Up";
@@ -124,7 +124,7 @@ namespace Redbrick_Addin {
       this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tlpControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tlpControls.Size = new System.Drawing.Size(367, 241);
+      this.tlpControls.Size = new System.Drawing.Size(367, 266);
       this.tlpControls.TabIndex = 0;
       // 
       // tlpDate
@@ -196,6 +196,7 @@ namespace Redbrick_Addin {
       this.cbCustomer.TabIndex = 1;
       this.cbCustomer.ValueMember = "CUSTID";
       this.cbCustomer.SelectedIndexChanged += new System.EventHandler(this.cbCustomer_SelectedIndexChanged);
+      this.cbCustomer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbCustomer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.cbCustomer_MouseDown);
       // 
       // tlpItemNo
@@ -235,6 +236,7 @@ namespace Redbrick_Addin {
       this.cbItemNo.Size = new System.Drawing.Size(228, 21);
       this.cbItemNo.TabIndex = 1;
       this.cbItemNo.SelectedIndexChanged += new System.EventHandler(this.cbItemNo_SelectedIndexChanged);
+      this.cbItemNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       this.cbItemNo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.cbItemNo_MouseClick);
       // 
       // cbRev
@@ -246,6 +248,7 @@ namespace Redbrick_Addin {
       this.cbRev.Name = "cbRev";
       this.cbRev.Size = new System.Drawing.Size(49, 21);
       this.cbRev.TabIndex = 2;
+      this.cbRev.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // tableLayoutPanel1
       // 
@@ -282,6 +285,7 @@ namespace Redbrick_Addin {
       this.cbDescription.Size = new System.Drawing.Size(265, 21);
       this.cbDescription.TabIndex = 1;
       this.cbDescription.TextChanged += new System.EventHandler(this.cbDescription_TextChanged);
+      this.cbDescription.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // tableLayoutPanel2
       // 
@@ -429,6 +433,7 @@ namespace Redbrick_Addin {
       this.cbDrawingReference.Name = "cbDrawingReference";
       this.cbDrawingReference.Size = new System.Drawing.Size(265, 21);
       this.cbDrawingReference.TabIndex = 1;
+      this.cbDrawingReference.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // tableLayoutPanel4
       // 
@@ -456,6 +461,8 @@ namespace Redbrick_Addin {
       // 
       // cbSetupBy
       // 
+      this.cbSetupBy.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbSetupBy.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbSetupBy.DisplayMember = "NAME";
       this.cbSetupBy.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbSetupBy.FormattingEnabled = true;
@@ -464,6 +471,7 @@ namespace Redbrick_Addin {
       this.cbSetupBy.Size = new System.Drawing.Size(265, 21);
       this.cbSetupBy.TabIndex = 1;
       this.cbSetupBy.ValueMember = "UID";
+      this.cbSetupBy.KeyDown += new System.Windows.Forms.KeyEventHandler(this.combobox_KeyDown);
       // 
       // tlpButtons
       // 
@@ -473,11 +481,11 @@ namespace Redbrick_Addin {
       this.tlpButtons.Controls.Add(this.btnCancel, 0, 0);
       this.tlpButtons.Controls.Add(this.btnCreate, 1, 0);
       this.tlpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tlpButtons.Location = new System.Drawing.Point(3, 291);
+      this.tlpButtons.Location = new System.Drawing.Point(3, 316);
       this.tlpButtons.Name = "tlpButtons";
       this.tlpButtons.RowCount = 1;
       this.tlpButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tlpButtons.Size = new System.Drawing.Size(373, 26);
+      this.tlpButtons.Size = new System.Drawing.Size(373, 29);
       this.tlpButtons.TabIndex = 1;
       // 
       // btnCancel
@@ -485,7 +493,7 @@ namespace Redbrick_Addin {
       this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCancel.Location = new System.Drawing.Point(3, 3);
       this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(180, 20);
+      this.btnCancel.Size = new System.Drawing.Size(180, 23);
       this.btnCancel.TabIndex = 0;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
@@ -496,7 +504,7 @@ namespace Redbrick_Addin {
       this.btnCreate.Dock = System.Windows.Forms.DockStyle.Fill;
       this.btnCreate.Location = new System.Drawing.Point(189, 3);
       this.btnCreate.Name = "btnCreate";
-      this.btnCreate.Size = new System.Drawing.Size(181, 20);
+      this.btnCreate.Size = new System.Drawing.Size(181, 23);
       this.btnCreate.TabIndex = 1;
       this.btnCreate.Text = "Create";
       this.btnCreate.UseVisualStyleBackColor = true;
@@ -506,7 +514,7 @@ namespace Redbrick_Addin {
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(379, 320);
+      this.ClientSize = new System.Drawing.Size(379, 348);
       this.Controls.Add(this.tlpMain);
       this.MinimumSize = new System.Drawing.Size(387, 350);
       this.Name = "CutlistHeaderInfo";
