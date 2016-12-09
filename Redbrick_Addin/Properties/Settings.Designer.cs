@@ -938,5 +938,17 @@ namespace Redbrick_Addin.Properties {
                 this["SketchDimensions"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoOpenPriority {
+            get {
+                return ((bool)(this["AutoOpenPriority"]));
+            }
+            set {
+                this["AutoOpenPriority"] = value;
+            }
+        }
     }
 }

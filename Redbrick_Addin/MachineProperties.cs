@@ -205,10 +205,11 @@ namespace Redbrick_Addin {
     }
 
     private void chUpdate_CheckedChanged(object sender, EventArgs e) {
-      //if (!(sender as CheckBox).Checked) {
-      //  btnWhere_Click(sender, new EventArgs());
-      //}
+      if (Properties.Settings.Default.AutoOpenPriority && btnWhere.Enabled) {
+        if (!(sender as CheckBox).Checked) {
+          btnWhere_Click(sender, new EventArgs());
+        }
+      }
     }
-
   }
 }

@@ -63,6 +63,7 @@ namespace Redbrick_Addin {
       checkBox5.Checked = Properties.Settings.Default.ExportEDrw;
       checkBox6.Checked = Properties.Settings.Default.ExportImg;
       checkBox7.Checked = Properties.Settings.Default.CutlistNotSelectedWarning;
+      checkBox8.Checked = Properties.Settings.Default.AutoOpenPriority;
 
       ToolTip tt = new ToolTip();
       tt.ShowAlways = true;
@@ -344,5 +345,13 @@ namespace Redbrick_Addin {
       Properties.Settings.Default.WarnExcludeAssy = checkBox1.Checked;
     }
 
+    private void combobox_KeyDown(object sender, KeyEventArgs e) {
+      if (sender is ComboBox)
+        (sender as ComboBox).DroppedDown = false;
+    }
+
+    private void checkBox8_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.AutoOpenPriority = checkBox8.Checked;
+    }
   }
 }
