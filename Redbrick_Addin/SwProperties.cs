@@ -1238,7 +1238,7 @@ namespace Redbrick_Addin {
         CheckFieldLength();
 
       if (val_msg != string.Empty) {
-        SwApp.SendMsgToUser2(val_msg, (int)swMessageBoxIcon_e.swMbWarning, (int)swMessageBoxBtn_e.swMbOk);
+        System.Windows.Forms.MessageBox.Show(val_msg, @"Warning", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
       }
     }
 
