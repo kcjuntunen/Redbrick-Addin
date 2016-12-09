@@ -265,7 +265,7 @@ namespace Redbrick_Addin {
         DrawingPropertySet.SwApp.SendMsgToUser2(Properties.Resources.ItemNumberEmpty,
           (int)swMessageBoxIcon_e.swMbStop,
           (int)swMessageBoxBtn_e.swMbOk);
-      } else if (cbDescription.Text.Length > 40) {
+      } else if (cbDescription.Text.Length > 50) {
         DrawingPropertySet.SwApp.SendMsgToUser2(Properties.Resources.CutlistDescriptionTooLong,
           (int)swMessageBoxIcon_e.swMbStop,
           (int)swMessageBoxBtn_e.swMbOk);

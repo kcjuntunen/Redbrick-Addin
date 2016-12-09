@@ -1269,7 +1269,7 @@ namespace Redbrick_Addin {
       string err = string.Empty;
       if (Properties.Settings.Default.Warn) {
         string descr = GetProperty(@"DESCRIPTION").Ctl.Text;
-        if (descr.Length > 25) {
+        if (descr.Length > 35) {
           err = Properties.Resources.Bullet +
             Properties.Resources.CheckFieldLength +
             System.Environment.NewLine;
