@@ -1,4 +1,7 @@
 ﻿
+* 1.1.0.1
+** [UI] Changed timing of priority popup.
+
 * 1.1.0.0
 ** [UI] Revised appearance of warnings a bit.
 ** [BUGFIX] Fixed  the bizarre double-dropdown problem.
