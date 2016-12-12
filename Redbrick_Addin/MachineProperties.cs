@@ -174,8 +174,6 @@ namespace Redbrick_Addin {
     }
 
     private void btnWhere_Click(object sender, EventArgs e) {
-      //MachineProgramManager mpm = new MachineProgramManager(propertySet, tbCNC1.Text);
-      //mpm.ShowDialog();
       SolidWorks.Interop.sldworks.ModelDoc2 md = (SolidWorks.Interop.sldworks.ModelDoc2)propertySet.modeldoc;
       System.IO.FileInfo fi = new System.IO.FileInfo(md.GetPathName());
       string name = fi.Name.Replace(fi.Extension, string.Empty);
@@ -202,14 +200,6 @@ namespace Redbrick_Addin {
 
     private void label5_Click(object sender, EventArgs e) {
       Redbrick.Clip(tbOverW.Text);
-    }
-
-    private void chUpdate_CheckedChanged(object sender, EventArgs e) {
-      if (Properties.Settings.Default.AutoOpenPriority && btnWhere.Enabled) {
-        if (!(sender as CheckBox).Checked) {
-          btnWhere_Click(sender, new EventArgs());
-        }
-      }
     }
   }
 }

@@ -157,7 +157,6 @@ namespace Redbrick_Addin
       this.chUpdate.Name = "chUpdate";
       this.chUpdate.Size = new System.Drawing.Size(62, 24);
       this.chUpdate.TabIndex = 19;
-      this.chUpdate.CheckedChanged += new System.EventHandler(this.chUpdate_CheckedChanged);
       // 
       // tbPPB
       // 

@@ -1214,6 +1214,10 @@ namespace Redbrick_Addin {
     }
 
     public void ReadControls() {
+      if (Properties.Settings.Default.AutoOpenPriority) {
+        property_popup();
+      }
+
       foreach (SwProperty p in _innerArray) {
         if (p.Ctl != null) {
           p.Value = p.Ctl.Text;
@@ -1239,6 +1243,19 @@ namespace Redbrick_Addin {
 
       if (val_msg != string.Empty) {
         System.Windows.Forms.MessageBox.Show(val_msg, @"Warning", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+      }
+    }
+
+    private void property_popup() {
+      SwProperty p = GetProperty("UPDATE CNC");
+      bool updateprop = p.ResValue.ToUpper() == @"YES";
+      bool updatechkb = (p.Ctl as System.Windows.Forms.CheckBox).Checked;
+      if (updateprop && !updatechkb) {
+        SolidWorks.Interop.sldworks.ModelDoc2 md = (SolidWorks.Interop.sldworks.ModelDoc2)modeldoc;
+        System.IO.FileInfo fi = new System.IO.FileInfo(md.GetPathName());
+        string name = fi.Name.Replace(fi.Extension, string.Empty);
+        Machine_Priority_Control.MachinePriority mp = new Machine_Priority_Control.MachinePriority(name);
+        mp.Show();
       }
     }
 
