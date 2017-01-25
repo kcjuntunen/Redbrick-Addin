@@ -1,4 +1,7 @@
 ﻿
+* 1.1.0.3
+** [UI] Made priority popup modal.
+
 * 1.1.0.2
 ** [UI] Changed timing of priority popup.
 
