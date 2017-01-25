@@ -30,6 +30,7 @@ namespace Redbrick_Addin {
     public ModelRedbrick(ref SwProperties p) {
       props = p;
       _swApp = p.SwApp;
+      p.frm = this.ParentForm;
       InitializeComponent();                              // MS init
       Init();                                             // my additional init
       dirtTracker = new DirtTracker(this);

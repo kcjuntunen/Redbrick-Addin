@@ -16,7 +16,9 @@ namespace Redbrick_Addin {
     }
 
     public ModelDoc2 modeldoc { get; set; }
+    public System.Windows.Forms.Form frm = null;
     public string configName { get; set; }
+    public bool UpdCheckedAtStart { get; set; }
 
     public SwProperties(SldWorks sw) {
       swApp = sw;
@@ -1214,10 +1216,6 @@ namespace Redbrick_Addin {
     }
 
     public void ReadControls() {
-      if (Properties.Settings.Default.AutoOpenPriority) {
-        property_popup();
-      }
-
       foreach (SwProperty p in _innerArray) {
         if (p.Ctl != null) {
           p.Value = p.Ctl.Text;
@@ -1248,14 +1246,18 @@ namespace Redbrick_Addin {
 
     private void property_popup() {
       SwProperty p = GetProperty("UPDATE CNC");
-      bool updateprop = p.ResValue.ToUpper() == @"YES";
+      bool updateprop = UpdCheckedAtStart;
       bool updatechkb = (p.Ctl as System.Windows.Forms.CheckBox).Checked;
       if (updateprop && !updatechkb) {
         SolidWorks.Interop.sldworks.ModelDoc2 md = (SolidWorks.Interop.sldworks.ModelDoc2)modeldoc;
         System.IO.FileInfo fi = new System.IO.FileInfo(md.GetPathName());
         string name = fi.Name.Replace(fi.Extension, string.Empty);
         Machine_Priority_Control.MachinePriority mp = new Machine_Priority_Control.MachinePriority(name);
-        mp.Show();
+        if (frm != null) {
+          mp.ShowDialog(frm.ParentForm);
+        } else {
+          mp.ShowDialog();
+        }
       }
     }
 
@@ -1285,10 +1287,19 @@ namespace Redbrick_Addin {
     private string CheckFieldLength() {
       string err = string.Empty;
       if (Properties.Settings.Default.Warn) {
+        System.IO.FileInfo fi = new System.IO.FileInfo(modeldoc.GetPathName());
+        string prtnum = fi.Name.Replace(fi.Extension, string.Empty);
         string descr = GetProperty(@"DESCRIPTION").Ctl.Text;
+
+        if (prtnum.Length > 25) {
+          err += Properties.Resources.Bullet +
+            Properties.Resources.CheckPartnumLength +
+            System.Environment.NewLine;
+        }
+
         if (descr.Length > 35) {
-          err = Properties.Resources.Bullet +
-            Properties.Resources.CheckFieldLength +
+          err += Properties.Resources.Bullet +
+            Properties.Resources.CheckDescrLength +
             System.Environment.NewLine;
         }
       }
@@ -1388,6 +1399,7 @@ namespace Redbrick_Addin {
 
     public void Write() {
       cutlistData.IncrementOdometer(CutlistData.Functions.GreenCheck);
+      UpdCheckedAtStart = GetProperty("UPDATE CNC").ResValue.ToUpper().Contains("YES");
       DelSpecific(modeldoc);
       DelGlobal(modeldoc);
       foreach (SwProperty p in _innerArray) {
@@ -1448,6 +1460,9 @@ namespace Redbrick_Addin {
             (int)swMessageBoxIcon_e.swMbInformation,
             (int)swMessageBoxBtn_e.swMbOk);
         }
+      }
+      if (Properties.Settings.Default.AutoOpenPriority) {
+        property_popup();
       }
     }
 

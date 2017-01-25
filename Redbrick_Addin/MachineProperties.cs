@@ -178,7 +178,7 @@ namespace Redbrick_Addin {
       System.IO.FileInfo fi = new System.IO.FileInfo(md.GetPathName());
       string name = fi.Name.Replace(fi.Extension, string.Empty);
       Machine_Priority_Control.MachinePriority mp = new Machine_Priority_Control.MachinePriority(name);
-      mp.Show();
+      mp.ShowDialog(this.ParentForm);
     }
     
     private void label6_Click(object sender, EventArgs e) {
