@@ -88,11 +88,11 @@ namespace Redbrick_Addin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description cannot be longer than 25 characters. Cutlist will fail to upload..
+        ///   Looks up a localized string similar to Description cannot be longer than 35 characters. Cutlist will fail to upload..
         /// </summary>
-        internal static string CheckFieldLength {
+        internal static string CheckDescrLength {
             get {
-                return ResourceManager.GetString("CheckFieldLength", resourceCulture);
+                return ResourceManager.GetString("CheckDescrLength", resourceCulture);
             }
         }
         
@@ -102,6 +102,15 @@ namespace Redbrick_Addin.Properties {
         internal static string CheckOversize {
             get {
                 return ResourceManager.GetString("CheckOversize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Part number cannot be longer than 25 characters. Cutlist will fail to upload..
+        /// </summary>
+        internal static string CheckPartnumLength {
+            get {
+                return ResourceManager.GetString("CheckPartnumLength", resourceCulture);
             }
         }
         

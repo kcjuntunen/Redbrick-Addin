@@ -181,8 +181,8 @@
   <data name="CutlistNotSelected" xml:space="preserve">
     <value>Cutlist not selected. Only global properties have been updated.</value>
   </data>
-  <data name="CheckFieldLength" xml:space="preserve">
-    <value>Description cannot be longer than 25 characters. Cutlist will fail to upload.</value>
+  <data name="CheckDescrLength" xml:space="preserve">
+    <value>Description cannot be longer than 35 characters. Cutlist will fail to upload.</value>
   </data>
   <data name="Bullet" xml:space="preserve">
     <value>• </value>
@@ -195,5 +195,8 @@
   </data>
   <data name="ItemNumberEmpty" xml:space="preserve">
     <value>Fill in the Item Number box.</value>
+  </data>
+  <data name="CheckPartnumLength" xml:space="preserve">
+    <value>Part number cannot be longer than 25 characters. Cutlist will fail to upload.</value>
   </data>
 </root>
