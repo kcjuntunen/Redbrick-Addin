@@ -66,12 +66,12 @@ namespace Redbrick_Addin {
       this.checkBox4 = new System.Windows.Forms.CheckBox();
       this.checkBox5 = new System.Windows.Forms.CheckBox();
       this.checkBox6 = new System.Windows.Forms.CheckBox();
-      this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-      this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
       this.label7 = new System.Windows.Forms.Label();
       this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+      this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -82,11 +82,11 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel5.SuspendLayout();
       this.tabPage3.SuspendLayout();
       this.tableLayoutPanel6.SuspendLayout();
-      this.tableLayoutPanel3.SuspendLayout();
-      this.tableLayoutPanel2.SuspendLayout();
       this.tabPage4.SuspendLayout();
       this.tableLayoutPanel7.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+      this.tableLayoutPanel3.SuspendLayout();
+      this.tableLayoutPanel2.SuspendLayout();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
@@ -517,6 +517,7 @@ namespace Redbrick_Addin {
       this.chbIdiotLight.TabIndex = 13;
       this.chbIdiotLight.Text = "Green check warning";
       this.chbIdiotLight.UseVisualStyleBackColor = true;
+      this.chbIdiotLight.CheckedChanged += new System.EventHandler(this.chbIdiotLight_CheckedChanged);
       // 
       // checkBox7
       // 
@@ -634,39 +635,6 @@ namespace Redbrick_Addin {
       this.checkBox6.UseVisualStyleBackColor = true;
       this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
       // 
-      // tableLayoutPanel3
-      // 
-      this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.tableLayoutPanel3.ColumnCount = 2;
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
-      this.tableLayoutPanel3.Controls.Add(this.btnCancel, 0, 0);
-      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 402);
-      this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-      this.tableLayoutPanel3.RowCount = 1;
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel3.Size = new System.Drawing.Size(415, 29);
-      this.tableLayoutPanel3.TabIndex = 3;
-      // 
-      // tableLayoutPanel2
-      // 
-      this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.tableLayoutPanel2.ColumnCount = 1;
-      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
-      this.tableLayoutPanel2.Controls.Add(this.tabControl1, 0, 0);
-      this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 12);
-      this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-      this.tableLayoutPanel2.RowCount = 2;
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 434);
-      this.tableLayoutPanel2.TabIndex = 4;
-      // 
       // tabPage4
       // 
       this.tabPage4.Controls.Add(this.tableLayoutPanel7);
@@ -715,6 +683,39 @@ namespace Redbrick_Addin {
       this.dataGridView1.Size = new System.Drawing.Size(395, 335);
       this.dataGridView1.TabIndex = 1;
       // 
+      // tableLayoutPanel3
+      // 
+      this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tableLayoutPanel3.ColumnCount = 2;
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
+      this.tableLayoutPanel3.Controls.Add(this.btnCancel, 0, 0);
+      this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 402);
+      this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+      this.tableLayoutPanel3.RowCount = 1;
+      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel3.Size = new System.Drawing.Size(415, 29);
+      this.tableLayoutPanel3.TabIndex = 3;
+      // 
+      // tableLayoutPanel2
+      // 
+      this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tableLayoutPanel2.ColumnCount = 1;
+      this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
+      this.tableLayoutPanel2.Controls.Add(this.tabControl1, 0, 0);
+      this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 12);
+      this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+      this.tableLayoutPanel2.RowCount = 2;
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 434);
+      this.tableLayoutPanel2.TabIndex = 4;
+      // 
       // RedbrickConfiguration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -744,12 +745,12 @@ namespace Redbrick_Addin {
       this.tabPage3.ResumeLayout(false);
       this.tableLayoutPanel6.ResumeLayout(false);
       this.tableLayoutPanel6.PerformLayout();
-      this.tableLayoutPanel3.ResumeLayout(false);
-      this.tableLayoutPanel2.ResumeLayout(false);
       this.tabPage4.ResumeLayout(false);
       this.tableLayoutPanel7.ResumeLayout(false);
       this.tableLayoutPanel7.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+      this.tableLayoutPanel3.ResumeLayout(false);
+      this.tableLayoutPanel2.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
