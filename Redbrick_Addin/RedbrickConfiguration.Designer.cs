@@ -68,6 +68,10 @@ namespace Redbrick_Addin {
       this.checkBox6 = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.tabPage4 = new System.Windows.Forms.TabPage();
+      this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+      this.label7 = new System.Windows.Forms.Label();
+      this.dataGridView1 = new System.Windows.Forms.DataGridView();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -80,6 +84,9 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel6.SuspendLayout();
       this.tableLayoutPanel3.SuspendLayout();
       this.tableLayoutPanel2.SuspendLayout();
+      this.tabPage4.SuspendLayout();
+      this.tableLayoutPanel7.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
@@ -323,6 +330,7 @@ namespace Redbrick_Addin {
       this.tabControl1.Controls.Add(this.tabPage1);
       this.tabControl1.Controls.Add(this.tabPage2);
       this.tabControl1.Controls.Add(this.tabPage3);
+      this.tabControl1.Controls.Add(this.tabPage4);
       this.tabControl1.Location = new System.Drawing.Point(3, 3);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
@@ -659,6 +667,54 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 434);
       this.tableLayoutPanel2.TabIndex = 4;
       // 
+      // tabPage4
+      // 
+      this.tabPage4.Controls.Add(this.tableLayoutPanel7);
+      this.tabPage4.Location = new System.Drawing.Point(4, 22);
+      this.tabPage4.Name = "tabPage4";
+      this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPage4.Size = new System.Drawing.Size(407, 367);
+      this.tabPage4.TabIndex = 3;
+      this.tabPage4.Text = "Stats";
+      this.tabPage4.UseVisualStyleBackColor = true;
+      // 
+      // tableLayoutPanel7
+      // 
+      this.tableLayoutPanel7.ColumnCount = 1;
+      this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel7.Controls.Add(this.label7, 0, 0);
+      this.tableLayoutPanel7.Controls.Add(this.dataGridView1, 0, 1);
+      this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 3);
+      this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+      this.tableLayoutPanel7.RowCount = 2;
+      this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanel7.Size = new System.Drawing.Size(401, 361);
+      this.tableLayoutPanel7.TabIndex = 0;
+      // 
+      // label7
+      // 
+      this.label7.AutoSize = true;
+      this.label7.Location = new System.Drawing.Point(3, 0);
+      this.label7.Name = "label7";
+      this.label7.Size = new System.Drawing.Size(10, 13);
+      this.label7.TabIndex = 0;
+      this.label7.Text = " ";
+      // 
+      // dataGridView1
+      // 
+      this.dataGridView1.AllowUserToAddRows = false;
+      this.dataGridView1.AllowUserToDeleteRows = false;
+      this.dataGridView1.AllowUserToOrderColumns = true;
+      this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridView1.Location = new System.Drawing.Point(3, 23);
+      this.dataGridView1.Name = "dataGridView1";
+      this.dataGridView1.ReadOnly = true;
+      this.dataGridView1.Size = new System.Drawing.Size(395, 335);
+      this.dataGridView1.TabIndex = 1;
+      // 
       // RedbrickConfiguration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -690,6 +746,10 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel6.PerformLayout();
       this.tableLayoutPanel3.ResumeLayout(false);
       this.tableLayoutPanel2.ResumeLayout(false);
+      this.tabPage4.ResumeLayout(false);
+      this.tableLayoutPanel7.ResumeLayout(false);
+      this.tableLayoutPanel7.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -740,5 +800,9 @@ namespace Redbrick_Addin {
     private System.Windows.Forms.CheckBox chbOpWarnings;
     private System.Windows.Forms.CheckBox chbIdiotLight;
     private System.Windows.Forms.CheckBox checkBox7;
+    private System.Windows.Forms.TabPage tabPage4;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+    private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.DataGridView dataGridView1;
   }
 }

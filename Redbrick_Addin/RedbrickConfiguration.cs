@@ -69,7 +69,31 @@ namespace Redbrick_Addin {
       tt.ShowAlways = true;
       tt.SetToolTip(label4, "You probably don't want to mess with this.");
 
+      dataGridView1.AutoResizeRows();
+      dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+      dataGridView1.AutoResizeColumns();
+      dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+      dataGridView1.DataSource = get_stats();
+
       initialated = true;
+    }
+
+    private DataTable get_stats() {
+      DataTable dt = new DataTable();
+      dt.Columns.Add("Function");
+      dt.Columns.Add("Avg Daily Usage");
+      DateTime start = new DateTime(2016, 9, 1, 0, 0, 0);
+      DateTime end = DateTime.Now;
+      double days = ((end - start).Days / 7) * 5;
+      foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {
+        string x = Enum.GetName(typeof(CutlistData.Functions), (CutlistData.Functions)item);
+        double y = cd.GetOdometerValue((CutlistData.Functions)item) / days;
+        DataRow dr = dt.NewRow();
+        dr["Function"] = x;
+        dr["Avg Daily Usage"] = y.ToString("N3");
+        dt.Rows.Add(dr);
+      }
+      return dt;
     }
 
     /// <summary>

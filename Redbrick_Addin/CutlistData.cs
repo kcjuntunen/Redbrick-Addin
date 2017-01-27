@@ -1898,7 +1898,7 @@ namespace Redbrick_Addin {
       }
     }
 
-    private int GetOdometerValue(Functions funcCode) {
+    public int GetOdometerValue(Functions funcCode) {
       using (OdbcCommand comm = new OdbcCommand(@"SELECT ODO FROM GEN_ODOMETER WHERE (FUNCID = ? AND USERID = ?)", conn)) {
         comm.Parameters.AddWithValue("@app", (int)funcCode);
         comm.Parameters.AddWithValue("@user", GetCurrentAuthor());
