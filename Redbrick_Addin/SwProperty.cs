@@ -74,7 +74,7 @@ namespace Redbrick_Addin {
     /// Define this.SwApp, then use it to write on the active document.
     /// </summary>
     /// <param name="sw">SwApp</param>
-    public void Write(SldWorks sw) {
+    public virtual void Write(SldWorks sw) {
       if (sw != null) {
         SwApp = sw;
         Write();
@@ -88,7 +88,7 @@ namespace Redbrick_Addin {
     /// Writes data using the custom property managers of a selected ModelDoc2.
     /// </summary>
     /// <param name="md">A ModelDoc2 object</param>
-    public void Write(ModelDoc2 md) {
+    public virtual void Write(ModelDoc2 md) {
       if (md != null) {
         Configuration cf = md.ConfigurationManager.ActiveConfiguration;
 
@@ -322,7 +322,7 @@ namespace Redbrick_Addin {
     /// </summary>
     /// <param name="md">A ModelDoc2.</param>
     /// <param name="cd">The Cutlist handler.</param>
-    public void Get(ModelDoc2 md, CutlistData cd) {
+    public virtual void Get(ModelDoc2 md, CutlistData cd) {
       Configuration cf = md.ConfigurationManager.ActiveConfiguration;
 
       CustomPropertyManager gcpm = md.Extension.get_CustomPropertyManager(string.Empty);

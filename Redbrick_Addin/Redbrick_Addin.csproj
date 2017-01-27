@@ -187,6 +187,7 @@
     <Compile Include="ModelRedbrick.Designer.cs">
       <DependentUpon>ModelRedbrick.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpProperty.cs" />
     <Compile Include="Ops.cs">
       <SubType>UserControl</SubType>
     </Compile>
