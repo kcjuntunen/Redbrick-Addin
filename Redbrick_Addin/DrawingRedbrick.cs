@@ -43,12 +43,25 @@ namespace Redbrick_Addin {
     /// Update the Redbrick. Duh.
     /// </summary>
     public void DrbUpdate() {
+      try {
+        dirtTracker.Besmirched -= dirtTracker_Besmirched;
+      } catch (Exception) {
+        // I don't care.
+      }
+
       fillMat();
       fillAuthor();
       fillCustomer();
       fillStatus();
       fillRev();
       GetData();
+
+      dirtTracker = new DirtTracker(this);
+
+      if (dirtTracker != null) {
+        IsDirty = false;
+        dirtTracker.Besmirched += dirtTracker_Besmirched;
+      }
     }
 
     /// <summary>
@@ -102,11 +115,6 @@ namespace Redbrick_Addin {
     /// Populate controls.
     /// </summary>
     private void GetData() {
-      try {
-        dirtTracker.Besmirched -= dirtTracker_Besmirched;
-      } catch (Exception) {
-        // I don't care.
-      }
       PropertySet.Read();
       RevSet.Read();
 
@@ -114,13 +122,6 @@ namespace Redbrick_Addin {
 
       if (Properties.Settings.Default.RememberLastCustomer && (PropertySet.GetProperty("CUSTOMER").Value == string.Empty)) {
         cbCustomer.SelectedIndex = Properties.Settings.Default.LastCustomerSelection;
-      }
-
-      dirtTracker = new DirtTracker(this);
-
-      if (dirtTracker != null) {
-        IsDirty = false;
-        dirtTracker.Besmirched += dirtTracker_Besmirched;
       }
     }
 
@@ -459,6 +460,12 @@ namespace Redbrick_Addin {
     /// </summary>
     /// <param name="md">The current ModelDoc object.</param>
     public void Write(ModelDoc2 md) {
+      try {
+        dirtTracker.Besmirched -= dirtTracker_Besmirched;
+      } catch (Exception) {
+        // I don't care.
+      }
+
       if (!check_itemnumber()) {
         string itnu = label4.Text.Trim();
         string cuss = cbCustomer.Text.Split('-')[0].Trim();
@@ -473,6 +480,12 @@ namespace Redbrick_Addin {
       FillBoxes();
       (md as DrawingDoc).ForceRebuild();
       this.dirtTracker = null;
+      dirtTracker = new DirtTracker(this);
+
+      if (dirtTracker != null) {
+        IsDirty = false;
+        dirtTracker.Besmirched += dirtTracker_Besmirched;
+      }
     }
 
     private void btnCancel_Click(object sender, EventArgs e) {
