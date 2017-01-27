@@ -24,8 +24,6 @@ namespace RedbrickTest {
 
       DataTable d = m2m.GetJobsDue();
       DataTable wc = cd.GetWCData();
-      //DataTable x = cd.GetCutJobData();
-
       IEnumerable<DataRow> q1 = (from job in d.AsEnumerable()
                                  where job.Field<string>("fpartno").Contains("WC-122BA")
                                  select job);

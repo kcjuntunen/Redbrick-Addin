@@ -8,22 +8,16 @@ namespace RedbrickTest {
   [TestClass]
   public class CutlistDataTest {
     CutlistData cd = new CutlistData();
-    //[TestMethod]
-    //public void GetECODataTest() {
-    //  eco eco = cd.GetECOData("8042");
-    //  Debug.Assert(eco.RequestedBy == "S.PALMER");
-
-    //  eco = cd.GetECOData("xxxx");
-    //  Debug.Assert(eco.RequestedBy == string.Empty);
-
-    //  eco = cd.GetECOData("9000");
-    //  Debug.Assert(eco.Changes == "ANOTHER STERLING NITPICK.");
-    //}
-
     [TestMethod]
-    public void GetHashTest() {
-      int i = cd.GetHash("ZASC1505-02-06");
-      Debug.Assert(i == 246268142);
+    public void GetECODataTest() {
+      eco eco = cd.GetECOData("8042");
+      Debug.Assert(eco.RequestedBy == "S.PALMER");
+
+      eco = cd.GetECOData("xxxx");
+      Debug.Assert(eco.RequestedBy == string.Empty);
+
+      eco = cd.GetECOData("9000");
+      Debug.Assert(eco.Changes == "ADD EDGE BANDING TO BACK AND BOTTOM OF FIN (GE-35.21FINW.L & .R)");
     }
 
     [TestMethod]
@@ -38,21 +32,21 @@ namespace RedbrickTest {
     [TestMethod]
     public void GetMaterialIDTest() {
       int res = cd.GetMaterialID("SHT SST 430 #4 POLISH 24GA");
-      Debug.Assert(res == 1339);
+      Debug.Assert(res == 1342);
 
       res = cd.GetMaterialID("TBD MATERIAL");
-      Debug.Assert(res == 3030);
+      Debug.Assert(res == 3042);
 
       res = cd.GetMaterialID("ksladhfgakldfhasd");
-      Debug.Assert(res == 3030);
+      Debug.Assert(res == 3042);
 
       res = cd.GetMaterialID(string.Empty);
-      Debug.Assert(res == 3030);
+      Debug.Assert(res == 3042);
     }
 
     [TestMethod]
     public void GetMaterialByIDTest() {
-      string res = cd.GetMaterialByID("1339");
+      string res = cd.GetMaterialByID("1342");
       Debug.Assert(res == "SHT SST 430 #4 POLISH 24GA");
 
       res = cd.GetMaterialByID("9000");
@@ -78,59 +72,60 @@ namespace RedbrickTest {
 
     [TestMethod]
     public void GetDrawingID() {
-      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOFO\KOFO1536-02.PDF")) == 51560);
-      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505FWTI-INSTALL.PDF")) == 16344);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOFO\KOFO1536-02.PDF")) == 13320);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505FWTI-INSTALL.PDF")) == 28634);
       Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\TARGET\INSTALL\AX7505sdflkjgsdf.PDF")) == 0);
-      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOCO\KOCO1211-03.pdf")) == 6834);
+      Debug.Assert(cd.GetDrawingID(new System.IO.FileInfo(@"K:\KOHLS\KOCO\KOCO1211-03.pdf")) == 11568);
 
 
-      Debug.Assert(cd.GetDrawingID(@"KOFO1536-02.PDF") == 51560);
-      Debug.Assert(cd.GetDrawingID(@"AX7505FWTI-INSTALL.PDF") == 16344);
+      Debug.Assert(cd.GetDrawingID(@"KOFO1536-02.PDF") == 13320);
+      Debug.Assert(cd.GetDrawingID(@"AX7505FWTI-INSTALL.PDF") == 28634);
       Debug.Assert(cd.GetDrawingID(@"AX7505sdflkjgsdf.PDF") == 0);
-      Debug.Assert(cd.GetDrawingID(@"KOCO1211-03.pdf") == 6834);
+      Debug.Assert(cd.GetDrawingID(@"KOCO1211-03.pdf") == 11568);
     }
 
     [TestMethod]
     public void GetDrawingData() {
-      Debug.Assert((int)cd.GetDrawingData(@"KOFO1536-02.PDF")[0] == 51560);
+      Debug.Assert((int)cd.GetDrawingData(@"KOFO1536-02.PDF")[0] == 13320);
       Debug.Assert(cd.GetDrawingData(@"AX7505FWTI-INSTALL.PDF")[2].ToString() == @"K:\TARGET\INSTALL\");
       Debug.Assert((int)cd.GetDrawingData(@"AX7505sdflkjgsdf.PDF")[0] == 0);
-      Debug.Assert((int)cd.GetDrawingData(@"KOCO1211-03.pdf")[0] == 6834);
+      Debug.Assert((int)cd.GetDrawingData(@"KOCO1211-03.pdf")[0] == 11568);
     }
 
     [TestMethod]
     public void ECRIsBogus() {
-      Debug.Assert(cd.ECRIsBogus("8846") == false);
-      Debug.Assert(cd.ECRIsBogus("9000") == true);
-      Debug.Assert(cd.ECRIsBogus("8830") == true);
+      Debug.Assert(cd.ECRIsBogus("9000") == false);
+      Debug.Assert(cd.ECRIsBogus("1560") == true);
+      Debug.Assert(cd.ECRIsBogus("0") == true);
 
-      Debug.Assert(cd.ECRIsBogus(8846) == false);
-      Debug.Assert(cd.ECRIsBogus(9000) == true);
+      Debug.Assert(cd.ECRIsBogus(8996) == false);
+      Debug.Assert(cd.ECRIsBogus(8995) == true);
+      Debug.Assert(cd.ECRIsBogus(9000) == false);
       Debug.Assert(cd.ECRIsBogus(8830) == true);
     }
 
-    [TestMethod]
-    public void GetMaterials() {
+    //[TestMethod]
+    //public void GetMaterials() {
       //DataTable d = cd.Materials.Tables[0];
-      System.Data.DataSet ds = cd.Materials;
-      System.Data.DataTable dt = ds.Tables[0];
+      //System.Data.DataSet ds = cd.Materials;
+      //System.Data.DataTable dt = ds.Tables[0];
 
-      string testString = dt.Rows[1539].ItemArray.GetValue(1).ToString();
-      Debug.WriteLine(testString);
-      Debug.Assert(testString == "SLB FM 8841-WR G1 P .562");
+      //string testString = dt.Rows[1482].ItemArray.GetValue(1).ToString();
+      //Debug.WriteLine(testString);
+      //Debug.Assert(testString == "SLB FM 5488-58 G2 M 0.750");
 
-      testString = dt.Rows[1517].ItemArray.GetValue(2).ToString();
-      Debug.WriteLine(testString);
-      Debug.Assert(testString == "SPECTRUM BLUE/FROSTY WHITE");
-    }
+      //testString = dt.Rows[1517].ItemArray.GetValue(2).ToString();
+      //Debug.WriteLine(testString);
+      //Debug.Assert(testString == "SPECTRUM RED/FROSTY WHITE");
+    //}
 
     [TestMethod]
     public void EcrItemExists() {
       if (cd != null) {
-        Debug.Assert(cd.ECRItemExists(8847, "SS1010-Z3", "100"));
-        Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "100"));
-        Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "100"));
-        Debug.Assert(cd.ECRItemExists(8847, "WGFX1532-03", "100") == false);
+        Debug.Assert(cd.ECRItemExists(9000, "GE-35.21FINW.L", "100"));
+        Debug.Assert(cd.ECRItemExists(9000, "GE-35.21FINW.R", "100"));
+        Debug.Assert(cd.ECRItemExists(9000, "Z96895", "100"));
+        Debug.Assert(cd.ECRItemExists(9308, "SC-190SBP", "100"));
         Debug.Assert(cd.ECRItemExists(8850, "SS1009-Z3", "100") == false);
         Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-02", "101") == false);
         Debug.Assert(cd.ECRItemExists(8850, "WGFX1532-03", "101") == false);
