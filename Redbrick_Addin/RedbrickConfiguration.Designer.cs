@@ -13,6 +13,7 @@ namespace Redbrick_Addin {
       if (disposing && (components != null)) {
         components.Dispose();
       }
+      //cd.Dispose();
       base.Dispose(disposing);
     }
 

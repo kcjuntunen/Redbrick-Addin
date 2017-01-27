@@ -17,6 +17,7 @@ namespace Redbrick_Addin
             {
                 components.Dispose();
             }
+            //cd.Dispose();
             base.Dispose(disposing);
         }
 
