@@ -74,7 +74,7 @@ namespace Redbrick_Addin {
       dataGridView1.AutoResizeColumns();
       dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
       dataGridView1.DataSource = get_stats();
-
+      dataGridView1.Sort(dataGridView1.Columns[1], ListSortDirection.Descending);
       initialated = true;
     }
 
@@ -88,10 +88,12 @@ namespace Redbrick_Addin {
       foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {
         string x = Enum.GetName(typeof(CutlistData.Functions), (CutlistData.Functions)item);
         double y = cd.GetOdometerValue((CutlistData.Functions)item) / days;
-        DataRow dr = dt.NewRow();
-        dr["Function"] = x;
-        dr["Avg Daily Usage"] = y.ToString("N3");
-        dt.Rows.Add(dr);
+        if (y > 0) {
+          DataRow dr = dt.NewRow();
+          dr["Function"] = x;
+          dr["Avg Daily Usage"] = y.ToString("N3");
+          dt.Rows.Add(dr);
+        }
       }
       return dt;
     }
