@@ -33,6 +33,8 @@ namespace Redbrick_Addin
       // 
       // cbDepartment
       // 
+      this.cbDepartment.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.cbDepartment.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
       this.cbDepartment.Dock = System.Windows.Forms.DockStyle.Fill;
       this.cbDepartment.FormattingEnabled = true;
       this.cbDepartment.Location = new System.Drawing.Point(0, 0);
@@ -40,6 +42,7 @@ namespace Redbrick_Addin
       this.cbDepartment.Size = new System.Drawing.Size(153, 21);
       this.cbDepartment.TabIndex = 26;
       this.cbDepartment.DropDown += new System.EventHandler(this.cbDepartment_DropDown);
+      this.cbDepartment.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbDepartment_KeyDown);
       // 
       // DepartmentSelector
       // 

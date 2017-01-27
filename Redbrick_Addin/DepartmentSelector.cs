@@ -110,5 +110,9 @@ namespace Redbrick_Addin {
     private void cbDepartment_DropDown(object sender, EventArgs e) {
       used_mouse = true;
     }
+
+    private void cbDepartment_KeyDown(object sender, KeyEventArgs e) {
+      cbDepartment.DroppedDown = false;
+    }
   }
 }
