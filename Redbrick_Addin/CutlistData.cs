@@ -1911,6 +1911,27 @@ namespace Redbrick_Addin {
       }
     }
 
+    public int GetOdometerTotalValue(Functions funcCode) {
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT Sum(GEN_ODOMETER.ODO) AS SumOfODO FROM " + 
+        @"GEN_ODOMETER GROUP BY GEN_ODOMETER.FUNCID HAVING (((GEN_ODOMETER.FUNCID) = ?));", conn)) {
+          comm.Parameters.AddWithValue("@funcid", (int)funcCode);
+        try {
+          using (OdbcDataReader dr = comm.ExecuteReader()) {
+            if (dr.Read() && !dr.IsDBNull(0)) {
+              return dr.GetInt32(0);
+            } else {
+              return 0;
+            }
+          }
+        } catch (Exception x) {
+          System.Windows.Forms.MessageBox.Show(x.Message.ToString(), 
+            x.TargetSite.ToString(), 
+            System.Windows.Forms.MessageBoxButtons.OK);
+        }
+        return 0;
+      }
+    }
+
     public void InsertError(int errNo, string errmsg, string targetSite) {
       string SQL = "INSERT INTO GEN_ERRORS (ERRDATE, ERRUSER, ERRNUM, ERRMSG, ERROBJ, ERRCHK, ERRAPP) VALUES " +
         "(GETDATE(), ?, ?, ?, ?, ?, ?)";

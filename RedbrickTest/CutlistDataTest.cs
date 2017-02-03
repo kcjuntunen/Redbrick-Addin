@@ -146,5 +146,11 @@ namespace RedbrickTest {
 
     }
 
+    [TestMethod]
+    public void TestGetOdometerTotalValue() {
+      int x = cd.GetOdometerTotalValue((int)CutlistData.Functions.GreenCheck);
+      Debug.Assert(x > 0);
+    }
+
   }
 }

@@ -87,11 +87,12 @@ namespace Redbrick_Addin {
       double days = ((end - start).Days / 7) * 5;
       foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {
         string x = Enum.GetName(typeof(CutlistData.Functions), (CutlistData.Functions)item);
-        double y = cd.GetOdometerValue((CutlistData.Functions)item) / days;
+        int f = cd.GetOdometerTotalValue((CutlistData.Functions)item);
+        double y = f / days;
         if (y > 0) {
           DataRow dr = dt.NewRow();
           dr["Function"] = x;
-          dr["Avg Daily Usage"] = y.ToString("N3");
+          dr["Avg Daily Usage"] = y;//.ToString("N3");
           dt.Rows.Add(dr);
         }
       }
@@ -378,6 +379,10 @@ namespace Redbrick_Addin {
 
     private void checkBox8_CheckedChanged(object sender, EventArgs e) {
       Properties.Settings.Default.AutoOpenPriority = checkBox8.Checked;
+    }
+
+    private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
+
     }
   }
 }
