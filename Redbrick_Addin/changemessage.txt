@@ -1,4 +1,12 @@
 ﻿
+* 1.1.0.4
+** [UI] Added suggestion to dept button.
+** [UI] Added stat page
+** [BUGFIX] Drawing tool was adding an asterisk at times it oughtn't; now it doesn't.
+** [BUGFIX] Fixed a checkbox that stopped saving its state. 
+** [BUGFIX] Fixed Op boxes which defaulted to item 0 when the cursor was left in them.
+** [UI] Added validation for Revision Level vs filename to drawing tool.
+
 * 1.1.0.3
 ** [UI] Made priority popup modal.
 
