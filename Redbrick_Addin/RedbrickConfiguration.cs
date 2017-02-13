@@ -74,14 +74,15 @@ namespace Redbrick_Addin {
       dataGridView1.AutoResizeColumns();
       dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
       dataGridView1.DataSource = get_stats();
-      dataGridView1.Sort(dataGridView1.Columns[1], ListSortDirection.Descending);
+      dataGridView1.Columns["Avg Daily Usage"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+      dataGridView1.Columns["Avg Daily Usage"].DefaultCellStyle.Format = @"#.###";
       initialated = true;
     }
 
-    private DataTable get_stats() {
+    private DataView get_stats() {
       DataTable dt = new DataTable();
       dt.Columns.Add("Function");
-      dt.Columns.Add("Avg Daily Usage");
+      dt.Columns.Add("Avg Daily Usage", typeof(double));
       DateTime start = new DateTime(2016, 9, 1, 0, 0, 0);
       DateTime end = DateTime.Now;
       double days = ((end - start).Days / 7) * 5;
@@ -92,11 +93,12 @@ namespace Redbrick_Addin {
         if (y > 0) {
           DataRow dr = dt.NewRow();
           dr["Function"] = x;
-          dr["Avg Daily Usage"] = y;//.ToString("N3");
+          dr["Avg Daily Usage"] = y;
           dt.Rows.Add(dr);
         }
       }
-      return dt;
+      dt.DefaultView.Sort = "[Avg Daily Usage] DESC";
+      return dt.DefaultView;
     }
 
     /// <summary>
