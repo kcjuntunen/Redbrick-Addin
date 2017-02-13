@@ -27,6 +27,7 @@ namespace Redbrick_Addin {
       cbDepartment.SelectedIndexChanged += cbDepartment_SelectedIndexChanged;
 
       Selected = new DepartmentSelected(OnSelected);
+      Redbrick.unselect(this.Controls);
     }
 
     public void Update(ref SwProperties p) {
