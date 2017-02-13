@@ -16,6 +16,9 @@ namespace Redbrick_Addin {
   public partial class DrawingRedbrick : UserControl //Form
   {
     private DirtTracker dirtTracker;
+    private string fileTitle = string.Empty;
+    private string fileName = string.Empty;
+    private string fileRev = string.Empty;
     private bool custo_clicked = false;
 
     public DrawingRedbrick(SldWorks sw) {
@@ -134,11 +137,16 @@ namespace Redbrick_Addin {
       SwProperty by = this.PropertySet.GetProperty("DrawnBy");
       SwProperty d = this.PropertySet.GetProperty("DATE");
       SwProperty rl = PropertySet.GetProperty("REVISION LEVEL");
-
-      string name = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Replace(@".SLDDRW", string.Empty).Split(' ')[0].Trim();
+      fileTitle = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Replace(@".SLDDRW", string.Empty);
+      fileName = fileTitle.Split(' ')[0].Trim();
+      if (fileTitle.ToUpper().Contains(@" REV")) {
+        fileRev = fileTitle.Split(new string[] { @" REV", @" " }, StringSplitOptions.None)[1].Trim();
+      } else {
+        fileRev = rl.ResValue;
+      }
 
       if (partNo != null) {
-        label4.Text = name;
+        label4.Text = fileName;
         partNo.Ctl = tbItemNo;
       } else {
         partNo = new SwProperty("PartNo", swCustomInfoType_e.swCustomInfoText, "$PRP:\"SW-File Name\"", true);
@@ -217,7 +225,7 @@ namespace Redbrick_Addin {
         }
       }
 
-      DataSet ds = PropertySet.CutlistData.GetCutlistData(name.Trim(),
+      DataSet ds = PropertySet.CutlistData.GetCutlistData(fileName.Trim(),
         PropertySet.GetProperty("REVISION LEVEL").Value.Trim());
       int stat = 0;
       if (ds.Tables[0].Rows.Count > 0 && int.TryParse(ds.Tables[0].Rows[0][(int)CutlistData.CutlistDataFields.STATEID].ToString(), out stat)) {
@@ -302,6 +310,17 @@ namespace Redbrick_Addin {
           }
         }
         return true;
+      }
+      return true;
+    }
+
+    private bool check_rev() {
+      if (Properties.Settings.Default.Warn) {
+        if (fileTitle.ToUpper().Contains(@" REV")) {
+          if (fileRev != cbRevision.Text) {
+            return false;
+          }
+        }
       }
       return true;
     }
@@ -448,6 +467,7 @@ namespace Redbrick_Addin {
           (int)swMessageBoxIcon_e.swMbWarning,
           (int)swMessageBoxResult_e.swMbHitOk);
       }
+
       this.PropertySet.ReadControls();
       this.PropertySet.Write(this.SwApp);
       this.RevSet.Write(this.SwApp);
@@ -464,6 +484,15 @@ namespace Redbrick_Addin {
         dirtTracker.Besmirched -= dirtTracker_Besmirched;
       } catch (Exception) {
         // I don't care.
+      }
+
+      if (!check_rev()) {
+        if (System.Windows.Forms.MessageBox.Show(
+          string.Format(@"Make drawing REV ({0}) match filename ({1})?", cbRevision.Text, fileRev), @"REV mismatch.", MessageBoxButtons.YesNo)
+          == DialogResult.Yes) {
+          cbRevision.Text = fileRev;
+          PropertySet.GetProperty("REVISION LEVEL").Value = fileRev;
+        }
       }
 
       if (!check_itemnumber()) {
