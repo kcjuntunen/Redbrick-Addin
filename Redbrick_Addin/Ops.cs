@@ -120,6 +120,8 @@ namespace Redbrick_Addin {
         } else {
           s.SelectedIndex = s.FindString(s.Text.Trim());
         }
+        s.SelectionStart = 0;
+        s.SelectionLength = s.Text.Length;
       }
     }
 
