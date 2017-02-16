@@ -74,7 +74,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ArchivePDF\ArchivePDF\bin\Release\ArchivePDF.dll</HintPath>
     </Reference>
-    <Reference Include="Machine Priority Control, Version=1.0.6190.12705, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
+    <Reference Include="Machine Priority Control, Version=1.0.6190.13100, Culture=neutral, PublicKeyToken=3dbf4f27f46e74d2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Machine.Priority.Control\Machine Priority Control\bin\Release\Machine Priority Control.dll</HintPath>
     </Reference>
@@ -113,6 +113,12 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="M2MData.cs" />
     <Compile Include="ConfigurationSpecific.cs">
       <SubType>UserControl</SubType>
@@ -229,6 +235,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfigurationSpecific.resx">
       <DependentUpon>ConfigurationSpecific.cs</DependentUpon>
     </EmbeddedResource>
@@ -294,6 +303,7 @@
   <ItemGroup>
     <Content Include="changemessage.txt" />
     <Content Include="redlego.ico" />
+    <None Include="Resources\redlego.bmp" />
     <Content Include="sn.txt" />
     <None Include="Resources\setup.bmp" />
     <None Include="Resources\redlego.ico" />

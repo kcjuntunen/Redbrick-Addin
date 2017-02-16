@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Redbrick_Addin")]
-[assembly: AssemblyDescription("Amstore Redbrick Property Wizard")]
+[assembly: AssemblyTitle("Redbrick Addin")]
+[assembly: AssemblyDescription("Edit properties the Amstore way.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Amstore")]
-[assembly: AssemblyProduct("Redbrick_Addin")]
-[assembly: AssemblyCopyright("Copyright © Shfensoft 2015")]
+[assembly: AssemblyCompany("Shfensoft")]
+[assembly: AssemblyProduct("Redbrick Addin")]
+[assembly: AssemblyCopyright("Copyright © Shfensoft 2015-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

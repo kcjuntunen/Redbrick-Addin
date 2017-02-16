@@ -73,6 +73,7 @@ namespace Redbrick_Addin {
       this.dataGridView1 = new System.Windows.Forms.DataGridView();
       this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+      this.button1 = new System.Windows.Forms.Button();
       this.tableLayoutPanel1.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -292,7 +293,7 @@ namespace Redbrick_Addin {
             | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.Location = new System.Drawing.Point(3, 3);
       this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(201, 23);
+      this.btnCancel.Size = new System.Drawing.Size(132, 23);
       this.btnCancel.TabIndex = 0;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
@@ -302,9 +303,9 @@ namespace Redbrick_Addin {
       // 
       this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOK.Location = new System.Drawing.Point(210, 3);
+      this.btnOK.Location = new System.Drawing.Point(279, 3);
       this.btnOK.Name = "btnOK";
-      this.btnOK.Size = new System.Drawing.Size(202, 23);
+      this.btnOK.Size = new System.Drawing.Size(133, 23);
       this.btnOK.TabIndex = 1;
       this.btnOK.Text = "OK";
       this.btnOK.UseVisualStyleBackColor = true;
@@ -688,15 +689,17 @@ namespace Redbrick_Addin {
       // 
       this.tableLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.tableLayoutPanel3.ColumnCount = 2;
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel3.Controls.Add(this.btnOK, 1, 0);
+      this.tableLayoutPanel3.ColumnCount = 3;
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+      this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
       this.tableLayoutPanel3.Controls.Add(this.btnCancel, 0, 0);
+      this.tableLayoutPanel3.Controls.Add(this.btnOK, 2, 0);
+      this.tableLayoutPanel3.Controls.Add(this.button1, 1, 0);
       this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 402);
       this.tableLayoutPanel3.Name = "tableLayoutPanel3";
       this.tableLayoutPanel3.RowCount = 1;
-      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+      this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
       this.tableLayoutPanel3.Size = new System.Drawing.Size(415, 29);
       this.tableLayoutPanel3.TabIndex = 3;
       // 
@@ -716,6 +719,19 @@ namespace Redbrick_Addin {
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
       this.tableLayoutPanel2.Size = new System.Drawing.Size(421, 434);
       this.tableLayoutPanel2.TabIndex = 4;
+      // 
+      // button1
+      // 
+      this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.button1.Location = new System.Drawing.Point(141, 3);
+      this.button1.Name = "button1";
+      this.button1.Size = new System.Drawing.Size(132, 23);
+      this.button1.TabIndex = 2;
+      this.button1.Text = "About";
+      this.button1.UseVisualStyleBackColor = true;
+      this.button1.Click += new System.EventHandler(this.button1_Click);
       // 
       // RedbrickConfiguration
       // 
@@ -806,5 +822,6 @@ namespace Redbrick_Addin {
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.DataGridView dataGridView1;
+    private System.Windows.Forms.Button button1;
   }
 }

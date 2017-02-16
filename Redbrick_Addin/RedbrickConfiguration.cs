@@ -386,5 +386,10 @@ namespace Redbrick_Addin {
     private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {
 
     }
+
+    private void button1_Click(object sender, EventArgs e) {
+      AboutBox ab = new AboutBox();
+      ab.ShowDialog();
+    }
   }
 }
