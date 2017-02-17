@@ -1,4 +1,8 @@
 ﻿
+* 1.1.1.0
+** Linked radio select to different event on priority control
+** Un-hardcoded odometer start date
+
 * 1.1.0.4
 ** [UI] Added suggestion to dept button.
 ** [UI] Added stat page
