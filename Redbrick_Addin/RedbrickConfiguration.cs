@@ -11,6 +11,7 @@ namespace Redbrick_Addin {
     private CutlistData cd = new CutlistData();
     private bool initialated = false;
     private bool sound_clicked = false;
+    private DateTime odometerStart;
 
     public RedbrickConfiguration() {
       InitializeComponent();
@@ -75,6 +76,8 @@ namespace Redbrick_Addin {
       dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
       dataGridView1.DataSource = get_stats();
       dataGridView1.Columns["Avg Daily Usage"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+      dataGridView1.Columns["Total Since Reset"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+      dataGridView1.Columns["Total Since Reset"].ToolTipText = @"Reset @ " + odometerStart.ToShortDateString();
       dataGridView1.Columns["Avg Daily Usage"].DefaultCellStyle.Format = @"#.###";
       initialated = true;
     }
@@ -84,9 +87,10 @@ namespace Redbrick_Addin {
       DataTable dt = new DataTable();
       dt.Columns.Add("Function");
       dt.Columns.Add("Avg Daily Usage", typeof(double));
-      DateTime start = Redbrick.GetOdometerStart(pi.DirectoryName + @"\version.xml");
+      dt.Columns.Add("Total Since Reset", typeof(int));
+      odometerStart = Redbrick.GetOdometerStart(pi.DirectoryName + @"\version.xml");
       DateTime end = DateTime.Now;
-      double days = ((end - start).Days / 7) * 5;
+      double days = ((end - odometerStart).Days / 7) * 5;
       foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {
         string x = Enum.GetName(typeof(CutlistData.Functions), (CutlistData.Functions)item);
         int f = cd.GetOdometerTotalValue((CutlistData.Functions)item);
@@ -95,6 +99,7 @@ namespace Redbrick_Addin {
           DataRow dr = dt.NewRow();
           dr["Function"] = x;
           dr["Avg Daily Usage"] = y;
+          dr["Total Since Reset"] = f;
           dt.Rows.Add(dr);
         }
       }
