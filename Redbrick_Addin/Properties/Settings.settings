@@ -335,7 +335,7 @@
     <Setting Name="AutoOpenPriority" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="OdometerStart" Type="System.DateTime" Scope="Application">
+    <Setting Name="OdometerStart" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">2016-09-01</Value>
     </Setting>
   </Settings>

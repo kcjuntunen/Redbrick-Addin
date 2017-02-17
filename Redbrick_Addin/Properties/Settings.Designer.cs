@@ -951,12 +951,15 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2016-09-01")]
         public global::System.DateTime OdometerStart {
             get {
                 return ((global::System.DateTime)(this["OdometerStart"]));
+            }
+            set {
+                this["OdometerStart"] = value;
             }
         }
     }
