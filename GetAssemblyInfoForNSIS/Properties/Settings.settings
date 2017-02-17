@@ -5,5 +5,8 @@
     <Setting Name="MessagePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">..\..\..\..\Redbrick_Addin\changemessage.txt</Value>
     </Setting>
+    <Setting Name="OdometerStart" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2017-02-17</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

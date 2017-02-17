@@ -35,6 +35,10 @@ namespace GetAssemblyInfoForNSIS {
               writer.WriteStartDocument();
               writer.WriteStartElement("RedBrick");
 
+              writer.WriteStartElement("OdometerStart");
+              writer.WriteString(Properties.Settings.Default.OdometerStart.ToString());
+              writer.WriteEndElement();
+
               writer.WriteStartElement("version");
               writer.WriteString(fileInfo.FileVersion);
               writer.WriteEndElement();
