@@ -950,5 +950,14 @@ namespace Redbrick_Addin.Properties {
                 this["AutoOpenPriority"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2016-09-01")]
+        public global::System.DateTime OdometerStart {
+            get {
+                return ((global::System.DateTime)(this["OdometerStart"]));
+            }
+        }
     }
 }

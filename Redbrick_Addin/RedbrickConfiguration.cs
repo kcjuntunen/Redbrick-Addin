@@ -83,7 +83,7 @@ namespace Redbrick_Addin {
       DataTable dt = new DataTable();
       dt.Columns.Add("Function");
       dt.Columns.Add("Avg Daily Usage", typeof(double));
-      DateTime start = new DateTime(2016, 9, 1, 0, 0, 0);
+      DateTime start = Properties.Settings.Default.OdometerStart;
       DateTime end = DateTime.Now;
       double days = ((end - start).Days / 7) * 5;
       foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {
