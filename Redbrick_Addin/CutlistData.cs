@@ -36,7 +36,9 @@ namespace Redbrick_Addin {
       UpdateCutlist,
       DrawingCollector,
       ExportPrograms,
-      ConvertPrograms
+      ConvertPrograms,
+      MachinePrioritySW,
+      MachinePriorityACAD
     }
 
     public enum ECODataColumns {
