@@ -80,10 +80,11 @@ namespace Redbrick_Addin {
     }
 
     private DataView get_stats() {
+      System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
       DataTable dt = new DataTable();
       dt.Columns.Add("Function");
       dt.Columns.Add("Avg Daily Usage", typeof(double));
-      DateTime start = Properties.Settings.Default.OdometerStart;
+      DateTime start = Redbrick.GetOdometerStart(pi.DirectoryName + @"\version.xml");
       DateTime end = DateTime.Now;
       double days = ((end - start).Days / 7) * 5;
       foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {

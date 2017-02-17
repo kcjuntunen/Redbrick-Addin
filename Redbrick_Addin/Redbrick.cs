@@ -152,6 +152,23 @@ namespace Redbrick_Addin {
       nfi.CopyTo(Properties.Settings.Default.EngineeringDir + @"\InstallRedBrick.exe", true);
     }
 
+    public static DateTime GetOdometerStart(string t) {
+      DateTime dt = Properties.Settings.Default.OdometerStart;
+      System.IO.FileInfo pi = new System.IO.FileInfo(t);
+      string elementName = string.Empty;
+      using (System.Xml.XmlReader r = System.Xml.XmlReader.Create(pi.FullName)) {
+        while (r.Read())
+        {
+          if (r.NodeType == System.Xml.XmlNodeType.Element) {
+            elementName = r.Name;
+          } else if (r.NodeType == System.Xml.XmlNodeType.Text && r.HasValue && elementName == @"OdometerStart") {
+              DateTime.TryParse(r.Value, out dt);
+          }
+        }
+      }
+      return dt;
+    }
+
     /// <summary>
     /// Get data from the version XML file that goes with the installer.
     /// </summary>
