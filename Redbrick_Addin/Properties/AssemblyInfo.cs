@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Redbrick Addin")]
 [assembly: AssemblyDescription("Edit properties the Amstore way.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Shfensoft")]
+[assembly: AssemblyCompany("K. C. Juntunen")]
 [assembly: AssemblyProduct("Redbrick Addin")]
-[assembly: AssemblyCopyright("Copyright © Shfensoft 2015-2017")]
+[assembly: AssemblyCopyright("Copyright © K. C. Juntunen 2015-2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
