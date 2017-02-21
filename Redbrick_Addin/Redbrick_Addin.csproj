@@ -119,6 +119,21 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditOp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditOp.Designer.cs">
+      <DependentUpon>EditOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ENGINEERINGDataSet.cs">
+      <DependentUpon>ENGINEERINGDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ENGINEERINGDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ENGINEERINGDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="M2MData.cs" />
     <Compile Include="ConfigurationSpecific.cs">
       <SubType>UserControl</SubType>
@@ -200,6 +215,12 @@
     <Compile Include="Ops.Designer.cs">
       <DependentUpon>Ops.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ops2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ops2.Designer.cs">
+      <DependentUpon>Ops2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,6 +274,9 @@
     <EmbeddedResource Include="DrawingRedbrick.resx">
       <DependentUpon>DrawingRedbrick.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditOp.resx">
+      <DependentUpon>EditOp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditRev.resx">
       <DependentUpon>EditRev.cs</DependentUpon>
     </EmbeddedResource>
@@ -274,6 +298,9 @@
     <EmbeddedResource Include="Ops.resx">
       <DependentUpon>Ops.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ops2.resx">
+      <DependentUpon>Ops2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
@@ -290,6 +317,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ENGINEERINGDataSet.xsc">
+      <DependentUpon>ENGINEERINGDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ENGINEERINGDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ENGINEERINGDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ENGINEERINGDataSet.xss">
+      <DependentUpon>ENGINEERINGDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
