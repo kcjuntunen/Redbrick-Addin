@@ -2407,6 +2407,18 @@ namespace Redbrick_Addin {
             
             private global::System.Data.DataColumn columnOPPROG;
             
+            private global::System.Data.DataColumn columnPOPSETUP;
+            
+            private global::System.Data.DataColumn columnPOPRUN;
+            
+            private global::System.Data.DataColumn columnOPSETUP;
+            
+            private global::System.Data.DataColumn columnOPRUN;
+            
+            private global::System.Data.DataColumn columnOPTYPE;
+            
+            private global::System.Data.DataColumn columnPOPOP;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public OpTreeDataTable() {
@@ -2490,6 +2502,54 @@ namespace Redbrick_Addin {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn POPSETUPColumn {
+                get {
+                    return this.columnPOPSETUP;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn POPRUNColumn {
+                get {
+                    return this.columnPOPRUN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn OPSETUPColumn {
+                get {
+                    return this.columnOPSETUP;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn OPRUNColumn {
+                get {
+                    return this.columnOPRUN;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn OPTYPEColumn {
+                get {
+                    return this.columnOPTYPE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn POPOPColumn {
+                get {
+                    return this.columnPOPOP;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2525,7 +2585,7 @@ namespace Redbrick_Addin {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public OpTreeRow AddOpTreeRow(int POPPART, int POPORDER, string TYPEDESC, string OPDESCR, bool OPPROG) {
+            public OpTreeRow AddOpTreeRow(int POPPART, int POPORDER, string TYPEDESC, string OPDESCR, bool OPPROG, double POPSETUP, double POPRUN, double OPSETUP, double OPRUN, int OPTYPE, int POPOP) {
                 OpTreeRow rowOpTreeRow = ((OpTreeRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2533,7 +2593,13 @@ namespace Redbrick_Addin {
                         POPORDER,
                         TYPEDESC,
                         OPDESCR,
-                        OPPROG};
+                        OPPROG,
+                        POPSETUP,
+                        POPRUN,
+                        OPSETUP,
+                        OPRUN,
+                        OPTYPE,
+                        POPOP};
                 rowOpTreeRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowOpTreeRow);
                 return rowOpTreeRow;
@@ -2569,6 +2635,12 @@ namespace Redbrick_Addin {
                 this.columnTYPEDESC = base.Columns["TYPEDESC"];
                 this.columnOPDESCR = base.Columns["OPDESCR"];
                 this.columnOPPROG = base.Columns["OPPROG"];
+                this.columnPOPSETUP = base.Columns["POPSETUP"];
+                this.columnPOPRUN = base.Columns["POPRUN"];
+                this.columnOPSETUP = base.Columns["OPSETUP"];
+                this.columnOPRUN = base.Columns["OPRUN"];
+                this.columnOPTYPE = base.Columns["OPTYPE"];
+                this.columnPOPOP = base.Columns["POPOP"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2586,6 +2658,18 @@ namespace Redbrick_Addin {
                 base.Columns.Add(this.columnOPDESCR);
                 this.columnOPPROG = new global::System.Data.DataColumn("OPPROG", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnOPPROG);
+                this.columnPOPSETUP = new global::System.Data.DataColumn("POPSETUP", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPOPSETUP);
+                this.columnPOPRUN = new global::System.Data.DataColumn("POPRUN", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPOPRUN);
+                this.columnOPSETUP = new global::System.Data.DataColumn("OPSETUP", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOPSETUP);
+                this.columnOPRUN = new global::System.Data.DataColumn("OPRUN", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOPRUN);
+                this.columnOPTYPE = new global::System.Data.DataColumn("OPTYPE", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOPTYPE);
+                this.columnPOPOP = new global::System.Data.DataColumn("POPOP", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPOPOP);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnPOPID}, true));
                 this.columnPOPID.AutoIncrement = true;
@@ -3623,6 +3707,102 @@ namespace Redbrick_Addin {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double POPSETUP {
+                get {
+                    try {
+                        return ((double)(this[this.tableOpTree.POPSETUPColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'POPSETUP\' in table \'OpTree\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOpTree.POPSETUPColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double POPRUN {
+                get {
+                    try {
+                        return ((double)(this[this.tableOpTree.POPRUNColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'POPRUN\' in table \'OpTree\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOpTree.POPRUNColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double OPSETUP {
+                get {
+                    try {
+                        return ((double)(this[this.tableOpTree.OPSETUPColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'OPSETUP\' in table \'OpTree\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOpTree.OPSETUPColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double OPRUN {
+                get {
+                    try {
+                        return ((double)(this[this.tableOpTree.OPRUNColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'OPRUN\' in table \'OpTree\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOpTree.OPRUNColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int OPTYPE {
+                get {
+                    try {
+                        return ((int)(this[this.tableOpTree.OPTYPEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'OPTYPE\' in table \'OpTree\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOpTree.OPTYPEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int POPOP {
+                get {
+                    try {
+                        return ((int)(this[this.tableOpTree.POPOPColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'POPOP\' in table \'OpTree\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableOpTree.POPOPColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsPOPPARTNull() {
                 return this.IsNull(this.tableOpTree.POPPARTColumn);
             }
@@ -3679,6 +3859,78 @@ namespace Redbrick_Addin {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetOPPROGNull() {
                 this[this.tableOpTree.OPPROGColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPOPSETUPNull() {
+                return this.IsNull(this.tableOpTree.POPSETUPColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPOPSETUPNull() {
+                this[this.tableOpTree.POPSETUPColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPOPRUNNull() {
+                return this.IsNull(this.tableOpTree.POPRUNColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPOPRUNNull() {
+                this[this.tableOpTree.POPRUNColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsOPSETUPNull() {
+                return this.IsNull(this.tableOpTree.OPSETUPColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetOPSETUPNull() {
+                this[this.tableOpTree.OPSETUPColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsOPRUNNull() {
+                return this.IsNull(this.tableOpTree.OPRUNColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetOPRUNNull() {
+                this[this.tableOpTree.OPRUNColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsOPTYPENull() {
+                return this.IsNull(this.tableOpTree.OPTYPEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetOPTYPENull() {
+                this[this.tableOpTree.OPTYPEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPOPOPNull() {
+                return this.IsNull(this.tableOpTree.POPOPColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPOPOPNull() {
+                this[this.tableOpTree.POPOPColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -6468,6 +6720,12 @@ ORDER BY CUT_OPS.OPNAME";
             tableMapping.ColumnMappings.Add("TYPEDESC", "TYPEDESC");
             tableMapping.ColumnMappings.Add("OPDESCR", "OPDESCR");
             tableMapping.ColumnMappings.Add("OPPROG", "OPPROG");
+            tableMapping.ColumnMappings.Add("POPSETUP", "POPSETUP");
+            tableMapping.ColumnMappings.Add("POPRUN", "POPRUN");
+            tableMapping.ColumnMappings.Add("OPSETUP", "OPSETUP");
+            tableMapping.ColumnMappings.Add("OPRUN", "OPRUN");
+            tableMapping.ColumnMappings.Add("OPTYPE", "OPTYPE");
+            tableMapping.ColumnMappings.Add("POPOP", "POPOP");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -6481,16 +6739,17 @@ ORDER BY CUT_OPS.OPNAME";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT        CUT_PART_OPS.POPID, CUT_PART_OPS.POPPART, CUT_PART_OPS.POPORDER, CUT_PART_TYPES.TYPEDESC, CUT_OPS.OPDESCR, CUT_OPS.OPPROG
+            this._commandCollection[0].CommandText = @"SELECT        CUT_PART_OPS.POPID, CUT_PART_OPS.POPPART, CUT_PART_OPS.POPORDER, CUT_PART_OPS.POPOP, CUT_OPS.OPDESCR, CUT_OPS.OPTYPE, 
+                         CUT_PART_TYPES.TYPEDESC, CUT_OPS.OPPROG, CUT_OPS.OPSETUP, CUT_OPS.OPRUN, CUT_PART_OPS.POPSETUP, CUT_PART_OPS.POPRUN
 FROM            CUT_PARTS INNER JOIN
                          CUT_PART_OPS INNER JOIN
                          CUT_OPS ON CUT_PART_OPS.POPOP = CUT_OPS.OPID INNER JOIN
                          CUT_PART_TYPES ON CUT_OPS.OPTYPE = CUT_PART_TYPES.TYPEID ON CUT_PARTS.PARTID = CUT_PART_OPS.POPPART
 WHERE        (CUT_PART_OPS.POPPART = @partid)
-ORDER BY CUT_PART_OPS.POPORDER;  
+ORDER BY CUT_PART_OPS.POPORDER;      
 ";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@partid", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPPART", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -6501,16 +6760,29 @@ ORDER BY CUT_PART_OPS.POPORDER;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popid", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "UPDATE       CUT_PART_OPS\r\nSET                POPPART = @poppart, POPORDER = @pop" +
+            this._commandCollection[2].CommandText = @"SELECT        CUT_PART_OPS.POPID, CUT_PART_OPS.POPPART, CUT_PART_OPS.POPORDER, CUT_PART_OPS.POPOP, CUT_OPS.OPDESCR, CUT_OPS.OPTYPE, 
+                         CUT_PART_TYPES.TYPEDESC, CUT_OPS.OPPROG, CUT_OPS.OPSETUP, CUT_OPS.OPRUN, CUT_PART_OPS.POPSETUP, CUT_PART_OPS.POPRUN
+FROM            CUT_PARTS INNER JOIN
+                         CUT_PART_OPS INNER JOIN
+                         CUT_OPS ON CUT_PART_OPS.POPOP = CUT_OPS.OPID INNER JOIN
+                         CUT_PART_TYPES ON CUT_OPS.OPTYPE = CUT_PART_TYPES.TYPEID ON CUT_PARTS.PARTID = CUT_PART_OPS.POPPART
+WHERE        (CUT_PARTS.PARTNUM = @partnum)
+ORDER BY CUT_PART_OPS.POPORDER;       
+";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@partnum", global::System.Data.SqlDbType.NVarChar, 25, global::System.Data.ParameterDirection.Input, 0, 0, "PARTNUM", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "UPDATE       CUT_PART_OPS\r\nSET                POPPART = @poppart, POPORDER = @pop" +
                 "order, POPOP = @popop, POPSETUP = @popsetup, POPRUN = @poprun\r\nWHERE        (POP" +
                 "ID = @popid)";
-            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@poppart", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPPART", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@poporder", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPORDER", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popop", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPOP", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popsetup", global::System.Data.SqlDbType.Float, 8, global::System.Data.ParameterDirection.Input, 0, 0, "POPSETUP", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@poprun", global::System.Data.SqlDbType.Float, 8, global::System.Data.ParameterDirection.Input, 0, 0, "POPRUN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popid", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@poppart", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPPART", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@poporder", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPORDER", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popop", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPOP", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popsetup", global::System.Data.SqlDbType.Float, 8, global::System.Data.ParameterDirection.Input, 0, 0, "POPSETUP", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@poprun", global::System.Data.SqlDbType.Float, 8, global::System.Data.ParameterDirection.Input, 0, 0, "POPRUN", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@popid", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "POPID", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6552,6 +6824,42 @@ ORDER BY CUT_PART_OPS.POPORDER;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByPartNum(ENGINEERINGDataSet.OpTreeDataTable dataTable, string partnum) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((partnum == null)) {
+                throw new global::System.ArgumentNullException("partnum");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(partnum));
+            }
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ENGINEERINGDataSet.OpTreeDataTable GetDataByPartNum(string partnum) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((partnum == null)) {
+                throw new global::System.ArgumentNullException("partnum");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(partnum));
+            }
+            ENGINEERINGDataSet.OpTreeDataTable dataTable = new ENGINEERINGDataSet.OpTreeDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
         public virtual int DeleteByPopID(int popid) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
@@ -6578,7 +6886,7 @@ ORDER BY CUT_PART_OPS.POPORDER;
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
         public virtual int UpdateQuery(global::System.Nullable<int> poppart, global::System.Nullable<int> poporder, global::System.Nullable<int> popop, global::System.Nullable<double> popsetup, global::System.Nullable<double> poprun, int popid) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
             if ((poppart.HasValue == true)) {
                 command.Parameters[0].Value = ((int)(poppart.Value));
             }

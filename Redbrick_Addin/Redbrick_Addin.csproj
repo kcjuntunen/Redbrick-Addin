@@ -322,8 +322,8 @@
     </None>
     <None Include="ENGINEERINGDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ENGINEERINGDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>ENGINEERINGDataSet1.Designer.cs</LastGenOutput>
     </None>
     <None Include="ENGINEERINGDataSet.xss">
       <DependentUpon>ENGINEERINGDataSet.xsd</DependentUpon>

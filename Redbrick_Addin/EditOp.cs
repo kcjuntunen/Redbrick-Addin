@@ -10,6 +10,7 @@ namespace Redbrick_Addin {
   public partial class EditOp : Form {
     private ENGINEERINGDataSet.OpTreeRow dataRowView = default(ENGINEERINGDataSet.OpTreeRow);
     private string partNum = string.Empty;
+    private int partID = 0;
     private int department = 1;
     private ENGINEERINGDataSetTableAdapters.CUT_PART_OPSTableAdapter cUT_PART_OPSTableAdapter = 
       new ENGINEERINGDataSetTableAdapters.CUT_PART_OPSTableAdapter();
@@ -42,6 +43,15 @@ namespace Redbrick_Addin {
       partNum = partnum;
       department = dept;
       dataRowView = row;
+    }
+
+    public EditOp(ENGINEERINGDataSet.OpTreeRow row) {
+      InitializeComponent();
+      CutlistData cd = new CutlistData();
+      dataRowView = row;
+      department = (int)dataRowView[@"OPTYPE"];
+      partID = (int)dataRowView[@"POPPART"];
+      partNum = (string)dataRowView[@"POPPART"];
     }
 
     private void cUT_OPSBindingNavigatorSaveItem_Click(object sender, EventArgs e) {
