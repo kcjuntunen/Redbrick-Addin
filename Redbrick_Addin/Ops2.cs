@@ -11,6 +11,8 @@ using System.Windows.Forms;
 namespace Redbrick_Addin {
   public partial class Ops2 : UserControl {
     private string partNum = string.Empty;
+    private SwProperties propertySet = default(SwProperties);
+    private int OpType = 1;
 
     private ENGINEERINGDataSetTableAdapters.OpTreeTableAdapter opTreeTableAdapter = 
       new ENGINEERINGDataSetTableAdapters.OpTreeTableAdapter();
@@ -18,9 +20,18 @@ namespace Redbrick_Addin {
     private ENGINEERINGDataSet.OpTreeDataTable otdt = 
       new ENGINEERINGDataSet.OpTreeDataTable();
 
-    public Ops2(string partnum) {
-      partNum = partnum;
+    public Ops2(ref SwProperties p) {
+      propertySet = p;
+      partNum = p.PartName;
       InitializeComponent();
+      populate(partNum);
+    }
+
+    public void Update(ref SwProperties p) {
+      propertySet = p;
+      partNum = p.PartName;
+      OpType = p.cutlistData.OpType;
+      treeView1.Nodes.Clear();
       populate(partNum);
     }
 
@@ -28,23 +39,27 @@ namespace Redbrick_Addin {
       if (partnum == string.Empty) {
         return;
       }
-      CutlistData cd = new CutlistData();
-      var t = new System.Globalization.CultureInfo("en-US", false).TextInfo;
-      opTreeTableAdapter.FillByPartID(otdt, cd.GetPartID(partnum));
+      opTreeTableAdapter.FillByPartID(otdt, propertySet.cutlistData.GetPartID(partnum));
       foreach (DataRow item in otdt) {
-        string topNodeString = string.Format(@"{0} Operation {1}", 
-          t.ToTitleCase(item[@"TYPEDESC"].ToString().ToLower()), item[@"POPORDER"]);
-        double setupTime = 0;
-        double runTime = 0;
-        TreeNode subNode1 = new TreeNode(t.ToTitleCase(item[@"OPDESCR"].ToString().ToLower()));
-        TreeNode subNode2 = new TreeNode((bool)item[@"OPPROG"] ? @"Program required" : @"No program required");
-        setupTime = (double)item[@"POPSETUP"] == 0.0 ? (double)item[@"OPSETUP"] : (double)item[@"POPSETUP"];
-        runTime = (double)item[@"POPRUN"] == 0.0 ? (double)item[@"OPRUN"] : (double)item[@"POPRUN"];
-        TreeNode subNode3 = new TreeNode(string.Format(@"Setup time: {0}", TimeSpan.FromHours(setupTime).ToString()));
-        TreeNode subNode4 = new TreeNode(string.Format(@"Run time: {0}", TimeSpan.FromMinutes(runTime).ToString()));
-        TreeNode topNode = new TreeNode(topNodeString, new TreeNode[] { subNode1, subNode2, subNode3, subNode4 });
-        treeView1.Nodes.Add(topNode);
+        add_node(item);
       }
+    }
+
+    private int add_node(DataRow row) {
+      var t = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+      string topNodeString = string.Format(@"{0} Operation {1}",
+        t.ToTitleCase(row[@"TYPEDESC"].ToString().ToLower()), row[@"POPORDER"]);
+      double setupTime = 0;
+      double runTime = 0;
+      TreeNode subNode1 = new TreeNode(t.ToTitleCase(row[@"OPDESCR"].ToString().ToLower()));
+      TreeNode subNode2 = new TreeNode((bool)row[@"OPPROG"] ? @"Program required" : @"No program required");
+      setupTime = (double)row[@"POPSETUP"] == 0.0 ? (double)row[@"OPSETUP"] : (double)row[@"POPSETUP"];
+      runTime = (double)row[@"POPRUN"] == 0.0 ? (double)row[@"OPRUN"] : (double)row[@"POPRUN"];
+      TreeNode subNode3 = new TreeNode(string.Format(@"Setup time: {0}", TimeSpan.FromHours(setupTime).ToString()));
+      TreeNode subNode4 = new TreeNode(string.Format(@"Run time: {0}", TimeSpan.FromMinutes(runTime).ToString()));
+      TreeNode topNode = new TreeNode(topNodeString, new TreeNode[] { subNode1, subNode2, subNode3, subNode4 });
+      treeView1.Nodes.Add(topNode);
+      return topNode.Index;
     }
 
     private void writeToDB() {
@@ -64,7 +79,6 @@ namespace Redbrick_Addin {
     }
 
     private void button1_Click(object sender, EventArgs e) {
-
     }
 
     private void button2_Click(object sender, EventArgs e) {
@@ -73,5 +87,9 @@ namespace Redbrick_Addin {
       EditOp eo = new EditOp(partNum, otr, (int)otr[@"OPTYPE"]);
       eo.ShowDialog(this);
     }
+
+    public ENGINEERINGDataSet.OpTreeDataTable OpData {
+      get { return otdt; }
+      set { } }
   }
 }
