@@ -144,6 +144,9 @@ namespace Redbrick_Addin {
       double tp = 0.0;
       string resVal = propertySet.GetProperty("LENGTH").ResValue;
       labResLength.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}",  tp) : resVal;
+      if (!Properties.Settings.Default.SketchDimensions.Contains((sender as TextBox).Text)) {
+        Properties.Settings.Default.SketchDimensions.Add((sender as TextBox).Text);
+      }
     }
 
     private void tbWidth_Leave(object sender, EventArgs e) {
@@ -153,6 +156,9 @@ namespace Redbrick_Addin {
       double tp = 0.0;
       string resVal = propertySet.GetProperty("WIDTH").ResValue;
       labResWidth.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
+      if (!Properties.Settings.Default.SketchDimensions.Contains((sender as TextBox).Text)) {
+        Properties.Settings.Default.SketchDimensions.Add((sender as TextBox).Text);
+      }
     }
 
     private void tbThick_Leave(object sender, EventArgs e) {
@@ -162,6 +168,9 @@ namespace Redbrick_Addin {
       double tp = 0.0;
       string resVal = propertySet.GetProperty("THICKNESS").ResValue;
       labResThickness.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
+      if (!Properties.Settings.Default.SketchDimensions.Contains((sender as TextBox).Text)) {
+        Properties.Settings.Default.SketchDimensions.Add((sender as TextBox).Text);
+      }
     }
 
     private void tbWallThick_Leave(object sender, EventArgs e) {
@@ -171,6 +180,9 @@ namespace Redbrick_Addin {
       double tp = 0.0;
       string resVal = propertySet.GetProperty("WALL THICKNESS").ResValue;
       labResWallThickness.Text = double.TryParse(resVal, out tp) ? string.Format("{0:0.000}", tp) : resVal;
+      if (!Properties.Settings.Default.SketchDimensions.Contains((sender as TextBox).Text)) {
+        Properties.Settings.Default.SketchDimensions.Add((sender as TextBox).Text);
+      }
     }
 
     private double _length;

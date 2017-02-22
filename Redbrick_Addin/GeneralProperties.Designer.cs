@@ -121,6 +121,7 @@ namespace Redbrick_Addin
       // tbWallThick
       // 
       this.tbWallThick.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.tbWallThick.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
       this.tbWallThick.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbWallThick.Location = new System.Drawing.Point(3, 213);
       this.tbWallThick.MinimumSize = new System.Drawing.Size(5, 4);
@@ -143,6 +144,7 @@ namespace Redbrick_Addin
       // tbThick
       // 
       this.tbThick.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.tbThick.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
       this.tbThick.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbThick.Location = new System.Drawing.Point(3, 165);
       this.tbThick.MinimumSize = new System.Drawing.Size(5, 4);
@@ -165,6 +167,7 @@ namespace Redbrick_Addin
       // tbWidth
       // 
       this.tbWidth.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.tbWidth.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
       this.tbWidth.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbWidth.Location = new System.Drawing.Point(3, 117);
       this.tbWidth.MinimumSize = new System.Drawing.Size(5, 4);
@@ -187,6 +190,7 @@ namespace Redbrick_Addin
       // tbLength
       // 
       this.tbLength.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.tbLength.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
       this.tbLength.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbLength.Location = new System.Drawing.Point(3, 69);
       this.tbLength.MinimumSize = new System.Drawing.Size(5, 4);
@@ -208,6 +212,8 @@ namespace Redbrick_Addin
       // 
       // tbDescription
       // 
+      this.tbDescription.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+      this.tbDescription.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
       this.tableLayoutPanel1.SetColumnSpan(this.tbDescription, 2);
       this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbDescription.Location = new System.Drawing.Point(3, 21);
