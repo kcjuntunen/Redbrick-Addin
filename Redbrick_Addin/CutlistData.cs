@@ -1934,6 +1934,26 @@ namespace Redbrick_Addin {
       }
     }
 
+    public double GetOdometerStdDev(Functions funcCode) {
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT STDEV(ODO) FROM GEN_ODOMETER WHERE FUNCID = ?;", conn)) {
+        comm.Parameters.AddWithValue("@funcid", (int)funcCode);
+        try {
+          using (OdbcDataReader dr = comm.ExecuteReader()) {
+            if (dr.Read() && !dr.IsDBNull(0)) {
+              return dr.GetDouble(0);
+            } else {
+              return 0;
+            }
+          }
+        } catch (Exception x) {
+          System.Windows.Forms.MessageBox.Show(x.Message.ToString(),
+            x.TargetSite.ToString(),
+            System.Windows.Forms.MessageBoxButtons.OK);
+        }
+        return 0;
+      }
+    }
+
     public void InsertError(int errNo, string errmsg, string targetSite) {
       string SQL = "INSERT INTO GEN_ERRORS (ERRDATE, ERRUSER, ERRNUM, ERRMSG, ERROBJ, ERRCHK, ERRAPP) VALUES " +
         "(GETDATE(), ?, ?, ?, ?, ?, ?)";

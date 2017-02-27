@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +12,7 @@ namespace Redbrick_Addin {
     private bool initialated = false;
     private bool sound_clicked = false;
     private DateTime odometerStart;
+    private double workDays;
 
     public RedbrickConfiguration() {
       InitializeComponent();
@@ -69,7 +70,8 @@ namespace Redbrick_Addin {
       ToolTip tt = new ToolTip();
       tt.ShowAlways = true;
       tt.SetToolTip(label4, "You probably don't want to mess with this.");
-
+      var t = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+      string currentUserName = t.ToTitleCase(cd.GetAuthorFullName(cd.GetCurrentAuthorInitial()).ToLower());
       dataGridView1.AutoResizeRows();
       dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
       dataGridView1.AutoResizeColumns();
@@ -77,29 +79,61 @@ namespace Redbrick_Addin {
       dataGridView1.DataSource = get_stats();
       dataGridView1.Columns["Avg Daily Usage"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
       dataGridView1.Columns["Total Since Reset"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+      dataGridView1.Columns["Your Avg Daily Usage"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+      dataGridView1.Columns["Your Total Since Reset"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+      dataGridView1.Columns["σ"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+
+      dataGridView1.Columns["Avg Daily Usage"].ToolTipText = string.Format(@"{0} work days since {1}", workDays, odometerStart.ToShortDateString());
       dataGridView1.Columns["Total Since Reset"].ToolTipText = @"Reset @ " + odometerStart.ToShortDateString();
+      dataGridView1.Columns["Your Avg Daily Usage"].ToolTipText = string.Format(@"{0}'s average", currentUserName);
+      dataGridView1.Columns["Your Total Since Reset"].ToolTipText = 
+        string.Format(@"{0}'s total, reset @ {1}", currentUserName, odometerStart.ToShortDateString());
+      dataGridView1.Columns["σ"].ToolTipText = @"Standard deviation";
+
       dataGridView1.Columns["Avg Daily Usage"].DefaultCellStyle.Format = @"#.###";
+      dataGridView1.Columns["Your Avg Daily Usage"].DefaultCellStyle.Format = @"#.###";
+      dataGridView1.Columns["σ"].DefaultCellStyle.Format = @"#.###";
       initialated = true;
     }
 
-    private DataView get_stats() {
+    private double WorkDays() {
       System.IO.FileInfo pi = new System.IO.FileInfo(Properties.Settings.Default.InstallerNetworkPath);
+      odometerStart = Redbrick.GetOdometerStart(pi.DirectoryName + @"\version.xml");
+      DateTime end = DateTime.Now;
+
+      int dowStart = ((int)odometerStart.DayOfWeek == 0 ? 7 : (int)odometerStart.DayOfWeek);
+      int dowEnd = ((int)end.DayOfWeek == 0 ? 7 : (int)end.DayOfWeek);
+      TimeSpan tSpan = end - odometerStart;
+      if (dowStart <= dowEnd) {
+        return (((tSpan.Days / 7) * 5) + Math.Max((Math.Min((dowEnd + 1), 6) - dowStart), 0));
+      }
+      return (((tSpan.Days / 7) * 5) + Math.Min((dowEnd + 6) - Math.Min(dowStart, 6), 5));
+    }
+
+    private DataView get_stats() {
       DataTable dt = new DataTable();
       dt.Columns.Add("Function");
       dt.Columns.Add("Avg Daily Usage", typeof(double));
       dt.Columns.Add("Total Since Reset", typeof(int));
-      odometerStart = Redbrick.GetOdometerStart(pi.DirectoryName + @"\version.xml");
-      DateTime end = DateTime.Now;
-      double days = ((end - odometerStart).Days / 7) * 5;
+      dt.Columns.Add("Your Avg Daily Usage", typeof(double));
+      dt.Columns.Add("Your Total Since Reset", typeof(int));
+      dt.Columns.Add("σ", typeof(double));
+      workDays = WorkDays(); 
       foreach (object item in Enum.GetValues(typeof(CutlistData.Functions))) {
         string x = Enum.GetName(typeof(CutlistData.Functions), (CutlistData.Functions)item);
         int f = cd.GetOdometerTotalValue((CutlistData.Functions)item);
-        double y = f / days;
+        int mf = cd.GetOdometerValue((CutlistData.Functions)item);
+        double y = f / workDays;
+        double my = mf / workDays;
+        double σ = cd.GetOdometerStdDev((CutlistData.Functions)item);
         if (y > 0) {
           DataRow dr = dt.NewRow();
           dr["Function"] = x;
           dr["Avg Daily Usage"] = y;
           dr["Total Since Reset"] = f;
+          dr["Your Avg Daily Usage"] = my;
+          dr["Your Total Since Reset"] = mf;
+          dr["σ"] = σ;
           dt.Rows.Add(dr);
         }
       }
