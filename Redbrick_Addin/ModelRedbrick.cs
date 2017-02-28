@@ -18,7 +18,7 @@ namespace Redbrick_Addin {
     private ConfigurationSpecific cs;
     private GeneralProperties gp;
     private MachineProperties mp;
-    private Ops op;
+    private Ops2 op;
     //private CutlistHandler ch;
 
     Size s;
@@ -66,7 +66,7 @@ namespace Redbrick_Addin {
       mp.Location = new System.Drawing.Point(3, 13);
       mp.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
       //mp.Dock = d;
-      op = new Ops(ref this.props);
+      op = new Ops2(ref this.props);
       op.Location = new System.Drawing.Point(3, 13);
       op.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
       op.TabIndex = 2;
@@ -162,6 +162,7 @@ namespace Redbrick_Addin {
       // OK, so the controls were linked on update. This reads whatever was
       // entered into the controls, then writes to SW.
       ReadControls();
+      op.update_from_nodes();
       props.Write();
       //ch.Write();
       // Show changes.
@@ -230,29 +231,29 @@ namespace Redbrick_Addin {
       get { return mp; }
     }
 
-    public Ops aOps {
+    public Ops2 aOps {
       get { return op; }
     }
 
-    public string OP1 {
-      get { return op.GetOp1Box().Text; }
-    }
+    //public string OP1 {
+    //  get { return op.GetOp1Box().Text; }
+    //}
 
-    public string OP2 {
-      get { return op.GetOp2Box().Text; }
-    }
+    //public string OP2 {
+    //  get { return op.GetOp2Box().Text; }
+    //}
 
-    public string OP3 {
-      get { return op.GetOp3Box().Text; }
-    }
+    //public string OP3 {
+    //  get { return op.GetOp3Box().Text; }
+    //}
 
-    public string OP4 {
-      get { return op.GetOp4Box().Text; }
-    }
+    //public string OP4 {
+    //  get { return op.GetOp4Box().Text; }
+    //}
 
-    public string OP5 {
-      get { return op.GetOp5Box().Text; }
-    }
+    //public string OP5 {
+    //  get { return op.GetOp5Box().Text; }
+    //}
 
 
     private void ModelRedbrick_Load(object sender, EventArgs e) {

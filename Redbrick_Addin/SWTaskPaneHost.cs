@@ -31,7 +31,7 @@ namespace Redbrick_Addin {
     ConfigurationSpecific cs;
     GeneralProperties gp;
     MachineProperties mp;
-    Ops op;
+    Ops2 op;
 
     ModelRedbrick mrb;
     DrawingRedbrick drb;

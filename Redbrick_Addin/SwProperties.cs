@@ -1215,6 +1215,10 @@ namespace Redbrick_Addin {
       }
     }
 
+    public void ReadOpTree() {
+
+    }
+
     public void ReadControls() {
       foreach (SwProperty p in _innerArray) {
         if (p.Ctl != null) {
@@ -1233,6 +1237,40 @@ namespace Redbrick_Addin {
           }
         }
       }
+
+      string val_msg =
+        Validate() +
+        CheckOversize() +
+        CheckFieldLength();
+
+      if (val_msg != string.Empty) {
+        System.Windows.Forms.MessageBox.Show(val_msg, @"Warning", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+      }
+    }
+
+    public void ReadControls2() {
+      foreach (SwProperty p in _innerArray) {
+        if (p.Ctl != null) {
+          p.Value = p.Ctl.Text;
+          if (p.Ctl is System.Windows.Forms.ComboBox) {
+            if ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem != null) {
+              p.ID = ((p.Ctl as System.Windows.Forms.ComboBox).SelectedItem as System.Data.DataRowView).Row.ItemArray[0].ToString();
+
+              if (p.Name.ToUpper().StartsWith("OP") && p.Name.ToUpper().EndsWith("ID"))
+                continue;
+              else if (p.Name.ToUpper().StartsWith("OP") && !p.Name.ToUpper().EndsWith("ID"))
+                p.Descr = cutlistData.GetOpAbbreviationByID(p.ID);
+
+            }
+          }
+
+          if (p.Ctl is System.Windows.Forms.CheckBox) {
+            p.ID = (p.Ctl as System.Windows.Forms.CheckBox).Checked ? "True" : "False";
+          }
+        }
+      }
+
+      ReadOpTree();
 
       string val_msg =
         Validate() +
@@ -1306,21 +1344,31 @@ namespace Redbrick_Addin {
       return err;
     }
 
+    public int OpCount() {
+      int opcount = 0;
+      foreach (SwProperty prop in _innerArray) {
+        if (prop.Name.Contains(@"OP") && prop.Name.EndsWith(@"ID")) {
+          opcount++;
+        }
+      }
+      return opcount;
+    }
+
     private string CheckOversize() {
       string message = string.Empty;
       if (Properties.Settings.Default.Warn && Properties.Settings.Default.ProgWarn) {
         double oversize_val =
           double.Parse(GetProperty(@"OVERL").Ctl.Text) +
           double.Parse(GetProperty(@"OVERW").Ctl.Text);
-
         int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
         int ps_op = 0;
         int not_cnc_op = 0;
 
-        List<string> ops = new List<string> { };
+        SwProperty opProp = GetProperty("OP1ID");
+        List<string> ops = (opProp.Ctl as Ops2).OpNameList;
 
         for (int i = 1; i <= 5; i++)
-          ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Ctl.Text.Split(' ')[0]);
+          ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Value);
 
         for (int i = 0; i < 5; i++) {
           if (ops[i] == @"PS")
@@ -1349,20 +1397,9 @@ namespace Redbrick_Addin {
         bool have_eb_ops = false;
         bool have_eb = false;
 
-        for (int i = 0; i < 5; i++) {
-          SwProperty p = GetProperty(string.Format("OP{0}ID", i + 1));
-          foreach (string op in Properties.Settings.Default.CNCOps) {
-            if (p.Ctl != null && (p.Ctl.Text.Split(' ')[0] == op)) {
-              have_cnc_ops |= true;
-            }
-          }
-
-          foreach (string op in Properties.Settings.Default.EBOps) {
-            if (p.Ctl != null && (p.Ctl.Text.Split(' ')[0] == op)) {
-              have_eb_ops |= true;
-            }
-          }
-        }
+        SwProperty opProp = GetProperty("OP1ID");
+        have_cnc_ops = (opProp.Ctl as Ops2).HasCNCOp;
+        have_eb_ops = (opProp.Ctl as Ops2).HasEBOp;
 
         SwProperty pCNC1 = GetProperty("CNC1");
         SwProperty pUpd = GetProperty("UPDATE CNC");
