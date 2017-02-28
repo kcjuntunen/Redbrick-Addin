@@ -168,6 +168,8 @@ namespace Redbrick_Addin {
     private void label1_Click(object sender, EventArgs e) {
       Form f = new Form();
       Ops2 op2 = new Ops2(ref propertySet);
+      f.ShowIcon = false;
+      f.FormBorderStyle = FormBorderStyle.SizableToolWindow;
       f.Text = propertySet.PartName;
       op2.Dock = DockStyle.Fill;
       f.Controls.Add(op2);
