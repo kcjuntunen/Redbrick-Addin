@@ -13,8 +13,10 @@ namespace Redbrick_Addin {
     private string partNum = string.Empty;
     private SwProperties propertySet = default(SwProperties);
     private int OpType = 1;
+    private int count = 0;
     private bool has_cnc_op = false;
     private bool has_eb_op = false;
+    private List<string> op_names = new List<string>();
 
     private ENGINEERINGDataSetTableAdapters.CUT_PART_OPSTableAdapter cUT_PART_OPSTableAdapter =
       new ENGINEERINGDataSetTableAdapters.CUT_PART_OPSTableAdapter();
@@ -65,16 +67,20 @@ namespace Redbrick_Addin {
       for (int i = 0; i < nodes.Count; i++) {
         TreeNodeWithData tn = (TreeNodeWithData)treeView1.Nodes[i];
         tn.OpData[@"POPORDER"] = tn.Index + 1;
-        SwProperty p = tn.PropertySet.GetProperty(string.Format(@"OP{0}ID", tn.Index + 1));
+        SwProperty p = tn.PropertySet.GetProperty(string.Format(@"OP{0}ID", i + 1));
         p.ID = tn.OpData[@"POPOP"].ToString();
         p.Value = tn.OpData[@"POPOP"].ToString();
         p.ResValue = tn.OpData[@"POPOP"].ToString();
+        p.Descr = tn.OpData[@"OPNAME"].ToString();
+        p.Old = false;
         p.Write(propertySet.modeldoc);
         if (Properties.Settings.Default.Testing) {
-          SwProperty old_p = tn.PropertySet.GetProperty(string.Format(@"OP{0}", tn.Index + 1));
+          SwProperty old_p = tn.PropertySet.GetProperty(string.Format(@"OP{0}", i + 1));
           old_p.ID = tn.OpData[@"POPOP"].ToString();
           old_p.Value = tn.OpData[@"OPNAME"].ToString();
           old_p.ResValue = tn.OpData[@"OPNAME"].ToString();
+          old_p.Descr = tn.OpData[@"OPNAME"].ToString();
+          old_p.Old = true;
           old_p.Write(propertySet.modeldoc);
         }
         newRows.Add(tn.OpData);
@@ -100,6 +106,22 @@ namespace Redbrick_Addin {
       OpType = p.cutlistData.OpType;
       LinkControls();
       populate(partNum);
+    }
+
+    private void LinkControls() {
+      int cnt = 0;
+
+      for (int i = 1; i < Count + 1; i++) {
+        propertySet.GetProperty(string.Format(@"OP{0}ID", i)).Ctl = this;
+      }
+
+      foreach (SwProperty p in propertySet) {
+        if (p.Name.StartsWith(@"OP") && (cnt > Count)) {
+          propertySet.Remove(p);
+          p.Del(propertySet.modeldoc);
+          cnt++;
+        }
+      }
     }
 
     private void populate(string partnum) {
@@ -151,18 +173,12 @@ namespace Redbrick_Addin {
 
     private bool IsEBOp(TreeNodeWithData tn) {
       bool is_eb = false;
-      foreach (string op in Properties.Settings.Default.CNCOps) {
+      foreach (string op in Properties.Settings.Default.EBOps) {
         if (tn.OpData[@"OPNAME"].ToString() == op) {
           is_eb |= true;
         }
       }
       return is_eb;
-    }
-
-    private void LinkControls() {
-      for (int i = 0; i < treeView1.Nodes.Count; i++) {
-        propertySet.GetProperty(string.Format(@"OP{0}ID")).Ctl = this;
-      }
     }
 
     private void writeToDB() {
@@ -230,7 +246,23 @@ namespace Redbrick_Addin {
       }
     }
 
-    public List<string> OpNameList { get; set; }
+    public List<string> OpNameList {
+      get {
+        return op_names;
+      }
+      private set {
+        op_names = value;
+      }
+    }
+
+    public int Count {
+      get {
+        return treeView1.Nodes.Count;
+      }
+      private set {
+          count = value;
+      }
+    }
 
     public ENGINEERINGDataSet.OpDataDataTable OpData {
       get { return otdt; }
