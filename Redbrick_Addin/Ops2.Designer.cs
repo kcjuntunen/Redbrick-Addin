@@ -52,6 +52,7 @@
       // 
       // treeView1
       // 
+      this.treeView1.AllowDrop = true;
       this.tableLayoutPanel1.SetColumnSpan(this.treeView1, 3);
       this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.treeView1.Location = new System.Drawing.Point(3, 3);
@@ -90,6 +91,7 @@
       this.button3.TabIndex = 3;
       this.button3.Text = "Delete...";
       this.button3.UseVisualStyleBackColor = true;
+      this.button3.Click += new System.EventHandler(this.button3_Click);
       // 
       // Ops2
       // 
