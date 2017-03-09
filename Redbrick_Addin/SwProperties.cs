@@ -916,6 +916,7 @@ namespace Redbrick_Addin {
       SwProperty op3id = new SwProperty("OP3ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
       SwProperty op4id = new SwProperty("OP4ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
       SwProperty op5id = new SwProperty("OP5ID", swCustomInfoType_e.swCustomInfoNumber, "0", true);
+      SwProperty dictops = new SwProperty("DictOps", swCustomInfoType_e.swCustomInfoText, string.Empty, true);
       op1.Old = true;
       op2.Old = true;
       op3.Old = true;
@@ -935,6 +936,7 @@ namespace Redbrick_Addin {
       bq.Get(modeldoc, cutlistData);
       c.Get(modeldoc, cutlistData);
       uc.Get(modeldoc, cutlistData);
+      dictops.Get(modeldoc, cutlistData);
 
       if (IsAmongTheProperties(op1.Name, modeldoc)) {
         op1.Get(modeldoc, cutlistData);
@@ -1024,6 +1026,7 @@ namespace Redbrick_Addin {
       Add(op3id);
       Add(op4id);
       Add(op5id);
+      Add(dictops);
 
       if (Properties.Settings.Default.Testing) {
         Add(op1);
@@ -1363,27 +1366,30 @@ namespace Redbrick_Addin {
         int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
         int ps_op = 0;
         int not_cnc_op = 0;
+        try {
+          SwProperty opProp = GetProperty("OP1ID");
+          List<string> ops = (opProp.Ctl as Ops2).OpNameList;
 
-        SwProperty opProp = GetProperty("OP1ID");
-        List<string> ops = (opProp.Ctl as Ops2).OpNameList;
+          for (int i = 1; i <= (opProp.Ctl as Ops2).Count; i++)
+            ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Value);
 
-        for (int i = 1; i <= 5; i++)
-          ops.Add(GetProperty(string.Format(@"OP{0}ID", i)).Value);
+          for (int i = 0; i < (opProp.Ctl as Ops2).Count; i++) {
+            if (ops[i] == @"PS")
+              ps_op = i;
 
-        for (int i = 0; i < 5; i++) {
-          if (ops[i] == @"PS")
-            ps_op = i;
-
-          if ((i < 4) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
-            not_cnc_op = i + 1;
-            if (bq == 1 && oversize_val > 0) {
-              message = Properties.Resources.Bullet +
-                string.Format(Properties.Resources.CheckOversize,
-                ops[ps_op],
-                ops[not_cnc_op]) +
-                System.Environment.NewLine;
+            if ((i < 4) && (ops[i] == @"PS" && !(IsCNCOp(ops[i + 1]) || (ops[i + 1] == string.Empty)))) {
+              not_cnc_op = i + 1;
+              if (bq == 1 && oversize_val > 0) {
+                message = Properties.Resources.Bullet +
+                  string.Format(Properties.Resources.CheckOversize,
+                  ops[ps_op],
+                  ops[not_cnc_op]) +
+                  System.Environment.NewLine;
+              }
             }
           }
+        } catch (Exception) {
+          //
         }
       }
       return message;
@@ -1398,8 +1404,10 @@ namespace Redbrick_Addin {
         bool have_eb = false;
 
         SwProperty opProp = GetProperty("OP1ID");
-        have_cnc_ops = (opProp.Ctl as Ops2).HasCNCOp;
-        have_eb_ops = (opProp.Ctl as Ops2).HasEBOp;
+        if (opProp.Ctl != null) {
+          have_cnc_ops = (opProp.Ctl as Ops2).HasCNCOp;
+          have_eb_ops = (opProp.Ctl as Ops2).HasEBOp;
+        }
 
         SwProperty pCNC1 = GetProperty("CNC1");
         SwProperty pUpd = GetProperty("UPDATE CNC");

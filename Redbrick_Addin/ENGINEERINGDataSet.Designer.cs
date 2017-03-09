@@ -1842,6 +1842,8 @@ namespace Redbrick_Addin {
             
             private global::System.Data.DataColumn columnTYPEID;
             
+            private global::System.Data.DataColumn columnTYPEDESC;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FRIENDLY_CUT_OPSDataTable() {
@@ -1933,6 +1935,14 @@ namespace Redbrick_Addin {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TYPEDESCColumn {
+                get {
+                    return this.columnTYPEDESC;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1968,7 +1978,7 @@ namespace Redbrick_Addin {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FRIENDLY_CUT_OPSRow AddFRIENDLY_CUT_OPSRow(int OPID, string FRIENDLYDESCR, int OPMETHOD, double OPSETUP, double OPRUN, bool OPPROG, int TYPEID) {
+            public FRIENDLY_CUT_OPSRow AddFRIENDLY_CUT_OPSRow(int OPID, string FRIENDLYDESCR, int OPMETHOD, double OPSETUP, double OPRUN, bool OPPROG, int TYPEID, string TYPEDESC) {
                 FRIENDLY_CUT_OPSRow rowFRIENDLY_CUT_OPSRow = ((FRIENDLY_CUT_OPSRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         OPID,
@@ -1977,7 +1987,8 @@ namespace Redbrick_Addin {
                         OPSETUP,
                         OPRUN,
                         OPPROG,
-                        TYPEID};
+                        TYPEID,
+                        TYPEDESC};
                 rowFRIENDLY_CUT_OPSRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFRIENDLY_CUT_OPSRow);
                 return rowFRIENDLY_CUT_OPSRow;
@@ -2007,6 +2018,7 @@ namespace Redbrick_Addin {
                 this.columnOPRUN = base.Columns["OPRUN"];
                 this.columnOPPROG = base.Columns["OPPROG"];
                 this.columnTYPEID = base.Columns["TYPEID"];
+                this.columnTYPEDESC = base.Columns["TYPEDESC"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2026,6 +2038,8 @@ namespace Redbrick_Addin {
                 base.Columns.Add(this.columnOPPROG);
                 this.columnTYPEID = new global::System.Data.DataColumn("TYPEID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTYPEID);
+                this.columnTYPEDESC = new global::System.Data.DataColumn("TYPEDESC", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTYPEDESC);
                 this.columnOPID.AutoIncrementSeed = -1;
                 this.columnOPID.AutoIncrementStep = -1;
                 this.columnOPID.AllowDBNull = false;
@@ -2035,6 +2049,7 @@ namespace Redbrick_Addin {
                 this.columnTYPEID.AutoIncrementStep = -1;
                 this.columnTYPEID.AllowDBNull = false;
                 this.columnTYPEID.ReadOnly = true;
+                this.columnTYPEDESC.MaxLength = 20;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4553,6 +4568,22 @@ namespace Redbrick_Addin {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string TYPEDESC {
+                get {
+                    try {
+                        return ((string)(this[this.tableFRIENDLY_CUT_OPS.TYPEDESCColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TYPEDESC\' in table \'FRIENDLY_CUT_OPS\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFRIENDLY_CUT_OPS.TYPEDESCColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFRIENDLYDESCRNull() {
                 return this.IsNull(this.tableFRIENDLY_CUT_OPS.FRIENDLYDESCRColumn);
             }
@@ -4609,6 +4640,18 @@ namespace Redbrick_Addin {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetOPPROGNull() {
                 this[this.tableFRIENDLY_CUT_OPS.OPPROGColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTYPEDESCNull() {
+                return this.IsNull(this.tableFRIENDLY_CUT_OPS.TYPEDESCColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTYPEDESCNull() {
+                this[this.tableFRIENDLY_CUT_OPS.TYPEDESCColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -7867,6 +7910,7 @@ SELECT TYPEID, TYPEDESC, TYPEINC, TYPEREP FROM CUT_PART_TYPES WHERE (TYPEID = @T
             tableMapping.ColumnMappings.Add("OPRUN", "OPRUN");
             tableMapping.ColumnMappings.Add("OPPROG", "OPPROG");
             tableMapping.ColumnMappings.Add("TYPEID", "TYPEID");
+            tableMapping.ColumnMappings.Add("TYPEDESC", "TYPEDESC");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -7880,11 +7924,11 @@ SELECT TYPEID, TYPEDESC, TYPEINC, TYPEREP FROM CUT_PART_TYPES WHERE (TYPEID = @T
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT        CUT_OPS.OPID, CUT_OPS.OPNAME + ' - ' + CUT_OPS.OPDESCR AS FRIENDLYDESCR, CUT_OPS.OPMETHOD, CUT_OPS.OPSETUP, CUT_OPS.OPRUN, 
-                         CUT_OPS.OPPROG, CUT_PART_TYPES.TYPEID
+                         CUT_OPS.OPPROG, CUT_PART_TYPES.TYPEID, CUT_PART_TYPES.TYPEDESC
 FROM            CUT_OPS INNER JOIN
                          CUT_OPS_TYPES ON CUT_OPS.OPID = CUT_OPS_TYPES.OTOP INNER JOIN
                          CUT_PART_TYPES ON CUT_OPS_TYPES.OTTYPE = CUT_PART_TYPES.TYPEID
@@ -7893,7 +7937,7 @@ ORDER BY CUT_OPS.OPNAME";
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
             this._commandCollection[1].CommandText = @"SELECT        CUT_OPS.OPID, CUT_OPS.OPNAME + ' - ' + CUT_OPS.OPDESCR AS FRIENDLYDESCR, CUT_OPS.OPMETHOD, CUT_OPS.OPSETUP, CUT_OPS.OPRUN, 
-                         CUT_OPS.OPPROG, CUT_PART_TYPES.TYPEID
+                         CUT_OPS.OPPROG, CUT_PART_TYPES.TYPEID, CUT_PART_TYPES.TYPEDESC
 FROM            CUT_OPS INNER JOIN
                          CUT_OPS_TYPES ON CUT_OPS.OPID = CUT_OPS_TYPES.OTOP INNER JOIN
                          CUT_PART_TYPES ON CUT_OPS_TYPES.OTTYPE = CUT_PART_TYPES.TYPEID
@@ -7901,6 +7945,18 @@ WHERE        (CUT_OPS.OPID = @OPID)
 ORDER BY CUT_OPS.OPNAME";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@OPID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "OPID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = @"SELECT        CUT_OPS.OPID, CUT_OPS.OPNAME + ' - ' + CUT_OPS.OPDESCR AS FRIENDLYDESCR, CUT_OPS.OPMETHOD, CUT_OPS.OPSETUP, CUT_OPS.OPRUN, 
+                         CUT_OPS.OPPROG, CUT_PART_TYPES.TYPEID, CUT_PART_TYPES.TYPEDESC
+FROM            CUT_OPS INNER JOIN
+                         CUT_OPS_TYPES ON CUT_OPS.OPID = CUT_OPS_TYPES.OTOP INNER JOIN
+                         CUT_PART_TYPES ON CUT_OPS_TYPES.OTTYPE = CUT_PART_TYPES.TYPEID
+WHERE        (CUT_PART_TYPES.TYPEID = @TYPEID) AND (CUT_OPS.OPID = @OPID)
+ORDER BY CUT_OPS.OPNAME";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TYPEID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "TYPEID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@OPID", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "OPID", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7948,6 +8004,34 @@ ORDER BY CUT_OPS.OPNAME";
         public virtual ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable GetDataByOpID(int OPID) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(OPID));
+            ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable dataTable = new ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByTypeOp(ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable dataTable, int TYPEID, int OPID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(TYPEID));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(OPID));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable GetDataByTypeOp(int TYPEID, int OPID) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(TYPEID));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(OPID));
             ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable dataTable = new ENGINEERINGDataSet.FRIENDLY_CUT_OPSDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
