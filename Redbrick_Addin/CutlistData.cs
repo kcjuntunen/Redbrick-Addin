@@ -1914,9 +1914,9 @@ namespace Redbrick_Addin {
     }
 
     public int GetOdometerTotalValue(Functions funcCode) {
-      using (OdbcCommand comm = new OdbcCommand(@"SELECT Sum(GEN_ODOMETER.ODO) AS SumOfODO FROM " + 
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT Sum(GEN_ODOMETER.ODO) AS SumOfODO FROM " +
         @"GEN_ODOMETER GROUP BY GEN_ODOMETER.FUNCID HAVING (((GEN_ODOMETER.FUNCID) = ?));", conn)) {
-          comm.Parameters.AddWithValue("@funcid", (int)funcCode);
+        comm.Parameters.AddWithValue("@funcid", (int)funcCode);
         try {
           using (OdbcDataReader dr = comm.ExecuteReader()) {
             if (dr.Read() && !dr.IsDBNull(0)) {
@@ -1926,8 +1926,28 @@ namespace Redbrick_Addin {
             }
           }
         } catch (Exception x) {
-          System.Windows.Forms.MessageBox.Show(x.Message.ToString(), 
-            x.TargetSite.ToString(), 
+          System.Windows.Forms.MessageBox.Show(x.Message.ToString(),
+            x.TargetSite.ToString(),
+            System.Windows.Forms.MessageBoxButtons.OK);
+        }
+        return 0;
+      }
+    }
+
+    public double GetOdometerStdDev(Functions funcCode) {
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT STDEV(ODO) FROM GEN_ODOMETER WHERE FUNCID = ?;", conn)) {
+        comm.Parameters.AddWithValue("@funcid", (int)funcCode);
+        try {
+          using (OdbcDataReader dr = comm.ExecuteReader()) {
+            if (dr.Read() && !dr.IsDBNull(0)) {
+              return dr.GetDouble(0);
+            } else {
+              return 0;
+            }
+          }
+        } catch (Exception x) {
+          System.Windows.Forms.MessageBox.Show(x.Message.ToString(),
+            x.TargetSite.ToString(),
             System.Windows.Forms.MessageBoxButtons.OK);
         }
         return 0;
@@ -2054,7 +2074,7 @@ namespace Redbrick_Addin {
       p.Comment = swp.GetProperty("COMMENT").Value;
       p.CNC1 = swp.GetProperty("CNC1").Value;
       p.CNC2 = swp.GetProperty("CNC2").Value;
-      p.SetUpdateCNC((swp.GetProperty("UPDATE CNC").Ctl as System.Windows.Forms.CheckBox).Checked ? "True": "False");
+      p.SetUpdateCNC((swp.GetProperty("UPDATE CNC").Ctl as System.Windows.Forms.CheckBox).Checked ? "True" : "False");
 
       p.SetOverL(swp.GetProperty("OVERL").Value);
       p.SetOverW(swp.GetProperty("OVERW").Value);
@@ -2205,11 +2225,11 @@ namespace Redbrick_Addin {
 
     public DataSet Customers {
       get {
-          if (Properties.Settings.Default.OnlyCurrentCustomers)
-            _customers = GetCustomers(true);
-          else
-            _customers = GetCustomers(false);
-          return _customers;
+        if (Properties.Settings.Default.OnlyCurrentCustomers)
+          _customers = GetCustomers(true);
+        else
+          _customers = GetCustomers(false);
+        return _customers;
       }
 
       private set {
