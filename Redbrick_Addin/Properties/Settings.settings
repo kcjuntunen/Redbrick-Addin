@@ -11,6 +11,206 @@
     <Setting Name="RevLimit" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
+    <Setting Name="EditRevLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">100, 100</Value>
+    </Setting>
+    <Setting Name="Dev" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">kcjuntunen@amstore.com</Value>
+    </Setting>
+    <Setting Name="SubjectLine" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Error in property wizard</Value>
+    </Setting>
+    <Setting Name="NetPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22</Value>
+    </Setting>
+    <Setting Name="Icon" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\setup.bmp</Value>
+    </Setting>
+    <Setting Name="CurrentCutlist" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">645</Value>
+    </Setting>
+    <Setting Name="UserDept" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="EnableDBWrite" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Testing" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="OnlyCurrentCustomers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LastLegacyECR" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8999</Value>
+    </Setting>
+    <Setting Name="CurrentRev" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DefaultState" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="CutlistHeaderLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="CutlistHeaderSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">390, 350</Value>
+    </Setting>
+    <Setting Name="RevNoLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="MasterTableHash" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F</Value>
+    </Setting>
+    <Setting Name="DataDisplayLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="DataDisplaySize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">500, 100</Value>
+    </Setting>
+    <Setting Name="RBConfigLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="RBConfigSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">450, 450</Value>
+    </Setting>
+    <Setting Name="DefaultMaterial" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3042</Value>
+    </Setting>
+    <Setting Name="RefreshIcon" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Refresh-icon.bmp</Value>
+    </Setting>
+    <Setting Name="InstallerNetworkPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\RedBrick\InstallRedBrick.exe</Value>
+    </Setting>
+    <Setting Name="UninstallerPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Program Files\RedBrick\RemoveRedbrick.exe</Value>
+    </Setting>
+    <Setting Name="EngineeringDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Engineering</Value>
+    </Setting>
+    <Setting Name="FlameWar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MPMLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="MPMSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">200, 200</Value>
+    </Setting>
+    <Setting Name="LastCustomerSelection" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="MakeSounds" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Warn" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClipboardSound" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Windows\Media\tada.wav</Value>
+    </Setting>
+    <Setting Name="CheckEpsilon" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.001</Value>
+    </Setting>
+    <Setting Name="IdiotLight" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="OnlyActiveAuthors" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RememberLastCustomer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ECRDrawingsDestination" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Engineering Utility\ECR Drawings\</Value>
+    </Setting>
+    <Setting Name="ArchiveIcon" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Archive PDF.bmp</Value>
+    </Setting>
+    <Setting Name="ProgWarn" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HelpIcon" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\help_and_support.bmp</Value>
+    </Setting>
+    <Setting Name="UsageLink" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://kcjuntunen.github.io/readbrick_readme.html</Value>
+    </Setting>
+    <Setting Name="NotSavedMark" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> *</Value>
+    </Setting>
+    <Setting Name="WarnExcludeAssy" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CHIHideLWH" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GaugePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\Amstore_Macros\gauges.xml</Value>
+    </Setting>
+    <Setting Name="ShtFmtPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\AMSTORE_SHEET_FORMATS\zPostCard.slddrt</Value>
+    </Setting>
+    <Setting Name="JPGPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-01\details\JPGs\</Value>
+    </Setting>
+    <Setting Name="KPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-01\details\</Value>
+    </Setting>
+    <Setting Name="GPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\PDF ARCHIVE\</Value>
+    </Setting>
+    <Setting Name="MetalPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Metals\METAL MANUFACTURING\</Value>
+    </Setting>
+    <Setting Name="SaveFirst" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SilenceGaugeErrors" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ExportPDF" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ExportEDrw" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ExportImg" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CutlistNotSelectedWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="BOMTemplatePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\AMSTORE CUTLIST BOM\CL.sldbomtbt</Value>
+    </Setting>
+    <Setting Name="BOMLocationX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.01</Value>
+    </Setting>
+    <Setting Name="BOMLocationY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-0.01</Value>
+    </Setting>
+    <Setting Name="AutoOpenPriority" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="OdometerStart" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2016-09-01</Value>
+    </Setting>
+    <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING</Value>
+    </Setting>
+    <Setting Name="M2MConnection" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True</Value>
+    </Setting>
     <Setting Name="Authors" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -77,160 +277,12 @@
   &lt;string&gt;WALMART - 505&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="EditRevLocation" Type="System.Drawing.Point" Scope="User">
-      <Value Profile="(Default)">100, 100</Value>
-    </Setting>
-    <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING&lt;/ConnectionString&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING</Value>
-    </Setting>
-    <Setting Name="Dev" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">kcjuntunen@amstore.com</Value>
-    </Setting>
-    <Setting Name="SubjectLine" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Error in property wizard</Value>
-    </Setting>
-    <Setting Name="NetPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-22</Value>
-    </Setting>
-    <Setting Name="Icon" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\setup.bmp</Value>
-    </Setting>
-    <Setting Name="CurrentCutlist" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">645</Value>
-    </Setting>
-    <Setting Name="UserDept" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">6</Value>
-    </Setting>
-    <Setting Name="EnableDBWrite" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="Testing" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="OnlyCurrentCustomers" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="LastLegacyECR" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8999</Value>
-    </Setting>
-    <Setting Name="CurrentRev" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="DefaultState" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">2</Value>
-    </Setting>
-    <Setting Name="CutlistHeaderLocation" Type="System.Drawing.Point" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
-    </Setting>
-    <Setting Name="CutlistHeaderSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">390, 350</Value>
-    </Setting>
-    <Setting Name="RevNoLimit" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">7</Value>
-    </Setting>
-    <Setting Name="MasterTableHash" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F</Value>
-    </Setting>
-    <Setting Name="DataDisplayLocation" Type="System.Drawing.Point" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
-    </Setting>
-    <Setting Name="DataDisplaySize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">500, 100</Value>
-    </Setting>
-    <Setting Name="RBConfigLocation" Type="System.Drawing.Point" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
-    </Setting>
-    <Setting Name="RBConfigSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">450, 450</Value>
-    </Setting>
-    <Setting Name="DefaultMaterial" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3042</Value>
-    </Setting>
-    <Setting Name="LayerHeads" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;AMS&lt;/string&gt;
-  &lt;string&gt;CUS&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="LayerTails" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;.1-5&lt;/string&gt;
-  &lt;string&gt;.6-10&lt;/string&gt;
-  &lt;string&gt;.11-15&lt;/string&gt;
-  &lt;string&gt;.16-20&lt;/string&gt;
-  &lt;string&gt;.21-25&lt;/string&gt;
-&lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="RefreshIcon" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Refresh-icon.bmp</Value>
-    </Setting>
-    <Setting Name="InstallerNetworkPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\RedBrick\InstallRedBrick.exe</Value>
-    </Setting>
-    <Setting Name="UninstallerPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">C:\Program Files\RedBrick\RemoveRedbrick.exe</Value>
-    </Setting>
-    <Setting Name="EngineeringDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Engineering</Value>
-    </Setting>
-    <Setting Name="FlameWar" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="M2MConnection" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True&lt;/ConnectionString&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True</Value>
-    </Setting>
-    <Setting Name="MPMLocation" Type="System.Drawing.Point" Scope="User">
-      <Value Profile="(Default)">0, 0</Value>
-    </Setting>
-    <Setting Name="MPMSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">200, 200</Value>
-    </Setting>
-    <Setting Name="LastCustomerSelection" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">6</Value>
-    </Setting>
-    <Setting Name="MakeSounds" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="Warn" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ClipboardSound" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Windows\Media\tada.wav</Value>
-    </Setting>
-    <Setting Name="CheckEpsilon" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.001</Value>
-    </Setting>
-    <Setting Name="IdiotLight" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="MasterTableHashes" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F&lt;/string&gt;
   &lt;string&gt;7D-37-E7-57-82-09-28-71-D3-0B-94-7D-AC-44-D2-0F&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="OnlyActiveAuthors" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="RememberLastCustomer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ECRDrawingsDestination" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Engineering Utility\ECR Drawings\</Value>
-    </Setting>
-    <Setting Name="ArchiveIcon" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\Archive PDF.bmp</Value>
     </Setting>
     <Setting Name="CNCOps" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -249,74 +301,28 @@
   &lt;string&gt;CEB&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="ProgWarn" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="LayerHeads" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;AMS&lt;/string&gt;
+  &lt;string&gt;CUS&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
-    <Setting Name="HelpIcon" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\cad\\Solid Works\\Amstore_Macros\\ICONS\\help_and_support.bmp</Value>
-    </Setting>
-    <Setting Name="UsageLink" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">https://kcjuntunen.github.io/readbrick_readme.html</Value>
-    </Setting>
-    <Setting Name="NotSavedMark" Type="System.String" Scope="User">
-      <Value Profile="(Default)"> *</Value>
+    <Setting Name="LayerTails" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;.1-5&lt;/string&gt;
+  &lt;string&gt;.6-10&lt;/string&gt;
+  &lt;string&gt;.11-15&lt;/string&gt;
+  &lt;string&gt;.16-20&lt;/string&gt;
+  &lt;string&gt;.21-25&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="BOMFilter" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;[Zz][0-9]{5,6}.*|([A-Za-z]{3,4})([0-9]{4})-?.*&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="WarnExcludeAssy" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="CHIHideLWH" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="GaugePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\Amstore_Macros\gauges.xml</Value>
-    </Setting>
-    <Setting Name="ShtFmtPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\AMSTORE_SHEET_FORMATS\zPostCard.slddrt</Value>
-    </Setting>
-    <Setting Name="JPGPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-01\details\JPGs\</Value>
-    </Setting>
-    <Setting Name="KPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-01\details\</Value>
-    </Setting>
-    <Setting Name="GPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\PDF ARCHIVE\</Value>
-    </Setting>
-    <Setting Name="MetalPath" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">\\AMSTORE-SVR-02\shared\shared\general\Metals\METAL MANUFACTURING\</Value>
-    </Setting>
-    <Setting Name="SaveFirst" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="SilenceGaugeErrors" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ExportPDF" Type="System.Boolean" Scope="Application">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ExportEDrw" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ExportImg" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="CutlistNotSelectedWarning" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="BOMTemplatePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\\AMSTORE-SVR-22\cad\Solid Works\AMSTORE CUTLIST BOM\CL.sldbomtbt</Value>
-    </Setting>
-    <Setting Name="BOMLocationX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.01</Value>
-    </Setting>
-    <Setting Name="BOMLocationY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-0.01</Value>
     </Setting>
     <Setting Name="SketchDimensions" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
@@ -331,12 +337,6 @@
   &lt;string&gt;"RD3@Annotations"&lt;/string&gt;
   &lt;string&gt;"RD4@Annotations"&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="AutoOpenPriority" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="OdometerStart" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">2016-09-01</Value>
     </Setting>
   </Settings>
 </SettingsFile>

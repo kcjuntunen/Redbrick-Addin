@@ -59,90 +59,6 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>BS</string>
-  <string>CD</string>
-  <string>CW</string>
-  <string>DF</string>
-  <string>DH</string>
-  <string>ED</string>
-  <string>JB</string>
-  <string>KJ</string>
-  <string>KL</string>
-  <string>LF</string>
-  <string>SP</string>
-  <string>TH</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Authors {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Authors"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string />
-  <string>ACRYLIC</string>
-  <string>ALUMINUM</string>
-  <string>BENDER</string>
-  <string>CRS</string>
-  <string>FELT</string>
-  <string>GLASS FL</string>
-  <string>GLASS LAM</string>
-  <string>GLASS TMP</string>
-  <string>HPL</string>
-  <string>HRS</string>
-  <string>MDF</string>
-  <string>MEL</string>
-  <string>OFF ALL</string>
-  <string>PB</string>
-  <string>PC</string>
-  <string>PE</string>
-  <string>PETG</string>
-  <string>PLWD</string>
-  <string>POPLAR</string>
-  <string>POSTFRM MDF</string>
-  <string>PVC</string>
-  <string>SLAB</string>
-  <string>SOLID SURF</string>
-  <string>SST</string>
-  <string>STYRENE</string>
-  <string>VAC PRESS</string>
-  <string>VENEER</string>
-  <string>VINYL</string>
-  <string>VINYL WRAP</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Materials {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Materials"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>JCPENNEY - 220</string>
-  <string>KMART - 239</string>
-  <string>KOHLS - 201</string>
-  <string>MACY'S  - 495</string>
-  <string>SEARS - 210</string>
-  <string>STERLING-491</string>
-  <string>TARGET - 274</string>
-  <string>WALGREENS - 510</string>
-  <string>WALMART - 505</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Customers {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Customers"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100, 100")]
@@ -152,16 +68,6 @@ namespace Redbrick_Addin.Properties {
             }
             set {
                 this["EditRevLocation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING")]
-        public string ConnectionString {
-            get {
-                return ((string)(this["ConnectionString"]));
             }
         }
         
@@ -402,39 +308,6 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>AMS</string>\r\n  <string>CUS</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection LayerHeads {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["LayerHeads"]));
-            }
-            set {
-                this["LayerHeads"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>.1-5</string>
-  <string>.6-10</string>
-  <string>.11-15</string>
-  <string>.16-20</string>
-  <string>.21-25</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection LayerTails {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["LayerTails"]));
-            }
-            set {
-                this["LayerTails"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("\\\\cad\\\\Solid Works\\\\Amstore_Macros\\\\ICONS\\\\Refresh-icon.bmp")]
@@ -483,16 +356,6 @@ namespace Redbrick_Addin.Properties {
             }
             set {
                 this["FlameWar"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True")]
-        public string M2MConnection {
-            get {
-                return ((string)(this["M2MConnection"]));
             }
         }
         
@@ -592,19 +455,6 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F</string>
-  <string>7D-37-E7-57-82-09-28-71-D3-0B-94-7D-AC-44-D2-0F</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection MasterTableHashes {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["MasterTableHashes"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -647,33 +497,6 @@ namespace Redbrick_Addin.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>CEB</string>
-  <string>CNC</string>
-  <string>GIO</string>
-  <string>LAC</string>
-  <string>WEE</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection CNCOps {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["CNCOps"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>EB</string>\r\n  <string>CEB</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection EBOps {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["EBOps"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -713,20 +536,6 @@ namespace Redbrick_Addin.Properties {
             }
             set {
                 this["NotSavedMark"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>[Zz][0-9]{5,6}.*|([A-Za-z]{3,4})([0-9]{4})-?.*</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection BOMFilter {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["BOMFilter"]));
-            }
-            set {
-                this["BOMFilter"] = value;
             }
         }
         
@@ -918,29 +727,6 @@ namespace Redbrick_Addin.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>""D1@Sketch1""</string>
-  <string>""D2@Sketch1""</string>
-  <string>""D3@Sketch1""</string>
-  <string>""D2@Base-Flange1""</string>
-  <string>""Thickness@Sheet-Metal1""</string>
-  <string>""RD1@Annotations""</string>
-  <string>""RD2@Annotations""</string>
-  <string>""RD3@Annotations""</string>
-  <string>""RD4@Annotations""</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection SketchDimensions {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["SketchDimensions"]));
-            }
-            set {
-                this["SketchDimensions"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool AutoOpenPriority {
             get {
@@ -960,6 +746,220 @@ namespace Redbrick_Addin.Properties {
             }
             set {
                 this["OdometerStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Driver={SQL Server};SERVER=AMSTORE-SQL-05;DATABASE=ENGINEERING")]
+        public string ConnectionString {
+            get {
+                return ((string)(this["ConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("SERVER=AMSTORE-SQL-07;DATABASE=M2MDATA01;Trusted_Connection=True")]
+        public string M2MConnection {
+            get {
+                return ((string)(this["M2MConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>BS</string>
+  <string>CD</string>
+  <string>CW</string>
+  <string>DF</string>
+  <string>DH</string>
+  <string>ED</string>
+  <string>JB</string>
+  <string>KJ</string>
+  <string>KL</string>
+  <string>LF</string>
+  <string>SP</string>
+  <string>TH</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Authors {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Authors"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string />
+  <string>ACRYLIC</string>
+  <string>ALUMINUM</string>
+  <string>BENDER</string>
+  <string>CRS</string>
+  <string>FELT</string>
+  <string>GLASS FL</string>
+  <string>GLASS LAM</string>
+  <string>GLASS TMP</string>
+  <string>HPL</string>
+  <string>HRS</string>
+  <string>MDF</string>
+  <string>MEL</string>
+  <string>OFF ALL</string>
+  <string>PB</string>
+  <string>PC</string>
+  <string>PE</string>
+  <string>PETG</string>
+  <string>PLWD</string>
+  <string>POPLAR</string>
+  <string>POSTFRM MDF</string>
+  <string>PVC</string>
+  <string>SLAB</string>
+  <string>SOLID SURF</string>
+  <string>SST</string>
+  <string>STYRENE</string>
+  <string>VAC PRESS</string>
+  <string>VENEER</string>
+  <string>VINYL</string>
+  <string>VINYL WRAP</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Materials {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Materials"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>JCPENNEY - 220</string>
+  <string>KMART - 239</string>
+  <string>KOHLS - 201</string>
+  <string>MACY'S  - 495</string>
+  <string>SEARS - 210</string>
+  <string>STERLING-491</string>
+  <string>TARGET - 274</string>
+  <string>WALGREENS - 510</string>
+  <string>WALMART - 505</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Customers {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Customers"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>B2-01-6F-32-BD-A0-D4-35-11-4D-40-09-16-58-0B-2F</string>
+  <string>7D-37-E7-57-82-09-28-71-D3-0B-94-7D-AC-44-D2-0F</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection MasterTableHashes {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["MasterTableHashes"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>CEB</string>
+  <string>CNC</string>
+  <string>GIO</string>
+  <string>LAC</string>
+  <string>WEE</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection CNCOps {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["CNCOps"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>EB</string>\r\n  <string>CEB</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection EBOps {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EBOps"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>AMS</string>\r\n  <string>CUS</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection LayerHeads {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["LayerHeads"]));
+            }
+            set {
+                this["LayerHeads"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>.1-5</string>
+  <string>.6-10</string>
+  <string>.11-15</string>
+  <string>.16-20</string>
+  <string>.21-25</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection LayerTails {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["LayerTails"]));
+            }
+            set {
+                this["LayerTails"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>[Zz][0-9]{5,6}.*|([A-Za-z]{3,4})([0-9]{4})-?.*</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection BOMFilter {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["BOMFilter"]));
+            }
+            set {
+                this["BOMFilter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>""D1@Sketch1""</string>
+  <string>""D2@Sketch1""</string>
+  <string>""D3@Sketch1""</string>
+  <string>""D2@Base-Flange1""</string>
+  <string>""Thickness@Sheet-Metal1""</string>
+  <string>""RD1@Annotations""</string>
+  <string>""RD2@Annotations""</string>
+  <string>""RD3@Annotations""</string>
+  <string>""RD4@Annotations""</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection SketchDimensions {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["SketchDimensions"]));
+            }
+            set {
+                this["SketchDimensions"] = value;
             }
         }
     }
