@@ -210,6 +210,11 @@ namespace Redbrick_Addin {
       }
     }
 
+    private void OnClickMachinePriority(object sender, EventArgs e) {
+      Machine_Priority_Control.MachinePriority mp = new Machine_Priority_Control.MachinePriority(part);
+      mp.Show(this);
+    }
+
     private void DataDisplay_MouseClick(object sender, MouseEventArgs e) {
       if (e.Button == MouseButtons.Right && swApp != null) {
         try {
@@ -217,8 +222,9 @@ namespace Redbrick_Addin {
           int current_row = Grid.HitTest(e.X, e.Y).RowIndex;
           if (current_row >= 0) {
             part = Grid["Part", current_row].Value.ToString();
-            m.MenuItems.Add(new MenuItem("Open Model...", OnClickOpenModel));
-            m.MenuItems.Add(new MenuItem("Open Drawing...", OnClickOpenDrawing));
+            m.MenuItems.Add(new MenuItem(@"Open Model...", OnClickOpenModel));
+            m.MenuItems.Add(new MenuItem(@"Open Drawing...", OnClickOpenDrawing));
+            m.MenuItems.Add(new MenuItem(@"Machine Priority...", OnClickMachinePriority));
             //m.MenuItems.Add(new MenuItem(string.Format("Action specific to {0}...", Grid["Part", current_row].Value)));
           }
 
@@ -228,5 +234,6 @@ namespace Redbrick_Addin {
         }
       }
     }
+
   }
 }
