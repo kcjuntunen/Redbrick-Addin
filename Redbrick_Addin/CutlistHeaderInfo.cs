@@ -83,7 +83,8 @@ namespace Redbrick_Addin {
       cbRev.Items.Add("NS");
       cbRev.SelectedIndex = 0;
 
-      string[] title = (DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(' ');
+      string[] title = (DrawingPropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Split(new string [] {@"REV", @".", @" "},
+        StringSplitOptions.None);
       Text = "Add/Update Cutlist for " + title[0] + "...";
       cbItemNo.DisplayMember = "PARTNUM";
       cbItemNo.ValueMember = "CLID";
