@@ -1,4 +1,7 @@
 ﻿
+* 1.1.1.2
+** Added menu items to context menu on BOM examiner.
+
 * 1.1.1.0
 ** Linked radio select to different event on priority control
 ** Un-hardcoded odometer start date
