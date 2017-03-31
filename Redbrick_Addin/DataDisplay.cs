@@ -148,6 +148,13 @@ namespace Redbrick_Addin {
       return new System.IO.FileInfo((swApp.ActiveDoc as SolidWorks.Interop.sldworks.ModelDoc2).GetTitle());
     }
 
+    private bool DrawingExists(string part) {
+      System.IO.FileInfo fi = find_doc(part);
+      string ext = fi.Extension;
+      System.IO.FileInfo dwgfi = new System.IO.FileInfo(fi.FullName.Replace(ext, @".SLDDRW"));
+      return dwgfi.Exists;
+    }
+
     private void OnClickOpenModel(System.Object sender, EventArgs e) {
       try {
         int err = 0;
@@ -215,6 +222,34 @@ namespace Redbrick_Addin {
       mp.Show(this);
     }
 
+    private void OnClickNewDrawing(object sender, EventArgs e) {
+      System.IO.DirectoryInfo d = new System.IO.DirectoryInfo(GetPath());
+      System.IO.FileInfo fi = find_doc(part);
+      int err = 0;
+      swApp.OpenDocSilent(fi.FullName, (int)SolidWorks.Interop.swconst.swDocumentTypes_e.swDocPART, ref err);
+      swApp.ActivateDoc3(fi.FullName, true,
+            (int)SolidWorks.Interop.swconst.swRebuildOnActivation_e.swDontRebuildActiveDoc, ref err);
+      SolidWorks.Interop.sldworks.ModelDoc2 md = swApp.ActiveDoc;
+      md.ClearSelection2(true);
+      SolidWorks.Interop.sldworks.ModelView v = (SolidWorks.Interop.sldworks.ModelView)md.ActiveView;
+      v.FrameState = (int)SolidWorks.Interop.swconst.swWindowState_e.swWindowMaximized;
+      SolidWorks.Interop.sldworks.ModelDoc2 dd =
+        swApp.NewDocument(Properties.Settings.Default.DrawingTemplate, 12, 0.2159, 0.2794);
+      v = (SolidWorks.Interop.sldworks.ModelView)dd.ActiveView;
+      v.FrameState = (int)SolidWorks.Interop.swconst.swWindowState_e.swWindowMaximized;
+      //SolidWorks.Interop.sldworks.DrawingDoc dd = (SolidWorks.Interop.sldworks.DrawingDoc)md;
+      SolidWorks.Interop.sldworks.ModelDocExtension mde = (SolidWorks.Interop.sldworks.ModelDocExtension)dd.Extension;
+      mde.LoadDraftingStandard(Properties.Settings.Default.DraftingStandard);
+      SolidWorks.Interop.sldworks.Sheet s = (dd as SolidWorks.Interop.sldworks.DrawingDoc).Sheet[@"Sheet1"];
+      s.SetName(@"AMS1");
+      dd.SetUserPreferenceToggle((int)SolidWorks.Interop.swconst.swUserPreferenceToggle_e.swDisplayOrigins, false);
+      dd.SetUserPreferenceToggle((int)SolidWorks.Interop.swconst.swUserPreferenceToggle_e.swDisplayPlanes, false);
+      dd.SetUserPreferenceToggle((int)SolidWorks.Interop.swconst.swUserPreferenceToggle_e.swDisplayRoutePoints, false);
+      //dd.SetUserPreferenceToggle((int)SolidWorks.Interop.swconst.swUserPreferenceToggle_e.swDisplaySketches, false);
+      //md.Close();  // NotImplementedException ?!
+      Close();
+    }
+
     private void DataDisplay_MouseClick(object sender, MouseEventArgs e) {
       if (e.Button == MouseButtons.Right && swApp != null) {
         try {
@@ -223,7 +258,13 @@ namespace Redbrick_Addin {
           if (current_row >= 0) {
             part = Grid["Part", current_row].Value.ToString();
             m.MenuItems.Add(new MenuItem(@"Open Model...", OnClickOpenModel));
-            m.MenuItems.Add(new MenuItem(@"Open Drawing...", OnClickOpenDrawing));
+            MenuItem od = new MenuItem(@"Open Drawing...", OnClickOpenDrawing);
+            od.Enabled = DrawingExists(part);
+            m.MenuItems.Add(@"Drawing", new MenuItem[] {
+              od,
+              new MenuItem(@"Open PDF...", OnOpenPDF),
+              new MenuItem(@"Create Drawing...", OnClickNewDrawing)
+            });
             m.MenuItems.Add(new MenuItem(@"Machine Priority...", OnClickMachinePriority));
             //m.MenuItems.Add(new MenuItem(string.Format("Action specific to {0}...", Grid["Part", current_row].Value)));
           }
@@ -233,6 +274,21 @@ namespace Redbrick_Addin {
           //
         }
       }
+    }
+
+    private void OnOpenPDF(object sender, EventArgs e) {
+      CutlistData cd = new CutlistData();
+      object[] o = cd.GetDrawingData(part);
+      string fullpath = string.Format(@"{0}\{1}", o[2], o[1]);
+      if (o[1].ToString() == @"NULL") {
+        o = cd.GetMetalDrawingData(part);
+        fullpath = string.Format(@"{0}\{1}", o[2], o[1]);
+      }
+
+      if (o[1] != @"NULL") {
+        System.Diagnostics.Process.Start(fullpath);
+      }
+
     }
 
   }

@@ -991,6 +991,24 @@ namespace Redbrick_Addin {
       return o;
     }
 
+    public object[] GetMetalDrawingData(string filename) {
+      int drdata = 0;
+      object[] o = new object[] { };
+      string SQL = @"SELECT * FROM GEN_DRAWINGS_MTL WHERE FName LIKE ?";
+      using (OdbcCommand comm = new OdbcCommand(SQL, conn)) {
+        comm.Parameters.AddWithValue("@filename", filename + "%");
+        using (OdbcDataReader dr = comm.ExecuteReader(CommandBehavior.SingleResult)) {
+          if (dr.Read()) {
+            o = new object[dr.FieldCount];
+            drdata = dr.GetValues(o);
+          } else {
+            o = new object[] { 0, "NULL", "NULL", DateTime.Now };
+          }
+        }
+      }
+      return o;
+    }
+
     public bool ECRIsBogus(string econumber) {
       bool bogus = true;
       int en = 0;

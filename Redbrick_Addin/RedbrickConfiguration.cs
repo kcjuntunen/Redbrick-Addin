@@ -66,6 +66,8 @@ namespace Redbrick_Addin {
       checkBox6.Checked = Properties.Settings.Default.ExportImg;
       checkBox7.Checked = Properties.Settings.Default.CutlistNotSelectedWarning;
       checkBox8.Checked = Properties.Settings.Default.AutoOpenPriority;
+      textBox4.Text = Properties.Settings.Default.DrawingTemplate;
+      textBox5.Text = Properties.Settings.Default.DraftingStandard;
 
       ToolTip tt = new ToolTip();
       tt.ShowAlways = true;
@@ -208,6 +210,9 @@ namespace Redbrick_Addin {
     private void btnOK_Click(object sender, EventArgs e) {
       System.Collections.Specialized.StringCollection sc = new System.Collections.Specialized.StringCollection();
       sc.Add(textBox1.Text);
+
+      Properties.Settings.Default.DrawingTemplate = textBox4.Text;
+      Properties.Settings.Default.DraftingStandard = textBox5.Text;
 
       Properties.Settings.Default.BOMFilter = sc;
       Properties.Settings.Default.RBConfigLocation = Location;

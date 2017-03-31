@@ -962,5 +962,29 @@ namespace Redbrick_Addin.Properties {
                 this["SketchDimensions"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("G:\\Solid Works\\AMSTORE_PROFILES\\AMSTORE 10-31-12.sldstd")]
+        public string DraftingStandard {
+            get {
+                return ((string)(this["DraftingStandard"]));
+            }
+            set {
+                this["DraftingStandard"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("G:\\Solid Works\\AMSTORE_SHEET_FORMATS\\AM_PART.slddrt")]
+        public string DrawingTemplate {
+            get {
+                return ((string)(this["DrawingTemplate"]));
+            }
+            set {
+                this["DrawingTemplate"] = value;
+            }
+        }
     }
 }

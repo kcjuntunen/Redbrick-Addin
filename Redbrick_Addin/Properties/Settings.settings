@@ -338,5 +338,11 @@
   &lt;string&gt;"RD4@Annotations"&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="DraftingStandard" Type="System.String" Scope="User">
+      <Value Profile="(Default)">G:\Solid Works\AMSTORE_PROFILES\AMSTORE 10-31-12.sldstd</Value>
+    </Setting>
+    <Setting Name="DrawingTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">G:\Solid Works\AMSTORE_SHEET_FORMATS\AM_PART.slddrt</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
