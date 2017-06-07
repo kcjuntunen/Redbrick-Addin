@@ -9,6 +9,7 @@ using System.Windows.Forms;
 namespace Redbrick_Addin {
   public partial class DataDisplay : Form {
     private string part = string.Empty;
+    private CutlistData cd = new CutlistData();
     public DataDisplay() {
       InitializeComponent();
       Grid.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
@@ -257,16 +258,26 @@ namespace Redbrick_Addin {
           int current_row = Grid.HitTest(e.X, e.Y).RowIndex;
           if (current_row >= 0) {
             part = Grid["Part", current_row].Value.ToString();
-            m.MenuItems.Add(new MenuItem(@"Open Model...", OnClickOpenModel));
+            MenuItem m1 = new MenuItem(@"Open Model...", OnClickOpenModel);
+            MenuItem m2 = new MenuItem("-");
             MenuItem od = new MenuItem(@"Open Drawing...", OnClickOpenDrawing);
             od.Enabled = DrawingExists(part);
-            m.MenuItems.Add(@"Drawing", new MenuItem[] {
-              od,
-              new MenuItem(@"Open PDF...", OnOpenPDF),
-              new MenuItem(@"Create Drawing...", OnClickNewDrawing)
-            });
-            m.MenuItems.Add(new MenuItem(@"Machine Priority...", OnClickMachinePriority));
-            //m.MenuItems.Add(new MenuItem(string.Format("Action specific to {0}...", Grid["Part", current_row].Value)));
+            System.IO.FileInfo drw = find_doc(part);
+            m2.Enabled = drw.Exists;
+            MenuItem m3 = new MenuItem(@"Open PDF..", OnOpenPDF);
+            System.IO.FileInfo f = cd.GetPDF(drw);
+            m3.Enabled = f != null && f.Exists;
+            MenuItem m4 = new MenuItem(@"Create Drawing...", OnClickNewDrawing);
+            MenuItem m5 = new MenuItem("-");
+            MenuItem m6 = new MenuItem(@"Machine Priority...", OnClickMachinePriority);
+
+            m.MenuItems.Add(m1);
+            m.MenuItems.Add(m2);
+            m.MenuItems.Add(od);
+            m.MenuItems.Add(m3);
+            m.MenuItems.Add(m4);
+            m.MenuItems.Add(m5);
+            m.MenuItems.Add(m6);
           }
 
           m.Show(Grid, new Point(e.X, e.Y));

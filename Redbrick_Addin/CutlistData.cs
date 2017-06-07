@@ -1972,6 +1972,44 @@ namespace Redbrick_Addin {
       }
     }
 
+    public FileInfo GetPDF(FileInfo fileInfo) {
+      FileInfo result = GetMetalPDF(fileInfo);
+      if (result == null) {
+        result = GetGeneralPDF(fileInfo);
+      }
+      return result;
+    }
+
+    public FileInfo GetGeneralPDF(FileInfo fileInfo) {
+      string search_term = string.Format(@"{0}.PDF", System.IO.Path.GetFileNameWithoutExtension(fileInfo.FullName));
+      System.IO.FileInfo result = null;
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT * FROM GEN_DRAWINGS WHERE FName Like ?", conn)) {
+        comm.Parameters.AddWithValue("@target", search_term);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.Read() && !dr.IsDBNull(0)) {
+            string strRes = string.Format(@"{0}{1}", dr.GetString(2), dr.GetString(1));
+            result = new FileInfo(strRes);
+          }
+          return result;
+        }
+      }
+    }
+
+    public FileInfo GetMetalPDF(FileInfo fileInfo) {
+      string search_term = string.Format(@"{0}.PDF", System.IO.Path.GetFileNameWithoutExtension(fileInfo.FullName));
+      System.IO.FileInfo result = null;
+      using (OdbcCommand comm = new OdbcCommand(@"SELECT * FROM GEN_DRAWINGS_MTL WHERE FName Like ?", conn)) {
+        comm.Parameters.AddWithValue("@target", search_term);
+        using (OdbcDataReader dr = comm.ExecuteReader()) {
+          if (dr.Read() && !dr.IsDBNull(0)) {
+            string strRes = string.Format(@"{0}{1}", dr.GetString(2), dr.GetString(1));
+            result = new FileInfo(strRes);
+          }
+          return result;
+        }
+      }
+    }
+
     public void InsertError(int errNo, string errmsg, string targetSite) {
       string SQL = "INSERT INTO GEN_ERRORS (ERRDATE, ERRUSER, ERRNUM, ERRMSG, ERROBJ, ERRCHK, ERRAPP) VALUES " +
         "(GETDATE(), ?, ?, ?, ?, ?, ?)";
