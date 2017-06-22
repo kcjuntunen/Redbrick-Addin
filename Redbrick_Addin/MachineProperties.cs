@@ -13,6 +13,9 @@ namespace Redbrick_Addin {
     SwProperties propertySet;
     //private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
 
+    string ol = string.Empty;
+    string ow = string.Empty;
+
     public MachineProperties(ref SwProperties prop) {
       propertySet = prop;
       InitializeComponent();
@@ -39,36 +42,67 @@ namespace Redbrick_Addin {
 
     private void CalculateBlankSize(double edgeL, double edgeW) {
       double dVal = 0.0;
-
-      double finLen = 0.0;
       double blankLen = 0.0;
+      bool calcMultiBlankL = ol.Contains(@"*");
+      bool calcMultiBlankW = ow.Contains(@"*");
 
       if (propertySet.Contains("LENGTH")) {
-        if (double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out finLen))
-          blankLen = finLen;
+        double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out blankLen);
+        string[] arr = ol.Split('*');
 
-        if (double.TryParse(tbOverL.Text, out dVal))
+        if (double.TryParse(arr[0], out dVal))
           _overL = dVal;
 
-        this.tbBlankL.Text = Math.Round((blankLen + dVal + edgeW), 3).ToString("N3");
+        double _blnksize = (blankLen + _overL + edgeW);
+
+        if (calcMultiBlankL) {
+          double _gapSize = 0.0F;
+          int _ppb = 1;
+
+          if (double.TryParse(arr[1].Trim(), out _gapSize) &&
+              int.TryParse(tbPPB.Text, out _ppb)) {
+                _overL = ((((blankLen + edgeW) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overL);
+                tbOverL.Text = _overL.ToString("N3");
+                tbBlankL.Text = (blankLen + _overL + edgeW).ToString("N3");
+          }
+        } else {
+          this.tbBlankL.Text = _blnksize.ToString("N3");
+        }
       }
 
       blankLen = 0.0;
       if (propertySet.Contains("WIDTH")) {
-        if (double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out finLen))
-          blankLen = finLen;
+        double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out blankLen);
 
+        string[] arr = ow.Split('*');
         dVal = 0.0;
-        if (double.TryParse(tbOverW.Text, out dVal))
+
+        if (double.TryParse(arr[0], out dVal))
           _overW = dVal;
 
-        tbBlankW.Text = Math.Round((blankLen + dVal + edgeL), 3).ToString("N3");
+        double _blnksize = (blankLen + _overW + edgeL);
+
+        if (calcMultiBlankW) {
+          double _gapSize = 0.0F;
+          int _ppb = 1;
+
+          if (double.TryParse(arr[1].Trim(), out _gapSize) &&
+              int.TryParse(tbPPB.Text, out _ppb)) {
+                _overW = ((((blankLen + edgeL) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overW);
+                tbOverW.Text = _overW.ToString("N3");
+                tbBlankW.Text = (blankLen + _overW + edgeL).ToString("N3");
+          }
+        } else {
+          tbBlankW.Text = _blnksize.ToString("N3");
+        }
       }
     }
 
     private void LinkControls() {
       tbCNC1.Text = string.Empty;
       tbCNC2.Text = string.Empty;
+      ol = tbOverL.Text;
+      ow = tbOverW.Text;
       tbOverL.Text = string.Empty;
       tbOverW.Text = string.Empty;
       tbBlankW.Text = string.Empty;
@@ -152,11 +186,11 @@ namespace Redbrick_Addin {
     }
 
     private void tbOverL_TextChanged(object sender, EventArgs e) {
-      tbOverL.Text = string.Format("{0:0.000}", tbOverL.Text);
+      //tbOverL.Text = string.Format("{0:0.000}", tbOverL.Text);
     }
 
     private void tbOverW_TextChanged(object sender, EventArgs e) {
-      tbOverW.Text = string.Format("{0:0.000}", tbOverW.Text);
+      //tbOverW.Text = string.Format("{0:0.000}", tbOverW.Text);
     }
 
     private void tbOverL_Validated(object sender, EventArgs e) {

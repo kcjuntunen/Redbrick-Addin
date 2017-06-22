@@ -1310,8 +1310,8 @@ namespace Redbrick_Addin {
       string message = string.Empty;
       if (Properties.Settings.Default.Warn && Properties.Settings.Default.ProgWarn) {
         double oversize_val =
-          double.Parse(GetProperty(@"OVERL").Ctl.Text) +
-          double.Parse(GetProperty(@"OVERW").Ctl.Text);
+          double.Parse(GetProperty(@"OVERL").Ctl.Text.Split('*')[0]) +
+          double.Parse(GetProperty(@"OVERW").Ctl.Text.Split('*')[0]);
 
         int bq = int.Parse(GetProperty(@"BLANK QTY").Ctl.Text);
         int ps_op = 0;
