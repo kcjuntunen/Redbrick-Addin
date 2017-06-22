@@ -140,7 +140,7 @@ namespace Redbrick_Addin {
       fileTitle = (PropertySet.SwApp.ActiveDoc as ModelDoc2).GetTitle().Replace(@".SLDDRW", string.Empty);
       fileName = fileTitle.Split(' ')[0].Trim();
       if (fileTitle.ToUpper().Contains(@" REV")) {
-        fileRev = fileTitle.Split(new string[] { @" REV", @" " }, StringSplitOptions.None)[1].Trim();
+        fileRev = fileTitle.Split(new string[] { @" REV", @" " }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();        
       } else {
         fileRev = rl.ResValue;
       }
