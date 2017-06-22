@@ -1,4 +1,7 @@
-﻿
+﻿* 1.1.1.3
+** [BUGFIX] Rev checker doesn't find blank revs. At least not in the way it used to.
+** [UI] Added a secret feature for Dan which could conceivably result in a mini-language.
+
 * 1.1.1.2
 ** Added menu items to context menu on BOM examiner.
 

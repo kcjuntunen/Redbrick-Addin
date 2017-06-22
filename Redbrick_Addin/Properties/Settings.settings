@@ -197,6 +197,12 @@
     <Setting Name="OdometerStart" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">2016-09-01</Value>
     </Setting>
+    <Setting Name="DraftingStandard" Type="System.String" Scope="User">
+      <Value Profile="(Default)">G:\Solid Works\AMSTORE_PROFILES\AMSTORE 10-31-12.sldstd</Value>
+    </Setting>
+    <Setting Name="DrawingTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">G:\Solid Works\AMSTORE_SHEET_FORMATS\AM_PART.slddrt</Value>
+    </Setting>
     <Setting Name="ConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -337,12 +343,6 @@
   &lt;string&gt;"RD3@Annotations"&lt;/string&gt;
   &lt;string&gt;"RD4@Annotations"&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="DraftingStandard" Type="System.String" Scope="User">
-      <Value Profile="(Default)">G:\Solid Works\AMSTORE_PROFILES\AMSTORE 10-31-12.sldstd</Value>
-    </Setting>
-    <Setting Name="DrawingTemplate" Type="System.String" Scope="User">
-      <Value Profile="(Default)">G:\Solid Works\AMSTORE_SHEET_FORMATS\AM_PART.slddrt</Value>
     </Setting>
   </Settings>
 </SettingsFile>
