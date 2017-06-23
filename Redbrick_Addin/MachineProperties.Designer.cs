@@ -213,7 +213,7 @@ namespace Redbrick_Addin
       this.tbOverL.Name = "tbOverL";
       this.tbOverL.Size = new System.Drawing.Size(60, 22);
       this.tbOverL.TabIndex = 20;
-      this.tbOverL.TextChanged += new System.EventHandler(this.tbOverL_TextChanged);
+      this.tbOverL.TextChanged += new System.EventHandler(this.tbOver_TextChanged);
       this.tbOverL.Leave += new System.EventHandler(this.tbOverL_Validated);
       // 
       // tbOverW
@@ -225,7 +225,7 @@ namespace Redbrick_Addin
       this.tbOverW.Name = "tbOverW";
       this.tbOverW.Size = new System.Drawing.Size(60, 22);
       this.tbOverW.TabIndex = 21;
-      this.tbOverW.TextChanged += new System.EventHandler(this.tbOverW_TextChanged);
+      this.tbOverW.TextChanged += new System.EventHandler(this.tbOver_TextChanged);
       this.tbOverW.Leave += new System.EventHandler(this.tbOverW_Validated);
       // 
       // tbBlankL

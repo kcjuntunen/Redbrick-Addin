@@ -36,7 +36,8 @@ namespace Redbrick_Addin {
         btnWhere.Enabled = false;
       else
         btnWhere.Enabled = true;
-
+      ol = propertySet.GetProperty("OVERL").Value;
+      ow = propertySet.GetProperty("OVERW").Value;
       CalculateBlankSize(l, w);
     }
 
@@ -63,6 +64,8 @@ namespace Redbrick_Addin {
               int.TryParse(tbPPB.Text, out _ppb)) {
                 _overL = ((((blankLen + edgeW) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overL);
                 tbOverL.Text = _overL.ToString("N3");
+                propertySet.GetProperty("OVERL").Value = tbOverL.Text;
+                propertySet.GetProperty("OVERL").ResValue = tbOverL.Text;
                 tbBlankL.Text = (blankLen + _overL + edgeW).ToString("N3");
           }
         } else {
@@ -90,6 +93,8 @@ namespace Redbrick_Addin {
               int.TryParse(tbPPB.Text, out _ppb)) {
                 _overW = ((((blankLen + edgeL) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overW);
                 tbOverW.Text = _overW.ToString("N3");
+                propertySet.GetProperty("OVERW").Value = tbOverW.Text;
+                propertySet.GetProperty("OVERW").ResValue = tbOverW.Text;
                 tbBlankW.Text = (blankLen + _overW + edgeL).ToString("N3");
           }
         } else {
@@ -185,18 +190,15 @@ namespace Redbrick_Addin {
       set { _overW = value; }
     }
 
-    private void tbOverL_TextChanged(object sender, EventArgs e) {
-      //tbOverL.Text = string.Format("{0:0.000}", tbOverL.Text);
-    }
-
-    private void tbOverW_TextChanged(object sender, EventArgs e) {
-      //tbOverW.Text = string.Format("{0:0.000}", tbOverW.Text);
+    private void tbOver_TextChanged(object sender, EventArgs e) {
+      //
     }
 
     private void tbOverL_Validated(object sender, EventArgs e) {
       string tVal = tbOverL.Text;
       double dVal = 0.0;
       if (double.TryParse(tVal, out dVal))
+        (sender as TextBox).Text = dVal.ToString("N3");
         _overL = dVal;
     }
 
@@ -204,6 +206,7 @@ namespace Redbrick_Addin {
       string tVal = tbOverW.Text;
       double dVal = 0.0;
       if (double.TryParse(tVal, out dVal))
+        (sender as TextBox).Text = dVal.ToString("N3");
         _overW = dVal;
     }
 
