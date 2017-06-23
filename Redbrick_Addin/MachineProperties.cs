@@ -36,8 +36,12 @@ namespace Redbrick_Addin {
         btnWhere.Enabled = false;
       else
         btnWhere.Enabled = true;
-      ol = propertySet.GetProperty("OVERL").Value;
-      ow = propertySet.GetProperty("OVERW").Value;
+
+      if (ol == string.Empty || ow == string.Empty) {
+        ol = propertySet.GetProperty("OVERL").Value;
+        ow = propertySet.GetProperty("OVERW").Value;
+      }
+
       CalculateBlankSize(l, w);
     }
 
@@ -196,18 +200,22 @@ namespace Redbrick_Addin {
 
     private void tbOverL_Validated(object sender, EventArgs e) {
       string tVal = tbOverL.Text;
+      ol = tVal;
       double dVal = 0.0;
-      if (double.TryParse(tVal, out dVal))
+      if (double.TryParse(tVal, out dVal)) {
         (sender as TextBox).Text = dVal.ToString("N3");
         _overL = dVal;
+      }
     }
 
     private void tbOverW_Validated(object sender, EventArgs e) {
       string tVal = tbOverW.Text;
+      ow = tVal;
       double dVal = 0.0;
-      if (double.TryParse(tVal, out dVal))
+      if (double.TryParse(tVal, out dVal)) {
         (sender as TextBox).Text = dVal.ToString("N3");
         _overW = dVal;
+      }
     }
 
     private void btnWhere_Click(object sender, EventArgs e) {
