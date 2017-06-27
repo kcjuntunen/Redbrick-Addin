@@ -1,4 +1,7 @@
-﻿* 1.1.1.4
+﻿* 1.1.1.5
+** [BUGFIX] Counteracted loopy read/write routine on Machine Properties.
+
+* 1.1.1.4
 ** [BUGFIX] Repaired a micro-regression.
 
 * 1.1.1.3
