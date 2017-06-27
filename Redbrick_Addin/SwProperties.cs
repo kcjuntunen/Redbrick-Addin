@@ -1084,6 +1084,7 @@ namespace Redbrick_Addin {
       if (Contains(property)) {
         SwProperty p = GetProperty(property);
         p.SwApp = swApp;
+        p.Ctl = c;
         // Only these fields get resolved to something.
         if (p.Name.ToUpper() == "LENGTH" || p.Name.ToUpper() == "WIDTH"
             || p.Name.ToUpper() == "THICKNESS" || p.Name.ToUpper() == "WALL THICKNESS") {
@@ -1095,7 +1096,7 @@ namespace Redbrick_Addin {
               (c as System.Windows.Forms.ComboBox).SelectedValue = tp;
             }
           } else if (c is System.Windows.Forms.CheckBox) {
-            (c as System.Windows.Forms.CheckBox).Checked = (p.ID == "-1" ? true : false);
+            (c as System.Windows.Forms.CheckBox).Checked = (p.Value.ToUpper().Contains("YES") ? true : false);
           } else {
             c.Text = string.Empty;
             if (p.Descr != null && p.Descr != string.Empty)
@@ -1106,7 +1107,6 @@ namespace Redbrick_Addin {
               c.Text = p.Value;
           }
         }
-        p.Ctl = c;
       } else {
         SwProperty x = new SwProperty(property, swCustomInfoType_e.swCustomInfoText, string.Empty, global);
         x.SwApp = swApp;
@@ -1229,7 +1229,11 @@ namespace Redbrick_Addin {
           }
 
           if (p.Ctl is System.Windows.Forms.CheckBox) {
-            p.ID = (p.Ctl as System.Windows.Forms.CheckBox).Checked ? "True" : "False";
+            System.Windows.Forms.CheckBox ch = (System.Windows.Forms.CheckBox)p.Ctl;
+            p.ID = ch.Checked ? "-1" : "0";
+            p.Value = ch.Checked ? "Yes" : "N";
+            p.ResValue = ch.Checked ? "Yes" : "N";
+            
           }
         }
       }
@@ -1399,7 +1403,7 @@ namespace Redbrick_Addin {
 
     public void Write() {
       cutlistData.IncrementOdometer(CutlistData.Functions.GreenCheck);
-      UpdCheckedAtStart = GetProperty("UPDATE CNC").ResValue.ToUpper().Contains("YES");
+      //UpdCheckedAtStart = GetProperty("UPDATE CNC").ResValue.ToUpper().Contains("YES");
       DelSpecific(modeldoc);
       DelGlobal(modeldoc);
       foreach (SwProperty p in _innerArray) {

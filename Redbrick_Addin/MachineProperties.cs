@@ -13,6 +13,10 @@ namespace Redbrick_Addin {
     SwProperties propertySet;
     //private System.Media.SoundPlayer sp = new System.Media.SoundPlayer(Properties.Settings.Default.ClipboardSound);
 
+    string cnc1 = string.Empty;
+    string cnc2 = string.Empty;
+    bool? chkupd = null;
+    int ppb = 1;
     string ol = string.Empty;
     string ow = string.Empty;
 
@@ -37,12 +41,26 @@ namespace Redbrick_Addin {
       else
         btnWhere.Enabled = true;
 
+      if (cnc1 == string.Empty || cnc2 == string.Empty) {
+        cnc1 = propertySet.GetProperty("CNC1").Value;
+        cnc2 = propertySet.GetProperty("CNC2").Value;
+      }
+
       if (ol == string.Empty || ow == string.Empty) {
         ol = propertySet.GetProperty("OVERL").Value;
         ow = propertySet.GetProperty("OVERW").Value;
       }
 
+      if (chkupd == null) {
+        chkupd = propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES");
+      }
+
       CalculateBlankSize(l, w);
+
+      tbCNC1.Text = cnc1;
+      tbCNC2.Text = cnc2;
+      tbPPB.Text = ppb.ToString();
+      chUpdate.Checked = chkupd.Value;
     }
 
     private void CalculateBlankSize(double edgeL, double edgeW) {
@@ -108,26 +126,31 @@ namespace Redbrick_Addin {
     }
 
     private void LinkControls() {
-      tbCNC1.Text = string.Empty;
-      tbCNC2.Text = string.Empty;
+      cnc1 = tbCNC1.Text;
+      cnc2 = tbCNC2.Text;
       ol = tbOverL.Text;
       ow = tbOverW.Text;
+      if (chkupd != null) {
+        chkupd = chUpdate.Checked;
+      }
+
+      tbCNC1.Text = string.Empty;
+      tbCNC2.Text = string.Empty;
       tbOverL.Text = string.Empty;
       tbOverW.Text = string.Empty;
       tbBlankW.Text = string.Empty;
       tbBlankL.Text = string.Empty;
 
+      int.TryParse(tbPPB.Text, out ppb);
       propertySet.LinkControlToProperty("BLANK QTY", true, this.tbPPB);
       propertySet.LinkControlToProperty("CNC1", true, this.tbCNC1);
       propertySet.LinkControlToProperty("CNC2", true, this.tbCNC2);
       propertySet.LinkControlToProperty("OVERL", true, this.tbOverL);
       propertySet.LinkControlToProperty("OVERW", true, this.tbOverW);
       propertySet.LinkControlToProperty("UPDATE CNC", true, this.chUpdate);
+      propertySet.GetProperty("UPDATE CNC").Type = swCustomInfoType_e.swCustomInfoYesOrNo;
 
-      if (propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES"))
-        chUpdate.Checked = true;
-      else
-        chUpdate.Checked = false;
+      propertySet.UpdCheckedAtStart = propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES");
     }
 
     private void LinkControlToProperty(string property, Control c) {
@@ -245,6 +268,14 @@ namespace Redbrick_Addin {
 
     private void label5_Click(object sender, EventArgs e) {
       Redbrick.Clip(tbOverW.Text);
+    }
+
+    private void chUpdate_CheckedChanged(object sender, EventArgs e) {
+      //chkupd = chUpdate.Checked;
+      //SwProperty p = propertySet.GetProperty("UPDATE CNC");
+      //p.Value = chUpdate.Checked ? "Y" : "N";
+      //p.ResValue = chUpdate.Checked ? "Y" : "N";
+      //p.Write();
     }
   }
 }
