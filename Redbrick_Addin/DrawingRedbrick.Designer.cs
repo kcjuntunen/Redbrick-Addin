@@ -322,35 +322,43 @@ namespace Redbrick_Addin
       // 
       // tbFinish1
       // 
+      this.tbFinish1.AcceptsReturn = true;
       this.tbFinish1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbFinish1.Location = new System.Drawing.Point(96, 16);
       this.tbFinish1.Name = "tbFinish1";
       this.tbFinish1.Size = new System.Drawing.Size(213, 22);
       this.tbFinish1.TabIndex = 9;
+      this.tbFinish1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFinish_KeyPress);
       // 
       // tbFinish2
       // 
+      this.tbFinish2.AcceptsReturn = true;
       this.tbFinish2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbFinish2.Location = new System.Drawing.Point(96, 57);
       this.tbFinish2.Name = "tbFinish2";
       this.tbFinish2.Size = new System.Drawing.Size(213, 22);
       this.tbFinish2.TabIndex = 11;
+      this.tbFinish2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFinish_KeyPress);
       // 
       // tbFinish3
       // 
+      this.tbFinish3.AcceptsReturn = true;
       this.tbFinish3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbFinish3.Location = new System.Drawing.Point(96, 98);
       this.tbFinish3.Name = "tbFinish3";
       this.tbFinish3.Size = new System.Drawing.Size(213, 22);
       this.tbFinish3.TabIndex = 13;
+      this.tbFinish3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFinish_KeyPress);
       // 
       // tbFinish4
       // 
+      this.tbFinish4.AcceptsReturn = true;
       this.tbFinish4.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tbFinish4.Location = new System.Drawing.Point(96, 139);
       this.tbFinish4.Name = "tbFinish4";
       this.tbFinish4.Size = new System.Drawing.Size(213, 22);
       this.tbFinish4.TabIndex = 15;
+      this.tbFinish4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFinish_KeyPress);
       // 
       // tbFinish5
       // 

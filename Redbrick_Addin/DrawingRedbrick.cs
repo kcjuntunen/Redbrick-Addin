@@ -46,10 +46,8 @@ namespace Redbrick_Addin {
     /// Update the Redbrick. Duh.
     /// </summary>
     public void DrbUpdate() {
-      try {
+      if (dirtTracker != null) {
         dirtTracker.Besmirched -= dirtTracker_Besmirched;
-      } catch (Exception) {
-        // I don't care.
       }
 
       fillMat();
@@ -627,7 +625,13 @@ namespace Redbrick_Addin {
 
         dd.ColorRows(
           // λ! Wooo!
-          (r) => { return r.Cells["Update"].Value.ToString().ToUpper() == "YES"; },
+          (r) => {
+              if (r.Cells["Update"].Value != null) {
+                return r.Cells["Update"].Value.ToString().ToUpper() == "YES";
+              } else {
+                return false;
+              }
+            },
           Color.Red, 
           Color.Yellow
           );
@@ -972,6 +976,30 @@ namespace Redbrick_Addin {
     private void combobox_KeyDown(object sender, KeyEventArgs e) {
       if (sender is ComboBox)
         (sender as ComboBox).DroppedDown = false;
+    }
+
+    private void tbFinish_KeyPress(object sender, KeyPressEventArgs e) {
+      if (e.KeyChar == 0x000a) {
+        List<TextBox> tbs = new List<TextBox> { tbFinish1, tbFinish2, tbFinish3, tbFinish4, tbFinish5 };
+        if ((sender as TextBox) != tbs[tbs.Count -1]) {
+          TextBox curTb = sender as TextBox;
+          int curPos = curTb.SelectionStart;
+          curTb.SelectionLength = curTb.TextLength - curPos;
+          string selectedText = curTb.SelectedText;
+          curTb.Text = curTb.Text.Remove(curPos);
+
+          for (int i = 0; i < tbs.Count; i++) {
+            if (tbs[i] == curTb) {
+              TextBox nxt = tbs[i + 1];
+              nxt.Text = string.Format(@"{0}{1}", selectedText, nxt.Text);
+              nxt.Focus();
+            }
+          }
+
+
+
+        }
+      }
     }
   }
 }
