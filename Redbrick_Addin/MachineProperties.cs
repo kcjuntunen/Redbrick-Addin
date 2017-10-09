@@ -67,65 +67,94 @@ namespace Redbrick_Addin {
 
     private void CalculateBlankSize(double edgeL, double edgeW) {
       double dVal = 0.0;
+
+      double finLen = 0.0;
       double blankLen = 0.0;
-      bool calcMultiBlankL = ol.Contains(@"*");
-      bool calcMultiBlankW = ow.Contains(@"*");
 
       if (propertySet.Contains("LENGTH")) {
-        double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out blankLen);
-        string[] arr = ol.Split('*');
+        if (double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out finLen))
+          blankLen = finLen;
 
-        if (double.TryParse(arr[0], out dVal))
+        if (double.TryParse(tbOverL.Text, out dVal))
           _overL = dVal;
 
-        double _blnksize = (blankLen + _overL + edgeW);
-
-        if (calcMultiBlankL) {
-          double _gapSize = 0.0F;
-          int _ppb = 1;
-
-          if (double.TryParse(arr[1].Trim(), out _gapSize) &&
-              int.TryParse(tbPPB.Text, out _ppb)) {
-                _overL = ((((blankLen + edgeW) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overL);
-                tbOverL.Text = _overL.ToString("N3");
-                propertySet.GetProperty("OVERL").Value = tbOverL.Text;
-                propertySet.GetProperty("OVERL").ResValue = tbOverL.Text;
-                tbBlankL.Text = (blankLen + _overL + edgeW).ToString("N3");
-          }
-        } else {
-          this.tbBlankL.Text = _blnksize.ToString("N3");
-        }
+        this.tbBlankL.Text = Math.Round((blankLen + dVal + edgeW), 3).ToString("N3");
       }
 
       blankLen = 0.0;
       if (propertySet.Contains("WIDTH")) {
-        double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out blankLen);
+        if (double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out finLen))
+          blankLen = finLen;
 
-        string[] arr = ow.Split('*');
         dVal = 0.0;
-
-        if (double.TryParse(arr[0], out dVal))
+        if (double.TryParse(tbOverW.Text, out dVal))
           _overW = dVal;
 
-        double _blnksize = (blankLen + _overW + edgeL);
-
-        if (calcMultiBlankW) {
-          double _gapSize = 0.0F;
-          int _ppb = 1;
-
-          if (double.TryParse(arr[1].Trim(), out _gapSize) &&
-              int.TryParse(tbPPB.Text, out _ppb)) {
-                _overW = ((((blankLen + edgeL) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overW);
-                tbOverW.Text = _overW.ToString("N3");
-                propertySet.GetProperty("OVERW").Value = tbOverW.Text;
-                propertySet.GetProperty("OVERW").ResValue = tbOverW.Text;
-                tbBlankW.Text = (blankLen + _overW + edgeL).ToString("N3");
-          }
-        } else {
-          tbBlankW.Text = _blnksize.ToString("N3");
-        }
+        tbBlankW.Text = Math.Round((blankLen + dVal + edgeL), 3).ToString("N3");
       }
     }
+
+    //private void CalculateBlankSize(double edgeL, double edgeW) {
+    //  double dVal = 0.0;
+    //  double blankLen = 0.0;
+    //  bool calcMultiBlankL = ol.Contains(@"*");
+    //  bool calcMultiBlankW = ow.Contains(@"*");
+
+    //  if (propertySet.Contains("LENGTH")) {
+    //    double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out blankLen);
+    //    string[] arr = ol.Split('*');
+
+    //    if (double.TryParse(arr[0], out dVal))
+    //      _overL = dVal;
+
+    //    double _blnksize = (blankLen + _overL + edgeW);
+
+    //    if (calcMultiBlankL) {
+    //      double _gapSize = 0.0F;
+    //      int _ppb = 1;
+
+    //      if (double.TryParse(arr[1].Trim(), out _gapSize) &&
+    //          int.TryParse(tbPPB.Text, out _ppb)) {
+    //            _overL = ((((blankLen + edgeW) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overL);
+    //            tbOverL.Text = _overL.ToString("N3");
+    //            propertySet.GetProperty("OVERL").Value = tbOverL.Text;
+    //            propertySet.GetProperty("OVERL").ResValue = tbOverL.Text;
+    //            tbBlankL.Text = (blankLen + _overL + edgeW).ToString("N3");
+    //      }
+    //    } else {
+    //      this.tbBlankL.Text = _blnksize.ToString("N3");
+    //    }
+    //  }
+
+    //  blankLen = 0.0;
+    //  if (propertySet.Contains("WIDTH")) {
+    //    double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out blankLen);
+
+    //    string[] arr = ow.Split('*');
+    //    dVal = 0.0;
+
+    //    if (double.TryParse(arr[0], out dVal))
+    //      _overW = dVal;
+
+    //    double _blnksize = (blankLen + _overW + edgeL);
+
+    //    if (calcMultiBlankW) {
+    //      double _gapSize = 0.0F;
+    //      int _ppb = 1;
+
+    //      if (double.TryParse(arr[1].Trim(), out _gapSize) &&
+    //          int.TryParse(tbPPB.Text, out _ppb)) {
+    //            _overW = ((((blankLen + edgeL) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overW);
+    //            tbOverW.Text = _overW.ToString("N3");
+    //            propertySet.GetProperty("OVERW").Value = tbOverW.Text;
+    //            propertySet.GetProperty("OVERW").ResValue = tbOverW.Text;
+    //            tbBlankW.Text = (blankLen + _overW + edgeL).ToString("N3");
+    //      }
+    //    } else {
+    //      tbBlankW.Text = _blnksize.ToString("N3");
+    //    }
+    //  }
+    //}
 
     private void LinkControls() {
       cnc1 = tbCNC1.Text;
