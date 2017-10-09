@@ -1328,7 +1328,7 @@ namespace Redbrick_Addin {
       if (ENABLE_DB_WRITE && !ECRIsBogus(ecrId) && !ECRItemExists(ecrId, partnum, rev)) {
         ecr_item_id = InsertECRItemInner(ecrId, partnum, rev, type);
         object[] o = GetDrawingData(Path.GetFileNameWithoutExtension(dwg_file_name) + ".pdf");
-        string DRW_FILE = ecrno + "_" + o[1].ToString().Replace(".pdf", "-" + lvl + ".pdf");
+        string DRW_FILE = ecrno + "_" + o[1].ToString().ToUpper().Replace(".PDF", "-" + lvl + ".PDF");
         string ORIG_PATH = o[2].ToString() + o[1].ToString();
         if (!File.Exists(Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE)) { // doublecheck
           File.Copy(ORIG_PATH, Properties.Settings.Default.ECRDrawingsDestination + DRW_FILE, false);
