@@ -353,16 +353,15 @@ namespace Redbrick_Addin {
 
       for (int i = 0; i < Properties.Settings.Default.LayerTails.Count; i++) {
         string currentTail = Properties.Settings.Default.LayerTails[i];
-        try {
-          Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", head, currentTail));
 
+        Layer l = (Layer)lm.GetLayer(string.Format("{0}{1}", head, currentTail));
+        if (l != null) {
           l.Visible = false;
           if (Math.Floor((double)(revcount / 5)) == i) {
             l.Visible = true;
           }
-        } catch (Exception) {
-          // Sometimes the layer doesn't exist.
         }
+
       }
     }
 
