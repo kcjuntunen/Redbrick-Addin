@@ -1,4 +1,7 @@
-﻿* 1.1.1.7
+﻿* 1.1.1.8
+** Buggy stashed code snuck back in.
+
+* 1.1.1.7
 ** [BUGFIX] REV LVL replacement was failing.
 ** Change Pythonic try/catch blocks for more C-sharpy null checks.
 ** Added ^J to split finish to next line.
