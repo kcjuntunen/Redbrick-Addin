@@ -140,7 +140,11 @@ namespace Redbrick_Addin {
       if (fileTitle.ToUpper().Contains(@" REV")) {
         fileRev = fileTitle.Split(new string[] { @" REV", @" " }, StringSplitOptions.RemoveEmptyEntries)[1].Trim();        
       } else {
-        fileRev = rl.ResValue;
+        if (rl != null) {
+          fileRev = rl.ResValue;
+        } else {
+          fileRev = "100";
+        }
       }
 
       if (partNo != null) {
