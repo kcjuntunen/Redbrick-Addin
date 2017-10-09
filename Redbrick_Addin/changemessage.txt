@@ -1,4 +1,9 @@
-﻿* 1.1.1.5
+﻿* 1.1.1.7
+** [BUGFIX] REV LVL replacement was failing.
+** Change Pythonic try/catch blocks for more C-sharpy null checks.
+** Added ^J to split finish to next line.
+
+* 1.1.1.5
 ** [BUGFIX] Counteracted loopy read/write routine on Machine Properties.
 
 * 1.1.1.4
