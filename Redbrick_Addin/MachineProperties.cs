@@ -59,6 +59,8 @@ namespace Redbrick_Addin {
 
       tbCNC1.Text = cnc1;
       tbCNC2.Text = cnc2;
+      tbOverL.Text = ol;
+      tbOverW.Text = ow;
       tbPPB.Text = ppb.ToString();
       chUpdate.Checked = chkupd.Value;
     }
