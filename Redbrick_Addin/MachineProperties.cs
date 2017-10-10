@@ -41,28 +41,7 @@ namespace Redbrick_Addin {
       else
         btnWhere.Enabled = true;
 
-      if (cnc1 == string.Empty || cnc2 == string.Empty) {
-        cnc1 = propertySet.GetProperty("CNC1").Value;
-        cnc2 = propertySet.GetProperty("CNC2").Value;
-      }
-
-      if (ol == string.Empty || ow == string.Empty) {
-        ol = propertySet.GetProperty("OVERL").Value;
-        ow = propertySet.GetProperty("OVERW").Value;
-      }
-
-      if (chkupd == null) {
-        chkupd = propertySet.GetProperty("UPDATE CNC").Value.ToUpper().Contains("YES");
-      }
-
       CalculateBlankSize(l, w);
-
-      tbCNC1.Text = cnc1;
-      tbCNC2.Text = cnc2;
-      tbOverL.Text = ol;
-      tbOverW.Text = ow;
-      tbPPB.Text = ppb.ToString();
-      chUpdate.Checked = chkupd.Value;
     }
 
     private void CalculateBlankSize(double edgeL, double edgeW) {
@@ -93,68 +72,6 @@ namespace Redbrick_Addin {
         tbBlankW.Text = Math.Round((blankLen + dVal + edgeL), 3).ToString("N3");
       }
     }
-
-    //private void CalculateBlankSize(double edgeL, double edgeW) {
-    //  double dVal = 0.0;
-    //  double blankLen = 0.0;
-    //  bool calcMultiBlankL = ol.Contains(@"*");
-    //  bool calcMultiBlankW = ow.Contains(@"*");
-
-    //  if (propertySet.Contains("LENGTH")) {
-    //    double.TryParse(propertySet.GetProperty("LENGTH").ResValue, out blankLen);
-    //    string[] arr = ol.Split('*');
-
-    //    if (double.TryParse(arr[0], out dVal))
-    //      _overL = dVal;
-
-    //    double _blnksize = (blankLen + _overL + edgeW);
-
-    //    if (calcMultiBlankL) {
-    //      double _gapSize = 0.0F;
-    //      int _ppb = 1;
-
-    //      if (double.TryParse(arr[1].Trim(), out _gapSize) &&
-    //          int.TryParse(tbPPB.Text, out _ppb)) {
-    //            _overL = ((((blankLen + edgeW) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overL);
-    //            tbOverL.Text = _overL.ToString("N3");
-    //            propertySet.GetProperty("OVERL").Value = tbOverL.Text;
-    //            propertySet.GetProperty("OVERL").ResValue = tbOverL.Text;
-    //            tbBlankL.Text = (blankLen + _overL + edgeW).ToString("N3");
-    //      }
-    //    } else {
-    //      this.tbBlankL.Text = _blnksize.ToString("N3");
-    //    }
-    //  }
-
-    //  blankLen = 0.0;
-    //  if (propertySet.Contains("WIDTH")) {
-    //    double.TryParse(propertySet.GetProperty("WIDTH").ResValue, out blankLen);
-
-    //    string[] arr = ow.Split('*');
-    //    dVal = 0.0;
-
-    //    if (double.TryParse(arr[0], out dVal))
-    //      _overW = dVal;
-
-    //    double _blnksize = (blankLen + _overW + edgeL);
-
-    //    if (calcMultiBlankW) {
-    //      double _gapSize = 0.0F;
-    //      int _ppb = 1;
-
-    //      if (double.TryParse(arr[1].Trim(), out _gapSize) &&
-    //          int.TryParse(tbPPB.Text, out _ppb)) {
-    //            _overW = ((((blankLen + edgeL) * (_ppb - 1)) + ((_ppb - 1) * _gapSize)) + _overW);
-    //            tbOverW.Text = _overW.ToString("N3");
-    //            propertySet.GetProperty("OVERW").Value = tbOverW.Text;
-    //            propertySet.GetProperty("OVERW").ResValue = tbOverW.Text;
-    //            tbBlankW.Text = (blankLen + _overW + edgeL).ToString("N3");
-    //      }
-    //    } else {
-    //      tbBlankW.Text = _blnksize.ToString("N3");
-    //    }
-    //  }
-    //}
 
     private void LinkControls() {
       cnc1 = tbCNC1.Text;

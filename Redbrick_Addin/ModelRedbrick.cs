@@ -161,7 +161,7 @@ namespace Redbrick_Addin {
     public void Write(ModelDoc2 doc) {
       // OK, so the controls were linked on update. This reads whatever was
       // entered into the controls, then writes to SW.
-      mp.Update(ref props, cs.EdgeDiffL, cs.EdgeDiffW);
+      //mp.Update(ref props, cs.EdgeDiffL, cs.EdgeDiffW);
       ReadControls();
       props.Write();
       //ch.Write();
