@@ -1,4 +1,7 @@
-﻿* 1.1.1.8
+﻿* 1.1.1.9
+** Changed save routine in ArchivePDF.dll.
+
+* 1.1.1.8
 ** Buggy stashed code snuck back in.
 
 * 1.1.1.7
