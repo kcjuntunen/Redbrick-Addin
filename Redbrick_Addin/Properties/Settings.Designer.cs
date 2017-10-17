@@ -986,5 +986,29 @@ namespace Redbrick_Addin.Properties {
                 this["SketchDimensions"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FilterBOM {
+            get {
+                return ((bool)(this["FilterBOM"]));
+            }
+            set {
+                this["FilterBOM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int DeptPref {
+            get {
+                return ((int)(this["DeptPref"]));
+            }
+            set {
+                this["DeptPref"] = value;
+            }
+        }
     }
 }

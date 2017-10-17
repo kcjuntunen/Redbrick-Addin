@@ -66,6 +66,7 @@ namespace Redbrick_Addin {
       checkBox6.Checked = Properties.Settings.Default.ExportImg;
       checkBox7.Checked = Properties.Settings.Default.CutlistNotSelectedWarning;
       checkBox8.Checked = Properties.Settings.Default.AutoOpenPriority;
+      chbFilterBOM.Checked = Properties.Settings.Default.FilterBOM;
       textBox4.Text = Properties.Settings.Default.DrawingTemplate;
       textBox5.Text = Properties.Settings.Default.DraftingStandard;
 
@@ -435,6 +436,10 @@ namespace Redbrick_Addin {
     private void button1_Click(object sender, EventArgs e) {
       AboutBox ab = new AboutBox();
       ab.ShowDialog();
+    }
+
+    private void chbFilterBOM_CheckedChanged(object sender, EventArgs e) {
+      Properties.Settings.Default.FilterBOM = (sender as CheckBox).Checked;
     }
   }
 }

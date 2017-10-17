@@ -55,6 +55,10 @@ namespace Redbrick_Addin {
       fillCustomer();
       fillStatus();
       fillRev();
+      if (Properties.Settings.Default.FilterBOM) {
+        fillDept();
+        comboBox1.Visible = true;
+      }
       GetData();
 
       dirtTracker = new DirtTracker(this);
@@ -263,6 +267,13 @@ namespace Redbrick_Addin {
       cbAuthor.ValueMember = "INITIAL";
       cbAuthor.DisplayMember = "NAME";
       cbAuthor.DataSource = PropertySet.CutlistData.GetAuthors().Tables[0];
+    }
+
+    private void fillDept() {
+      comboBox1.ValueMember = "TYPEID";
+      comboBox1.DisplayMember = "TYPEDESC";
+      comboBox1.DataSource = _propSet.CutlistData.OpTypes.Tables[0];
+      comboBox1.SelectedValue = Properties.Settings.Default.DeptPref;
     }
 
     /// <summary>
@@ -577,29 +588,28 @@ namespace Redbrick_Addin {
 
     }
 
-    private void insert_BOM() {
-      ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
-      DrawingDoc dd = (DrawingDoc)SwApp.ActiveDoc;
-      ModelDocExtension ex = (ModelDocExtension)md.Extension;
-      int bom_type = (int)swBomType_e.swBomType_PartsOnly;
-      int bom_numbering = (int)swNumberingType_e.swNumberingType_Flat;
-      int bom_anchor =(int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft;
-      SolidWorks.Interop.sldworks.View v = GetFirstView(SwApp);
+    //private void insert_BOM() {
+    //  ModelDoc2 md = (ModelDoc2)SwApp.ActiveDoc;
+    //  DrawingDoc dd = (DrawingDoc)SwApp.ActiveDoc;
+    //  ModelDocExtension ex = (ModelDocExtension)md.Extension;
+    //  int bom_type = (int)swBomType_e.swBomType_PartsOnly;
+    //  int bom_numbering = (int)swNumberingType_e.swNumberingType_Flat;
+    //  int bom_anchor =(int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft;
+    //  SolidWorks.Interop.sldworks.View v = GetFirstView(SwApp);
 
-      if (dd.ActivateView(v.Name)) {
-        v.InsertBomTable4(
-          false,
-          Properties.Settings.Default.BOMLocationX, Properties.Settings.Default.BOMLocationY,
-          bom_anchor,
-          bom_type,
-          v.ReferencedConfiguration,
-          Properties.Settings.Default.BOMTemplatePath,
-          false,
-          bom_numbering,
-          false);
-      }
-
-    }
+    //  if (dd.ActivateView(v.Name)) {
+    //    v.InsertBomTable4(
+    //      false,
+    //      Properties.Settings.Default.BOMLocationX, Properties.Settings.Default.BOMLocationY,
+    //      bom_anchor,
+    //      bom_type,
+    //      v.ReferencedConfiguration,
+    //      Properties.Settings.Default.BOMTemplatePath,
+    //      false,
+    //      bom_numbering,
+    //      false);
+    //  }
+    //}
 
     /// <summary>
     /// Show what will be uploaded to the as a cutlist, only with hardware and other oddments filtered out.
@@ -641,7 +651,11 @@ namespace Redbrick_Addin {
 
         dd.ShowDialog();
       } catch (NullReferenceException nre) {
-        Redbrick.InsertBOM(_swApp);
+        if (comboBox1.SelectedValue != null) {
+          Redbrick.InsertBOM(_swApp, (int)comboBox1.SelectedValue);
+        } else {
+          Redbrick.InsertBOM(_swApp);
+        }
         btnLookup_Click(this, new EventArgs());
       } catch (ArgumentOutOfRangeException aoore) {
         PropertySet.SwApp.SendMsgToUser2(@"No acceptable parts in BOM.",
@@ -723,7 +737,11 @@ namespace Redbrick_Addin {
           Color.Red);
         dd.ShowDialog();
       } catch (NullReferenceException nre) {
-        Redbrick.InsertBOM(_swApp);
+        if (comboBox1.SelectedValue != null) {
+          Redbrick.InsertBOM(_swApp, (int)comboBox1.SelectedValue);
+        } else {
+          Redbrick.InsertBOM(_swApp);
+        }
         btnLookup_Click(this, new EventArgs());
       } catch (ArgumentOutOfRangeException aoore) {
         PropertySet.SwApp.SendMsgToUser2(@"No acceptable parts in BOM.",
@@ -973,7 +991,7 @@ namespace Redbrick_Addin {
     }
 
     private void button1_Click_1(object sender, EventArgs e) {
-      insert_BOM();
+      //insert_BOM();
     }
 
     private void combobox_KeyDown(object sender, KeyEventArgs e) {
@@ -1003,6 +1021,20 @@ namespace Redbrick_Addin {
 
         }
       }
+    }
+
+    bool cb1UserEdit = false;
+
+    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+      if (cb1UserEdit) {
+        Properties.Settings.Default.DeptPref = (int)(sender as ComboBox).SelectedValue;
+        Properties.Settings.Default.Save();
+        cb1UserEdit = false;
+      }
+    }
+
+    private void comboBox1_MouseClick(object sender, MouseEventArgs e) {
+      cb1UserEdit = true;
     }
   }
 }

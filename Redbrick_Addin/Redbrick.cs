@@ -375,9 +375,11 @@ namespace Redbrick_Addin {
       int bom_numbering = (int)swNumberingType_e.swNumberingType_Flat;
       int bom_anchor = (int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft;
       SolidWorks.Interop.sldworks.View v = GetFirstView(swApp);
+      BomTableAnnotation bta = null;
+      TableAnnotation ta = null;
 
       if (dd.ActivateView(v.Name)) {
-        v.InsertBomTable4(
+        bta = v.InsertBomTable4(
           false,
           Properties.Settings.Default.BOMLocationX, Properties.Settings.Default.BOMLocationY,
           bom_anchor,
@@ -388,6 +390,93 @@ namespace Redbrick_Addin {
           bom_numbering,
           false);
       }
+
+      if (bta != null) {
+        ta = (TableAnnotation)bta;
+        if (ta != null) {
+          int deptcol = 0;
+          List<int> rowdpt =  new List<int>();
+          System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(BOMFilter[0]);
+
+          for (int i = 0; i < ta.ColumnCount; i++) {
+            if (ta.Text[0, i].ToUpper() == @"DEPTID") {
+              deptcol = i;
+              break;
+            }
+          }
+
+          for (int i = 0; i < ta.RowCount; i++) {
+            if (!r.IsMatch(ta.Text[i, deptcol])) {
+              rowdpt.Add(i);
+            }
+          }
+
+          foreach (int item in rowdpt) {
+            ta.set_RowHidden(item, true);
+          }
+
+        }
+      }
+    }
+
+    public static void InsertBOM(SldWorks swApp, int dept) {
+      ModelDoc2 md = (ModelDoc2)swApp.ActiveDoc;
+      DrawingDoc dd = (DrawingDoc)swApp.ActiveDoc;
+      ModelDocExtension ex = (ModelDocExtension)md.Extension;
+      int bom_type = (int)swBomType_e.swBomType_PartsOnly;
+      int bom_numbering = (int)swNumberingType_e.swNumberingType_Flat;
+      int bom_anchor = (int)swBOMConfigurationAnchorType_e.swBOMConfigurationAnchor_TopLeft;
+      SolidWorks.Interop.sldworks.View v = GetFirstView(swApp);
+      BomTableAnnotation bta = null;
+      TableAnnotation ta = null;
+
+      if (dd.ActivateView(v.Name)) {
+        bta = v.InsertBomTable4(
+          false,
+          Properties.Settings.Default.BOMLocationX, Properties.Settings.Default.BOMLocationY,
+          bom_anchor,
+          bom_type,
+          v.ReferencedConfiguration,
+          Properties.Settings.Default.BOMTemplatePath,
+          false,
+          bom_numbering,
+          false);
+      }
+
+      if (Properties.Settings.Default.FilterBOM) {
+        if (bta != null) {
+          ta = (TableAnnotation)bta;
+          if (ta != null) {
+            int deptcol = findColumn(@"DEPTID", ta);
+            int partcol = findColumn(@"PART", ta);
+            List<int> rowdpt = new List<int>();
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(BOMFilter[0]);
+
+
+            for (int i = 0; i < ta.RowCount; i++) {
+              int var = 0;
+              int.TryParse(ta.Text[i, deptcol], out var);
+              if (!r.IsMatch(ta.Text[i, partcol]) || var != dept) {
+                rowdpt.Add(i);
+              }
+            }
+
+            foreach (int item in rowdpt) {
+              ta.set_RowHidden(item, true);
+            }
+
+          }
+        }
+      }
+    }
+
+    public static int findColumn(string colName, TableAnnotation ta) {
+      for (int i = 0; i < ta.ColumnCount; i++) {
+        if (ta.Text[0, i].ToUpper() == colName) {
+          return i;
+        }
+      }
+      return 0;
     }
 
     /// </summary>
