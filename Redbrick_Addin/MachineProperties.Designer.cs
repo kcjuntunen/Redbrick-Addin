@@ -238,6 +238,7 @@ namespace Redbrick_Addin
       this.tbBlankL.Name = "tbBlankL";
       this.tbBlankL.Size = new System.Drawing.Size(60, 22);
       this.tbBlankL.TabIndex = 23;
+      this.tbBlankL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbBlankL_KeyDown);
       // 
       // tbBlankW
       // 
@@ -248,6 +249,7 @@ namespace Redbrick_Addin
       this.tbBlankW.Name = "tbBlankW";
       this.tbBlankW.Size = new System.Drawing.Size(60, 22);
       this.tbBlankW.TabIndex = 24;
+      this.tbBlankW.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbBlankW_KeyDown);
       // 
       // btnWhere
       // 

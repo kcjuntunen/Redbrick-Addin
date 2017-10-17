@@ -1010,5 +1010,14 @@ namespace Redbrick_Addin.Properties {
                 this["DeptPref"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{0:0.000}")]
+        public string NumberFormat {
+            get {
+                return ((string)(this["NumberFormat"]));
+            }
+        }
     }
 }

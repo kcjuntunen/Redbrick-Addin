@@ -225,5 +225,47 @@ namespace Redbrick_Addin {
       //p.ResValue = chUpdate.Checked ? "Y" : "N";
       //p.Write();
     }
+
+    static private string enforce_number_format(string input) {
+      double _val = 0.0F;
+      if (double.TryParse(input, out _val)) {
+        return string.Format(Properties.Settings.Default.NumberFormat, _val);
+      }
+      return @"#VALUE!";
+    }
+
+    static private string enforce_number_format(double input) {
+      return string.Format(Properties.Settings.Default.NumberFormat, input);
+    }
+
+    static private string enforce_number_format(Single input) {
+      return string.Format(Properties.Settings.Default.NumberFormat, input);
+    }
+
+    static private string enforce_number_format(decimal input) {
+      return string.Format(Properties.Settings.Default.NumberFormat, input);
+    }
+
+    static private void calculate_oversize_from_blanksize(Single bl_box_val, TextBox ov_box, Single length, Single total_edging) {
+      Decimal _val = Math.Round(Convert.ToDecimal((bl_box_val - length) + total_edging), 3);
+      ov_box.Text = enforce_number_format(_val);
+    }
+
+    bool bl_userediting = false;
+    private void tbBlankL_TextChanged(object sender, EventArgs e) {
+
+    }
+
+    private void tbBlankW_TextChanged(object sender, EventArgs e) {
+
+    }
+
+    private void tbBlankL_KeyDown(object sender, KeyEventArgs e) {
+      bl_userediting = true;
+    }
+
+    private void tbBlankW_KeyDown(object sender, KeyEventArgs e) {
+      bl_userediting = true;
+    }
   }
 }
