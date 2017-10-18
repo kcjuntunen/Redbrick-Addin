@@ -19,6 +19,7 @@ namespace Redbrick_Addin {
     private int fracdisp;
     private int decs;
     private int decd;
+    private int dept = -1;
 
     public enum CutlistFunction {
       AddToExistingAlreadySelected,
@@ -56,6 +57,19 @@ namespace Redbrick_Addin {
 
     public CutlistHeaderInfo(DrawingProperties dp, string descr, SldWorks swapp) {
       _swApp = swapp;
+      InitializeComponent();
+      SetLWHVisibility(Properties.Settings.Default.CHIHideLWH);
+      DrawingPropertySet = dp;
+      CutlistData = dp.CutlistData;
+      Location = Properties.Settings.Default.CutlistHeaderLocation;
+      Size = Properties.Settings.Default.CutlistHeaderSize;
+      description = descr;
+      InitControlsWithDrawing();
+    }
+
+    public CutlistHeaderInfo(DrawingProperties dp, string descr, int dpt, SldWorks swapp) {
+      _swApp = swapp;
+      dept = dpt;
       InitializeComponent();
       SetLWHVisibility(Properties.Settings.Default.CHIHideLWH);
       DrawingPropertySet = dp;
@@ -233,7 +247,11 @@ namespace Redbrick_Addin {
           Redbrick.MasterHashes);
       } catch (NullReferenceException nre) {
         if (_swApp != null) {
-          Redbrick.InsertBOM(_swApp);
+          if (dept > -1) {
+            Redbrick.InsertBOM(_swApp, dept);
+          } else {
+            Redbrick.InsertBOM(_swApp);
+          }
           InitTableData();
         } else {
           throw new NullReferenceException(@"No table found.");

@@ -564,9 +564,20 @@ namespace Redbrick_Addin {
     /// <param name="e">Any args?</param>
     private void button1_Click(object sender, EventArgs e) {
       string descr = get_description(Redbrick.GetFirstView(_swApp));
-      CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr, _swApp);
+      if (comboBox1.SelectedItem == null) {
+        CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr, _swApp);
+        ShowCutlistHeaderInfo(chi);
+      } else {
+        CutlistHeaderInfo chi = new CutlistHeaderInfo(PropertySet, descr, (int)comboBox1.SelectedValue, _swApp);
+        ShowCutlistHeaderInfo(chi);
+      }
+
+      FillBoxes();
+    }
+
+    private void ShowCutlistHeaderInfo(CutlistHeaderInfo c) {
       try {
-        chi.ShowDialog();
+        c.ShowDialog();
       } catch (ObjectDisposedException odex) {
         // Failed to initiate.
         // Usually, it closed itself because no table was found.
@@ -575,8 +586,6 @@ namespace Redbrick_Addin {
           (int)swMessageBoxIcon_e.swMbStop,
           (int)swMessageBoxBtn_e.swMbOk);
       }
-
-      FillBoxes();
     }
 
     /// <summary>
