@@ -452,7 +452,6 @@ namespace Redbrick_Addin {
             List<int> rowdpt = new List<int>();
             System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(BOMFilter[0]);
 
-
             for (int i = 0; i < ta.RowCount; i++) {
               int var = 0;
               int.TryParse(ta.Text[i, deptcol], out var);
@@ -472,7 +471,7 @@ namespace Redbrick_Addin {
 
     public static int findColumn(string colName, TableAnnotation ta) {
       for (int i = 0; i < ta.ColumnCount; i++) {
-        if (ta.Text[0, i].ToUpper() == colName) {
+        if (ta.Text[0, i].ToUpper().Trim() == colName.Trim()) {
           return i;
         }
       }
